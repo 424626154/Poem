@@ -7,4 +7,5 @@ yarn add react-native-zss-rich-text-editor
 yarn add react-native-markdown
 yarn add react-native-keyboard-spacer
 yarn add react-native-webview-bridge
+yarn add realm
 --- yarn add ---

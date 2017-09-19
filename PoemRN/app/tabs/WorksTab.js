@@ -9,7 +9,13 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
+import HTMLView from 'react-native-htmlview';
+
 import{isLogin} from '../utils/Utils'
+
+import SQLite from '../db/Sqlite';
+const sqlite = new SQLite();
+import PoemModel from '../db/PoemModel';
 
 // 封装Item组件
 class FlatListItem extends React.PureComponent {
@@ -27,9 +33,9 @@ class FlatListItem extends React.PureComponent {
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
                   <View style={styles.poem_bg}>
-                    <Text style={styles.poem}>
-                        {this.props.poem}
-                    </Text>
+                  <HTMLView
+                      value={this.props.poem}
+                      />
                   </View>
                   <View style={styles.fitem_more}>
                     <Text style={styles.fitem_time}>
@@ -67,21 +73,34 @@ class WorksTab extends React.Component {
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-        // 创造模拟数据
-        for (let i = 0; i < 10; i ++) {
-            let obj = {
-                id: i,
-                name: 'name'+1,
-                poem:'在StackNavigator中注册后的组件都有navigation这个属性. navigation又有5个参',
-            };
-            //  将模拟数据存入数据容器中
-            this.dataContainer.push(obj);
-        }
-        // 将存储的数据赋予状态并更新页面
-        this.setState({
-            sourceData: this.dataContainer
-        });
+        // // 创造模拟数据
+        // for (let i = 0; i < 10; i ++) {
+        //     let obj = {
+        //         id: i,
+        //         name: 'name'+1,
+        //         poem:'在StackNavigator中注册后的组件都有navigation这个属性. navigation又有5个参',
+        //     };
+        //     //  将模拟数据存入数据容器中
+        //     this.dataContainer.push(obj);
+        // }
+        // // 将存储的数据赋予状态并更新页面
+        // this.setState({
+        //     sourceData: this.dataContainer
+        // });
+
+        sqlite.createTable();
+        sqlite.queryPoems().then((results)=>{
+            this.dataContainer = results;
+      			this.setState({
+      				sourceData: this.dataContainer
+      			});
+      		})
     }
+
+    componentWillUnMount(){
+      sqlite.close()
+    }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -222,6 +241,21 @@ class WorksTab extends React.Component {
 
 
 }
+const markdownStyles = {
+  heading1: {
+    fontSize: 24,
+    color: 'purple',
+  },
+  link: {
+    color: 'pink',
+  },
+  mailTo: {
+    color: 'orange',
+  },
+  text: {
+    color: '#555555',
+  },
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -251,8 +285,7 @@ const styles = StyleSheet.create({
 
   },
   poem:{
-    fontSize:18,
-    color:'#000000',
+
   },
   menu:{
     paddingLeft:60,

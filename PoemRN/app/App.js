@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabNavigator,StackNavigator } from 'react-navigation';
+var SQLite = require('react-native-sqlite-storage');
 
 import {WorksTab} from './tabs/WorksTab';//作品
 import {ReadingTab} from './tabs/ReadingTab';//欣赏

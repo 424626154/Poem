@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import SQLite from '../db/Sqlite';
+const sqlite = new SQLite();
+import PoemModel from '../db/PoemModel';
 
 class AddPoemUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
@@ -23,7 +26,7 @@ class AddPoemUI extends React.Component {
          </TouchableOpacity>
        ),
        headerRight:(
-         <TouchableOpacity  onPress={()=>navigation.state.params.navigatePress()}>
+         <TouchableOpacity  onPress={()=>navigation.state.params.oGetContentHtml()}>
            <Text style={styles.nav_right}>发布</Text>
          </TouchableOpacity>
        ),
@@ -36,11 +39,15 @@ class AddPoemUI extends React.Component {
         this.state = {
             placeholder:'请输入内容',
             value:'',
-            text:'1122'
         }
+        this.oGetContentHtml = this.oGetContentHtml.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({navigatePress:this.getHTML})
+       this.props.navigation.setParams({oGetContentHtml:this.oGetContentHtml})
+       sqlite.createTable()
+    }
+    componentWillUnMount(){
+      sqlite.close()
     }
   render() {
     const { navigate } = this.props.navigation;
@@ -62,7 +69,8 @@ class AddPoemUI extends React.Component {
           style={{backgroundColor:'#d4d4d4'}}
             getEditor={() => this.richtext}
             onPressAddLink={()=>{
-              Alert.alert('onPressAddLink')
+              // Alert.alert('onPressAddLink')
+              this.oGetContentHtml()
             }}
             onPressAddImage={()=>Alert.alert('onPressAddImage')}
             selectedButtonStyle={{backgroundColor:'#1e8ae8'}}
@@ -74,13 +82,36 @@ class AddPoemUI extends React.Component {
     );
   }
   onEditorInitialized(){
-    // Alert.alert('onEditorInitialized')
+    this.setFocusHandlers();
+    this.getHTML();
   }
   async getHTML() {
+    const titleHtml = await this.richtext.getTitleHtml();
     const contentHtml = await this.richtext.getContentHtml();
-    // alert(contentHtml)
-    Alert.alert(contentHtml)
+    // alert(titleHtml + ' ' + contentHtml)
   }
+  setFocusHandlers() {
+    this.richtext.setTitleFocusHandler(() => {
+      //alert('title focus');
+    });
+    this.richtext.setContentFocusHandler(() => {
+      //alert('content focus');
+    });
+  }
+  async oGetContentHtml() {
+    const contentHtml = await this.richtext.getContentHtml();
+    // Alert.alert(contentHtml)
+    const poemModel = new PoemModel();
+    poemModel.setId(1);
+    poemModel.setPoem(contentHtml);
+    sqlite.savePoem(poemModel).then(()=>{
+		 	  this.props.navigation.goBack();
+        console.log('poemModel:',poemModel)
+		 	}).catch((err)=>{
+		 	    Alert.alert('图书列表保存失败:',err);
+		 	});
+  }
+
 
 }
 const markdownStyles = {
