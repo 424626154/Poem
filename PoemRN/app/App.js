@@ -12,6 +12,8 @@ import {MyTab} from './tabs/MyTab';//我的
 import {AddPoemUI} from './ui/AddPoemUI';//添加诗词
 import {LoginUI} from './ui/LoginUI';
 import {RegisterUI} from './ui/RegisterUI';
+import {DetailsUI} from './ui/DetailsUI';
+import {ModifyPoemUI} from './ui/ModifyPoemUI';
 
 const Tabs = TabNavigator({
   WorksTab: {
@@ -85,6 +87,12 @@ const App = StackNavigator({
   },
   RegisterUI:{
     screen:RegisterUI,
+  },
+  DetailsUI:{
+    screen:DetailsUI,
+  },
+  ModifyPoemUI:{
+    screen:ModifyPoemUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

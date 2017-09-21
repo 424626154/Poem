@@ -8,6 +8,8 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
+  AsyncStorage,
+  DeviceEventEmitter,
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -15,9 +17,14 @@ import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import PoemModel from '../db/PoemModel';
 
+const bold = require('../images/ic_format_bold_black.png');
+const italic = require('../images/ic_format_italic_black.png');
+const align_left = require('../images/ic_format_align_left_black.png');
+const align_center = require('../images/ic_format_align_center_black.png');
+
 class AddPoemUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
-       title: '添加诗词',
+       title: '添加',
        headerTintColor:'#ffffff',
        headerTitleStyle:{fontSize:20},
        headerLeft:(
@@ -39,15 +46,30 @@ class AddPoemUI extends React.Component {
         this.state = {
             placeholder:'请输入内容',
             value:'',
+            userid:'',
         }
         this.oGetContentHtml = this.oGetContentHtml.bind(this);
     }
     componentDidMount(){
        this.props.navigation.setParams({oGetContentHtml:this.oGetContentHtml})
-       sqlite.createTable()
+       AsyncStorage.getItem('userid',(error,result)=>{
+         if(!error){
+           var islogin = false;
+           if(result){
+             islogin = true;
+           }
+           this.setState({
+             islogin:islogin,
+             userid:result,
+           })
+           if(!islogin){
+             this.props.navigation.navigate('LoginUI')
+           }
+         }
+       })
     }
     componentWillUnMount(){
-      sqlite.close()
+
     }
   render() {
     const { navigate } = this.props.navigation;
@@ -66,15 +88,13 @@ class AddPoemUI extends React.Component {
           />
         <View style={styles.toolbar}>
           <RichTextToolbar
-          style={{backgroundColor:'#d4d4d4'}}
+            style={{backgroundColor:'#ffffff', borderTopWidth: 1,borderTopColor:'#d4d4d4'}}
             getEditor={() => this.richtext}
-            onPressAddLink={()=>{
-              // Alert.alert('onPressAddLink')
-              this.oGetContentHtml()
-            }}
-            onPressAddImage={()=>Alert.alert('onPressAddImage')}
-            selectedButtonStyle={{backgroundColor:'#1e8ae8'}}
+            iconTint='#d4d4d4'
+            selectedButtonStyle={{backgroundColor:'#0f88eb'}}
             selectedIconTint={'#ffffff'}
+            actions={['bold','italic','justifyLeft','justifyCenter']}
+            iconMap={{bold:bold,italic:italic,justifyLeft:align_left,justifyCenter:align_center}}
             />
         </View>
         <KeyboardSpacer/>
@@ -100,16 +120,44 @@ class AddPoemUI extends React.Component {
   }
   async oGetContentHtml() {
     const contentHtml = await this.richtext.getContentHtml();
-    // Alert.alert(contentHtml)
-    const poemModel = new PoemModel();
-    poemModel.setId(1);
-    poemModel.setPoem(contentHtml);
-    sqlite.savePoem(poemModel).then(()=>{
-		 	  this.props.navigation.goBack();
-        console.log('poemModel:',poemModel)
-		 	}).catch((err)=>{
-		 	    Alert.alert('图书列表保存失败:',err);
-		 	});
+
+    if(!contentHtml){
+      Alert.alert('请输入发布内容')
+    }
+    if(!this.state.userid){
+      Alert.alert('登录后再发布')
+    }
+    var url = 'http://192.168.1.6:3000/poem/addpoem';
+    var json = JSON.stringify({
+      userid:this.state.userid,
+      poem:contentHtml,
+    });
+    var that = this;
+    fetch(url,{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: json,
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if(responseJson.code == 0){
+            var poem = responseJson.data;
+            sqlite.savePoem(poem).then(()=>{
+                DeviceEventEmitter.emit('AddPoem',poem);
+             	  that.props.navigation.goBack();
+             	}).catch((err)=>{
+             	    Alert.alert('保存诗歌失败:',err);
+             	});
+        }else{
+          alert(responseJson.errmsg);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
 

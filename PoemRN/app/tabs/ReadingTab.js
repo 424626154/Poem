@@ -8,17 +8,19 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
+      AsyncStorage,
      } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import PoemModel from '../db/PoemModel';
+import Utils from '../utils/Utils';
 
 // 封装Item组件
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        Alert.alert('详情')
+        this.props.navigate('DetailsUI',{id:this.props.id});
     };
     render() {
         return(
@@ -43,7 +45,7 @@ class FlatListItem extends React.PureComponent {
                     {this.props.name}
                   </Text>
                   <Text style={styles.fitem_time}>
-                    1小时前
+                    {this.props.time}
                   </Text>
                 </View>
               </View>
@@ -57,7 +59,9 @@ class FlatListItem extends React.PureComponent {
               {/* menu */}
               <View style={styles.menu}>
                   <TouchableOpacity
-                    onPress={()=>Alert.alert('评论')}>
+                    onPress={()=>{
+                      this.props.navigate('DetailsUI',{id:this.props.id});
+                    }}>
                     <View style={styles.menu_item}>
                       <Icon
                         name='sms'
@@ -66,7 +70,7 @@ class FlatListItem extends React.PureComponent {
                         color={'#7b8992'}
                         />
                         <Text style={styles.menu_font}>
-                          1
+                          {this.renderCommentnum(this.props.commentnum)}
                         </Text>
                     </View>
                   </TouchableOpacity>
@@ -80,7 +84,7 @@ class FlatListItem extends React.PureComponent {
                         color={'#7b8992'}
                         />
                         <Text style={styles.menu_font}>
-                          1
+                          {this.renderLivenum(this.props.livenum)}
                         </Text>
                     </View>
                   </TouchableOpacity>
@@ -88,6 +92,13 @@ class FlatListItem extends React.PureComponent {
             </View>
             </TouchableOpacity>
         );
+    }
+
+    renderCommentnum(commentnum){
+      return commentnum > 0 ? commentnum:'';
+    }
+    renderLivenum(livenum){
+      return livenum > 0 ? livenum:'';
     }
 }
 
@@ -106,23 +117,36 @@ class ReadingTab extends React.Component {
          super(props);
          this.state = {
              // 存储数据的状态
-             sourceData : []
-             ,selected: (new Map(): Map<String, boolean>)
-             ,refreshing: false
+             sourceData : [],
+             selected: (new Map(): Map<String, boolean>),
+             refreshing: false,
+             userid:'',
          }
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-      sqlite.createTable();
-      sqlite.queryPoems().then((results)=>{
-          this.dataContainer = results;
+      AsyncStorage.getItem('userid',(error,result)=>{
+        if(!error){
+          var islogin = false;
+          if(result){
+            islogin = true;
+          }
+          if(islogin){
+            sqlite.queryAllPoems().then((results)=>{
+                this.dataContainer = results;
+                this.setState({
+                  sourceData: this.dataContainer,
+                  userid:result
+                });
+              })
+          }
           this.setState({
-            sourceData: this.dataContainer
-          });
-        })
+            islogin:islogin,
+          })
+        }
+      })
     }
     componentWillUnMount(){
-      sqlite.close()
     }
   render() {
     return (
@@ -135,7 +159,7 @@ class ReadingTab extends React.Component {
                 // 决定当距离内容最底部还有多远时触发onEndReached回调；数值范围0~1，例如：0.5表示可见布局的最底端距离content最底端等于可见布局一半高度的时候调用该回调
                 onEndReachedThreshold={0.1}
                 // 当列表被滚动到距离内容最底部不足onEndReacchedThreshold设置的距离时调用
-                // onEndReached={ this._onEndReached }
+                onEndReached={ this._onEndReached }
                 // ListHeaderComponent={ this._renderHeader }
                 // ListFooterComponent={ this._renderFooter }
                 ItemSeparatorComponent={ this._renderItemSeparatorComponent }
@@ -185,6 +209,10 @@ class ReadingTab extends React.Component {
                selected={ !!this.state.selected.get(item.id) }
                name= { item.name }
                poem={item.poem}
+               time={Utils.dateStr(item.time)}
+               livenum={item.livenum}
+               commentnum={item.commentnum}
+               navigate = {this.props.navigation.navigate}
            />
        );
    };
@@ -205,35 +233,100 @@ class ReadingTab extends React.Component {
 
    // 空布局
    _renderEmptyView = () => (
-       <View><Text>EmptyView</Text></View>
+     <View style={styles.empty}>
+      <Text style={styles.empty_font}>暂无作品
+      </Text>
+     </View>
    );
      // 下拉刷新
  _renderRefresh = () => {
-     this.setState({refreshing: true}) // 开始刷新
-     // 这里模拟请求网络，拿到数据，1s后停止刷新
-     setTimeout(() => {
-         // TODO 提示没有可刷新的内容！
-         this.setState({refreshing: false});
-     }, 1000);
+   this.setState({refreshing: true}) // 开始刷新
+   var fromid = 0;
+   if(this.state.sourceData.length > 0 ){
+     fromid = this.state.sourceData[0].id;
+   }
+   var url = 'http://192.168.1.6:3000/poem/newestallpoem';
+   var json = JSON.stringify({
+     id:fromid,
+     userid:this.state.userid,
+   });
+   var that = this;
+   fetch(url,{
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+       },
+       body: json,
+     })
+     .then((response) => response.json())
+     .then((responseJson) => {
+       if(responseJson.code == 0){
+           var poems = responseJson.data;
+            if(poems.length > 0){
+              this.dataContainer = poems.concat(this.dataContainer);
+              this.setState({
+                sourceData: this.dataContainer
+              });
+              sqlite.saveAllPoems(poems).then((results)=>{
+                console.log('reading 下拉数据保存成功:'+results)
+              }).catch((err)=>{
+                console.log(err);
+              })
+            }
+       }else{
+         alert(responseJson.errmsg);
+       }
+       that.setState({refreshing: false});
+     })
+     .catch((error) => {
+       console.error(error);
+     });
  };
 
  // 上拉加载更多
  _onEndReached = () => {
-     // 以下是制造新数据
-     let newData = [];
-     for (let i = 20; i < 30; i ++) {
-         let obj = {
-             id: i,
-             name: 'name'+1,
-             poem:'poem',
-         };
-         newData.push(obj);
-     }
-     // 将新数据添加到数据容器中
-     this.dataContainer = this.dataContainer.concat(newData);
-     // 将新数据集合赋予数据状态并更新页面
-     this.setState({
-         sourceData: this.dataContainer
+   this.setState({refreshing: true})
+   var fromid = 0;
+   if(this.state.sourceData.length > 0 ){
+     fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+   }
+   var url = 'http://192.168.1.6:3000/poem/historyallpoem';
+   var json = JSON.stringify({
+     id:fromid,
+     userid:this.state.userid,
+   });
+   var that = this;
+   fetch(url,{
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+       },
+       body: json,
+     })
+     .then((response) => response.json())
+     .then((responseJson) => {
+       if(responseJson.code == 0){
+           var poems = responseJson.data;
+            if(poems.length > 0){
+              this.dataContainer = this.dataContainer.concat(newData);
+              this.setState({
+                sourceData: this.dataContainer
+              });
+              sqlite.saveAllPoems(poems).then((results)=>{
+                console.log('reading 上拉数据保存成功:'+results)
+              }).catch((err)=>{
+                console.log(err);
+              })
+            }
+       }else{
+         alert(responseJson.errmsg);
+       }
+       that.setState({refreshing: false});
+     })
+     .catch((error) => {
+       console.error(error);
      });
  };
 
@@ -283,6 +376,16 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:'#7b8992',
     marginLeft:4,
+  },
+  empty:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+  },
+  empty_font:{
+    marginTop:160,
+    fontSize:18,
+    color:'#d4d4d4',
   }
 });
 

@@ -8,19 +8,29 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
+  AsyncStorage,
+  DeviceEventEmitter,
 } from 'react-native';
-// import { Hideo } from 'react-native-textinput-effects';
-// import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-// import PropTypes from 'prop-types';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 
 class LoginUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        header:null,
     });
+    constructor(props){
+      super(props);
+      this.state={
+        phone:'',
+        password:'',
+      }
+    }
+    componentDidMount(){
 
+    }
+    componentWillUnMount(){
+
+    }
   render() {
-    const { navigate,goBack } = this.props.navigation;
+    const { state,navigate,goBack } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={styles.login}>
@@ -35,7 +45,9 @@ class LoginUI extends React.Component {
           <TextInput
             style={styles.input}
             underlineColorAndroid={'transparent'}
-            placeholder={'用户名'}
+            placeholder={'手机号'}
+            onChangeText={(text) => this.setState({phone:text})}
+            value={this.state.phone}
           />
         </View>
         <View style={styles.line}></View>
@@ -50,6 +62,9 @@ class LoginUI extends React.Component {
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'密码'}
+            secureTextEntry = {true}
+            onChangeText={(text) => this.setState({password:text})}
+            value={this.state.password}
           />
         </View>
         <View style={styles.interval}></View>
@@ -58,7 +73,8 @@ class LoginUI extends React.Component {
           textStyle={{textAlign: 'center',fontSize:18,}}
           title={'登录'}
           onPress={()=>{
-            goBack()
+            // alert(this.state.phone+'_'+this.state.password)
+            this._onLogin();
           }}
         />
         <View style={styles.other}>
@@ -81,6 +97,48 @@ class LoginUI extends React.Component {
 
   onForget(){
     Alert.alert('onForget')
+  }
+  _onLogin(){
+    if(!this.state.phone){
+      Alert.alert('请输入手机号');
+      return;
+    }
+    if(!this.state.password){
+      Alert.alert('请输入密码');
+      return;
+    }
+    var url = 'http://192.168.1.6:3000/users/login';
+    var json = JSON.stringify({
+      phone:this.state.phone,
+      password:this.state.password,
+    });
+    var that = this;
+    fetch(url,{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: json,
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if(responseJson.code == 0){
+            var user = responseJson.data;
+            var userid = user.userid;
+            AsyncStorage.setItem('userid',userid,(error,result)=>{
+              if (!error) {
+                DeviceEventEmitter.emit('Login',{userid:userid});
+                that.props.navigation.goBack();
+              }
+            });
+        }else{
+          alert(responseJson.errmsg);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
 }

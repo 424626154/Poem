@@ -6,8 +6,11 @@ import {
         View,
         Image,
         TouchableOpacity,
+        DeviceEventEmitter,
+        AsyncStorage,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
+import Utils from '../utils/Utils';
 
 class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -18,11 +21,33 @@ class MyTab extends React.Component {
           backgroundColor:'#1e8ae8',
         },
      });
+   constructor(props){
+     super(props);
+     this.state={
+       name:'',
+       islogin:false,
+     }
+   }
+   componentDidMount(){
+     this.reloadLogin();
+     DeviceEventEmitter.addListener('Login', (obj)=>{
+       this.reloadLogin();
+     });
+   }
+   componentWillUnMount(){
+     DeviceEventEmitter.remove();
+   }
   render() {
-    const { navigate } = this.props.navigation;
+    const { state,navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={()=>navigate('LoginUI')}>
+        <TouchableOpacity onPress={()=>{
+          if(this.state.islogin){
+
+          }else{
+            navigate('LoginUI',{go_back_key:state.key});
+          }
+        }}>
           <View style={styles.header}>
             <View style={styles.personal}>
               <Icon
@@ -33,7 +58,7 @@ class MyTab extends React.Component {
               />
               <View style={styles.head_bg}>
                 <Text style={styles.name}>
-                  name
+                  {this.state.name}
                 </Text>
               </View>
               <View style={styles.personal_more}>
@@ -47,9 +72,48 @@ class MyTab extends React.Component {
             </View>
           </View>
         </TouchableOpacity>
+        <View style={styles.interval}></View>
+        {this.renderLogout()}
       </View>
     );
   }
+  reloadLogin(){
+    AsyncStorage.getItem('userid',(error,result)=>{
+      if(!error){
+        var islogin = false;
+        if(result){
+          islogin = true;
+        }
+        var name = '未登录';
+        if(islogin){
+          name = result;
+        }
+        console.log('islogin:'+islogin+'name:'+name)
+        this.setState({
+          islogin:islogin,
+          name:name,
+        })
+      }
+    })
+  }
+  renderLogout(){
+    if(this.state.islogin){
+      return(
+          <TouchableOpacity onPress={()=>{
+            AsyncStorage.setItem('userid','',(error,result)=>{
+              if (!error) {
+                this.reloadLogin();
+              }
+            });
+          }}>
+            <View style={styles.label}>
+                <Text style={styles.logout}>退出登录</Text>
+            </View>
+          </TouchableOpacity>
+      )
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -85,6 +149,22 @@ const styles = StyleSheet.create({
   },
   personal_more:{
     justifyContent:'center',
+  },
+  interval:{
+    height:10,
+  },
+  label:{
+    alignItems:'center',
+    height:40,
+    borderTopWidth:1,
+    borderTopColor:'#d4d4d4',
+    borderBottomWidth:1,
+    borderBottomColor:'#d4d4d4',
+  },
+  logout:{
+    marginTop:10,
+    fontSize:22,
+    color:'#d4d4d4',
   }
 });
 

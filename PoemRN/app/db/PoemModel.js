@@ -5,7 +5,19 @@ export default class Poem extends Component {
   render(){
     return null;
   }
-
+  loadPoem(poem){
+    this.id = poem.id;
+    this.userid = poem.userid;
+    this.poem = poem.poem;
+    this.time = poem.time;
+  }
+  loadAllPoem(poem){
+    this.id = poem.id;
+    this.userid = poem.userid;
+    this.poem = poem.poem;
+    this.time = poem.time;
+    this.livenum = livenum;
+  }
   setId(id){
     this.id = id;
   }
@@ -13,15 +25,12 @@ export default class Poem extends Component {
   getId(id){
     return this.id;
   }
-
-  setAuthor(author){
-    this.author = author;
+  setUserId(userid){
+    this.userid = userid;
   }
-
-  getAuthor(author){
-    return this.author;
+  getUserId(userid){
+    return this.userid;
   }
-
   setPoem(poem){
     this.poem = poem;
   }
@@ -35,4 +44,17 @@ export default class Poem extends Component {
   getTime(time){
     return this.time;
   }
+  setLivenum(livenum){
+    this.livenum = livenum;
+  }
+  getLivenum(livenum){
+    return this.livenum;
+  }
+  setCommentnum(commentnum){
+    this.commentnum =commentnum;
+  }
+  getCommentnum(commentnum){
+    return this.commentnum;
+  }
+
 };
