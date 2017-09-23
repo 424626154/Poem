@@ -9,6 +9,7 @@ import {
       TouchableOpacity,
       Alert,
       AsyncStorage,
+      DeviceEventEmitter,
      } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SQLite from '../db/Sqlite';
@@ -20,7 +21,7 @@ import Utils from '../utils/Utils';
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id});
+        this.props.navigate('DetailsUI',{id:this.props.id,ftype:2});
     };
     render() {
         return(
@@ -60,7 +61,7 @@ class FlatListItem extends React.PureComponent {
               <View style={styles.menu}>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.navigate('DetailsUI',{id:this.props.id});
+                      this.props.navigate('DetailsUI',{id:this.props.id,ftype:2});
                     }}>
                     <View style={styles.menu_item}>
                       <Icon
@@ -125,6 +126,9 @@ class ReadingTab extends React.Component {
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
+      DeviceEventEmitter.addListener('DelPoem', (id)=>{
+        this._eventDeletePoem(id)
+      });
       AsyncStorage.getItem('userid',(error,result)=>{
         if(!error){
           var islogin = false;
@@ -147,6 +151,7 @@ class ReadingTab extends React.Component {
       })
     }
     componentWillUnMount(){
+      DeviceEventEmitter.remove();
     }
   render() {
     return (
@@ -261,6 +266,7 @@ class ReadingTab extends React.Component {
      })
      .then((response) => response.json())
      .then((responseJson) => {
+       console.log('poem/newestallpoem :'+JSON.stringify(responseJson));
        if(responseJson.code == 0){
            var poems = responseJson.data;
             if(poems.length > 0){
@@ -329,6 +335,18 @@ class ReadingTab extends React.Component {
        console.error(error);
      });
  };
+
+  _eventDeletePoem(id){
+    let sourceData = this.state.sourceData
+    for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
+      if(sourceData[i].id == id){
+        sourceData.splice(i,1);
+      }
+    }
+    this.setState({
+        sourceData: sourceData
+    });
+  }
 
 }
 

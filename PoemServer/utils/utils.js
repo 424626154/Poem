@@ -9,7 +9,6 @@ module.exports = {
 	},
 	getTime:function(){
 		var time = parseInt(Date.now()/1000)
-		console.log(time);
 		return time;
 	},
 	getUserid:function(phone){

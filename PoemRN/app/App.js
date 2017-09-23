@@ -14,6 +14,7 @@ import {LoginUI} from './ui/LoginUI';
 import {RegisterUI} from './ui/RegisterUI';
 import {DetailsUI} from './ui/DetailsUI';
 import {ModifyPoemUI} from './ui/ModifyPoemUI';
+import {CommentUI} from './ui/CommentUI';
 
 const Tabs = TabNavigator({
   WorksTab: {
@@ -93,6 +94,9 @@ const App = StackNavigator({
   },
   ModifyPoemUI:{
     screen:ModifyPoemUI,
+  },
+  CommentUI:{
+    screen:CommentUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

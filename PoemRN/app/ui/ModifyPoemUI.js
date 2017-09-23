@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
   TextInput,
   DeviceEventEmitter,
+  AsyncStorage,
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import PoemModel from '../db/PoemModel';
+import HttpUtil  from '../utils/HttpUtil';
 
 const bold = require('../images/ic_format_bold_black.png');
 const italic = require('../images/ic_format_italic_black.png');
@@ -44,24 +46,41 @@ class ModifyPoemUI extends React.Component {
     constructor(props) {
         super(props);
         let params = this.props.navigation.state.params;
-        console.log(params.id);
+        console.log(params);
         this.state = {
             placeholder:'请输入内容',
             value:'',
             id:params.id,
+            userid:'',
             poem:{poem:''},
+            ftype:params.ftype,
         }
         this.oGetContentHtml = this.oGetContentHtml.bind(this);
     }
     componentDidMount(){
        this.props.navigation.setParams({oGetContentHtml:this.oGetContentHtml})
-       sqlite.queryAllPoem(this.state.id).then((results)=>{
+       if(this.state.ftype == 2){
+         sqlite.queryAllPoem(this.state.id).then((results)=>{
+             this.setState({
+               poem: results,
+               value:results.poem,
+             });
+           })
+       }else{
+         sqlite.queryPoem(this.state.id).then((results)=>{
+             this.setState({
+               poem: results,
+               value:results.poem,
+             });
+           })
+       }
+       AsyncStorage.getItem('userid',(error,userid)=>{
+         if(!error){
            this.setState({
-             poem: results,
-             value:results.poem,
-           });
-           console.log('queryPoem:',results);
-         })
+             userid:userid,
+           })
+         }
+       })
     }
     componentWillUnMount(){
     }
@@ -114,17 +133,28 @@ class ModifyPoemUI extends React.Component {
   }
   async oGetContentHtml() {
     const contentHtml = await this.richtext.getContentHtml();
-    // Alert.alert(contentHtml)
-    const poemModel = new PoemModel();
-    poemModel.setId(this.state.id);
-    poemModel.setPoem(contentHtml);
-    sqlite.updatePoem(poemModel).then(()=>{
+    var json = JSON.stringify({
+      id:this.state.id,
+      userid:this.state.userid,
+      poem:contentHtml,
+    });
+    HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
+      if(data.code == 0){
+        var poem = data.data;
+        sqlite.updateAllPoem(poem).then((data)=>{
+
+        })
+        sqlite.updatePoem(poem).then((data)=>{
+
+        })
         DeviceEventEmitter.emit('UpPoem',{id:this.state.id,poem:contentHtml});
-		 	  this.props.navigation.goBack();
-        console.log('updatePoem:',poemModel)
-		 	}).catch((err)=>{
-		 	    Alert.alert('保存诗歌失败:',err);
-		 	});
+     	  this.props.navigation.goBack();
+      }else{
+        Alert.alert(data.errmsg);
+      }
+    }).catch((err)=>{
+        Alert.alert('保存诗歌失败:',err);
+    });
   }
 
 

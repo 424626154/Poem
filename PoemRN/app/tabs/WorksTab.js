@@ -13,8 +13,6 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 
-import{isLogin} from '../utils/Utils';
-
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import PoemModel from '../db/PoemModel';
@@ -24,7 +22,7 @@ import Utils from '../utils/Utils';
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id});
+        this.props.navigate('DetailsUI',{id:this.props.id,ftype:1});
     };
 
     render() {
@@ -111,7 +109,7 @@ class WorksTab extends React.Component {
 
     componentWillUnMount(){
       sqlite.close()
-       DeviceEventEmitter.remove();
+      DeviceEventEmitter.remove();
     }
 
   render() {
@@ -286,7 +284,7 @@ class WorksTab extends React.Component {
         if(responseJson.code == 0){
             var poems = responseJson.data;
              if(poems.length > 0){
-               this.dataContainer = this.dataContainer.concat(newData);
+               this.dataContainer = this.dataContainer.concat(poems);
                this.setState({
                  sourceData: this.dataContainer
                });
@@ -330,7 +328,6 @@ class WorksTab extends React.Component {
   }
   //删除监听
   _eventDeletePoem(id){
-    // alert(id)
     let sourceData = this.state.sourceData
     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
       if(sourceData[i].id == id){
