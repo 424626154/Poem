@@ -14,6 +14,27 @@ var ResJson = function(){
 	this.data;
 	this.errmsg ;
 }
+/**
+ * 返回错误
+ */
+function resError(res,err){
+	console.error(err)
+	var resjson = new ResJson();
+	resjson.code = 1;
+	resjson.errmsg = err;
+	res.json(resjson)
+}
+/**
+ * 返回成功
+ */
+function resSuccess(res,data){
+	var resjson = new ResJson();
+	resjson.code = 0;
+	resjson.data = data;
+	console.log('---res succes--- data:',data)
+	res.json(resjson)
+}
+
 //登录
 router.post('/login',function(req,res,next){
 	var phone = req.body.phone; 
@@ -165,6 +186,48 @@ router.post('/register',function(req,res,next){
 		}
 	});
 })
+/**
+ * 修改用户信息
+ */
+router.post('/upinfo',function(req,res,next){
+	console.log('rep users upinfo body:'+JSON.stringify(req.body));
+	var userid = req.body.userid;
+	var head = req.body.head||'';
+	var pseudonym = req.body.pseudonym||'';
+	if(!userid){
+		resError(res,'参数错误')
+		return;
+	}
+	userDao.updateUserInfo(userid,head,pseudonym,function(err,result){
+		if(err){
+			resError(res,err);
+		}else{
+			resSuccess(res,result);
+		}
+	})
+});
 
+/**
+ * 获取用户信息
+ */
+router.post('/info',function(req,res,next){
+	console.log('rep users info body:'+JSON.stringify(req.body));
+	var userid = req.body.userid;
+	if(!userid){
+		resError(res,'参数错误')
+		return;
+	}
+	userDao.queryUserInfo(userid,function(err,result){
+		if(err){
+			resError(res,err);
+		}else{
+			var user = {};
+			if(result.length > 0 ){
+				user = result[0];
+			}
+			resSuccess(res,user);
+		}
+	})
+});
 
 module.exports = router;

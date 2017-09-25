@@ -35,7 +35,7 @@ class ModifyPoemUI extends React.Component {
          </TouchableOpacity>
        ),
        headerRight:(
-         <TouchableOpacity  onPress={()=>navigation.state.params.oGetContentHtml()}>
+         <TouchableOpacity  onPress={()=>navigation.state.params.onGetContentHtml()}>
            <Text style={styles.nav_right}>修改</Text>
          </TouchableOpacity>
        ),
@@ -55,10 +55,10 @@ class ModifyPoemUI extends React.Component {
             poem:{poem:''},
             ftype:params.ftype,
         }
-        this.oGetContentHtml = this.oGetContentHtml.bind(this);
+        this.onGetContentHtml = this.onGetContentHtml.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({oGetContentHtml:this.oGetContentHtml})
+       this.props.navigation.setParams({onGetContentHtml:this.oGnetContentHtml})
        if(this.state.ftype == 2){
          sqlite.queryAllPoem(this.state.id).then((results)=>{
              this.setState({
@@ -131,7 +131,7 @@ class ModifyPoemUI extends React.Component {
       //alert('content focus');
     });
   }
-  async oGetContentHtml() {
+  async onGetContentHtml() {
     const contentHtml = await this.richtext.getContentHtml();
     var json = JSON.stringify({
       id:this.state.id,

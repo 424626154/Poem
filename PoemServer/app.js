@@ -4,10 +4,12 @@ var bodyParser = require('body-parser');
 
 var users = require('./routers/users');
 var poem = require('./routers/poem');
+var pimage = require('./routers/pimage');
 
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 
+app.use('/images', express.static('images'));
 
 app.get('/', function(req, res){
   res.send('hello world');
@@ -15,6 +17,8 @@ app.get('/', function(req, res){
 
 app.use('/users', users);
 app.use('/poem', poem);
+app.use('/pimage', pimage);
+
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

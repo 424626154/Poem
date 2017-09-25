@@ -149,9 +149,7 @@ class RegisterUI extends React.Component {
             AsyncStorage.setItem('userid',userid,(error,result)=>{
               if (!error) {
                 DeviceEventEmitter.emit('Login',{userid:userid});
-                const { state,navigate,goBack } = that.props.navigation;
-                const params = state.params || {};
-                goBack(params.go_back_key);
+                that.props.navigation.navigate('PerfectUI');
               }
             });
         }else{

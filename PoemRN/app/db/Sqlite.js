@@ -66,6 +66,8 @@ class SQLite extends React.Component{
           tx.executeSql('CREATE TABLE IF NOT EXISTS ' + ALLPOEM_TABLE + '(' +//图书列表
                     'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
                     'userid VARCHAR,' +
+                    'head VARCHAR,' +
+                    'pseudonym VARCHAR,' +
                     'poem LONGTEXT,'+
                     'lovenum INTEGER,'+
                     'commentnum INTEGER,'+
@@ -309,8 +311,10 @@ class SQLite extends React.Component{
            let time = poem.time;
            let lovenum = poem.lovenum;
            let commentnum = poem.commentnum;
-           let sql = 'INSERT INTO '+ ALLPOEM_TABLE +' (id,userid,poem,time,lovenum,commentnum) VALUES(?,?,?,?,?,?)';
-           tx.executeSql(sql,[id,userid,poem_str,time,lovenum,commentnum],()=>{
+           let head = poem.head;
+           let pseudonym = poem.pseudonym;
+           let sql = 'INSERT INTO '+ ALLPOEM_TABLE +' (id,userid,poem,time,lovenum,commentnum,head,pseudonym) VALUES(?,?,?,?,?,?,?,?)';
+           tx.executeSql(sql,[id,userid,poem_str,time,lovenum,commentnum,head,pseudonym],()=>{
 
              },(err)=>{
                console.log(err);

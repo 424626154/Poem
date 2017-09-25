@@ -32,7 +32,15 @@ module.exports = {
             });
         });
 	},
-
+    queryUserInfo:function(userid,callback){
+        var sql = 'SELECT * FROM user WHERE userid = ?';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [userid], function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
 	addUser:function(userid,phone,password,callback){
 		var sql = 'INSERT INTO user(userid,phone,password) VALUES(?,?,?)';
 		pool.getConnection(function(err, connection) {
@@ -75,7 +83,23 @@ module.exports = {
         });
 	},
 
-
+    updateUserInfo:function(userid,head,pseudonym,callback){
+        var sql = 'UPDATE user SET head = ? , pseudonym = ? WHERE userid = ? ';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [head,pseudonym,userid], function(err, result) {
+                if(err){
+                    callback(err, result)
+                    connection.release();
+                }else{
+                    var sql1 = 'SELECT * FROM user WHERE userid = ? ';
+                    connection.query(sql1, [userid], function(err, result) {
+                        callback(err, result)
+                        connection.release();
+                    });
+                }
+            });
+        });
+    }
 
 
 

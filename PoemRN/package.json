@@ -12,6 +12,7 @@
     "react-native": "0.48.3",
     "react-native-elements": "^0.16.0",
     "react-native-htmlview": "^0.12.0",
+    "react-native-image-crop-picker": "^0.16.1",
     "react-native-keyboard-spacer": "^0.3.1",
     "react-native-markdown": "^0.1.1",
     "react-native-simple-markdown": "^1.0.60-rc.3",

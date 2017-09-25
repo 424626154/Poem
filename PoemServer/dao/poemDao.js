@@ -2,10 +2,12 @@ var mysql = require('mysql');
 var $conf = require('../conf/db');
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
+const POEM_TABLE = 'poem'; 
+const USER_TABLE = 'user';
 module.exports = {
     //添加作品
 	addPoem:function(userid,poem,time,callback){
-		var sql = 'INSERT INTO mypoem(userid,poem,time) VALUES(?,?,?)';
+		var sql = 'INSERT INTO '+POEM_TABLE+'(userid,poem,time) VALUES(?,?,?)';
 		pool.getConnection(function(err, connection) {
             connection.query(sql, [userid,poem,time], function(err, result) {
             	callback(err, result)
@@ -15,7 +17,7 @@ module.exports = {
 	},
     //修改
     upPoem:function(id,userid,poem,callback){
-        var sql = 'UPDATE mypoem SET poem = ? WHERE id = ? AND userid = ? ';
+        var sql = 'UPDATE '+POEM_TABLE+' SET poem = ? WHERE id = ? AND userid = ? ';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [poem,id,userid], function(err, result) {
                 callback(err, result)
@@ -25,7 +27,7 @@ module.exports = {
     },
     // 删除
     delPoem:function(id,userid,callback){
-        var sql = 'UPDATE mypoem SET del = 1 WHERE id = ? AND userid = ?';
+        var sql = 'UPDATE '+POEM_TABLE+' SET del = 1 WHERE id = ? AND userid = ?';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [id,userid], function(err, result) {
                 callback(err, result)
@@ -34,7 +36,7 @@ module.exports = {
         });
     },
 	queryNewestPoem(userid,fromid,callback){
-		var sql = 'SELECT * FROM mypoem WHERE id>? AND userid = ? AND del = 0 ORDER BY id DESC LIMIT 20';
+		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id>? AND userid = ? AND del = 0 ORDER BY id DESC LIMIT 20';
 		console.log('queryNewestPoem sql:'+sql);
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,userid], function(err, result) {
@@ -45,7 +47,7 @@ module.exports = {
 	},
 
 	queryHistoryPoem(userid,fromid,callback){
-		var sql = 'SELECT * FROM mypoem WHERE id<? AND userid = ? AND del = 0  ORDER BY id DESC LIMIT 20';
+		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id<? AND userid = ? AND del = 0  ORDER BY id DESC LIMIT 20';
 		pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,userid], function(err, result) {
             	callback(err, result)
@@ -53,19 +55,26 @@ module.exports = {
             });
         });
 	},
+    /**
+     *查询新的所有作品
+     */
 	queryNewestAllPoem(fromid,callback){
-		var sql = 'SELECT * FROM mypoem WHERE id>?  AND del = 0  ORDER BY id DESC LIMIT 20';
-		pool.getConnection(function(err, connection) {
+		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id>?  AND del = 0  ORDER BY id DESC LIMIT 20';
+		var sql = 'SELECT poem.id,poem.userid,poem.poem,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+        pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid], function(err, result) {
             	callback(err, result)
                 connection.release();
             });
         });
 	},
-
+    /**
+     *查询历史所有作品
+     */
 	queryHistoryAllPoem(fromid,callback){
-		var sql = 'SELECT * FROM mypoem WHERE id<?  AND del = 0 ORDER BY id DESC LIMIT 20';
-		pool.getConnection(function(err, connection) {
+		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id < ?  AND del = 0 ORDER BY id DESC LIMIT 20';
+        var sql = 'SELECT poem.id,poem.userid,poem.poem,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+        pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid], function(err, result) {
             	callback(err, result)
                 connection.release();
@@ -196,7 +205,7 @@ module.exports = {
      */
     addLoveNum(pid,callback){
         pool.getConnection(function(err, connection) {
-            var sql = 'SELECT * FROM mypoem WHERE id = ?'
+            var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id = ?'
             connection.query(sql, [pid], function(err, result) {
                 if(err){
                     callback(err, result)
@@ -205,7 +214,7 @@ module.exports = {
                     if(result.length > 0){
                         var id = result[0].id;
                         var lovenum = result[0].lovenum + 1;
-                        var sql1 = 'UPDATE mypoem SET lovenum = ? WHERE id = ?'
+                        var sql1 = 'UPDATE '+POEM_TABLE+' SET lovenum = ? WHERE id = ?'
                         connection.query(sql1, [lovenum,id], function(err, result) {
                             callback(err, result)
                             connection.release();
@@ -220,7 +229,7 @@ module.exports = {
      */
     reduceLoveNum(pid,callback){
         pool.getConnection(function(err, connection) {
-            var sql = 'SELECT * FROM mypoem WHERE id = ?'
+            var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id = ?'
             connection.query(sql, [pid], function(err, result) {
                 if(err){
                     callback(err, result)
@@ -230,7 +239,7 @@ module.exports = {
                         var id = result[0].id;
                         if(result[0].lovenum > 0){
                             var lovenum = result[0].lovenum - 1;
-                            var sql1 = 'UPDATE mypoem SET lovenum = ? WHERE id = ?'
+                            var sql1 = 'UPDATE '+POEM_TABLE+' SET lovenum = ? WHERE id = ?'
                             connection.query(sql1, [lovenum,id], function(err, result) {
                                 callback(err, result)
                                 connection.release();
@@ -252,7 +261,7 @@ module.exports = {
      */
     addCommentNum(pid,callback){
         pool.getConnection(function(err, connection) {
-            var sql = 'SELECT * FROM mypoem WHERE id = ?'
+            var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id = ?'
             connection.query(sql, [pid], function(err, result) {
                 if(err){
                     callback(err, result)
@@ -261,7 +270,7 @@ module.exports = {
                     if(result.length > 0){
                         var id = result[0].id;
                         var commentnum = result[0].commentnum + 1;
-                        var sql1 = 'UPDATE mypoem SET commentnum = ? WHERE id = ?'
+                        var sql1 = 'UPDATE '+POEM_TABLE+' SET commentnum = ? WHERE id = ?'
                         connection.query(sql1, [commentnum,id], function(err, result) {
                             callback(err, result)
                             connection.release();
@@ -276,7 +285,7 @@ module.exports = {
      */
     reduceCommentNum(pid,callback){
         pool.getConnection(function(err, connection) {
-            var sql = 'SELECT * FROM mypoem WHERE id = ?'
+            var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id = ?'
             connection.query(sql, [pid], function(err, result) {
                 if(err){
                     callback(err, result)
@@ -286,7 +295,7 @@ module.exports = {
                         var id = result[0].id;
                         if(result[0].commentnum > 0){
                             var commentnum = result[0].commentnum - 1;
-                            var sql1 = 'UPDATE mypoem SET commentnum = ? WHERE id = ?'
+                            var sql1 = 'UPDATE '+POEM_TABLE+' SET commentnum = ? WHERE id = ?'
                             connection.query(sql1, [commentnum,id], function(err, result) {
                                 callback(err, result)
                                 connection.release();

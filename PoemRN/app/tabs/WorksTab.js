@@ -16,7 +16,11 @@ import HTMLView from 'react-native-htmlview';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import PoemModel from '../db/PoemModel';
+
 import Utils from '../utils/Utils';
+import HttpUtil from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
+import Global from '../Global';
 
 // 封装Item组件
 class FlatListItem extends React.PureComponent {
@@ -24,7 +28,6 @@ class FlatListItem extends React.PureComponent {
         this.props.onPressItem(this.props.id);
         this.props.navigate('DetailsUI',{id:this.props.id,ftype:1});
     };
-
     render() {
         return(
             <TouchableOpacity
@@ -85,18 +88,19 @@ class WorksTab extends React.Component {
         DeviceEventEmitter.addListener('UpPoem', (poem)=>{
           this._eventUpPoem(poem)
         });
-        AsyncStorage.getItem('userid',(error,result)=>{
+        AsyncStorage.getItem('userid',(error,userid)=>{
           if(!error){
             var islogin = false;
-            if(result){
+            if(userid){
               islogin = true;
+              this._requestUserInfo(userid);
             }
             if(islogin){
               sqlite.queryPoems().then((results)=>{
                   this.dataContainer = results;
                   this.setState({
                     sourceData: this.dataContainer,
-                    userid:result
+                    userid:userid
                   });
                 })
             }
@@ -349,6 +353,26 @@ class WorksTab extends React.Component {
     this.setState({
         sourceData: sourceData
     });
+  }
+  /**
+   * 请求个人信息
+   */
+  _requestUserInfo(userid){
+    Global.user.userid = userid;
+    var json = JSON.stringify({
+      userid:userid,
+    })
+    HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
+      if(res.code == 0){
+        Global.loadUser(res.data);
+        Utils.log('_requestUserInfo',Global.user)
+        DeviceEventEmitter.emit(Emitter.UPINFO,res.data);
+      }else{
+        Alert.alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
   }
 
 

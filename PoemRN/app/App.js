@@ -15,6 +15,8 @@ import {RegisterUI} from './ui/RegisterUI';
 import {DetailsUI} from './ui/DetailsUI';
 import {ModifyPoemUI} from './ui/ModifyPoemUI';
 import {CommentUI} from './ui/CommentUI';
+import {PerfectUI} from './ui/PerfectUI';
+import {PersonalUI} from './ui/PersonalUI';
 
 const Tabs = TabNavigator({
   WorksTab: {
@@ -97,6 +99,12 @@ const App = StackNavigator({
   },
   CommentUI:{
     screen:CommentUI,
+  },
+  PerfectUI:{
+    screen:PerfectUI,
+  },
+  PersonalUI:{
+    screen:PersonalUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

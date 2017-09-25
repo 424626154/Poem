@@ -141,15 +141,9 @@ router.post('/newestpoem', function(req, res, next) {
     	 poemDao.queryNewestPoem(userid,id,function(err,poems){
     	 	console.log(err)
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+				resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = poems;
-				res.json(resjson)
+	    		resSuccess(res,poems);
 	    	}
 	    })
     }
@@ -167,15 +161,9 @@ router.post('/historypoem', function(req, res, next) {
     }else{
     	poemDao.queryHistoryPoem(userid,id,function(err,poems){
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+				resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = poems;
-				res.json(resjson)
+	    		resSuccess(res,poems);
 	    	}
 	    })
     }
@@ -183,40 +171,27 @@ router.post('/historypoem', function(req, res, next) {
 
 // 新所有作品
 router.post('/newestallpoem', function(req, res, next) {
-	console.log('req /poem/newestallpoem body:'+req.body)
+	console.log('req /poem/newestallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
 	 poemDao.queryNewestAllPoem(id,function(err,poems){
 	 	console.log(err)
     	if(err){
-    		var resjson = new ResJson();
-			resjson.code = 1;
-			resjson.errmsg = err;
-			res.json(resjson)
+    		resError(res,err);
     	}else{
-    		var resjson = new ResJson();
-			resjson.code = 0;
-			resjson.data = poems;
-			res.json(resjson)
+    		resSuccess(res,poems);
     	}
     })
 
 });	
 // 历史所有作品
 router.post('/historyallpoem', function(req, res, next) {
-	console.log('req /poem/historyallpoem body:'+req.body)
+	console.log('req /poem/historyallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
 	 poemDao.queryHistoryAllPoem(id,function(err,poems){
-	 	console.log(err)
     	if(err){
-    		var resjson = new ResJson();
-			resjson.code = 1;
-			resjson.errmsg = err;
-			res.json(resjson)
+			resError(res,err);
     	}else{
-    		var resjson = new ResJson();
-			resjson.code = 0;
-			resjson.data = poems;
-			res.json(resjson)
+    		resSuccess(res,poems);
     	}
     })
 });	

@@ -56,7 +56,9 @@ class FlatListItem extends React.PureComponent {
       )
     }
 }
-
+/**
+ * 点赞列表
+ */
 class LoveListView extends React.Component{
   pages = [];
   constructor(props){

@@ -10,12 +10,16 @@ import {
       Alert,
       AsyncStorage,
       DeviceEventEmitter,
+      Image,
      } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
-import PoemModel from '../db/PoemModel';
+
 import Utils from '../utils/Utils';
+import HttpUtil from '../utils/HttpUtil';
+
+const nothead = require('../images/ic_account_circle_black.png');
 
 // 封装Item组件
 class FlatListItem extends React.PureComponent {
@@ -32,18 +36,17 @@ class FlatListItem extends React.PureComponent {
             <View style={styles.fitem}>
               {/* 个人信息 */}
               <TouchableOpacity
-                onPress={()=>Alert.alert('个人')}>
+                onPress={()=>{
+                  this.props.navigate('PersonalUI',{userid:this.props.item.userid});
+                }}>
               <View style={styles.fitem_header}>
-                <Icon
-                  reverse
-                  name='person'
-                  type='MaterialIcons'
-                  color='#176eb9'
-                  size={20}
-                />
+                <Image
+                  style={styles.head}
+                  source={this.props.headurl}
+                  />
                 <View style={styles.fitem_header_info}>
                   <Text style={styles.fitem_name}>
-                    {this.props.name}
+                    {this.props.pseudonym}
                   </Text>
                   <Text style={styles.fitem_time}>
                     {this.props.time}
@@ -207,16 +210,19 @@ class ReadingTab extends React.Component {
    };
    // 加载item布局
    _renderItem = ({item}) =>{
+      let headurl = item.head?{uri:HttpUtil.getHeadurl(item.head)}:nothead;
        return(
            <FlatListItem
                id={item.id}
                onPressItem={ this._onPressItem }
                selected={ !!this.state.selected.get(item.id) }
-               name= { item.name }
+               pseudonym={ item.pseudonym }
+               headurl={headurl}
                poem={item.poem}
                time={Utils.dateStr(item.time)}
                livenum={item.livenum}
                commentnum={item.commentnum}
+               item={item}
                navigate = {this.props.navigation.navigate}
            />
        );
@@ -404,6 +410,10 @@ const styles = StyleSheet.create({
     marginTop:160,
     fontSize:18,
     color:'#d4d4d4',
+  },
+  head:{
+    height:40,
+    width:40,
   }
 });
 

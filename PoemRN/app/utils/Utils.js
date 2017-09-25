@@ -32,5 +32,7 @@ Utils.dateStr = function(date){
       return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
   }
 }
-
+Utils.log = function(key,value){
+  console.log('~~~~~~'+key+':'+JSON.stringify(value)+'~~~~~');
+}
 export default Utils;

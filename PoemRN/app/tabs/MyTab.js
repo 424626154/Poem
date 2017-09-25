@@ -10,7 +10,14 @@ import {
         AsyncStorage,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
+
 import Utils from '../utils/Utils';
+import Global from '../Global';
+import Emitter from '../utils/Emitter';
+import HttpUtil from '../utils/HttpUtil';
+
+const modify = require('../images/ic_border_color_black.png');
+const nothead = require('../images/ic_account_circle_black.png');
 
 class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -24,7 +31,8 @@ class MyTab extends React.Component {
    constructor(props){
      super(props);
      this.state={
-       name:'',
+       headurl:nothead,
+       pseudonym:'',
        islogin:false,
      }
    }
@@ -33,6 +41,9 @@ class MyTab extends React.Component {
      DeviceEventEmitter.addListener('Login', (obj)=>{
        this.reloadLogin();
      });
+     DeviceEventEmitter.addListener(Emitter.UPINFO,obj=>{
+       this._eventUserInfo();
+     })
    }
    componentWillUnMount(){
      DeviceEventEmitter.remove();
@@ -43,31 +54,24 @@ class MyTab extends React.Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={()=>{
           if(this.state.islogin){
-
+            navigate('PerfectUI',{go_back_key:state.key});
           }else{
             navigate('LoginUI',{go_back_key:state.key});
           }
         }}>
           <View style={styles.header}>
             <View style={styles.personal}>
-              <Icon
-                reverse
-                name='person'
-                type='MaterialIcons'
-                color='#176eb9'
-              />
+              <Image
+                style={styles.head}
+                source={this.state.headurl}
+                />
               <View style={styles.head_bg}>
                 <Text style={styles.name}>
-                  {this.state.name}
+                  {this.state.pseudonym}
                 </Text>
               </View>
               <View style={styles.personal_more}>
-                <Icon
-                  name='chevron-right'
-                  size={30}
-                  type="MaterialIcons"
-                  color={'#ffffff'}
-                />
+                {this._renderEdit()}
               </View>
             </View>
           </View>
@@ -76,6 +80,22 @@ class MyTab extends React.Component {
         {this.renderLogout()}
       </View>
     );
+  }
+  _renderEdit(){
+    if(this.state.islogin){
+      return(
+        <Icon
+          name='create'
+          size={30}
+          type="MaterialIcons"
+          color={'#ffffff'}
+        />
+      )
+    }else{
+      return(
+        <View></View>
+      )
+    }
   }
   reloadLogin(){
     AsyncStorage.getItem('userid',(error,result)=>{
@@ -96,6 +116,9 @@ class MyTab extends React.Component {
       }
     })
   }
+  /**
+   * 退出登录
+   */
   renderLogout(){
     if(this.state.islogin){
       return(
@@ -112,6 +135,16 @@ class MyTab extends React.Component {
           </TouchableOpacity>
       )
     }
+  }
+  _eventUserInfo(){
+    let user = Global.user;
+    let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
+    Utils.log('_eventUserInfo @@@@@@',headurl);
+    let pseudonym = user.pseudonym;
+    this.setState({
+      headurl:headurl,
+      pseudonym:pseudonym,
+    })
   }
 
 }
@@ -141,7 +174,8 @@ const styles = StyleSheet.create({
     padding:10,
   },
   head:{
-
+    height:80,
+    width:80,
   },
   name:{
     fontSize:20,
@@ -165,7 +199,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     fontSize:22,
     color:'#d4d4d4',
-  }
+  },
 });
 
 export {MyTab};
