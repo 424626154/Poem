@@ -17,6 +17,7 @@
     "react-native-markdown": "^0.1.1",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-sqlite-storage": "^3.3.3",
+    "react-native-tab-view": "^0.0.69",
     "react-native-textinput-effects": "^0.4.0",
     "react-native-vector-icons": "^4.3.0",
     "react-native-webview-bridge": "^0.33.0",

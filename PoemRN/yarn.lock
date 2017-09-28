@@ -3650,6 +3650,10 @@ react-native-htmlview@^0.12.0:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.0"
 
+react-native-image-crop-picker@^0.16.1:
+  version "0.16.1"
+  resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.16.1.tgz#37efb419276c691ac0f99d497ef787b53e652fc2"
+
 react-native-keyboard-spacer@^0.3.1:
   version "0.3.1"
   resolved "http://registry.npm.taobao.org/react-native-keyboard-spacer/download/react-native-keyboard-spacer-0.3.1.tgz#9580297ebfd078202dc4c65303d29cda35de67f1"
@@ -3690,6 +3694,12 @@ react-native-tab-navigator@^0.3.3:
 react-native-tab-view@^0.0.65:
   version "0.0.65"
   resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
+  dependencies:
+    prop-types "^15.5.8"
+
+react-native-tab-view@^0.0.69:
+  version "0.0.69"
+  resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.69.tgz#f52d4354a98a382f10eb5fcf61db5216c91dc7e7"
   dependencies:
     prop-types "^15.5.8"
 

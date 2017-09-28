@@ -8,9 +8,11 @@ import {
         TouchableOpacity,
         DeviceEventEmitter,
         AsyncStorage,
+        Alert,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import Utils from '../utils/Utils';
 import Global from '../Global';
 import Emitter from '../utils/Emitter';
@@ -18,32 +20,31 @@ import HttpUtil from '../utils/HttpUtil';
 
 const modify = require('../images/ic_border_color_black.png');
 const nothead = require('../images/ic_account_circle_black.png');
-
+/**
+ * 我的主页
+ */
 class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
-        title: '我的',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{fontSize:20},
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
      });
+    navigate = this.props.navigation.navigate;
    constructor(props){
      super(props);
      this.state={
        headurl:nothead,
        pseudonym:'',
-       islogin:false,
+       userid:'',
+       myfollow:0,
+       followme:0,
      }
    }
    componentDidMount(){
-     this.reloadLogin();
-     DeviceEventEmitter.addListener('Login', (obj)=>{
-       this.reloadLogin();
+     this._eventUserInfo();
+     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
+        this._analysisObserver(obj);
      });
-     DeviceEventEmitter.addListener(Emitter.UPINFO,obj=>{
-       this._eventUserInfo();
-     })
    }
    componentWillUnMount(){
      DeviceEventEmitter.remove();
@@ -52,37 +53,38 @@ class MyTab extends React.Component {
     const { state,navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={()=>{
-          if(this.state.islogin){
-            navigate('PerfectUI',{go_back_key:state.key});
-          }else{
-            navigate('LoginUI',{go_back_key:state.key});
-          }
-        }}>
           <View style={styles.header}>
-            <View style={styles.personal}>
-              <Image
-                style={styles.head}
-                source={this.state.headurl}
-                />
-              <View style={styles.head_bg}>
-                <Text style={styles.name}>
-                  {this.state.pseudonym}
-                </Text>
+            <TouchableOpacity onPress={()=>{
+              if(this.state.userid){
+                navigate('PerfectUI',{go_back_key:state.key});
+              }else{
+                navigate('LoginUI',{go_back_key:state.key});
+              }
+            }}>
+              <View style={styles.personal}>
+                <Image
+                  style={styles.head}
+                  source={this.state.headurl}
+                  />
+                <View style={styles.head_bg}>
+                  <Text style={styles.name}>
+                    {this.state.pseudonym}
+                  </Text>
+                </View>
+                <View style={styles.personal_more}>
+                  {this._renderEdit()}
+                </View>
               </View>
-              <View style={styles.personal_more}>
-                {this._renderEdit()}
-              </View>
-            </View>
+            </TouchableOpacity>
+            {this._renderFollow()}
           </View>
-        </TouchableOpacity>
         <View style={styles.interval}></View>
-        {this.renderLogout()}
+        {this._renderLogout()}
       </View>
     );
   }
   _renderEdit(){
-    if(this.state.islogin){
+    if(this.state.userid){
       return(
         <Icon
           name='create'
@@ -97,35 +99,46 @@ class MyTab extends React.Component {
       )
     }
   }
-  reloadLogin(){
-    AsyncStorage.getItem('userid',(error,result)=>{
-      if(!error){
-        var islogin = false;
-        if(result){
-          islogin = true;
-        }
-        var name = '未登录';
-        if(islogin){
-          name = result;
-        }
-        console.log('islogin:'+islogin+'name:'+name)
-        this.setState({
-          islogin:islogin,
-          name:name,
-        })
-      }
-    })
+  /**
+   * 关注
+   */
+  _renderFollow(){
+    if(this.state.userid){
+      return(
+        <View style={styles.follow_bg}>
+          <TouchableOpacity onPress={()=>{
+            this._onMeFollow();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.myfollow}</Text>
+              <Text style={styles.follow_item_font}>我关注的人</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            this._onFollowMe();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.followme}</Text>
+              <Text style={styles.follow_item_font}>关注我的人</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    }else{
+      return(<View></View>)
+    }
   }
   /**
    * 退出登录
    */
-  renderLogout(){
-    if(this.state.islogin){
+  _renderLogout(){
+    if(this.state.userid){
       return(
           <TouchableOpacity onPress={()=>{
-            AsyncStorage.setItem('userid','',(error,result)=>{
+            AsyncStorage.setItem(StorageConfig.USERID,'',(error,result)=>{
               if (!error) {
-                this.reloadLogin();
+                Global.user.userid = result;
+                Emitter.emit(Emitter.LOGOUT,'');
               }
             });
           }}>
@@ -138,24 +151,59 @@ class MyTab extends React.Component {
   }
   _eventUserInfo(){
     let user = Global.user;
-    let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
-    Utils.log('_eventUserInfo @@@@@@',headurl);
-    let pseudonym = user.pseudonym;
-    this.setState({
-      headurl:headurl,
-      pseudonym:pseudonym,
-    })
+    console.log('_eventUserInfo:'+JSON.stringify(user));
+    if(user.userid){
+      let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
+      let pseudonym = user.pseudonym;
+      this.setState({
+        headurl:headurl,
+        pseudonym:pseudonym,
+        userid:user.userid,
+        myfollow:user.myfollow,
+        followme:user.followme,
+      })
+    }else{
+      this.setState({
+        headurl:nothead,
+        pseudonym:'未登录',
+        userid:'',
+      })
+    }
   }
-
+  /**
+   * 解析观察者
+   */
+  _analysisObserver(obj){
+      var action = obj.action;
+      var param = obj.param;
+      switch (action) {
+        case Emitter.LOGIN:
+        case Emitter.LOGOUT:
+        case Emitter.UPINFO:
+          this._eventUserInfo();
+          break;
+        default:
+          break;
+      }
+  }
+  /**
+   * 我的关注
+   */
+  _onMeFollow(){
+    this.navigate('FollowUI',{title:'我的关注',type:0});
+  }
+  /**
+   * 关注我的
+   */
+  _onFollowMe(){
+    this.navigate('FollowUI',{title:'关注我的',type:1});
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-  },
-  nav:{
-    height:26,
   },
   header:{
     backgroundColor: '#1e8ae8',
@@ -179,7 +227,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color:'#ffffff',
+    color:StyleConfig.C_FFFFFF,
   },
   personal_more:{
     justifyContent:'center',
@@ -200,6 +248,23 @@ const styles = StyleSheet.create({
     fontSize:22,
     color:'#d4d4d4',
   },
+  //关注
+  follow_bg:{
+    flexDirection:'row',
+    padding:10,
+  },
+  follow_item_bg:{
+    padding:10,
+  },
+  follow_item_num:{
+    fontSize:StyleConfig.F_14,
+    color:StyleConfig.C_000000,
+  },
+  follow_item_font:{
+    marginTop:10,
+    fontSize:StyleConfig.F_12,
+    color:StyleConfig.C_D4D4D4,
+  }
 });
 
 export {MyTab};

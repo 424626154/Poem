@@ -13,9 +13,13 @@ import {
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+
+import pstyles from '../style/PStyles';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
-import PoemModel from '../db/PoemModel';
+import HttpUtil from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
 
 const bold = require('../images/ic_format_bold_black.png');
 const italic = require('../images/ic_format_italic_black.png');
@@ -25,21 +29,24 @@ const align_center = require('../images/ic_format_align_center_black.png');
 class AddPoemUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        title: '添加',
-       headerTintColor:'#ffffff',
-       headerTitleStyle:{fontSize:20},
+       headerTintColor:StyleConfig.C_FFFFFF,
+       headerTitleStyle:HeaderConfig.headerTitleStyle,
        headerLeft:(
-         <TouchableOpacity  onPress={()=>navigation.goBack()}>
-           <Text style={styles.nav_left}>取消</Text>
+         <TouchableOpacity  onPress={()=>{
+          navigation.goBack()
+         }}>
+           <Text style={pstyles.nav_left}>取消</Text>
          </TouchableOpacity>
        ),
        headerRight:(
-         <TouchableOpacity  onPress={()=>navigation.state.params.oGetContentHtml()}>
-           <Text style={styles.nav_right}>发布</Text>
+         <TouchableOpacity  onPress={()=>navigation.state.params.onGetContentHtml()}>
+           <Text style={pstyles.nav_right}>发布</Text>
          </TouchableOpacity>
        ),
        headerStyle:{
          backgroundColor:'#1e8ae8',
        },
+       tabBarVisible: false,
     });
     constructor(props) {
         super(props);
@@ -48,10 +55,10 @@ class AddPoemUI extends React.Component {
             value:'',
             userid:'',
         }
-        this.oGetContentHtml = this.oGetContentHtml.bind(this);
+        this.onGetContentHtml = this.onGetContentHtml.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({oGetContentHtml:this.oGetContentHtml})
+       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml})
        AsyncStorage.getItem('userid',(error,result)=>{
          if(!error){
            var islogin = false;
@@ -118,7 +125,7 @@ class AddPoemUI extends React.Component {
       //alert('content focus');
     });
   }
-  async oGetContentHtml() {
+  async onGetContentHtml() {
     const contentHtml = await this.richtext.getContentHtml();
 
     if(!contentHtml){
@@ -127,37 +134,25 @@ class AddPoemUI extends React.Component {
     if(!this.state.userid){
       Alert.alert('登录后再发布')
     }
-    var url = 'http://192.168.1.6:3000/poem/addpoem';
     var json = JSON.stringify({
       userid:this.state.userid,
       poem:contentHtml,
     });
-    var that = this;
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: json,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if(responseJson.code == 0){
-            var poem = responseJson.data;
-            sqlite.savePoem(poem).then(()=>{
-                DeviceEventEmitter.emit('AddPoem',poem);
-             	  that.props.navigation.goBack();
-             	}).catch((err)=>{
-             	    Alert.alert('保存诗歌失败:',err);
-             	});
-        }else{
-          alert(responseJson.errmsg);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
+      if(res.code == 0){
+          var poem = res.data;
+          DeviceEventEmitter.emit(Emitter.ADDPOEM,poem);
+          this.props.navigation.goBack();
+          sqlite.savePoem(poem).then(()=>{
+            }).catch((err)=>{
+                console.error(err);
+            });
+      }else{
+        alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
   }
 
 
@@ -194,16 +189,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     padding:10,
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
-  nav_right:{
-    fontSize:18,
-    color:'#ffffff',
-    marginRight:10,
   },
   input:{
     flex:1,

@@ -13,11 +13,16 @@ import {
       Image,
      } from 'react-native';
 import HTMLView from 'react-native-htmlview';
+
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
-
 import Utils from '../utils/Utils';
 import HttpUtil from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
+import Global from '../Global';
+
+import RealmDB from '../db/RealmDB';
+const realmdb = new RealmDB();
 
 const nothead = require('../images/ic_account_circle_black.png');
 
@@ -132,24 +137,23 @@ class ReadingTab extends React.Component {
       DeviceEventEmitter.addListener('DelPoem', (id)=>{
         this._eventDeletePoem(id)
       });
-      AsyncStorage.getItem('userid',(error,result)=>{
+      DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
+         this._analysisObserver(obj);
+      });
+      AsyncStorage.getItem('userid',(error,userid)=>{
         if(!error){
-          var islogin = false;
-          if(result){
-            islogin = true;
-          }
-          if(islogin){
-            sqlite.queryAllPoems().then((results)=>{
-                this.dataContainer = results;
-                this.setState({
-                  sourceData: this.dataContainer,
-                  userid:result
-                });
-              })
+          if(userid){
+            this._requestUserInfo(userid);
           }
           this.setState({
-            islogin:islogin,
+            userid:userid,
           })
+          sqlite.queryAllPoems().then((results)=>{
+              this.dataContainer = results;
+              this.setState({
+                sourceData: this.dataContainer,
+              });
+            })
         }
       })
     }
@@ -256,25 +260,13 @@ class ReadingTab extends React.Component {
    if(this.state.sourceData.length > 0 ){
      fromid = this.state.sourceData[0].id;
    }
-   var url = 'http://192.168.1.6:3000/poem/newestallpoem';
    var json = JSON.stringify({
      id:fromid,
      userid:this.state.userid,
    });
-   var that = this;
-   fetch(url,{
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
-       body: json,
-     })
-     .then((response) => response.json())
-     .then((responseJson) => {
-       console.log('poem/newestallpoem :'+JSON.stringify(responseJson));
-       if(responseJson.code == 0){
-           var poems = responseJson.data;
+   HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
+       if(res.code == 0){
+           var poems = res.data;
             if(poems.length > 0){
               this.dataContainer = poems.concat(this.dataContainer);
               this.setState({
@@ -287,9 +279,9 @@ class ReadingTab extends React.Component {
               })
             }
        }else{
-         alert(responseJson.errmsg);
+         Alert.alert(res.errmsg);
        }
-       that.setState({refreshing: false});
+       this.setState({refreshing: false});
      })
      .catch((error) => {
        console.error(error);
@@ -303,26 +295,15 @@ class ReadingTab extends React.Component {
    if(this.state.sourceData.length > 0 ){
      fromid = this.state.sourceData[this.state.sourceData.length-1].id;
    }
-   var url = 'http://192.168.1.6:3000/poem/historyallpoem';
    var json = JSON.stringify({
      id:fromid,
      userid:this.state.userid,
    });
-   var that = this;
-   fetch(url,{
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
-       body: json,
-     })
-     .then((response) => response.json())
-     .then((responseJson) => {
-       if(responseJson.code == 0){
-           var poems = responseJson.data;
+   HttpUtil.post(HttpUtil.POEM_HISTORY_ALLPOEM,json).then((res) => {
+       if(res.code == 0){
+           var poems = res.data;
             if(poems.length > 0){
-              this.dataContainer = this.dataContainer.concat(newData);
+              this.dataContainer = this.dataContainer.concat(poems);
               this.setState({
                 sourceData: this.dataContainer
               });
@@ -333,9 +314,9 @@ class ReadingTab extends React.Component {
               })
             }
        }else{
-         alert(responseJson.errmsg);
+         Alert.alert(res.errmsg);
        }
-       that.setState({refreshing: false});
+       this.setState({refreshing: false});
      })
      .catch((error) => {
        console.error(error);
@@ -352,6 +333,48 @@ class ReadingTab extends React.Component {
     this.setState({
         sourceData: sourceData
     });
+  }
+  /**
+   * 请求个人信息
+   */
+  _requestUserInfo(userid){
+    Global.user.userid = userid;
+    var json = JSON.stringify({
+      userid:userid,
+    })
+    HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
+      if(res.code == 0){
+        Global.user = res.data ;
+        Utils.log('_requestUserInfo',Global.user)
+        Emitter.emit(Emitter.UPINFO,res.data);
+      }else{
+        Alert.alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
+  }
+  /**
+   * 解析广播数据
+   */
+  _analysisObserver(obj){
+    var action = obj.action;
+    var param = obj.param;
+    switch (action) {
+      case Emitter.LOGIN:
+        this.setState({
+          userid:Global.user.userid,
+        })
+        this._requestUserInfo(Global.user.userid);
+        break;
+      case Emitter.LOGOUT:
+        this.setState({
+          userid:Global.user.userid,
+        })
+        break;
+      default:
+        break;
+    }
   }
 
 }

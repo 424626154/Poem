@@ -1,4 +1,3 @@
-// 作品详情
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
 import {
@@ -13,16 +12,20 @@ import {
   FlatList,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
+
 import Utils from '../utils/Utils';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import HttpUtil  from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
 
-// 封装Item组件
-class FlatListItem extends React.PureComponent {
+/**
+ * 评论组件
+ */
+class CommentListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        this.props.navigate('CommentUI',{id:this.props.comment.pid,replyid:this.props.comment.id});
+        this.props.navigate('CommentUI',{id:this.props.comment.pid,cid:this.props.comment.id});
     };
 
     render() {
@@ -39,10 +42,10 @@ class FlatListItem extends React.PureComponent {
     }
     _loadComment(comment){
       var comment_html = '';
-      if(comment.replyid > 0){
-          comment_html =  '<div><span><comment_font0>'+comment.userid+'</comment_font0></span>&nbsp;<span><comment_font1>回复</comment_font1></span>&nbsp;<span><comment_font0>'+comment.replyuser+'</comment_font0></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
+      if(comment.cid > 0){
+          comment_html =  '<div><span><comment_font0>'+comment.pseudonym+'</comment_font0></span>&nbsp;<span><comment_font1>回复</comment_font1></span>&nbsp;<span><comment_font0>'+comment.cpseudonym+'</comment_font0></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
       }else{
-          comment_html =  '<div><span><comment_font0>'+comment.userid+'</comment_font0></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
+          comment_html =  '<div><span><comment_font0>'+comment.pseudonym+'</comment_font0></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
       }
       // console.log('comment_html:'+comment_html)
       return(
@@ -101,7 +104,7 @@ class LoveListView extends React.Component{
               this._onLoveItem(item)
             }}>
             <Text style={styles.love_name}>
-              { item.userid }
+              { item.pseudonym }
             </Text>
           </TouchableOpacity>
         </View>
@@ -123,7 +126,9 @@ class LoveListView extends React.Component{
     }
   }
 }
-
+/**
+ * 作品详情
+ */
 class DetailsUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
     title: '详情',
@@ -142,7 +147,6 @@ class DetailsUI extends React.Component{
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
-    console.log(params);
     this.state = {
         id:params.id,
         poem:{poem:'',lovenum:0,commentnum:0},
@@ -199,6 +203,7 @@ class DetailsUI extends React.Component{
       });
     })
     this._requestLoves()
+    // 刷新作品
     DeviceEventEmitter.addListener('UpPoem', (poem)=>{
         temp_poem = this.state.poem;
         if(temp_poem.id == poem.id){
@@ -208,12 +213,14 @@ class DetailsUI extends React.Component{
           })
         }
     });
-    DeviceEventEmitter.addListener('Comment',(comment)=>{
+    // 评论监听
+    DeviceEventEmitter.addListener(Emitter.COMMENT,(comment)=>{
       let sourceData = this.state.sourceData;
       sourceData.unshift(comment);
       this.setState({
         sourceData: this.dataContainer,
       });
+      this._requestLoveComment();
     })
   }
 
@@ -299,7 +306,7 @@ class DetailsUI extends React.Component{
             </TouchableOpacity>
             <TouchableOpacity
               onPress={()=>{
-                  this.props.navigation.navigate('CommentUI',{id:this.state.id,replyid:0})
+                  this.props.navigation.navigate('CommentUI',{id:this.state.id,cid:0})
               }}>
               <View style={styles.menu_item}>
                 <Icon
@@ -399,7 +406,7 @@ class DetailsUI extends React.Component{
   };
   _renderItem = ({item}) =>{
       return(
-          <FlatListItem
+          <CommentListItem
               id={item.id}
               onPressItem={ this._onPressItem }
               selected={ !!this.state.selected.get(item.id) }
@@ -567,7 +574,8 @@ class DetailsUI extends React.Component{
           loves:loves,
           love:love.love,
           poem:poem,
-        })
+        });
+        this._requestLoveComment();
       }else{
         Alert.alert(result.errmsg);
       }
@@ -628,6 +636,31 @@ class DetailsUI extends React.Component{
     }).catch((err)=>{
       console.error(err);
     });
+  }
+  /**
+   * 请求点单数和评论数
+   */
+  _requestLoveComment(){
+    var json = JSON.stringify({
+      pid:this.state.id,
+    })
+    HttpUtil.post(HttpUtil.POEM_LOVE_COMMENT,json).then(res=>{
+      if(res.code == 0){
+          var poem = this.state.poem;
+          var data = res.data;
+          if(poem.id == data.id){
+            poem.lovenum = data.lovenum;
+            poem.commentnum = data.commentnum;
+            this.setState({
+              poem:poem,
+            });
+          }
+      }else{
+        Alert.alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
   }
 }
 

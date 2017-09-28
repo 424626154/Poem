@@ -58,21 +58,31 @@ class PersonalUI extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        {/* ---修改头像--- */}
-        <TouchableOpacity
-          onPress={() => {}}
-        >
-          <View style={styles.head_bg}>
-            <Image
-              style={styles.head}
-              source={this.state.headurl}
-              />
-          </View>
-        </TouchableOpacity>
-        {/* ---笔名--- */}
-        <View style={styles.pseudonym_bg}>
-            <Text>{this.state.pseudonym}</Text>
-            {this._readerPse()}
+        <View style={styles.person_info}>
+          {/* ---修改头像--- */}
+          <TouchableOpacity
+              onPress={() => {
+                this._onEidet()
+              }}
+            >
+            <View style={styles.head_bg}>
+              <Image
+                style={styles.head}
+                source={this.state.headurl}
+                />
+            </View>
+          </TouchableOpacity>
+          {/* ---笔名--- */}
+          <TouchableOpacity
+            onPress={() => {
+              this._onEidet()
+            }}
+          >
+            <View style={styles.pseudonym_bg}>
+                <Text>{this.state.pseudonym}</Text>
+                {this._readerPse()}
+            </View>
+          </TouchableOpacity>
         </View>
         <DialogSelected ref={(dialog)=>{
                    this.dialog = dialog;
@@ -117,6 +127,12 @@ class PersonalUI extends React.Component{
       )
     }
   }
+  _onEidet(){
+    if(this.state.userid == Global.user.userid){
+      const { navigate } = this.props.navigation;
+      navigate('PerfectUI');
+    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -152,8 +168,12 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
+  person_info:{
+
+  },
   pseudonym_bg:{
     paddingTop:20,
+    flexDirection:'row',
   },
   pseudonym:{
     fontSize:22,

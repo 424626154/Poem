@@ -1,6 +1,3 @@
-/**
- * 完善资料
- */
 import React from 'react';
 import {
         StyleSheet,
@@ -24,7 +21,9 @@ import Global from '../Global';
 const nothead = require('../images/ic_account_circle_black.png');
 const mhead = require('../images/ic_border_color_black.png');
 
-
+/**
+ * 完善资料
+ */
 class PerfectUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: '完善资料',
@@ -62,10 +61,15 @@ class PerfectUI extends React.Component{
     let headurl = {uri:HttpUtil.getHeadurl(user.head)};
     let pseudonym = user.pseudonym;
     var userid = user.userid;
+    let sheadurl = '';
+    if(user.head){
+      sheadurl = user.head;
+    }
     this.setState({
       headurl:headurl,
       pseudonym:pseudonym,
       userid:userid,
+      sheadurl:sheadurl,
     })
     this.props.navigation.setParams({_onSave:this._onSave})
   }
@@ -121,13 +125,11 @@ class PerfectUI extends React.Component{
       pseudonym:this.state.pseudonym,
       userid:this.state.userid,
     })
-    HttpUtil.post(HttpUtil.USERS_UPINFO,json).then((res)=>{
+    HttpUtil.post(HttpUtil.USER_UPINFO,json).then((res)=>{
       if(res.code == 0 ){
         Global.user = res.data;
-        DeviceEventEmitter.emit('UpInfo',res.data);
-        const { state,navigate,goBack } = that.props.navigation;
-        const params = state.params || {};
-        goBack(params.go_back_key);
+        Emitter.emit(Emitter.UPINFO,res.data);
+        this.props.navigation.goBack();
       }else{
         Alert.alert(res.errmsg);
       }
@@ -136,10 +138,7 @@ class PerfectUI extends React.Component{
     })
   }
   _uploadImage(){
-    let params = {
-        path:  this._imageObj['path'],    //本地文件地址
-    };
-    HttpUtil.uploadImage(params).then((res)=>{
+    HttpUtil.uploadImageData(this._imageObj).then((res)=>{
       if(res.code == 0){
         var name = res.data.name;
         if(name){

@@ -8,5 +8,5 @@ yarn add react-native-markdown
 yarn add react-native-keyboard-spacer
 yarn add react-native-webview-bridge
 yarn add realm
-npm i react-native-image-crop-picker --save
+yarn add react-native-image-crop-picker
 --- yarn add ---

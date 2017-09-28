@@ -1,8 +1,10 @@
 import React from 'react';
 import SQLiteStorage from 'react-native-sqlite-storage';
-SQLiteStorage.DEBUG(true);
+SQLiteStorage.DEBUG(false);
 let database_name = "poem.db";
-let database_version = "1.0";
+let database_version = "2.0";
+var database_current_version = 0;
+var database_latest_version = 1;
 let database_displayname = "poem";
 let database_size = -1;
 let database_location = '~/db/poem.db';
@@ -12,6 +14,9 @@ const MYPOEM_TABLE = 'mypoem';//诗歌
 const ALLPOEM_TABLE = 'allpoem';
 const COMMENT_TABLE = 'comment';//评论
 const LOVE_TABLE = 'love';//点赞
+const MY_FOLLOW_TABLE = 'my_follow';//我的关注
+const FOLLOW_ME_TABLE = 'follow_me';//关注我的
+
 class SQLite extends React.Component{
   componentWillUnmount(){
 		if(db){
@@ -25,8 +30,8 @@ class SQLite extends React.Component{
           database_displayname,
           database_size,
           ()=>{
-              console.log('数据库打开成功！');
-
+              this.populateDatabase(db)
+              console.log('数据库打开成功');
           },
           (err)=>{
               console.log('数据库打开失败！,错误是：'+err);
@@ -43,6 +48,32 @@ class SQLite extends React.Component{
 
       db = null;
   }
+  populateDatabase(db){
+    var that = this;
+    db.executeSql('SELECT version_id FROM Version ORDER BY version_id DESC LIMIT 1', [], function(results) {
+        console.log("Post version query (success)");
+        console.log(JSON.stringify(results));
+        var len = results.rows.length;
+        for (let i = 0; i < len; i++) {
+            let row = results.rows.item(i);
+            database_current_version = row.version_id;
+        }
+        db.transaction(that.upgradeTables, function() {
+            console.log("upgradeTables failed");
+        }, function() {
+            console.log("upgradeTables success");
+            that.getServices(() => {});
+        });
+
+    }, function() {
+        console.log("Post version query (failed)");
+        db.transaction(that.upgradeTables, function() {
+            console.log("Upgrade failed");
+        }, function() {
+            console.log("Upgrade success");
+        });
+    });
+  }
   createTable(){  // 创建表
       if(!db){
         this.open();
@@ -54,6 +85,8 @@ class SQLite extends React.Component{
         tx.executeSql('CREATE TABLE IF NOT EXISTS ' + MYPOEM_TABLE + '(' +//图书列表
                   'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
                   'userid VARCHAR,' +
+                  'head VARCHAR,' +
+                  'pseudonym VARCHAR,' +
                   'poem LONGTEXT,'+
                   'lovenum INTEGER,'+
                   'commentnum INTEGER,'+
@@ -81,8 +114,12 @@ class SQLite extends React.Component{
                     'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
                     'pid INT(11),'+
                     'userid VARCHAR,' +
-                    'replyid INT(11),'+
-                    'replyuser VARCHAR,'+
+                    'head VARCHAR,' +
+                    'pseudonym VARCHAR,' +
+                    'cid INT(11),'+
+                    'cuserid VARCHAR,'+
+                    'chead VARCHAR,' +
+                    'cpseudonym VARCHAR,' +
                     'comment LONGTEXT,'+
                     'time BIGINT(20)'
                     + ');'
@@ -94,6 +131,8 @@ class SQLite extends React.Component{
                       'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
                       'pid INT(11),'+
                       'userid VARCHAR,' +
+                      'head VARCHAR,' +
+                      'pseudonym VARCHAR,' +
                       'love INTEGER,'+
                       'time BIGINT(20)'
                       + ');'
@@ -101,6 +140,34 @@ class SQLite extends React.Component{
                       }, (err)=> {
                         console.log(err)
                       });
+              tx.executeSql('CREATE TABLE IF NOT EXISTS ' + MY_FOLLOW_TABLE + '(' +//我的关注列表
+                        'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+                        'userid VARCHAR,' +
+                        'fansid VARCHAR,' +
+                        'head VARCHAR,' +
+                        'pseudonym VARCHAR,' +
+                        'fstate INTEGER,'+
+                        'tstate INTEGER,'+
+                        'time BIGINT(20)'
+                        + ');'
+                        , [], ()=> {
+                        }, (err)=> {
+                          console.log(err)
+                        });
+              tx.executeSql('CREATE TABLE IF NOT EXISTS ' + FOLLOW_ME_TABLE + '(' +//关注我的列表
+                        'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+                        'userid VARCHAR,' +
+                        'fansid VARCHAR,' +
+                        'head VARCHAR,' +
+                        'pseudonym VARCHAR,' +
+                        'fstate INTEGER,'+
+                        'tstate INTEGER,'+
+                        'time BIGINT(20)'
+                        + ');'
+                        , [], ()=> {
+                        }, (err)=> {
+                          console.log(err)
+                        });
       }, (err) => {
         console.log('创建表失败 err:',err);
       } ,() => {
@@ -111,8 +178,8 @@ class SQLite extends React.Component{
       return new Promise( (resolve,reject) => {
             if(db){
                 db.executeSql(
-                    'INSERT INTO '+ MYPOEM_TABLE +' (id,userid,poem,lovenum,commentnum,time) VALUES(?,?,?,?,?,?)',
-                    [poem.id,poem.userid,poem.poem,poem.lovenum,poem.commentnum,poem.time],
+                    'INSERT INTO '+ MYPOEM_TABLE +' (id,userid,head,pseudonym,poem,lovenum,commentnum,time) VALUES(?,?,?,?,?,?,?,?)',
+                    [poem.id,poem.userid,poem.head,poem.pseudonym,poem.poem,poem.lovenum,poem.commentnum,poem.time],
                     ()=>{
                         resolve();
                     },
@@ -132,14 +199,16 @@ class SQLite extends React.Component{
              var poem = poems[i];
              let id= poem.id;
              let userid = poem.userid;
+             let head = poem.head;
+             let pseudonym = poem.pseudonym;
              let poem_str = poem.poem;
              let lovenum = poem.lovenum;
              let commentnum = poem.commentnum;
              let time = poem.time;
              console.log('poem:'+poem);
              console.log('time+'+time)
-             let sql = 'INSERT INTO '+ MYPOEM_TABLE +' (id,userid,poem,lovenum,commentnum,time) VALUES(?,?,?,?,?,?)';
-             tx.executeSql(sql,[id,userid,poem_str,lovenum,commentnum,time],()=>{
+             let sql = 'INSERT INTO '+  +' (id,userid,head,pseudonym,poem,lovenum,commentnum,time) VALUES(?,?,?,?,?,?,?,?)';
+             tx.executeSql(sql,[id,userid,head,pseudonym,poem_str,lovenum,commentnum,time],()=>{
 
                },(err)=>{
                  console.log(err);
@@ -153,17 +222,37 @@ class SQLite extends React.Component{
          });
       })
     }
+  upgradeTables(tx) {
+      console.log("Database running version "+database_current_version);
+      if(database_current_version < 1) {
+
+      }
+  }
+
+  getServices(callback) {
+      db.executeSql("SELECT id FROM Service", [], function(results) {
+          console.log("Got service results "+JSON.stringify(results));
+          var len = results.rows.length;
+          console.log("len = "+len);
+          for (var i = 0; i < len; i++) {
+              let row = results.row.item(i);
+              console.log("row "+i+" = "+row.id);
+          }
+
+          callback(results);
+      });
+  }
 
   updatePoem(poem){
       return new Promise( (resolve,reject) => {
             if(db){
-                var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id = ?';
+                var sql = 'SELECT * FROM '+MYPOEM+' WHERE id = ?';
                 db.executeSql(sql,[poem.id],
                     (results)=>{
                         var len = results.rows.length;
                         console.log('sql updatePoem:'+len);
                         if(len > 0) {
-                            var sql1 = 'UPDATE '+ MYPOEM_TABLE +' SET poem = ? WHERE id = ? ';
+                            var sql1 = 'UPDATE '+  +' SET poem = ? WHERE id = ? ';
                             db.executeSql(sql1,[poem.poem,poem.id],
                                 (results)=>{
                                     console.log('updatePoem:'+JSON.stringify(results))
@@ -185,10 +274,11 @@ class SQLite extends React.Component{
         } )
     }
 
-    queryPoems(){ // 查找缓存列表，找到所有需要展示的数据
+    queryPoems(userid){ // 查找缓存列表，找到所有需要展示的数据
        return new Promise((resolve, reject)=>{
            if(db){
-               db.executeSql('SELECT * FROM '+MYPOEM_TABLE +' ORDER BY id DESC LIMIT '+20,[],
+              let sql = 'SELECT * FROM '+MYPOEM+' WHERE userid = ? ORDER BY id DESC ';
+               db.executeSql(sql,[userid],
                    (results)=>{
                        var len = results.rows.length;
                        var datas = [];
@@ -205,7 +295,7 @@ class SQLite extends React.Component{
        });
    }
    queryMaxPoems(fromid){
-     var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id>? ORDER BY id DESC LIMIT 20';//最新
+     var sql = 'SELECT * FROM '+MYPOEM+' WHERE id>? ORDER BY id DESC ';//最新
      return new Promise((resolve, reject)=>{
          if(db){
              db.executeSql(sql,[fromid],
@@ -225,7 +315,7 @@ class SQLite extends React.Component{
      });
    }
    queryMinPoems(fromid){
-     var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id<? ORDER BY id DESC LIMIT 20';//历史
+     var sql = 'SELECT * FROM '+MYPOEM+' WHERE id<? ORDER BY id DESC ';//历史
      return new Promise((resolve, reject)=>{
          if(db){
              db.executeSql(sql,[fromid],
@@ -247,7 +337,7 @@ class SQLite extends React.Component{
    queryPoem(id){
       return new Promise((resolve, reject)=>{
           if(db){
-              db.executeSql('SELECT * FROM '+MYPOEM_TABLE +' WHERE id = ? LIMIT '+80,[id],
+              db.executeSql('SELECT * FROM '+MYPOEM+' WHERE id = ?  ',[id],
                   (results)=>{
                       var len = results.rows.length;
                       var data ;
@@ -267,7 +357,7 @@ class SQLite extends React.Component{
   queryPoemNum(poem){
     return new Promise( (resolve,reject) => {
           if(db){
-              var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id = ?';
+              var sql = 'SELECT * FROM '+MYPOEM+' WHERE id = ?';
               db.executeSql(sql,[poem.id],
                   (results)=>{
                       var len = results.rows.length;
@@ -285,7 +375,7 @@ class SQLite extends React.Component{
   deletePoem(id){
     return new Promise((resolve,reject) => {
     		if(db){
-    			db.executeSql('DELETE FROM ' + MYPOEM_TABLE + ' WHERE id=? ',[id],
+    			db.executeSql('DELETE FROM ' +MYPOEM+ ' WHERE id=? ',[id],
                     ()=>{
                         resolve();
                     },(err)=>{
@@ -359,7 +449,7 @@ class SQLite extends React.Component{
   queryAllPoems(){
        return new Promise((resolve, reject)=>{
            if(db){
-               db.executeSql('SELECT * FROM '+ALLPOEM_TABLE +' ORDER BY id DESC LIMIT '+20,[],
+               db.executeSql('SELECT * FROM '+ALLPOEM_TABLE +' ORDER BY id DESC  ',[],
                    (results)=>{
                        var len = results.rows.length;
                        var datas = [];
@@ -396,7 +486,7 @@ class SQLite extends React.Component{
    queryAllPoem(id){
         return new Promise((resolve, reject)=>{
             if(db){
-                db.executeSql('SELECT * FROM '+ALLPOEM_TABLE +' WHERE id = ? LIMIT '+80,[id],
+                db.executeSql('SELECT * FROM '+ALLPOEM_TABLE +' WHERE id = ? ',[id],
                     (results)=>{
                         var len = results.rows.length;
                         var data ;
@@ -433,8 +523,8 @@ class SQLite extends React.Component{
       return new Promise( (resolve,reject) => {
             if(db){
                 db.executeSql(
-                    'INSERT INTO '+ COMMENT_TABLE +' (id,pid,userid,replyid,replyuser,comment,time) VALUES(?,?,?,?,?,?,?)',
-                    [comment.id,comment.pid,comment.userid,comment.replyid,comment.replyuser,comment.comment,comment.time],
+                    'INSERT INTO '+ COMMENT_TABLE +' (id,pid,userid,head,pseudonym,cid,cuserid,chead,cpseudonym,comment,time) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                    [comment.id,comment.pid,comment.userid,comment.head,comment.pseudonym,comment.cid,comment.cuserid,comment.chead,comment.cpseudonym,comment.comment,comment.time],
                     ()=>{
                         resolve();
                     },
@@ -455,12 +545,16 @@ class SQLite extends React.Component{
              let id= comment.id;
              let pid = comment.pid;
              let userid = comment.userid;
-             let replyid = comment.replyid;
-             let replyuser = comment.replyuser;
+             let head = comment.head;
+             let pseudonym = comment.pseudonym;
+             let cid = comment.cid;
+             let cuserid = comment.cuserid;
+             let chead = comment.chead;
+             let cpseudonym = comment.cpseudonym;
              let comment_str = comment.comment;
              let time = comment.time;
-             let sql = 'INSERT INTO '+ MYPOEM_TABLE +' (id,pid,userid,replyid,replyuser,comment,time) VALUES(?,?,?,?,?,?,?)';
-             tx.executeSql(sql,[id,pid,userid,replyid,replyuser,comment_str,time],()=>{
+             let sql = 'INSERT INTO '+ COMMENT_TABLE +' (id,pid,userid,head,pseudonym,cid,cuserid,chead,cpseudonym,comment,time) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+             tx.executeSql(sql,[id,pid,userid,head,pseudonym,cid,cuserid,chead,cpseudonym,comment_str,time],()=>{
 
                },(err)=>{
                  console.log(err);
@@ -495,12 +589,14 @@ class SQLite extends React.Component{
       });
     }
 
-
+    /**
+     * 保存点赞
+     */
     saveLove(love){
       return new Promise( (resolve,reject) => {
         db.transaction((tx)=>{
-          let sql = 'INSERT INTO '+ LOVE_TABLE +' (pid,userid,love,time) VALUES(?,?,?,?)';
-          tx.executeSql(sql,[love.id,love.userid,love.love,love.time],()=>{
+          let sql = 'INSERT INTO '+ LOVE_TABLE +' (pid,userid,head,pseudonym,love,time) VALUES(?,?,?,?,?,?)';
+          tx.executeSql(sql,[love.id,love.userid,love.head,love.pseudonym,love.love,love.time],()=>{
 
             },(err)=>{
               console.log(err);
@@ -513,6 +609,36 @@ class SQLite extends React.Component{
          });
       })
     }
+    /**
+     * 保存点赞列表
+     */
+    saveLoves(loves){
+        return new Promise( (resolve,reject) => {
+          let len = loves.length;
+          db.transaction((tx)=>{
+              for(let i=0; i<len; i++){
+               var love = loves[i];
+               let pid= love.pid;
+               let userid = love.userid;
+               let head = love.head;
+               let pseudonym = love.pseudonym;
+               let love_str = love.love;
+               let time = love.time;
+               let sql = 'INSERT INTO '+ LOVE_TABLE +' (pid,userid,head,pseudonym,love,time) VALUES(?,?,?,?,?,?)';
+               tx.executeSql(sql,[pid,userid,head,pseudonym,love_str,time],()=>{
+
+                 },(err)=>{
+                   console.log(err);
+                 }
+               );
+             }
+           },(error)=>{
+             reject(error);
+           },()=>{
+             resolve(loves)
+           });
+        })
+      }
     queryLove(pid,userid){
       return new Promise((resolve, reject)=>{
           if(db){
@@ -592,47 +718,130 @@ class SQLite extends React.Component{
             }
         });
     }
+    deleteLoves(){
+      return new Promise((resolve,reject) => {
+      		if(db){
+      			db.executeSql('DELETE FROM ' + LOVE_TABLE ,[],
+                      ()=>{
+                          resolve();
+                      },(err)=>{
+                          reject(err);
+                      }
+      			)
+      		}else{
+      			reject()
+      		}
+      	});
+    }
+    /**
+     * 保存我的关注
+     */
+    saveMeFollows(follows){
+      return new Promise( (resolve,reject) => {
+        let len = follows.length;
+        db.transaction((tx)=>{
+            for(let i=0; i<len; i++){
+             var follow = follows[i];
+             let id= follow.id;
+             let userid = follow.userid;
+             let fansid = follow.fansid;
+             let head = follow.head;
+             let pseudonym = follow.pseudonym;
+             let fstate = follow.poem;
+             let tstate = follow.lovenum;
+             let sql = 'INSERT INTO '+ MY_FOLLOW_TABLE +' (id,userid,fansid,head,pseudonym,fstate,tstate) VALUES(?,?,?,?,?,?,?)';
+             tx.executeSql(sql,[id,userid,fansid,head,pseudonym,fstate,tstate],()=>{
 
-    saveLoves(loves){
-        return new Promise( (resolve,reject) => {
-          let len = loves.length;
-          db.transaction((tx)=>{
-              for(let i=0; i<len; i++){
-               var love = loves[i];
-               let pid= love.pid;
-               let userid = love.userid;
-               let love_str = love.love;
-               let time = love.time;
-               let sql = 'INSERT INTO '+ LOVE_TABLE +' (pid,userid,love,time) VALUES(?,?,?,?)';
-               tx.executeSql(sql,[pid,userid,love_str,time],()=>{
+               },(err)=>{
+                 console.log(err);
+               }
+             );
+           }
+         },(error)=>{
+           reject(error);
+         },()=>{
+           resolve(follows)
+         });
+      })
+    }
+    /**
+     * 查询我的关注
+     */
+    queryMeFollows(userid){
+       return new Promise((resolve, reject)=>{
+           if(db){
+              let sql = 'SELECT * FROM '+MY_FOLLOW_TABLE +' WHERE userid = ? ORDER BY id DESC  ';
+               db.executeSql(sql,[userid],
+                   (results)=>{
+                       var len = results.rows.length;
+                       var datas = [];
+                       for(let i=0;i<len;i++){
+                           datas.push(results.rows.item(i));
+                       }
+                       resolve(datas);
+                   },(err)=>{
+                       reject(err);
+                   });
+           }else {
+               reject('db not open');
+           }
+       });
+   }
 
-                 },(err)=>{
-                   console.log(err);
-                 }
-               );
-             }
-           },(error)=>{
-             reject(error);
-           },()=>{
-             resolve(loves)
-           });
-        })
-      }
-      deleteLoves(){
-        return new Promise((resolve,reject) => {
-        		if(db){
-        			db.executeSql('DELETE FROM ' + LOVE_TABLE ,[],
-                        ()=>{
-                            resolve();
-                        },(err)=>{
-                            reject(err);
-                        }
-        			)
-        		}else{
-        			reject()
-        		}
-        	});
-      }
+   /**
+    * 保存关注我的
+    */
+   saveFollowMes(follows){
+     return new Promise( (resolve,reject) => {
+       let len = follows.length;
+       db.transaction((tx)=>{
+           for(let i=0; i<len; i++){
+            var follow = follows[i];
+            let id= follow.id;
+            let userid = follow.userid;
+            let fansid = follow.fansid;
+            let head = follow.head;
+            let pseudonym = follow.pseudonym;
+            let fstate = follow.poem;
+            let tstate = follow.lovenum;
+            let sql = 'INSERT INTO '+ FOLLOW_ME_TABLE +' (id,userid,fansid,head,pseudonym,fstate,tstate) VALUES(?,?,?,?,?,?,?)';
+            tx.executeSql(sql,[id,userid,fansid,head,pseudonym,fstate,tstate],()=>{
+
+              },(err)=>{
+                console.log(err);
+              }
+            );
+          }
+        },(error)=>{
+          reject(error);
+        },()=>{
+          resolve(follows)
+        });
+     })
+   }
+   /**
+    * 查询关注我的
+    */
+   queryFollowMes(userid){
+      return new Promise((resolve, reject)=>{
+          if(db){
+             let sql = 'SELECT * FROM '+FOLLOW_ME_TABLE +' WHERE userid = ? ORDER BY id DESC  ';
+              db.executeSql(sql,[userid],
+                  (results)=>{
+                      var len = results.rows.length;
+                      var datas = [];
+                      for(let i=0;i<len;i++){
+                          datas.push(results.rows.item(i));
+                      }
+                      resolve(datas);
+                  },(err)=>{
+                      reject(err);
+                  });
+          }else {
+              reject('db not open');
+          }
+      });
+  }
 
 }
 

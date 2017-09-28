@@ -1,4 +1,3 @@
-// 登录
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
 import {
@@ -12,6 +11,14 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 
+import {StorageConfig} from '../Config';
+import HttpUtil from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
+import Global from '../Global';
+
+/**
+ * 注册
+ */
 class RegisterUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        header:null,
@@ -126,34 +133,24 @@ class RegisterUI extends React.Component {
       Alert.alert('请输入验证码');
       return;
     }
-    var url = 'http://192.168.1.6:3000/users/register';
     var json = JSON.stringify({
       phone:this.state.phone,
       password:this.state.password,
       code:this.state.code,
     });
-    var that = this;
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: json,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if(responseJson.code == 0){
-            var user = responseJson.data;
+    HttpUtil.post(HttpUtil.USER_REGISTER,json).then((res) => {
+        if(res.code == 0){
+            var user = res.data;
+            Global.user = user;
             var userid = user.userid;
-            AsyncStorage.setItem('userid',userid,(error,result)=>{
+            AsyncStorage.setItem(StorageConfig.USERID,userid,(error,result)=>{
               if (!error) {
-                DeviceEventEmitter.emit('Login',{userid:userid});
-                that.props.navigation.navigate('PerfectUI');
+                Emitter.emit(Emitter.LOGIN,user);
+                this.props.navigation.navigate('PerfectUI');
               }
             });
         }else{
-          Alert.alert(responseJson.errmsg);
+          Alert.alert(res.errmsg);
         }
       })
       .catch((error) => {
@@ -165,26 +162,15 @@ class RegisterUI extends React.Component {
       Alert.alert('请输入手机号');
       return;
     }
-    var url = 'http://192.168.1.6:3000/users/validate';
     var json = JSON.stringify({
       phone:this.state.phone,
     });
-    var that = this;
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: json,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if(responseJson.code == 0){
-            var validate = responseJson.data;
+    HttpUtil.post(HttpUtil.USER_VALIDATE,json).then((res) => {
+        if(res.code == 0){
+            var validate = res.data;
             Alert.alert(validate.code);
         }else{
-          alert(responseJson.errmsg);
+          alert(res.errmsg);
         }
       })
       .catch((error) => {

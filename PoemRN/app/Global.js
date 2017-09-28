@@ -3,12 +3,9 @@ const Global = {
       userid:'',
       head:'',
       pseudonym:'',
+      myfollow:0,
+      followme:0,
     }
 };
-
-Global.loadUser = function(fuser,tuser){
-  Global.user.head = fuser.head;
-  Global.user.pseudonym = fuser.pseudonym;
-}
 
 export default Global;

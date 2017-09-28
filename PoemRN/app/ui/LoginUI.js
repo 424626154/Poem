@@ -12,6 +12,11 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 
+import {StorageConfig} from '../Config';
+import HttpUtil from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
+import Global from '../Global';
+
 class LoginUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        header:null,
@@ -107,38 +112,30 @@ class LoginUI extends React.Component {
       Alert.alert('请输入密码');
       return;
     }
-    var url = 'http://192.168.1.6:3000/users/login';
     var json = JSON.stringify({
       phone:this.state.phone,
       password:this.state.password,
     });
-    var that = this;
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: json,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if(responseJson.code == 0){
-            var user = responseJson.data;
-            var userid = user.userid;
-            AsyncStorage.setItem('userid',userid,(error,result)=>{
-              if (!error) {
-                DeviceEventEmitter.emit('Login',{userid:userid});
-                that.props.navigation.goBack();
-              }
-            });
-        }else{
-          alert(responseJson.errmsg);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    HttpUtil.post(HttpUtil.USER_LOGIN,json)
+    .then((res) => {
+      if(res.code == 0){
+          var user = res.data;
+          var userid = user.userid;
+          Global.user = user;
+          Emitter.emit(Emitter.LOGIN,user);
+          AsyncStorage.setItem(StorageConfig.USERID,userid,(error,result)=>{
+            if (error) {
+              console.error(error);
+            }
+          });
+          this.props.navigation.goBack();
+      }else{
+        Alert.alert(res.errmsg);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
 }

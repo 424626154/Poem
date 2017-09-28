@@ -1,4 +1,3 @@
-// 添加作品
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
 import {
@@ -13,17 +12,20 @@ import {
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
-import PoemModel from '../db/PoemModel';
 import HttpUtil  from '../utils/HttpUtil';
+import Emitter from '../utils/Emitter';
 
 const bold = require('../images/ic_format_bold_black.png');
 const italic = require('../images/ic_format_italic_black.png');
 const align_left = require('../images/ic_format_align_left_black.png');
 const align_center = require('../images/ic_format_align_center_black.png');
 
-
+/**
+ * 修改作品
+ */
 class ModifyPoemUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        title: '修改',
@@ -58,7 +60,7 @@ class ModifyPoemUI extends React.Component {
         this.onGetContentHtml = this.onGetContentHtml.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({onGetContentHtml:this.oGnetContentHtml})
+       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml})
        if(this.state.ftype == 2){
          sqlite.queryAllPoem(this.state.id).then((results)=>{
              this.setState({

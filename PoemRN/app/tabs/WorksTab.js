@@ -1,4 +1,3 @@
-// 作品
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import {
@@ -13,16 +12,18 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
-import PoemModel from '../db/PoemModel';
-
+import pstyles from '../style/PStyles';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import Utils from '../utils/Utils';
 import HttpUtil from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
+import SQLite from '../db/Sqlite';
+const sqlite = new SQLite();
 
-// 封装Item组件
+/**
+ * 作品元素组件
+ */
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
@@ -51,19 +52,17 @@ class FlatListItem extends React.PureComponent {
         );
     }
 }
-
+/**
+ * 我的作品列表
+ */
 class WorksTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
         title: '作品',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{
-          fontSize:20,
-          alignSelf:'center',
-        },
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
      });
+
      // 数据容器，用来存储数据
      dataContainer = [];
      constructor(props) {
@@ -79,7 +78,10 @@ class WorksTab extends React.Component {
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
         sqlite.createTable();
-        DeviceEventEmitter.addListener('AddPoem', (poem)=>{
+        DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
+           this._analysisObserver(obj);
+        });
+        DeviceEventEmitter.addListener(Emitter.ADDPOEM, (poem)=>{
           this._eventAddPoem(poem)
         });
         DeviceEventEmitter.addListener('DelPoem', (id)=>{
@@ -88,29 +90,18 @@ class WorksTab extends React.Component {
         DeviceEventEmitter.addListener('UpPoem', (poem)=>{
           this._eventUpPoem(poem)
         });
-        AsyncStorage.getItem('userid',(error,userid)=>{
+        AsyncStorage.getItem(StorageConfig.USERID,(error,userid)=>{
           if(!error){
-            var islogin = false;
             if(userid){
-              islogin = true;
               this._requestUserInfo(userid);
-            }
-            if(islogin){
-              sqlite.queryPoems().then((results)=>{
-                  this.dataContainer = results;
-                  this.setState({
-                    sourceData: this.dataContainer,
-                    userid:userid
-                  });
-                })
+              this._queryPoems();
             }
             this.setState({
-              islogin:islogin,
+              userid:userid,
             })
           }
         })
     }
-
     componentWillUnMount(){
       sqlite.close()
       DeviceEventEmitter.remove();
@@ -119,7 +110,7 @@ class WorksTab extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <View style={pstyles.container}>
       <FlatList
                 data={ this.state.sourceData }
                 extraData={ this.state.selected }
@@ -136,7 +127,7 @@ class WorksTab extends React.Component {
                 refreshing={ this.state.refreshing }
                 onRefresh={ this._renderRefresh }
                 // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
-                getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
+                // getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
             />
 
         <TouchableOpacity style={styles.add} onPress={()=>{
@@ -205,109 +196,59 @@ class WorksTab extends React.Component {
 
    // 空布局
    _renderEmptyView = () => (
-       <View style={styles.empty}>
-        <Text style={styles.empty_font}>暂无作品
+       <View style={pstyles.empty}>
+        <Text style={pstyles.empty_font}>暂无作品
         </Text>
        </View>
    );
-     // 下拉刷新
+  // 下拉刷新
  _renderRefresh = () => {
-      if(!this.state.islogin){
+      if(!this.state.userid){
         return;
       }
-     this.setState({refreshing: true}) // 开始刷新
-     var fromid = 0;
-     if(this.state.sourceData.length > 0 ){
-       fromid = this.state.sourceData[0].id;
-     }
-     var url = 'http://192.168.1.6:3000/poem/newestpoem';
-     var json = JSON.stringify({
-       id:fromid,
-       userid:this.state.userid,
-     });
-     var that = this;
-     fetch(url,{
-         method: 'POST',
-         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json',
-         },
-         body: json,
-       })
-       .then((response) => response.json())
-       .then((responseJson) => {
-         if(responseJson.code == 0){
-             var poems = responseJson.data;
-              if(poems.length > 0){
-                this.dataContainer = poems.concat(this.dataContainer);
-                this.setState({
-                  sourceData: this.dataContainer
-                });
-                sqlite.savePoems(poems).then((results)=>{
-                  console.log('下拉数据保存成功:'+results)
-                }).catch((err)=>{
-                  console.log(err);
-                })
-              }
-         }else{
-           alert(responseJson.errmsg);
-         }
-         that.setState({refreshing: false});
-       })
-       .catch((error) => {
-         console.error(error);
-       });
+      this._requestNewestPoem();
  };
 
  // 上拉加载更多
  _onEndReached = () => {
-   if(!this.state.islogin){
-     return;
-   }
+   console.log('-----------WorksTab_onEndReached--------------');
+     if(!this.state.userid){
+       return;
+     }
     this.setState({refreshing: true})
     var fromid = 0;
     if(this.state.sourceData.length > 0 ){
       fromid = this.state.sourceData[this.state.sourceData.length-1].id;
     }
-    var url = 'http://192.168.1.6:3000/poem/historypoem';
     var json = JSON.stringify({
       id:fromid,
       userid:this.state.userid,
     });
-    var that = this;
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: json,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if(responseJson.code == 0){
-            var poems = responseJson.data;
-             if(poems.length > 0){
-               this.dataContainer = this.dataContainer.concat(poems);
-               this.setState({
-                 sourceData: this.dataContainer
-               });
-               sqlite.savePoems(poems).then((results)=>{
-                 console.log('上拉数据保存成功:'+results)
-               }).catch((err)=>{
-                 console.log(err);
-               })
-             }
-        }else{
-          alert(responseJson.errmsg);
-        }
-        that.setState({refreshing: false});
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    HttpUtil.post(HttpUtil.POEM_HISTORY_POEM,json).then(res=>{
+      if(res.code == 0){
+          var poems = res.data;
+           if(poems.length > 0){
+             this.dataContainer = this.dataContainer.concat(poems);
+             this.setState({
+               sourceData: this.dataContainer
+             });
+             sqlite.savePoems(poems).then((results)=>{
+               console.log('上拉数据保存成功:'+results)
+             }).catch((err)=>{
+               console.log(err);
+             })
+           }
+      }else{
+        Alert.alert(res.errmsg);
+      }
+      this.setState({refreshing: false});
+    }).catch(err=>{
+      console.log(err);
+    })
  };
-  // 添加按钮
+  /**
+   * 添加按钮
+   */
   _renderAdd(){
     return(
       <Icon
@@ -322,15 +263,32 @@ class WorksTab extends React.Component {
   onAdd(navigate){
     navigate('AddPoemUI')
   }
-  //添加监听
+  /**
+   * 初始化作品数据
+   */
+  _queryPoems(){
+    sqlite.queryPoems(this.state.userid).then((results)=>{
+        this.dataContainer = results;
+        this.setState({
+          sourceData: this.dataContainer,
+        });
+        this._requestNewestPoem();
+    }).catch(err=>{
+      console.error(err);
+    })
+  }
+  /**
+   * 添加作品监听
+   */
   _eventAddPoem(poem){
-    let sourceData = this.state.sourceData;
-    sourceData.unshift(poem);
+    this.dataContainer = [poem].concat(this.dataContainer);
     this.setState({
-        sourceData: sourceData,
+        sourceData: this.dataContainer,
     });
   }
-  //删除监听
+  /**
+   * 删除作品监听
+   */
   _eventDeletePoem(id){
     let sourceData = this.state.sourceData
     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
@@ -342,7 +300,9 @@ class WorksTab extends React.Component {
         sourceData: sourceData
     });
   }
-  //修改监听
+  /**
+   * 修改作品监听
+   */
   _eventUpPoem(poem){
     let sourceData = this.state.sourceData
     for(var i = 0 ; i < sourceData.length ; i ++ ){
@@ -364,9 +324,9 @@ class WorksTab extends React.Component {
     })
     HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
       if(res.code == 0){
-        Global.loadUser(res.data);
+        Global.user = res.data ;
         Utils.log('_requestUserInfo',Global.user)
-        DeviceEventEmitter.emit(Emitter.UPINFO,res.data);
+        Emitter.emit(Emitter.UPINFO,res.data);
       }else{
         Alert.alert(res.errmsg);
       }
@@ -374,30 +334,71 @@ class WorksTab extends React.Component {
       console.error(err);
     })
   }
-
-
-}
-const markdownStyles = {
-  heading1: {
-    fontSize: 24,
-    color: 'purple',
-  },
-  link: {
-    color: 'pink',
-  },
-  mailTo: {
-    color: 'orange',
-  },
-  text: {
-    color: '#555555',
-  },
+  /**
+   * 请求最新作品
+   */
+  _requestNewestPoem(){
+      if(!this.state.userid){
+        return;
+      }
+     this.setState({refreshing: true});
+     var fromid = 0;
+     if(this.state.sourceData.length > 0 ){
+       fromid = this.state.sourceData[0].id;
+     }
+     var json = JSON.stringify({
+       id:fromid,
+       userid:this.state.userid,
+     });
+     HttpUtil.post(HttpUtil.POEM_NEWEST_POEM,json).then(res=>{
+       if(res.code == 0 ){
+         var poems = res.data;
+          if(poems.length > 0){
+            this.dataContainer = poems.concat(this.dataContainer);
+            this.setState({
+              sourceData: this.dataContainer
+            });
+            sqlite.savePoems(poems).then((results)=>{
+              console.log('下拉数据保存成功:'+results)
+            }).catch((err)=>{
+              console.log(err);
+            })
+          }
+       }else{
+         Alert.alert(res.errmsg);
+       }
+       this.setState({refreshing: false});
+     }).catch(err=>{
+       console.error(err);
+     });
+  }
+  _analysisObserver(obj){
+    var action = obj.action;
+    var param = obj.param;
+    switch (action) {
+      case Emitter.LOGIN:
+        this.setState({
+          userid:Global.user.userid,
+        })
+        this._queryPoems();
+        this._requestUserInfo(Global.user.userid);
+        break;
+      case Emitter.LOGOUT:
+        this.setState({
+          userid:Global.user.userid,
+        })
+        this.dataContainer = [];
+        this.setState({
+          sourceData: this.dataContainer,
+        });
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
   add:{
     position: 'absolute',
     bottom: 15,
@@ -436,16 +437,6 @@ const styles = StyleSheet.create({
     color:'#7b8992',
     marginLeft:4,
   },
-  empty:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
-  },
-  empty_font:{
-    marginTop:160,
-    fontSize:18,
-    color:'#d4d4d4',
-  }
 });
 
 export {WorksTab};

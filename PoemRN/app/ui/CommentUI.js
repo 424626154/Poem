@@ -1,4 +1,3 @@
-//评论
 import React from 'react';
 import {
   StyleSheet,
@@ -10,10 +9,14 @@ import {
   DeviceEventEmitter,
   AsyncStorage,
 } from 'react-native';
+
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import HttpUtil  from '../utils/HttpUtil';
-
+import Emitter from '../utils/Emitter';
+/**
+ * 评论
+ */
 class CommentUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: '评论',
@@ -39,7 +42,7 @@ class CommentUI extends React.Component{
     let params = this.props.navigation.state.params;
     this.state = {
       id:params.id,
-      replyid:params.replyid,
+      cid:params.cid,
       userid:'',
     }
     this._onRelease = this._onRelease.bind(this);
@@ -80,7 +83,7 @@ class CommentUI extends React.Component{
     var json = JSON.stringify({
       id:this.state.id,
       userid:this.state.userid,
-      replyid:this.state.replyid,
+      cid:this.state.cid,
       comment:this.state.comment,
     })
     console.log(json);
@@ -88,7 +91,7 @@ class CommentUI extends React.Component{
       if(data.code == 0){
         var comment = data.data;
         sqlite.saveComment(comment).then((data)=>{
-          DeviceEventEmitter.emit('Comment',comment);
+          DeviceEventEmitter.emit(Emitter.COMMENT,comment);
        	  this.props.navigation.goBack();
         }).catch((err)=>{
           console.error(err);
