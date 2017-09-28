@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-var users = require('./routers/users');
+var user = require('./routers/user');
 var poem = require('./routers/poem');
 var pimage = require('./routers/pimage');
 
@@ -15,7 +15,7 @@ app.get('/', function(req, res){
   res.send('hello world');
 });
 
-app.use('/users', users);
+app.use('/user', user);
 app.use('/poem', poem);
 app.use('/pimage', pimage);
 

@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
-/* GET users listing. */
+/* GET user listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
-    res.send('users');
+    res.send('user');
 });
 
 
@@ -35,43 +35,41 @@ function resSuccess(res,data){
 	res.json(resjson)
 }
 
-//登录
+function logReq(req){
+	console.log('url:/user'+req.originalUrl+' body:'+JSON.stringify(req.body));
+}
+
+/**
+ * 登录
+ */
 router.post('/login',function(req,res,next){
+	logReq(req);
 	var phone = req.body.phone; 
 	var password = req.body.password;
 	userDao.queryUser(phone,function(err,users){
 		if(err){
-			var resjson = new ResJson();
-			resjson.code = 1;
-			resjson.errmsg = err.code;
-			res.json(resjson)
+			resError(res,err);
 		}else{
 			var length = users.length;
 			if(length > 0 ){
 				var user = users[0];
 				if(user.password == password){
-					var resjson = new ResJson();
-					resjson.code = 0;
-					resjson.data = user;
-					res.json(resjson)
+					resSuccess(res,user);
 				}else{
-					var resjson = new ResJson();
-					resjson.code = 2;
-					resjson.errmsg = '密码错误';
-					res.json(resjson)
+					resError(res,'密码错误');
 				}
 			}else{
-				var resjson = new ResJson();
-				resjson.code = 2;
-				resjson.errmsg = '用户未注册';
-				res.json(resjson)
+				resError(res,'用户未注册');
 			}
 		}
 	})
 });
 
-//请求验证码
+/**
+ * 请求验证码
+ */
 router.post('/validate',function(req,res,next){
+	logReq(req);
 	var phone = req.body.phone; 
 	if(!phone){
 		var resjson = new ResJson();
@@ -139,58 +137,59 @@ router.post('/validate',function(req,res,next){
 	}
 
 });
-//注册
+/**
+ * 注册
+ */
 router.post('/register',function(req,res,next){
+	logReq(req);
 	var phone = req.body.phone; 
 	var password = req.body.password;
 	var code = req.body.code;
 	var userid = utils.getUserid(phone)
-	userDao.queryValidate(phone,function(err,objs){
-		if(err){
-			var resjson = new ResJson();
-			resjson.code = 1;
-			resjson.errmsg = err.code;
-			res.json(resjson)
-		}else{
-			var length = objs.length;
-			// console.log(objs)
-			if(length > 0 ){
-				var validate = objs[0];
-				// console.log('validate.phone:'+validate.phone)
-				if(validate.phone == phone && validate.code == code){
-						userDao.addUser(userid,phone,password,function(err,objs){
+	if(!phone||!password||!code){
+		resError(res,err);
+	}else{
+		userDao.queryUser(phone,function(err,result){
+			if(err){
+				resError(res,err)
+			}else{
+				if(result.length >0){
+					resError(res,'用户已经注册')
+				}else{
+						userDao.queryValidate(phone,function(err,objs){
 							if(err){
-								var resjson = new ResJson();
-								resjson.code = 1;
-								resjson.errmsg = err.code;
-								res.json(resjson)
+								resError(res,err);
 							}else{
-								var resjson = new ResJson();
-								resjson.code = 0;
-								resjson.data = {phone:phone,password:password,userid:userid};
-								res.json(resjson)
+								var length = objs.length;
+								if(length > 0 ){
+									var validate = objs[0];
+									if(validate.phone == phone && validate.code == code){
+											userDao.addUser(userid,phone,password,function(err,result){
+												if(err){
+													resError(res,err);
+												}else{
+													var user = result.length > 0 ?result[0]:{};
+													resSuccess(res,user);
+												}
+											});
+									}else{
+										resError(res,'验证码错误');
+									}
+								}else{
+									resError(res,'验证码错误');
+								}
 							}
 						});
-				}else{
-					var resjson = new ResJson();
-					resjson.code = 1;
-					resjson.errmsg = '验证码错误';
-					res.json(resjson)
 				}
-			}else{
-				var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = '验证码错误';
-				res.json(resjson)
 			}
-		}
-	});
+		});
+	}
 })
 /**
  * 修改用户信息
  */
 router.post('/upinfo',function(req,res,next){
-	console.log('rep users upinfo body:'+JSON.stringify(req.body));
+	logReq(req);
 	var userid = req.body.userid;
 	var head = req.body.head||'';
 	var pseudonym = req.body.pseudonym||'';
@@ -202,7 +201,11 @@ router.post('/upinfo',function(req,res,next){
 		if(err){
 			resError(res,err);
 		}else{
-			resSuccess(res,result);
+			var user = {};
+			if(result.length > 0){
+				user = result[0];
+			}
+			resSuccess(res,user);
 		}
 	})
 });
@@ -211,7 +214,7 @@ router.post('/upinfo',function(req,res,next){
  * 获取用户信息
  */
 router.post('/info',function(req,res,next){
-	console.log('rep users info body:'+JSON.stringify(req.body));
+	logReq(req);
 	var userid = req.body.userid;
 	if(!userid){
 		resError(res,'参数错误')
@@ -221,13 +224,66 @@ router.post('/info',function(req,res,next){
 		if(err){
 			resError(res,err);
 		}else{
-			var user = {};
-			if(result.length > 0 ){
-				user = result[0];
-			}
-			resSuccess(res,user);
+			resSuccess(res,result);
 		}
 	})
+});
+/**
+ * 关注
+ * @param op 1 关注 0 取消关注
+ */
+router.post('/follow',function(req,res,next){
+	logReq(req);
+	var userid = req.body.userid;
+	var fansid = req.body.fansid;
+	var op = req.body.op;
+	if(!userid||!fansid){
+		resError(res,'参数错误');
+	}else{
+		userDao.upFollow(userid,fansid,op,function(err,result){
+			if(err){
+				resError(res,err);
+			}else{
+				resSuccess(res,result);
+			}
+		});
+	}
+});
+
+router.post('/getfollows',function(req,res,next){
+	logReq(req);
+	var userid = req.body.userid;
+	if(!userid){
+		resError(res,'参数错误');
+	}else{
+		userDao.queryFollow(userid,function(err,result){
+			if(err){
+				resError(res,err);
+			}else{
+				resSuccess(res,result);
+			}
+		});
+	}
+});
+/**
+ * 关注列表
+ * @param  0我的关注1关注我的
+ */
+router.post('/follows',function(req,res,next){
+	logReq(req);
+	var userid = req.body.userid;
+	var type = req.body.type;
+	if(!userid){
+		resError(res,'参数错误');
+	}else{
+		userDao.queryFollowType(userid,type,function(err,result){
+			if(err){
+				resError(res,err);
+			}else{
+				resSuccess(res,result);
+			}
+		});
+	}
 });
 
 module.exports = router;

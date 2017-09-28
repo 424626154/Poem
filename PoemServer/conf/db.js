@@ -6,6 +6,14 @@ module.exports = {
         user: 'root',
         password: '890503',
         database:'poem',
-        port: 3306
+        port: 3306,
+        multipleStatements:true,
+    },
+    tables:{
+    	USER_TABLE:'users',
+    	POEM_TABLE:'poem',
+    	LOVE_TABLE:'love',
+    	COMMENT_TABLE:'comment',
+    	FOLLOW_TABLE:'follow',
     }
 };

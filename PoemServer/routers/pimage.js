@@ -4,6 +4,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path'); 
 var crypto = require('crypto');
+var multiparty = require('multiparty');
 
 var ResJson = function(){
 	this.code;
@@ -18,7 +19,8 @@ function resError(res,err){
 	var resjson = new ResJson();
 	resjson.code = 1;
 	resjson.errmsg = err;
-	res.json(resjson)
+	res.json(resjson);
+  console.log('---res err--- err:',err);
 }
 /**
  * 返回成功
@@ -27,13 +29,15 @@ function resSuccess(res,data){
 	var resjson = new ResJson();
 	resjson.code = 0;
 	resjson.data = data;
-	console.log('---res succes--- data:',data)
-	res.json(resjson)
+	res.json(resjson);
+  console.log('---res succes--- data:',data);
+}
+function logReq(req){
+  console.log('url:/pimage'+req.originalUrl+' body:'+JSON.stringify(req.body));
 }
 
-
 router.post('/upload', function (req, res) {
-    console.log('req /pimage/upload ');
+    logReq(req);
     if(Object.keys(req.body).length<=0) {
         resError(res,'参数错误');
         return;
@@ -52,10 +56,12 @@ router.post('/upload', function (req, res) {
     var des_file = file_path + file_md5_name;
     //读取文件地址
     fs.readFile(file['uri'], function (err, data) {
+      if(err){
+        console.error(err);
+      }
         //开始写入文件
         fs.writeFile(des_file, data, function (err) {
             if(err) {
-                console.error(err);
                 resError(res,err);
             }else {
                 resSuccess(res,{name:file_md5_name})
@@ -65,6 +71,7 @@ router.post('/upload', function (req, res) {
 });
 
 router.get('/file/:fileName', function(req, res, next) {
+  logReq(req);
  // 实现文件下载 
  var fileName = req.params.fileName;
  console.log('fileName:'+fileName);
@@ -83,5 +90,32 @@ router.get('/file/:fileName', function(req, res, next) {
  }
 });
 
+
+router.post('/uploadimg', function(req, res, next){
+    logReq(req);
+    console.log(req.get('Content-Type'));
+    var file_path = path.join(__dirname, '../images/');
+    var form = new multiparty.Form({uploadDir: file_path});
+    form.parse(req, function(err, fields, files){
+      console.log(files);
+        if(err){
+            resError(res,err);
+        }else{
+            var inputFile = files.file[0];
+            var file_name = Date.now()+'_'+inputFile.originalFilename;
+            var file_md5_name = crypto.createHash('md5').update(file_name).digest('hex');
+            var uploadedPath = inputFile.path;
+            var dstPath = file_path + file_md5_name;
+            fs.rename(uploadedPath, dstPath, function(err) {
+                if(err){
+                    resError(res,err);
+                } else {
+                    resSuccess(res,{name:file_md5_name});
+                }
+            });
+        }
+    });
+
+});
 
 module.exports = router;

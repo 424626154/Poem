@@ -17,6 +17,7 @@ function resError(res,err){
 	resjson.code = 1;
 	resjson.errmsg = err;
 	res.json(resjson)
+	console.log(err);
 }
 /**
  * 返回成功
@@ -29,14 +30,8 @@ function resSuccess(res,data){
 	res.json(resjson)
 }
 
-function resultToDatas(result){
-   var len = result.length;
-   var datas = [];
-   for(let i=0;i<len;i++){
-       datas.push(result[i]);
-   }
-   console.log('---results to datas---:'+JSON.stringify(datas));
-   return datas;
+function logReq(req){
+	console.log('url:/poem'+req.originalUrl+' body:'+JSON.stringify(req.body));
 }
 
 /* GET users listing. */
@@ -44,99 +39,86 @@ router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
     res.send('poem');
 });
-// 添加作品
+/**
+ * 添加作品
+ */
 router.post('/addpoem', function(req, res, next) {
-  //res.send('respond with a resource');
+	logReq(req);
     var userid = req.body.userid;
     var poem = req.body.poem;
     var time = utils.getTime();
     if(!poem||!userid){
-    	var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+		resError(res,'参数错误');
     }else{
     	poemDao.addPoem(userid,poem,time,function(err,result){
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+				resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = {id:result.insertId,userid:userid,poem:poem,time:time};
-				res.json(resjson)
+	    		var poem = {};
+	    		if(result.length > 0){
+	    			poem = result[0];
+	    		}
+				resSuccess(res,poem);
 	    	}
 	    })
     }
 
 });
-// 修改作品
+/**
+ * 修改作品
+ */
 router.post('/uppoem', function(req, res, next) {
-  	console.log('req poem/uppoem')
+  	logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     var poem = req.body.poem;
     if(!poem||!id||!userid){
-    	var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+		resError(res,'参数错误');
     }else{
     	poemDao.upPoem(id,userid,poem,function(err,result){
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+	    		resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = {id:parseInt(id),userid:userid,poem:poem};
-				res.json(resjson)
+	    		var poem = {};
+	    		if(result.length > 0){
+	    			poem = result[0];
+	    		}
+				resSuccess(res,poem);
 	    	}
 	    })
     }
 
 });
-//删除作品
+/**
+ * 删除作品
+ */
 router.post('/delpoem', function(req, res, next) {
+	logReq(req);
     var userid = req.body.userid;
     var id = req.body.id;
     if(!id||!userid){
-    	var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+    	resError(res,'参数错误');
     }else{
     	poemDao.delPoem(id,userid,function(err,result){
-    		console.log(result);
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+	    		resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = {id:parseInt(id),userid:userid};
-				res.json(resjson)
+	    		var poem = {id:parseInt(id),userid:userid};
+				resSuccess(res,poem);
 	    	}
 	    })
     }
 });
 
-//新作品
+/**
+ * 最新作品
+ */
 router.post('/newestpoem', function(req, res, next) {
-	console.log('req /poem/newestpoem body:'+JSON.stringify(req.body))
+	logReq(req);
 	var userid = req.body.userid;
     var id = req.body.id;
     if(!userid){
-    	var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+		resError(res,'参数错误');
     }else{
     	 poemDao.queryNewestPoem(userid,id,function(err,poems){
     	 	console.log(err)
@@ -148,16 +130,15 @@ router.post('/newestpoem', function(req, res, next) {
 	    })
     }
 });	
-// 历史作品
+/**
+ * 历史作品
+ */
 router.post('/historypoem', function(req, res, next) {
 	console.log('req /poem/historypoem body:'+JSON.stringify(req.body));
 	var userid = req.body.userid;
     var id = req.body.id;
-    if(!id||!userid){
-    	var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+    if(!userid){
+    	resError(res,'参数错误');
     }else{
     	poemDao.queryHistoryPoem(userid,id,function(err,poems){
 	    	if(err){
@@ -165,70 +146,88 @@ router.post('/historypoem', function(req, res, next) {
 	    	}else{
 	    		resSuccess(res,poems);
 	    	}
-	    })
+	    });
     }
 });	
-
-// 新所有作品
+/**
+ * 作品点赞数和评论数
+ */
+router.post('/lovecomment', function(req, res, next) {
+	logReq(req);
+	var pid = req.body.pid;
+	if(!pid){
+		resError(res,'参数错误');
+	}else{
+		poemDao.queryLoveComment(pid,function(err,result){
+	    	if(err){
+				resError(res,err);
+	    	}else{
+	    		var poem = {};
+	    		if(result.length > 0 ){
+	    			poem = result[0];
+	    		}
+	    		resSuccess(res,poem);
+	    	}
+	    });
+	}
+});	
+/**
+ * 最新作品集
+ */
 router.post('/newestallpoem', function(req, res, next) {
 	console.log('req /poem/newestallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
-	 poemDao.queryNewestAllPoem(id,function(err,poems){
-	 	console.log(err)
+    poemDao.queryNewestAllPoem(id,function(err,poems){
     	if(err){
     		resError(res,err);
     	}else{
     		resSuccess(res,poems);
     	}
     })
-
 });	
-// 历史所有作品
+/**
+ * 历史作品集
+ */
 router.post('/historyallpoem', function(req, res, next) {
 	console.log('req /poem/historyallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
-	 poemDao.queryHistoryAllPoem(id,function(err,poems){
+    poemDao.queryHistoryAllPoem(id,function(err,poems){
     	if(err){
 			resError(res,err);
     	}else{
     		resSuccess(res,poems);
     	}
-    })
+    });
 });	
 
-// 评论作品
+/**
+ * 评论作品
+ */
 router.post('/commentpoem', function(req, res, next) {
-	console.log('req /poem/commentpoem body:'+JSON.stringify(req.body))
+	logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
-    var replyid = req.body.replyid;
+    var cid = req.body.cid;
     var comment = req.body.comment;
     var time = utils.getTime();
 	if(!id||!userid||!comment){
-		var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+		resError(res,'参数错误');
 	}else{
-		 poemDao.addPoemComment(id,userid,replyid,comment,time,function(err,comment){
+		 poemDao.addPoemComment(id,userid,cid,comment,time,function(err,comment){
 		 	console.log(err)
 	    	if(err){
-	    		var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err;
-				res.json(resjson)
+	    		resError(res,err);
 	    	}else{
-	    		var resjson = new ResJson();
-				resjson.code = 0;
-				resjson.data = comment;
-				res.json(resjson)
+	    		resSuccess(res,comment);
 	    	}
 	    })
 		poemDao.addCommentNum(id,function(err,comment){})
 	}
 });	
 
-//拉取新评论
+/**
+ * 最新评论
+ */
 router.post('/newestcomment', function(req, res, next) {
 	console.log('req /poem/newestcomment body:'+JSON.stringify(req.body));
     var id = req.body.id;
@@ -247,7 +246,9 @@ router.post('/newestcomment', function(req, res, next) {
     }
 
 });	
-//拉取历史评论
+/**
+ * 历史评论
+ */
 router.post('/historycomment', function(req, res, next) {
 	console.log('req /poem/historycomment body:'+JSON.stringify(req.body));
     var id = req.body.id;
@@ -320,7 +321,7 @@ router.post('/lovepoem', function(req, res, next) {
  * 获取点赞列表
  */
 router.post('/getloves', function(req, res, next) {
-	console.log('req /poem/getloves body:'+JSON.stringify(req.body))
+	logReq(req);
 	var pid = req.body.id;
 	if(!pid){
 		resError(res,'参数错误')
@@ -329,8 +330,7 @@ router.post('/getloves', function(req, res, next) {
 			if(err){
 	    		resError(res,err)
 	    	}else{
-	    		var loves = resultToDatas(result)
-	    		resSuccess(res,loves);
+	    		resSuccess(res,result);
 	    	}
 		});
 	}
@@ -339,7 +339,7 @@ router.post('/getloves', function(req, res, next) {
  *我的点赞
  */
 router.post('/mylove', function(req, res, next) {
-	console.log('req /poem/mylove body:'+JSON.stringify(req.body))
+	logReq(req);
 	var pid = req.body.id;
 	var userid = req.body.userid;
 	if(!pid){
