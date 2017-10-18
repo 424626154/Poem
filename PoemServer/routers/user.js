@@ -229,6 +229,25 @@ router.post('/info',function(req,res,next){
 	})
 });
 /**
+ * 获取他人信息
+ * */
+router.post('/otherinfo',function(req,res,next){
+	logReq(req);
+	var userid = req.body.userid;
+	var myid = req.body.myid;
+	if(!userid){
+		resError(res,'参数错误')
+		return;
+	}
+	userDao.queryOtherInfo(myid,userid,function(err,result){
+		if(err){
+			resError(res,err);
+		}else{
+			resSuccess(res,result);
+		}
+	})
+});
+/**
  * 关注
  * @param op 1 关注 0 取消关注
  */
@@ -250,33 +269,36 @@ router.post('/follow',function(req,res,next){
 	}
 });
 
-router.post('/getfollows',function(req,res,next){
-	logReq(req);
-	var userid = req.body.userid;
-	if(!userid){
-		resError(res,'参数错误');
-	}else{
-		userDao.queryFollow(userid,function(err,result){
-			if(err){
-				resError(res,err);
-			}else{
-				resSuccess(res,result);
-			}
-		});
-	}
-});
+// router.post('/getfollows',function(req,res,next){
+// 	logReq(req);
+// 	var userid = req.body.userid;
+// 	if(!userid){
+// 		resError(res,'参数错误');
+// 	}else{
+// 		userDao.queryFollow(userid,function(err,result){
+// 			if(err){
+// 				resError(res,err);
+// 			}else{
+// 				resSuccess(res,result);
+// 			}
+// 		});
+// 	}
+// });
 /**
  * 关注列表
+ * @param  myid 我的id
+ * @param  userid 用户的id
  * @param  0我的关注1关注我的
  */
 router.post('/follows',function(req,res,next){
 	logReq(req);
+	var myid = req.body.myid;
 	var userid = req.body.userid;
 	var type = req.body.type;
 	if(!userid){
 		resError(res,'参数错误');
 	}else{
-		userDao.queryFollowType(userid,type,function(err,result){
+		userDao.queryFollowType(myid,userid,type,function(err,result){
 			if(err){
 				resError(res,err);
 			}else{

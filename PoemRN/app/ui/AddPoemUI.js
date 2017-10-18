@@ -10,9 +10,13 @@ import {
   TextInput,
   AsyncStorage,
   DeviceEventEmitter,
+  Keyboard,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import dismissKeyboard from 'dismissKeyboard'
 
 import pstyles from '../style/PStyles';
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
@@ -26,15 +30,16 @@ const italic = require('../images/ic_format_italic_black.png');
 const align_left = require('../images/ic_format_align_left_black.png');
 const align_center = require('../images/ic_format_align_center_black.png');
 
+const {width, height} = Dimensions.get('window');
+
 class AddPoemUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
        title: '添加',
        headerTintColor:StyleConfig.C_FFFFFF,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
+       headerStyle:HeaderConfig.headerStyle,
        headerLeft:(
-         <TouchableOpacity  onPress={()=>{
-          navigation.goBack()
-         }}>
+         <TouchableOpacity  onPress={()=>navigation.goBack()}>
            <Text style={pstyles.nav_left}>取消</Text>
          </TouchableOpacity>
        ),
@@ -43,10 +48,6 @@ class AddPoemUI extends React.Component {
            <Text style={pstyles.nav_right}>发布</Text>
          </TouchableOpacity>
        ),
-       headerStyle:{
-         backgroundColor:'#1e8ae8',
-       },
-       tabBarVisible: false,
     });
     constructor(props) {
         super(props);
@@ -54,11 +55,13 @@ class AddPoemUI extends React.Component {
             placeholder:'请输入内容',
             value:'',
             userid:'',
+            title:'',
+            content:'',
         }
         this.onGetContentHtml = this.onGetContentHtml.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml})
+       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
        AsyncStorage.getItem('userid',(error,result)=>{
          if(!error){
            var islogin = false;
@@ -81,8 +84,8 @@ class AddPoemUI extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-      <RichTextEditor
+      <ScrollView style={styles.container}>
+      {/* <RichTextEditor
           ref={(r)=>this.richtext = r}
           style={styles.richText}
           contentInset={{right: 0, left: 0}}
@@ -103,9 +106,27 @@ class AddPoemUI extends React.Component {
             actions={['bold','italic','justifyLeft','justifyCenter']}
             iconMap={{bold:bold,italic:italic,justifyLeft:align_left,justifyCenter:align_center}}
             />
-        </View>
+        </View> */}
+        <TextInput
+          style={styles.title}
+          underlineColorAndroid={'transparent'}
+          placeholder={'请输入标题'}
+          onChangeText={(text) => this.setState({title:text})}
+          value={this.state.title}
+        />
+        <View style={styles.line}></View>
+        <TextInput
+          style={styles.content}
+          underlineColorAndroid={'transparent'}
+          placeholder={'请输入内容'}
+          onChangeText={(text) => this.setState({content:text})}
+          multiline={true}
+          textAlign={'center'}
+          textAlignVertical={'top'}
+          value={this.state.content}
+        />
         <KeyboardSpacer/>
-      </View>
+      </ScrollView>
     );
   }
   onEditorInitialized(){
@@ -127,7 +148,6 @@ class AddPoemUI extends React.Component {
   }
   async onGetContentHtml() {
     const contentHtml = await this.richtext.getContentHtml();
-
     if(!contentHtml){
       Alert.alert('请输入发布内容')
     }
@@ -141,7 +161,7 @@ class AddPoemUI extends React.Component {
     HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
       if(res.code == 0){
           var poem = res.data;
-          DeviceEventEmitter.emit(Emitter.ADDPOEM,poem);
+          Emitter.emit(Emitter.ADDPOEM,poem);
           this.props.navigation.goBack();
           sqlite.savePoem(poem).then(()=>{
             }).catch((err)=>{
@@ -154,36 +174,34 @@ class AddPoemUI extends React.Component {
       console.error(err);
     })
   }
-
-
 }
-const markdownStyles = {
-  heading1: {
-    fontSize: 24,
-    color: 'purple',
-  },
-  link: {
-    color: 'pink',
-  },
-  mailTo: {
-    color: 'orange',
-  },
-  text: {
-    color: '#555555',
-  },
-  richText: {
-     alignItems:'center',
-     justifyContent: 'center',
-     backgroundColor: 'transparent',
-     marginTop: 60
-   },
-   toolbar:{
-     position: 'absolute',
-     top: 0,
-     left: 0,
-     right: 0
-   }
-}
+// const markdownStyles = {
+//   heading1: {
+//     fontSize: 24,
+//     color: 'purple',
+//   },
+//   link: {
+//     color: 'pink',
+//   },
+//   mailTo: {
+//     color: 'orange',
+//   },
+//   text: {
+//     color: '#555555',
+//   },
+//   richText: {
+//      alignItems:'center',
+//      justifyContent: 'center',
+//      backgroundColor: 'transparent',
+//      marginTop: 60
+//    },
+//    toolbar:{
+//      position: 'absolute',
+//      top: 0,
+//      left: 0,
+//      right: 0
+//    }
+// }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -192,7 +210,21 @@ const styles = StyleSheet.create({
   },
   input:{
     flex:1,
-  }
+  },
+  title:{
+    // height:30,
+    padding:0,
+    fontSize:30,
+  },
+  content:{
+    // height:height,
+    padding:0,
+    fontSize:20,
+  },
+  line:{
+    height:1,
+    backgroundColor:StyleConfig.C_D4D4D4,
+  },
 });
 
 export {AddPoemUI};

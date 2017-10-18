@@ -9,4 +9,7 @@ yarn add react-native-keyboard-spacer
 yarn add react-native-webview-bridge
 yarn add realm
 yarn add react-native-image-crop-picker
+yarn add autoresponsive-react-native
+yarn add react-native-swRefresh
+yarn add react-native-pull@latest
 --- yarn add ---

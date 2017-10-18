@@ -6,8 +6,11 @@ HttpUtil.USER_INFO = 'user/info';
 HttpUtil.USER_REGISTER = 'user/register';
 HttpUtil.USER_VALIDATE = 'user/validate';
 HttpUtil.USER_FOLLOWS = 'user/follows';
+HttpUtil.USER_OTHERINFO = 'user/otherinfo';
+HttpUtil.USER_FOLLOW = 'user/follow';
 
 HttpUtil.POEM_ADDPOEM = 'poem/addpoem';
+HttpUtil.POEM_INFO = 'poem/info';
 HttpUtil.POEM_NEWEST_POEM = 'poem/newestpoem';
 HttpUtil.POEM_HISTORY_POEM = 'poem/historypoem';
 HttpUtil.POEM_UPPOEM = 'poem/uppoem';

@@ -19,7 +19,7 @@ module.exports = {
         });
 	},
     queryUserInfo:function(userid,callback){
-        var userinfo = 'SELECT * FROM '+USER_TABLE+' WHERE userid = "'+userid+'"';
+        var userinfo = 'SELECT user.userid,user.head,user.pseudonym FROM '+USER_TABLE+' WHERE userid = "'+userid+'"';
         var myfollow = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND fstate = 1';
         var followme = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND tstate = 1';
         var sql = userinfo+';'+myfollow+';'+followme;
@@ -35,6 +35,38 @@ module.exports = {
                      user = result[0][0];
                      user.myfollow = result[1][0].count;
                      user.followme = result[2][0].count;
+                  }
+                  callback(err, user)
+                  connection.release();                  
+                }
+
+            });
+        });
+    },
+    queryOtherInfo:function(myid,userid,callback){
+        var userinfo = 'SELECT user.userid,user.head,user.pseudonym FROM '+USER_TABLE+' WHERE userid = "'+userid+'"';
+        var myfollow = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND fstate = 1';
+        var followme = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND tstate = 1';
+        var follow = 'SELECT follow.fstate,follow.tstate FROM '+FOLLOW_TABLE+' WHERE userid = "'+myid+'" AND fansid = "'+userid+'"';
+        var sql = userinfo+';'+myfollow+';'+followme+';'+follow;
+        console.log(sql);
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, function(err, result) {
+                if(err){
+                  callback(err, result)
+                  connection.release();  
+                }else{
+                  var user = {};
+                  if(result[0].length > 0){
+                     user = result[0][0];
+                     user.myfollow = result[1][0].count;
+                     user.followme = result[2][0].count;
+                     user.fstate = 0;
+                     user.tstate = 0;
+                     if(result[3].length > 0){
+                       user.fstate = result[3][0].fstate;
+                       user.tstate = result[3][0].tstate;
+                     }
                   }
                   callback(err, user)
                   connection.release();                  
@@ -121,8 +153,21 @@ module.exports = {
             var sql = sql0+';'+sql1;
             console.log(sql);
             connection.query(sql,function(err,result){
-                callback(err, result)
-                connection.release();
+                if(err){
+                    callback(err, result)
+                    connection.release();
+                }else{
+                    sql = 'SELECT * FROM '+FOLLOW_TABLE+' WHERE userid = ? AND fansid = ?';
+                    connection.query(sql,[userid,fansid],function(err,result){
+                        var follow = {};
+                        if(result.length > 0){
+                            follow = result[0];
+                        }
+                        callback(err,follow);
+                        connection.release();
+                    });
+                }
+    
             });
         });
     },
@@ -147,13 +192,20 @@ module.exports = {
     /**
      * 关注列表
      */
-    queryFollowType:function(userid,type,callback){
+    queryFollowType:function(myid,userid,type,callback){
         pool.getConnection(function(err, connection) {
             var left_user = 'LEFT JOIN '+USER_TABLE+' ON follow.fansid = user.userid';
+            var left_follow = 'LEFT JOIN '+FOLLOW_TABLE+' AS myfollow ON follows.fansid = myfollow.fansid AND myfollow.userid = "'+myid+'"';
             var sql0 = 'SELECT * FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND fstate = 1';
             sql0 = 'SELECT follow.*,user.head,user.pseudonym FROM ('+sql0+') AS follow '+left_user;
+            if(myid != userid){
+                 sql0 = 'SELECT follows.*,myfollow.fstate,myfollow.tstate FROM ('+sql0+') AS follows '+left_follow;
+            }
             var sql1 = 'SELECT * FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND tstate = 1';
             sql1 = 'SELECT follow.*,user.head,user.pseudonym FROM ('+sql1+') AS follow '+left_user;
+            if(myid != userid){
+                 sql1 = 'SELECT follows.id,follows.userid,follows.fansid,follows.head,follows.pseudonym,IFNULL(myfollow.fstate,0) AS fstate,IFNULL(myfollow.tstate,0) AS tstate FROM ('+sql1+') AS follows '+left_follow;
+            }
             var sql = sql0;
             if(type == 1){
                 sql = sql1;

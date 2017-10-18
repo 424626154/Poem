@@ -214,7 +214,6 @@ router.post('/commentpoem', function(req, res, next) {
 		resError(res,'参数错误');
 	}else{
 		 poemDao.addPoemComment(id,userid,cid,comment,time,function(err,comment){
-		 	console.log(err)
 	    	if(err){
 	    		resError(res,err);
 	    	}else{
@@ -229,14 +228,13 @@ router.post('/commentpoem', function(req, res, next) {
  * 最新评论
  */
 router.post('/newestcomment', function(req, res, next) {
-	console.log('req /poem/newestcomment body:'+JSON.stringify(req.body));
+	logReq(req);
     var id = req.body.id;
     var pid = req.body.pid;
     if(!pid){
     	resError(res,'参数错误');
     }else{
     	poemDao.queryNewestComment(id,pid,function(err,comments){
-		 	console.error(err)
 	    	if(err){
 				resError(res,err);
 	    	}else{
@@ -358,5 +356,26 @@ router.post('/mylove', function(req, res, next) {
 		});
 	}
 });
+/**
+ * 作品详情
+ */
+router.post('/info', function(req, res, next) {
+	logReq(req);
+	var pid = req.body.pid;
+	var userid = req.body.userid;
+	if(!pid){
+		resError(res,'参数错误')
+	}else{
+		poemDao.queryPoemInfo(pid,userid,function(err,result){
+			if(err){
+	    		resError(res,err)
+	    	}else{
+	    		resSuccess(res,result);
+	    	}
+		});
+	}
+});
+
+
 
 module.exports = router;

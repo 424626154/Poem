@@ -117,6 +117,34 @@ module.exports = {
             });
         });
 	},
+    /**
+     *作品详情
+     */
+    queryPoemInfo(pid,userid,callback){
+        var poem_sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id = '+pid+' LIMIT 1';
+        var love_commet_sql = 'SELECT * FROM '+LOVE_TABLE+' WHERE pid = '+pid+' AND userid = "'+userid+'" LIMIT 1';
+        var sql = poem_sql+';'+love_commet_sql;
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, function(err, result) {
+                if(err){
+                    callback(err, result)
+                    connection.release();
+                }else{
+                    var poem = {};
+                    if(result[0].length > 0){
+                        poem = result[0][0];
+                        poem.love = 0;
+                        if(result[1].length > 0){
+                            poem.love = result[1][0].love;
+                        }
+                    }
+                    console.log(poem);
+                    callback(err, poem)
+                    connection.release();
+                }
+            });
+        });
+    },
     /*------------评论------------*/
     /**
      * 添加作品评论

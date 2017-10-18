@@ -11,18 +11,27 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 
-import {StorageConfig} from '../Config';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import HttpUtil from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
+import pstyles from '../style/PStyles';
 
 /**
  * 注册
  */
 class RegisterUI extends React.Component {
- static navigationOptions = ({navigation}) => ({
-       header:null,
-    });
+  static navigationOptions = ({navigation}) => ({
+        title:'注册',
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
+        headerLeft:(
+          <TouchableOpacity  onPress={()=>navigation.goBack()}>
+            <Text style={pstyles.nav_left}>返回</Text>
+          </TouchableOpacity>
+        ),
+     });
     constructor(props){
       super(props);
       this.state={
@@ -46,7 +55,7 @@ class RegisterUI extends React.Component {
         <View style={styles.interval}></View>
         <View style={styles.input_bg}>
           <Icon
-            name='home'
+            name='phone'
             size={30}
             type="MaterialIcons"
             color={'#1e8ae8'}
@@ -62,7 +71,7 @@ class RegisterUI extends React.Component {
         <View style={styles.line}></View>
         <View style={styles.input_bg}>
           <Icon
-            name='home'
+            name='keyboard'
             size={30}
             type="MaterialIcons"
             color={'#1e8ae8'}
@@ -78,7 +87,7 @@ class RegisterUI extends React.Component {
         <View style={styles.line}></View>
         <View style={styles.input_bg}>
           <Icon
-            name='home'
+            name='verified-user'
             size={30}
             type="MaterialIcons"
             color={'#1e8ae8'}
@@ -188,9 +197,9 @@ const styles = StyleSheet.create({
     padding:10,
   },
   login:{
-    backgroundColor: '#d4d4d4',
+    backgroundColor: StyleConfig.C_FFFFFF,
     borderRadius:10,
-    borderColor:'#7b8992',
+    borderColor:StyleConfig.C_D4D4D4,
     borderWidth:1,
   },
   interval:{
@@ -221,7 +230,7 @@ const styles = StyleSheet.create({
     padding:1,
   },
   line:{
-    backgroundColor:'#7b8992',
+    backgroundColor:StyleConfig.C_D4D4D4,
     height:1,
     marginLeft:14,
     marginRight:14,

@@ -1,7 +1,9 @@
-
 import {
       AsyncStorage,
       } from 'react-native';
+const nothead = require('../images/ic_account_circle_black.png');
+import HttpUtil from './HttpUtil';
+
 var Utils = {};
 
 Utils.dateStr = function(date){
@@ -34,5 +36,11 @@ Utils.dateStr = function(date){
 }
 Utils.log = function(key,value){
   console.log('~~~~~~'+key+':'+JSON.stringify(value)+'~~~~~');
+}
+
+
+Utils.getHead = function(head){
+  let headurl = head?{uri:HttpUtil.getHeadurl(head)}:nothead;
+  return headurl
 }
 export default Utils;

@@ -10,8 +10,8 @@ import {
       Alert,
       AsyncStorage,
       DeviceEventEmitter,
-      Image,
      } from 'react-native';
+import {CachedImage} from "react-native-img-cache";
 import HTMLView from 'react-native-htmlview';
 
 import SQLite from '../db/Sqlite';
@@ -20,9 +20,9 @@ import Utils from '../utils/Utils';
 import HttpUtil from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
+import pstyles from '../style/PStyles';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 
-import RealmDB from '../db/RealmDB';
-const realmdb = new RealmDB();
 
 const nothead = require('../images/ic_account_circle_black.png');
 
@@ -30,8 +30,34 @@ const nothead = require('../images/ic_account_circle_black.png');
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id,ftype:2});
+        this.props.navigate('DetailsUI',{id:this.props.id});
     };
+    renderNode(node, index, siblings, parent, defaultRenderer) {
+        // console.log('@@@@@@name:'+node.name);
+        // console.log('@@@@@@attribs:'+JSON.stringify(node.attribs));
+        if (node.name == 'div') {
+            const specialSyle = node.attribs.style
+            if(specialSyle == 'text-align: center;'){
+              specialSyle = {textAlign:'center',};
+              return (
+                <Text key={index} style={specialSyle}>
+                  {defaultRenderer(node.children, parent)}
+                </Text>
+              )
+            }
+          }
+        if(node.name == 'span'){
+          const specialSyle = node.attribs.style
+          if(specialSyle == 'font-size: 1em;'){
+            specialSyle = {fontSize:22,};
+            return (
+              <Text key={index} style={specialSyle}>
+                {defaultRenderer(node.children, parent)}
+              </Text>
+            )
+          }
+        }
+      }
     render() {
         return(
             <TouchableOpacity
@@ -45,8 +71,8 @@ class FlatListItem extends React.PureComponent {
                   this.props.navigate('PersonalUI',{userid:this.props.item.userid});
                 }}>
               <View style={styles.fitem_header}>
-                <Image
-                  style={styles.head}
+                <CachedImage
+                  style={pstyles.small_head}
                   source={this.props.headurl}
                   />
                 <View style={styles.fitem_header_info}>
@@ -60,16 +86,18 @@ class FlatListItem extends React.PureComponent {
               </View>
               </TouchableOpacity>
               {/* 诗歌 */}
-              <View style={styles.poem_bg}>
+              <View style={pstyles.htmlview_bg}>
                 <HTMLView
+                    style={pstyles.htmlview}
                     value={this.props.poem}
+                    renderNode={this.renderNode}
                     />
               </View>
               {/* menu */}
               <View style={styles.menu}>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.navigate('DetailsUI',{id:this.props.id,ftype:2});
+                      this.props.navigate('DetailsUI',{id:this.props.id});
                     }}>
                     <View style={styles.menu_item}>
                       <Icon
@@ -114,11 +142,10 @@ class FlatListItem extends React.PureComponent {
 class ReadingTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
         title: '欣赏',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{fontSize:20},
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
+        headerLeft:null,
      });
      // 数据容器，用来存储数据
      dataContainer = [];
@@ -134,28 +161,16 @@ class ReadingTab extends React.Component {
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-      DeviceEventEmitter.addListener('DelPoem', (id)=>{
-        this._eventDeletePoem(id)
-      });
       DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
          this._analysisObserver(obj);
       });
-      AsyncStorage.getItem('userid',(error,userid)=>{
-        if(!error){
-          if(userid){
-            this._requestUserInfo(userid);
-          }
-          this.setState({
-            userid:userid,
-          })
-          sqlite.queryAllPoems().then((results)=>{
-              this.dataContainer = results;
-              this.setState({
-                sourceData: this.dataContainer,
-              });
-            })
-        }
-      })
+      this._requestNewestAllPoem();
+      // sqlite.queryAllPoems().then((results)=>{
+      //     this.dataContainer = results;
+      //     this.setState({
+      //       sourceData: this.dataContainer,
+      //     });
+      //   });
     }
     componentWillUnMount(){
       DeviceEventEmitter.remove();
@@ -255,37 +270,7 @@ class ReadingTab extends React.Component {
    );
      // 下拉刷新
  _renderRefresh = () => {
-   this.setState({refreshing: true}) // 开始刷新
-   var fromid = 0;
-   if(this.state.sourceData.length > 0 ){
-     fromid = this.state.sourceData[0].id;
-   }
-   var json = JSON.stringify({
-     id:fromid,
-     userid:this.state.userid,
-   });
-   HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
-       if(res.code == 0){
-           var poems = res.data;
-            if(poems.length > 0){
-              this.dataContainer = poems.concat(this.dataContainer);
-              this.setState({
-                sourceData: this.dataContainer
-              });
-              sqlite.saveAllPoems(poems).then((results)=>{
-                console.log('reading 下拉数据保存成功:'+results)
-              }).catch((err)=>{
-                console.log(err);
-              })
-            }
-       }else{
-         Alert.alert(res.errmsg);
-       }
-       this.setState({refreshing: false});
-     })
-     .catch((error) => {
-       console.error(error);
-     });
+   this._requestNewestAllPoem();
  };
 
  // 上拉加载更多
@@ -307,11 +292,11 @@ class ReadingTab extends React.Component {
               this.setState({
                 sourceData: this.dataContainer
               });
-              sqlite.saveAllPoems(poems).then((results)=>{
-                console.log('reading 上拉数据保存成功:'+results)
-              }).catch((err)=>{
-                console.log(err);
-              })
+              // sqlite.saveAllPoems(poems).then((results)=>{
+              //   console.log('reading 上拉数据保存成功:'+results)
+              // }).catch((err)=>{
+              //   console.log(err);
+              // })
             }
        }else{
          Alert.alert(res.errmsg);
@@ -355,6 +340,42 @@ class ReadingTab extends React.Component {
     })
   }
   /**
+   * 请求最新的作品集
+   */
+  _requestNewestAllPoem(){
+    this.setState({refreshing: true}) // 开始刷新
+    var fromid = 0;
+    if(this.state.sourceData.length > 0 ){
+      fromid = this.state.sourceData[0].id;
+    }
+    var json = JSON.stringify({
+      id:fromid,
+      userid:this.state.userid,
+    });
+    HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
+        if(res.code == 0){
+            var poems = res.data;
+             if(poems.length > 0){
+               this.dataContainer = poems.concat(this.dataContainer);
+               this.setState({
+                 sourceData: this.dataContainer
+               });
+              //  sqlite.saveAllPoems(poems).then((results)=>{
+              //    console.log('reading 下拉数据保存成功:'+results)
+              //  }).catch((err)=>{
+              //    console.log(err);
+              //  })
+             }
+        }else{
+          Alert.alert(res.errmsg);
+        }
+        this.setState({refreshing: false});
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  /**
    * 解析广播数据
    */
   _analysisObserver(obj){
@@ -371,6 +392,12 @@ class ReadingTab extends React.Component {
         this.setState({
           userid:Global.user.userid,
         })
+        break;
+      case Emitter.ADDPOEM:
+        this._requestNewestAllPoem();
+        break;
+      case Emitter.DELPOEM:
+        this._eventDeletePoem(id);
         break;
       default:
         break;
@@ -434,10 +461,6 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:'#d4d4d4',
   },
-  head:{
-    height:40,
-    width:40,
-  }
 });
 
 export {ReadingTab};

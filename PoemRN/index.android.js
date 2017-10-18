@@ -4,23 +4,9 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-} from 'react-native';
+ import {
+   AppRegistry,
+ } from 'react-native';
+ import AppRN from './app/AppRN';
 
-import {App} from './app/App'
-
-export default class PoemRN extends Component {
-  render() {
-    return (
-      <App uriPrefix={'poem://poem/'}/>
-    );
-  }
-}
-
-AppRegistry.registerComponent('PoemRN', () => PoemRN);
+AppRegistry.registerComponent('PoemRN', () => AppRN);

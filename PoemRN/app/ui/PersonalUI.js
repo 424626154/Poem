@@ -8,34 +8,67 @@ import {
         TouchableOpacity,
         Alert,
         Text,
-        Image,
         TextInput,
+        FlatList,
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-import { Icon } from 'react-native-elements';
+import { Icon,SocialIcon } from 'react-native-elements';
+import {CachedImage} from "react-native-img-cache";
+import HTMLView from 'react-native-htmlview';
 
-import DialogSelected from '../utils/AlertSelected';
-const selectedArr = ["拍照", "图库"];
-
+import pstyles from '../style/PStyles';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import HttpUtil  from '../utils/HttpUtil';
 import Global from '../Global';
+import Utils from '../utils/Utils';
 
 const nothead = require('../images/ic_account_circle_black.png');
+
+/**
+ * 作品元素组件
+ */
+class FlatListItem extends React.PureComponent {
+    _onPress = () => {
+        this.props.onPressItem(this.props.id);
+        this.props.navigate('DetailsUI',{id:this.props.id});
+    };
+    render() {
+        return(
+            <TouchableOpacity
+                {...this.props}
+                onPress={this._onPress}
+                >
+                <View style={styles.fitem}>
+                  {/* 诗歌 */}
+                  <View style={styles.poem_bg}>
+                  <HTMLView
+                      value={this.props.poem}
+                      />
+                  </View>
+                  <View style={styles.fitem_more}>
+                    <Text style={styles.fitem_time}>
+                      {this.props.time}
+                    </Text>
+                  </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+}
 
 class PersonalUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: '个人信息',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{fontSize:20},
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
           <TouchableOpacity  onPress={()=>navigation.goBack()}>
             <Text style={styles.nav_left}>返回</Text>
           </TouchableOpacity>
         ),
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
      });
+  navigate = this.props.navigation.navigate;
+  dataContainer = [];
   constructor(props){
     super(props)
     let params = this.props.navigation.state.params;
@@ -44,13 +77,25 @@ class PersonalUI extends React.Component{
       headurl:nothead,
       pseudonym:'',
       userid:userid,
+      follow:'已关注',
+      user:{myfollow:0,followme:0},
+      myfollow_title:'我关注的',
+      followme_title:'关注我的',
+      sourceData : [],
+      selected: (new Map(): Map<String, boolean>),
+      refreshing: false,
     }
   }
   componentDidMount(){
     const { navigate } = this.props.navigation;
-    if(this.state.userid){
-      this._requestUserInfo(this.state.userid);
+    this._requestOtherInfo(this.state.userid);
+    if(this.state.userid != Global.user.userid){
+      this.setState({
+        myfollow_title:'ta关注的',
+        followme_title:'关注ta的',
+      });
     }
+    this._requestNewestPoem();
   }
   componentWillUnmount(){
 
@@ -58,43 +103,160 @@ class PersonalUI extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <View style={styles.person_info}>
-          {/* ---修改头像--- */}
-          <TouchableOpacity
-              onPress={() => {
-                this._onEidet()
-              }}
-            >
-            <View style={styles.head_bg}>
-              <Image
-                style={styles.head}
+        <View style={styles.header}>
+          <View style={styles.personal}>
+              <CachedImage
+                style={pstyles.big_head}
                 source={this.state.headurl}
                 />
+              <View style={styles.head_bg}>
+                <Text style={styles.name}>
+                  {this.state.pseudonym}
+                </Text>
+              </View>
+              <View style={styles.personal_more}>
+              </View>
             </View>
-          </TouchableOpacity>
-          {/* ---笔名--- */}
-          <TouchableOpacity
-            onPress={() => {
-              this._onEidet()
-            }}
-          >
-            <View style={styles.pseudonym_bg}>
-                <Text>{this.state.pseudonym}</Text>
-                {this._readerPse()}
-            </View>
-          </TouchableOpacity>
+          {this._renderFollow()}
+          {this._renderFollowOP()}
         </View>
-        <DialogSelected ref={(dialog)=>{
-                   this.dialog = dialog;
-               }} />
+        <FlatList
+                  data={ this.state.sourceData }
+                  extraData={ this.state.selected }
+                  keyExtractor={ this._keyExtractor }
+                  renderItem={ this._renderItem }
+                  onEndReachedThreshold={0.1}
+                  onEndReached={ this._onEndReached }
+                  ItemSeparatorComponent={ this._renderItemSeparatorComponent }
+                  ListEmptyComponent={ this._renderEmptyView }
+                  refreshing={ this.state.refreshing }
+                  onRefresh={ this._renderRefresh }
+              />
       </View>
     )
   }
-  _requestUserInfo(userid){
+  _keyExtractor = (item, index) => index;
+  _onPressItem = (id: string) => {
+      this.setState((state) => {
+          const selected = new Map(state.selected);
+          selected.set(id, !selected.get(id));
+          return {selected}
+      });
+  };
+  _renderItem = ({item}) =>{
+      return(
+          <FlatListItem
+              id={item.id}
+              onPressItem={ this._onPressItem }
+              selected={ !!this.state.selected.get(item.id) }
+              name= { item.name }
+              poem={item.poem}
+              time={Utils.dateStr(item.time)}
+              navigate = {this.props.navigation.navigate}
+          />
+      );
+  };
+  // 自定义分割线
+  _renderItemSeparatorComponent = ({highlighted}) => (
+      <View style={{ height:1, backgroundColor:'#d4d4d4' }}></View>
+  );
+
+  // 空布局
+  _renderEmptyView = () => (
+      <View style={pstyles.empty}>
+       <Text style={pstyles.empty_font}>暂无作品
+       </Text>
+      </View>
+  );
+  _renderRefresh = () => {
+    if(!this.state.userid){
+      return;
+    }
+    this._requestNewestPoem();
+  };
+  // 上拉加载更多
+  _onEndReached = () => {
+    console.log('-----------WorksTab_onEndReached--------------');
+      if(!this.state.userid){
+        return;
+      }
+     this.setState({refreshing: true})
+     var fromid = 0;
+     if(this.state.sourceData.length > 0 ){
+       fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     }
+     var json = JSON.stringify({
+       id:fromid,
+       userid:this.state.userid,
+     });
+     HttpUtil.post(HttpUtil.POEM_HISTORY_POEM,json).then(res=>{
+       if(res.code == 0){
+           var poems = res.data;
+            if(poems.length > 0){
+              this.dataContainer = this.dataContainer.concat(poems);
+              this.setState({
+                sourceData: this.dataContainer
+              });
+            }
+       }else{
+         Alert.alert(res.errmsg);
+       }
+       this.setState({refreshing: false});
+     }).catch(err=>{
+       console.log(err);
+     })
+  };
+  /**
+   * 关注
+   */
+  _renderFollow(){
+      return(
+        <View style={styles.follow_bg}>
+          <TouchableOpacity onPress={()=>{
+            this._onMeFollow();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.user.myfollow}</Text>
+              <Text style={styles.follow_item_font}>{this.state.myfollow_title}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            this._onFollowMe();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.user.followme}</Text>
+              <Text style={styles.follow_item_font}>{this.state.followme_title}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+  }
+  _renderFollowOP(){
+    return(
+      <View style={styles.follow}>
+      <SocialIcon
+        title={this.state.follow}
+        button={true}
+        onPress={()=>{
+          this._onFollow();
+        }}
+        fontStyle={styles.follow_font}
+        light
+        style={styles.follow_button}
+        />
+      </View>
+    )
+  }
+  _onFollow(){
+      this._requestFollow();
+  }
+
+  _requestOtherInfo(userid){
     var json = JSON.stringify({
+      myid:Global.user.userid,
       userid:userid,
     })
-    HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
+    HttpUtil.post(HttpUtil.USER_OTHERINFO,json).then(res=>{
       if(res.code == 0 ){
         let user = res.data;
         let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
@@ -103,6 +265,7 @@ class PersonalUI extends React.Component{
           headurl:headurl,
           pseudonym:pseudonym,
           user:user,
+          follow:this._getFollowStr(user),
         })
       }else{
         Alert.alert(res.errmsg);
@@ -111,34 +274,93 @@ class PersonalUI extends React.Component{
       console.log(err);
     })
   }
-  _readerPse(){
-    if(this.state.userid == Global.user.userid){
-      return(
-        <Icon
-          name='edit'
-          size={26}
-          type="MaterialIcons"
-          color={'#d4d4d4'}
-        />
-      )
-    }else{
-      retrun(
-        <View></View>
-      )
+  _getFollowStr(user){
+    var follow = '关注';
+    if(user.fstate == 1&&user.state == 1){
+      follow = '互相关注'
+    }else if(user.fstate == 1){
+      follow = '已关注'
+    }else if(user.state == 1){
+      follow = '关注我的'
     }
+    return follow;
   }
-  _onEidet(){
-    if(this.state.userid == Global.user.userid){
-      const { navigate } = this.props.navigation;
-      navigate('PerfectUI');
+  _requestFollow(){
+    var json = JSON.stringify({
+      userid:Global.user.userid,
+      fansid:this.state.user.userid,
+      op:this.state.user.fstate == 0?1:0,
+    })
+    HttpUtil.post(HttpUtil.USER_FOLLOW,json).then(res=>{
+      if(res.code == 0 ){
+        let user = res.data;
+        let temp_user = this.state.user;
+        temp_user.fstate = user.fstate;
+        temp_user.tstate = user.tstate;
+        let followme = temp_user.followme;
+        if(user.fstate == 0&&followme > 0){
+            followme -= 1;
+        }
+        temp_user.followme = followme;
+        this.setState({
+            user:temp_user,
+            follow:this._getFollowStr(temp_user),
+        })
+      }else{
+        Alert.alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
+  _requestNewestPoem(){
+    if(!this.state.userid){
+      return;
     }
+     this.setState({refreshing: true});
+     var fromid = 0;
+     if(this.state.sourceData.length > 0 ){
+       fromid = this.state.sourceData[0].id;
+     }
+     var json = JSON.stringify({
+       id:fromid,
+       userid:this.state.userid,
+     });
+     HttpUtil.post(HttpUtil.POEM_NEWEST_POEM,json).then(res=>{
+       if(res.code == 0 ){
+         var poems = res.data;
+          if(poems.length > 0){
+            this.dataContainer = poems.concat(this.dataContainer);
+            this.setState({
+              sourceData: this.dataContainer
+            });
+          }
+       }else{
+         Alert.alert(res.errmsg);
+       }
+       this.setState({refreshing: false});
+     }).catch(err=>{
+       console.error(err);
+     });
+  }
+  /**
+   * 我的关注
+   */
+  _onMeFollow(){
+    this.navigate('FollowUI',{userid:this.state.userid,title:this.state.myfollow_title,type:0});
+  }
+  /**
+   * 关注我的
+   */
+  _onFollowMe(){
+    this.navigate('FollowUI',{userid:this.state.userid,title:this.state.followme_title,type:1});
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems:'center',
+    backgroundColor: '#ffffff',
   },
   nav_left:{
     fontSize:18,
@@ -150,35 +372,75 @@ const styles = StyleSheet.create({
     color:'#ffffff',
     marginRight:10,
   },
+  header:{
+    backgroundColor: '#1e8ae8',
+  },
+  header_title:{
+    fontSize:20,
+    color:'#ffffff',
+    textAlign:'center',
+  },
+  personal:{
+    flexDirection:'row',
+    padding:10,
+  },
   head_bg:{
-    marginTop:40,
-    alignItems:'center',
-    height:120,
-    width:120,
+    flex:1,
+    padding:10,
   },
   head:{
-    height:120,
-    width:120,
+    height:80,
+    width:80,
   },
-  mhead:{
-    width:20,
-    height:20,
-    right:1,
-    position: 'absolute',//相对父元素进行绝对定位
-    top: 0,
-    right: 0,
+  name:{
+    fontSize:20,
+    color:StyleConfig.C_FFFFFF,
   },
-  person_info:{
+  //关注按钮
+  follow:{
+    padding:5,
+    alignItems:'flex-end',
+  },
+  follow_button:{
+    width:100,
+    height:40,
+  },
+  follow_font:{
+    fontSize:StyleConfig.F_18,
+    color:StyleConfig.C_1E8AE8,
+    marginLeft:-2,
+  },
+  //关注
+  follow_bg:{
+    flexDirection:'row',
+    padding:10,
+  },
+  follow_item_bg:{
+    padding:10,
+  },
+  follow_item_num:{
+    fontSize:StyleConfig.F_14,
+    color:StyleConfig.C_000000,
+  },
+  follow_item_font:{
+    marginTop:10,
+    fontSize:StyleConfig.F_12,
+    color:StyleConfig.C_D4D4D4,
+  },
+  fitem:{
+      flex:1,
+      padding:10,
+  },
+  fitem_more:{
+    alignItems:'flex-end'
+  },
+  fitem_time:{
+    fontSize:14,
+    color:'#d4d4d4',
+    marginTop:4,
+  },
+  poem_bg:{
 
   },
-  pseudonym_bg:{
-    paddingTop:20,
-    flexDirection:'row',
-  },
-  pseudonym:{
-    fontSize:22,
-    borderBottomWidth:1,
-    borderBottomColor:'#d4d4d4',
-  }
 })
 export {PersonalUI};

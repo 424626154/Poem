@@ -8,6 +8,9 @@ Emitter.COMMENT = 'comment';//评论
 Emitter.ADDPOEM = 'addpoem';//添加作品
 Emitter.LOGIN = 'login';
 Emitter.LOGOUT = 'logout';
+Emitter.DELPOEM = 'delpoem';
+Emitter.UPPOEM = 'uppoem';
+Emitter.DRAWER_CLOSE = 'drawer_close';
 
 Emitter.emit = function(action,param){
     var param_obj = {

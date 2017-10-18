@@ -4,15 +4,16 @@ import {
         StyleSheet,
         Text,
         View,
-        Image,
         TouchableOpacity,
         DeviceEventEmitter,
         AsyncStorage,
         Alert,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
+import {CachedImage} from "react-native-img-cache";
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
+import pstyles from '../style/PStyles';
 import Utils from '../utils/Utils';
 import Global from '../Global';
 import Emitter from '../utils/Emitter';
@@ -25,9 +26,11 @@ const nothead = require('../images/ic_account_circle_black.png');
  */
 class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
+        title: '我的',
         headerTintColor:StyleConfig.C_FFFFFF,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
+        headerLeft:null,
      });
     navigate = this.props.navigation.navigate;
    constructor(props){
@@ -61,9 +64,9 @@ class MyTab extends React.Component {
                 navigate('LoginUI',{go_back_key:state.key});
               }
             }}>
-              <View style={styles.personal}>
-                <Image
-                  style={styles.head}
+            <View style={styles.personal}>
+                <CachedImage
+                  style={pstyles.big_head}
                   source={this.state.headurl}
                   />
                 <View style={styles.head_bg}>
@@ -72,7 +75,7 @@ class MyTab extends React.Component {
                   </Text>
                 </View>
                 <View style={styles.personal_more}>
-                  {this._renderEdit()}
+                    {this._renderMore()}
                 </View>
               </View>
             </TouchableOpacity>
@@ -82,22 +85,6 @@ class MyTab extends React.Component {
         {this._renderLogout()}
       </View>
     );
-  }
-  _renderEdit(){
-    if(this.state.userid){
-      return(
-        <Icon
-          name='create'
-          size={30}
-          type="MaterialIcons"
-          color={'#ffffff'}
-        />
-      )
-    }else{
-      return(
-        <View></View>
-      )
-    }
   }
   /**
    * 关注
@@ -126,6 +113,23 @@ class MyTab extends React.Component {
       )
     }else{
       return(<View></View>)
+    }
+  }
+
+  _renderMore(){
+    if(this.state.userid){
+      return(
+        <Icon
+          name='create'
+          size={30}
+          type="MaterialIcons"
+          color={'#ffffff'}
+        />
+      )
+    }else{
+      return(
+        <View></View>
+      )
     }
   }
   /**
@@ -220,10 +224,6 @@ const styles = StyleSheet.create({
   head_bg:{
     flex:1,
     padding:10,
-  },
-  head:{
-    height:80,
-    width:80,
   },
   name:{
     fontSize:20,

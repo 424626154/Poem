@@ -3,13 +3,14 @@ import {
         StyleSheet,
         Text,
         View,
-        Image,
         TouchableOpacity,
         DeviceEventEmitter,
         AsyncStorage,
         Alert,
         FlatList,
       } from 'react-native';
+import { SocialIcon } from 'react-native-elements';
+import {CachedImage} from "react-native-img-cache";
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import pstyles from '../style/PStyles';
@@ -30,10 +31,24 @@ class FollowListItem extends React.PureComponent {
                 {...this.props}
                 onPress={this._onPress}
                 >
-                <View style={styles.fitem}>
-                    <Text style={styles.fitem_time}>
-                      qqqqqq
+                <View style={styles.follow}>
+                    <CachedImage
+                      style={pstyles.small_head}
+                      source={this.props.head}
+                      />
+                    <Text style={styles.follow_pseudonym}>
+                      {this.props.follow.pseudonym}
                     </Text>
+                    <SocialIcon
+                      title={this.props.followbut}
+                      button={true}
+                      onPress={()=>{
+                        this.props.onFollow(this.props);
+                      }}
+                      fontStyle={styles.follow_font}
+                      light
+                      style={styles.follow_button}
+                      />
                 </View>
             </TouchableOpacity>
         );
@@ -45,15 +60,14 @@ class FollowUI extends React.Component {
        title:navigation.state.params.title,
        headerTintColor:StyleConfig.C_FFFFFF,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
+       headerStyle:HeaderConfig.headerStyle,
        headerLeft:(
          <TouchableOpacity  onPress={()=>navigation.goBack()}>
            <Text style={pstyles.nav_left}>返回</Text>
          </TouchableOpacity>
        ),
-       headerStyle:{
-         backgroundColor:'#1e8ae8',
-       },
     });
+    navigate = this.props.navigation.navigate;
     dataContainer = [];
     constructor(props) {
         super(props);
@@ -63,11 +77,11 @@ class FollowUI extends React.Component {
           selected: (new Map(): Map<String, boolean>),
           refreshing: false,
           type:params.type,
-          userid:Global.user.userid,
+          userid:params.userid,
         });
     }
     componentDidMount(){
-        this._requestFollow();
+        this._requestFollows();
     }
     componentWillUnMount(){
 
@@ -99,7 +113,7 @@ class FollowUI extends React.Component {
     // 空布局
     _renderEmptyView = () => (
         <View style={pstyles.empty}>
-         <Text style={pstyles.empty_font}>暂无作品
+         <Text style={pstyles.empty_font}>
          </Text>
         </View>
     );
@@ -116,10 +130,11 @@ class FollowUI extends React.Component {
                 id={item.id}
                 onPressItem={ this._onPressItem }
                 selected={ !!this.state.selected.get(item.id) }
-                name= { item.name }
-                poem={item.poem}
-                time={Utils.dateStr(item.time)}
+                follow= {item}
+                head={Utils.getHead(item.head)}
+                followbut={this._getFolloBut(item)}
                 navigate = {this.props.navigation.navigate}
+                onFollow={this._onFollow}
             />
         );
     };
@@ -129,12 +144,28 @@ class FollowUI extends React.Component {
     //上拉刷新
     _onEndReached = () => {
     }
+    _getFolloBut(user){
+      var follow = '关注';
+      if(user.fansid == Global.user.userid){
+        return '自己';
+      }
+      if(user.fstate == 1&&user.state == 1){
+        follow = '互相关注'
+      }else if(user.fstate == 1){
+        follow = '已关注'
+      }else if(user.state == 1){
+        follow = '关注我的'
+      }
+      return follow;
+    }
 
-    _requestFollow(){
+    _requestFollows(){
       var json = JSON.stringify({
+        myid:Global.user.userid,
         userid:this.state.userid,
         type:this.state.type,
-      })
+      });
+      console.log(json);
       HttpUtil.post(HttpUtil.USER_FOLLOWS,json).then(res=>{
           if(res.code == 0 ){
               var follows = res.data;
@@ -142,15 +173,6 @@ class FollowUI extends React.Component {
               this.setState({
                 sourceData: this.dataContainer
               });
-              if(this.state.type == 1){
-                sqlite.saveFollowMes(follows).then(res=>{}).catch(err=>{
-                  console.error(err);
-                });
-              }else{
-                sqlite.saveMeFollows(follows).then(res=>{}).catch(err=>{
-                  console.error(err);
-                });
-              }
           }else{
             Alert.alert(res.errmsg);
           }
@@ -158,10 +180,66 @@ class FollowUI extends React.Component {
         console.error(err);
       })
     }
+    _onFollow(props){
+      let user = props.follow;
+      if(user.fransid == Global.user.userid){
+        return;
+      }
+      this._requestFollow(user);
+    }
+    _requestFollow(user){
+      var json = JSON.stringify({
+        userid:Global.user.userid,
+        fansid:user.fansid,
+        op:user.fstate == 0?1:0,
+      })
+      HttpUtil.post(HttpUtil.USER_FOLLOW,json).then(res=>{
+        if(res.code == 0 ){
+          let user = res.data;
+          for(var id = 0 ; i < this.dataContainer.length;i++){
+            if(this.dataContainer[i].fansid == user.fansid){
+              this.dataContainer[i].fstate = user.fstate;
+              this.dataContainer[i].tstate = user.tstate;
+              break;
+            }
+          }
+          this.setState({
+            sourceData: this.dataContainer
+          });
+        }else{
+          Alert.alert(res.errmsg);
+        }
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
 }
 
 const styles = StyleSheet.create({
-
+    follow:{
+      flex:1,
+      flexDirection:'row',
+      padding:10,
+    },
+    follow_head:{
+      height:60,
+      width:60,
+    },
+    follow_pseudonym:{
+      flex:1,
+      fontSize:StyleConfig.F_18,
+      color:StyleConfig.C_000000,
+      padding:4,
+    },
+    follow_button:{
+      width:80,
+      height:30,
+    },
+    follow_font:{
+      fontSize:StyleConfig.F_18,
+      color:StyleConfig.C_1E8AE8,
+      marginLeft:-2,
+    },
 });
 
 export {FollowUI};

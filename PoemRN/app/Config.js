@@ -16,6 +16,7 @@ StyleConfig.F_18 = 18;
 StyleConfig.F_14 = 14;
 StyleConfig.F_12 = 12;
 StyleConfig.F_10 = 10;
+StyleConfig.IOS_NAV = 20;
 
 var HeaderConfig = {
 
@@ -27,7 +28,9 @@ HeaderConfig.headerTitleStyle = {
 HeaderConfig.headerStyle = {
   backgroundColor:'#1e8ae8',
   };
-
+HeaderConfig.iosNavStyle = {
+  height:20,
+}
 var StorageConfig = {
 
 };

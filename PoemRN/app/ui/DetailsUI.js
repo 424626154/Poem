@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
+import pstyles from '../style/PStyles';
 import Utils from '../utils/Utils';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import HttpUtil  from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
-
+import Global from '../Global';
 /**
  * 评论组件
  */
@@ -132,27 +134,24 @@ class LoveListView extends React.Component{
 class DetailsUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
     title: '详情',
-    headerTintColor:'#ffffff',
-    headerTitleStyle:{fontSize:20},
+    headerTintColor:StyleConfig.C_FFFFFF,
+    headerTitleStyle:HeaderConfig.headerTitleStyle,
+    headerStyle:HeaderConfig.headerStyle,
     headerLeft:(
       <TouchableOpacity  onPress={()=>navigation.goBack()}>
         <Text style={styles.nav_left}>返回</Text>
       </TouchableOpacity>
     ),
-    headerStyle:{
-      backgroundColor:'#1e8ae8',
-    },
   });
-
+  dataContainer = [];
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
     this.state = {
         id:params.id,
-        poem:{poem:'',lovenum:0,commentnum:0},
-        userid:'',
+        poem:{userid:'',poem:'',lovenum:0,commentnum:0},
+        userid:Global.user.userid,
         ftype:params.ftype,
-        islogin:false,
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
@@ -162,79 +161,63 @@ class DetailsUI extends React.Component{
   }
 
   componentDidMount(){
-    AsyncStorage.getItem('userid',(error,userid)=>{
-      if(!error){
-        var islogin = false;
-        if(userid){
-          islogin = true;
-        }
-        this.setState({
-          islogin:islogin,
-          userid:userid,
-        })
-        if(islogin){
-          this._requestMylove();
-        }
-        if(this.state.ftype == 2){
-          sqlite.queryAllPoem(this.state.id).then((peom)=>{
-              console.log('queryAllPoem:'+JSON.stringify(peom));
-              this.setState({
-                poem: peom,
-              });
-            }).catch((err)=>{
-              console.error(err);
-            });
-        }else{
-          sqlite.queryPoem(this.state.id).then((peom)=>{
-              console.log('queryPoem:'+JSON.stringify(peom));
-              this.setState({
-                poem: peom,
-              });
-            }).catch((err)=>{
-              console.error(err);
-            });
-        }
-      }
-    })
-    sqlite.queryComments(this.state.id).then((comments)=>{
-      this.dataContainer = comments;
-      this.setState({
-        sourceData: this.dataContainer,
-      });
-    })
-    this._requestLoves()
-    // 刷新作品
-    DeviceEventEmitter.addListener('UpPoem', (poem)=>{
-        temp_poem = this.state.poem;
-        if(temp_poem.id == poem.id){
-          temp_poem.poem = poem.poem;
-          this.setState({
-            poem:temp_poem,
-          })
-        }
+    this._requestPoem();
+    this._requestLoves();
+    this._requestNewestComment();
+    DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
+       this._analysisObserver(obj);
     });
-    // 评论监听
-    DeviceEventEmitter.addListener(Emitter.COMMENT,(comment)=>{
-      let sourceData = this.state.sourceData;
-      sourceData.unshift(comment);
-      this.setState({
-        sourceData: this.dataContainer,
-      });
-      this._requestLoveComment();
-    })
   }
 
   componentWillUnMount(){
     DeviceEventEmitter.remove();
   }
-
+  renderNode(node, index, siblings, parent, defaultRenderer) {
+      console.log('@@@@@@name:'+node.name);
+      // console.log('@@@@@@attribs:'+JSON.stringify(node.attribs));
+      // if(node.name == undefined){
+      //     const specialSyle = {fontSize:22,};
+      //     return (
+      //       <Text key={index} style={specialSyle}>
+      //         {defaultRenderer(node.children, parent)}
+      //       </Text>
+      //     )
+      // }
+      if (node.name == 'div') {
+          const specialSyle = node.attribs.style
+          console.log('@@@@@@specialSyle:'+specialSyle);
+          if(specialSyle == 'text-align: center;'){
+            specialSyle = {textAlign:'center',fontSize:22,};
+          }else{
+            specialSyle = {fontSize:22,};
+          }
+          return (
+            <Text key={index} style={specialSyle}>
+              {defaultRenderer(node.children, parent)}
+            </Text>
+          )
+      }
+      if(node.name == 'span'){
+        const specialSyle = node.attribs.style
+        if(specialSyle == 'font-size: 1em;'){
+          specialSyle = {fontSize:22,};
+          return (
+            <Text key={index} style={specialSyle}>
+              {defaultRenderer(node.children, parent)}
+            </Text>
+          )
+        }
+      }
+    }
   render(){
     const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
-        <View>
+        <View style={pstyles.htmlview_bg}>
         <HTMLView
+            style={pstyles.htmlview}
             value={this.state.poem.poem}
+            renderNode={this.renderNode}
             />
         </View>
         {/* ---menu--- */}
@@ -267,12 +250,12 @@ class DetailsUI extends React.Component{
    * 功能视图
    */
   _renderMenu(){
-    if(this.state.userid == this.state.poem.userid){
+    if(this.state.poem.userid == Global.user.userid){
       return(
         <View style={styles.menu}>
             <TouchableOpacity
               onPress={()=>{
-                this.props.navigation.navigate('ModifyPoemUI',{id:this.state.id,ftype:this.state.ftype})
+                this.props.navigation.navigate('ModifyPoemUI',{id:this.state.id,poem:this.state.poem})
               }}>
               <View style={styles.menu_item}>
                 <Icon
@@ -421,38 +404,7 @@ class DetailsUI extends React.Component{
   );
   // 下拉刷新
   _renderRefresh = () => {
-     this.setState({refreshing: true}) // 开始刷新
-     var fromid = 0;
-     if(this.state.sourceData.length > 0 ){
-       fromid = this.state.sourceData[0].id;
-     }
-     var json = JSON.stringify({
-       id:fromid,
-       pid:this.state.id,
-     });
-    var that = this;
-     HttpUtil.post(HttpUtil.POEM_NEWEST_COMMENT,json).then((data)=>{
-       console.log(HttpUtil.POEM_NEWEST_COMMENT+':'+data);
-       if(data.code == 0){
-           var comments = data.data;
-            if(comments.length > 0){
-              sqlite.saveComments(comments).then((results)=>{
-                console.log('下拉数据保存成功:'+results)
-              }).catch((err)=>{
-                console.log(err);
-              })
-              this.dataContainer = comments.concat(this.dataContainer);
-              this.setState({
-                sourceData: this.dataContainer
-              });
-            }
-       }else{
-         Alert.alert(data.errmsg);
-       }
-       that.setState({refreshing: false});
-     }).catch((err)=>{
-       console.error(err);
-     })
+     this._requestNewestComment();
   }
   // 上拉刷新
   _onEndReached = () => {
@@ -471,11 +423,6 @@ class DetailsUI extends React.Component{
       if(data.code == 0){
           var comments = data.data;
            if(comments.length > 0){
-             sqlite.saveComments(comments).then((results)=>{
-               console.log('上拉数据保存成功:'+results)
-             }).catch((err)=>{
-               console.log(err);
-             })
              this.dataContainer = this.dataContainer.concat(comments);
              this.setState({
                sourceData: this.dataContainer
@@ -584,6 +531,27 @@ class DetailsUI extends React.Component{
     })
   }
   /**
+   * 作品信息
+   */
+  _requestPoem(){
+      var json = JSON.stringify({
+        pid:this.state.id,
+        userid:Global.user.userid,
+      });
+      HttpUtil.post(HttpUtil.POEM_INFO,json).then(res=>{
+        if(res.code == 0){
+          var poem = res.data;
+          this.setState({
+              poem:poem,
+          })
+        }else{
+          Alert.alert(res.errmsg);
+        }
+      }).catch(err=>{
+        console.error(err);
+      })
+  }
+  /**
    * 请求点赞列表
    */
   _requestLoves(){
@@ -614,28 +582,35 @@ class DetailsUI extends React.Component{
     });
   }
   /**
-   * 我的点赞信息
+   * 请求评论列表
    */
-  _requestMylove(){
+  _requestNewestComment(){
+    this.setState({refreshing: true}) // 开始刷新
+    var fromid = 0;
+    if(this.state.sourceData.length > 0 ){
+      fromid = this.state.sourceData[0].id;
+    }
     var json = JSON.stringify({
-      id:this.state.id,
-      userid:this.state.userid,
+      id:fromid,
+      pid:this.state.id,
     });
-    console.log('_requestLoves:'+json);
-    HttpUtil.post(HttpUtil.POEM_MYLOVE,json).then((data)=>{
-        if(data.code == 0){
-          var love = data.data;
-          if(love.id > 0){
-            this.setState({
-              love:love.love,
-            })
-          }
-        }else{
-          Alert.alert(data.errmsg);
-        }
+    HttpUtil.post(HttpUtil.POEM_NEWEST_COMMENT,json).then((data)=>{
+      console.log(HttpUtil.POEM_NEWEST_COMMENT+':'+data);
+      if(data.code == 0){
+          var comments = data.data;
+           if(comments.length > 0){
+             this.dataContainer = comments.concat(this.dataContainer);
+             this.setState({
+               sourceData: this.dataContainer
+             });
+           }
+      }else{
+        Alert.alert(data.errmsg);
+      }
+      this.setState({refreshing: false});
     }).catch((err)=>{
       console.error(err);
-    });
+    })
   }
   /**
    * 请求点单数和评论数
@@ -662,6 +637,31 @@ class DetailsUI extends React.Component{
       console.error(err);
     })
   }
+
+  _analysisObserver(obj){
+    var action = obj.action;
+    var param = obj.param;
+    switch (action) {
+      case Emitter.UPPOEM:// 刷新作品
+          var temp_poem = this.state.poem;
+          if(temp_poem.id == param.id){
+            temp_poem.poem = param.poem;
+            this.setState({
+              poem:temp_poem,
+            })
+          }
+          break;
+      case Emitter.COMMENT:// 评论监听
+          let sourceData = this.state.sourceData;
+          sourceData.unshift(param);
+          this.setState({
+            sourceData: this.dataContainer,
+          });
+          this._requestLoveComment();
+          break;
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({

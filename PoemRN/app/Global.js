@@ -5,7 +5,8 @@ const Global = {
       pseudonym:'',
       myfollow:0,
       followme:0,
-    }
+    },
+    uppoem:{},
 };
 
 export default Global;

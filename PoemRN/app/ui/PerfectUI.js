@@ -17,6 +17,8 @@ const selectedArr = ["拍照", "图库"];
 import HttpUtil  from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
+import pstyles from '../style/PStyles';
 
 const nothead = require('../images/ic_account_circle_black.png');
 const mhead = require('../images/ic_border_color_black.png');
@@ -27,8 +29,9 @@ const mhead = require('../images/ic_border_color_black.png');
 class PerfectUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: '完善资料',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{fontSize:20},
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
           <TouchableOpacity  onPress={()=>navigation.goBack()}>
             <Text style={styles.nav_left}>放弃</Text>
@@ -39,9 +42,6 @@ class PerfectUI extends React.Component{
             <Text style={styles.nav_right}>保存</Text>
           </TouchableOpacity>
         ),
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
      });
   _imageObj = {};
   constructor(props){
@@ -85,7 +85,7 @@ class PerfectUI extends React.Component{
         >
           <View style={styles.head_bg}>
             <Image
-              style={styles.head}
+              style={pstyles.big_head}
               source={this.state.headurl}
               />
               <Image

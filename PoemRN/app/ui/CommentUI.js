@@ -10,6 +10,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 
+import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
 import HttpUtil  from '../utils/HttpUtil';
@@ -20,8 +21,9 @@ import Emitter from '../utils/Emitter';
 class CommentUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: '评论',
-        headerTintColor:'#ffffff',
-        headerTitleStyle:{fontSize:20},
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
           <TouchableOpacity  onPress={()=>navigation.goBack()}>
             <Text style={styles.nav_left}>取消</Text>
@@ -32,9 +34,6 @@ class CommentUI extends React.Component{
             <Text style={styles.nav_right}>发布</Text>
           </TouchableOpacity>
         ),
-        headerStyle:{
-          backgroundColor:'#1e8ae8',
-        },
      });
 
   constructor(props){
@@ -91,7 +90,7 @@ class CommentUI extends React.Component{
       if(data.code == 0){
         var comment = data.data;
         sqlite.saveComment(comment).then((data)=>{
-          DeviceEventEmitter.emit(Emitter.COMMENT,comment);
+          Emitter.emit(Emitter.COMMENT,comment);
        	  this.props.navigation.goBack();
         }).catch((err)=>{
           console.error(err);

@@ -1,15 +1,17 @@
 import React from 'react';
 import SQLiteStorage from 'react-native-sqlite-storage';
-SQLiteStorage.DEBUG(false);
+SQLiteStorage.DEBUG(true);
 let database_name = "poem.db";
-let database_version = "2.0";
-var database_current_version = 0;
-var database_latest_version = 1;
+let database_version = "1.0";
+var curVersion = 6;
+var oldVersion = -1;//旧的数据库版本
+var newVersion = -1;//新的数据库版本
 let database_displayname = "poem";
 let database_size = -1;
 let database_location = '~/db/poem.db';
 let db;
 
+const VERSION_TABLE = 'version';//版本控制
 const MYPOEM_TABLE = 'mypoem';//诗歌
 const ALLPOEM_TABLE = 'allpoem';
 const COMMENT_TABLE = 'comment';//评论
@@ -23,19 +25,41 @@ class SQLite extends React.Component{
 			db.close();
 		}
 	}
+  initDB(){
+    var that = this;
+    return new Promise(function(resolve, reject){
+        db = SQLiteStorage.openDatabase(
+            database_name,
+            database_version,
+            database_displayname,
+            database_size,
+            ()=>{
+                that.populateDatabase(db,function(err,results){
+                  if(err){
+                    reject(err)
+                  }else{
+                    resolve();
+                  }
+                })
+            },
+            (err)=>{
+                // console.log('数据库打开失败！,错误是：'+err);
+                reject(err)
+            });
+    })
+  }
   open(){
-      db = SQLiteStorage.openDatabase(
-          database_name,
-          database_version,
-          database_displayname,
-          database_size,
-          ()=>{
-              this.populateDatabase(db)
-              console.log('数据库打开成功');
-          },
-          (err)=>{
-              console.log('数据库打开失败！,错误是：'+err);
-          });
+    db = SQLiteStorage.openDatabase(
+                database_name,
+                database_version,
+                database_displayname,
+                database_size,
+                ()=>{
+                    console.log('数据库打开成功！');
+                },
+                (err)=>{
+                    console.log('数据库打开失败！,错误是：'+err);
+                });
   }
 
   close(){
@@ -48,132 +72,321 @@ class SQLite extends React.Component{
 
       db = null;
   }
-  populateDatabase(db){
-    var that = this;
-    db.executeSql('SELECT version_id FROM Version ORDER BY version_id DESC LIMIT 1', [], function(results) {
-        console.log("Post version query (success)");
-        console.log(JSON.stringify(results));
-        var len = results.rows.length;
-        for (let i = 0; i < len; i++) {
-            let row = results.rows.item(i);
-            database_current_version = row.version_id;
-        }
-        db.transaction(that.upgradeTables, function() {
-            console.log("upgradeTables failed");
-        }, function() {
-            console.log("upgradeTables success");
-            that.getServices(() => {});
-        });
+  /**
+   * 数据库填充操作
+   */
+  populateDatabase(db,callback){
+    // return new Promise(function(resolve, reject){
+      var that = this;
+      db.executeSql('SELECT * FROM '+VERSION_TABLE+' ORDER BY id DESC LIMIT 1', [], (results)=>{
+          console.log(JSON.stringify(results));
+          var len = results.rows.length;
+          if(len > 0){
+            let row = results.rows.item(0);
+            oldVersion = row.newVersion;
+            newVersion = curVersion;
+          }
+          if(newVersion > oldVersion){
+            db.transaction(that.onUpgrade,(err)=>{
+              // console.error(err)
+              callback(err,null);
+            },()=>{
+              callback(null,null);
+            });
+          }else if(newVersion < oldVersion){
+            db.transaction(that.onDowngrade,(err)=>{
+              // console.error(err)
+              callback(err,null);
+            },()=>{
+              callback(null,null);
+            });
+          }else if(newVersion == -1 && oldVersion == -1 ||newVersion == oldVersion){
+            console.log(db);
+            db.transaction(that.onCreate,(err)=>{
+              // console.error(err)
+              callback(err,null);
+            },()=>{
+              callback(null,null);
+            });
+          }else {
+            var err = '版本异常 oldVersion:'+oldVersion+' newVersion:'+newVersion;
+            // console.error(err);
+            callback(err,null);
+          }
 
-    }, function() {
-        console.log("Post version query (failed)");
-        db.transaction(that.upgradeTables, function() {
-            console.log("Upgrade failed");
-        }, function() {
-            console.log("Upgrade success");
-        });
-    });
+      }, (err)=>{
+          db.transaction(that.onCreate,(err)=>{
+            // console.error(err)
+            callback(err,null);
+          },()=>{
+            callback(null,null);
+          });
+      });
+    // })
   }
-  createTable(){  // 创建表
-      if(!db){
-        this.open();
-      }
-      console.log(db)
-      console.log('----------------')
-      // 创建列表
-      db.transaction((tx)=>{
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ' + MYPOEM_TABLE + '(' +//图书列表
-                  'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                  'userid VARCHAR,' +
-                  'head VARCHAR,' +
-                  'pseudonym VARCHAR,' +
-                  'poem LONGTEXT,'+
-                  'lovenum INTEGER,'+
-                  'commentnum INTEGER,'+
-                  'time BIGINT(20)'
-                  + ');'
-                  , [], ()=> {
+  /**
+   * 初次创建
+   */
+  onCreate(tx){
+    console.log('@@@@@@数据库初始化');
+    var create_version_sql = 'CREATE TABLE IF NOT EXISTS '+VERSION_TABLE+'( '+//版本控制
+             'id INTEGER PRIMARY KEY NOT NULL,'+
+             'oldVersion INTEGER DEFAULT(-1),'+
+             'newVersion INTEGER DEFAULT(-1)'+
+             '); ';
+    var crate_mypoen_sql = 'CREATE TABLE IF NOT EXISTS ' + MYPOEM_TABLE + '(' +//作品
+             'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+             'userid VARCHAR,' +
+             'head VARCHAR,' +
+             'pseudonym VARCHAR,' +
+             'poem LONGTEXT,'+
+             'lovenum INTEGER,'+
+             'commentnum INTEGER,'+
+             'time BIGINT(20)'
+             + ');';
+   var create_allpoem_sql = 'CREATE TABLE IF NOT EXISTS ' + ALLPOEM_TABLE + '(' +//图书列表
+             'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+             'userid VARCHAR,' +
+             'head VARCHAR,' +
+             'pseudonym VARCHAR,' +
+             'poem LONGTEXT,'+
+             'lovenum INTEGER,'+
+             'commentnum INTEGER,'+
+             'time BIGINT(20)'
+             + ');';
+     var create_comment_sql = 'CREATE TABLE IF NOT EXISTS ' + COMMENT_TABLE + '(' +//评论列表
+               'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+               'pid INT(11),'+
+               'userid VARCHAR,' +
+               'head VARCHAR,' +
+               'pseudonym VARCHAR,' +
+               'cid INT(11),'+
+               'cuserid VARCHAR,'+
+               'chead VARCHAR,' +
+               'cpseudonym VARCHAR,' +
+               'comment LONGTEXT,'+
+               'time BIGINT(20)'
+               + ');'  ;
+       var create_love_sql = 'CREATE TABLE IF NOT EXISTS ' + LOVE_TABLE + '(' +//点赞列表
+                   'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+                   'pid INT(11),'+
+                   'userid VARCHAR,' +
+                   'head VARCHAR,' +
+                   'pseudonym VARCHAR,' +
+                   'love INTEGER,'+
+                   'time BIGINT(20)'
+                   + ');';
+       var create_myfllow_sql = 'CREATE TABLE IF NOT EXISTS ' + MY_FOLLOW_TABLE + '(' +//我的关注列表
+                 'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+                 'userid VARCHAR,' +
+                 'fansid VARCHAR,' +
+                 'head VARCHAR,' +
+                 'pseudonym VARCHAR,' +
+                 'fstate INTEGER,'+
+                 'tstate INTEGER,'+
+                 'time BIGINT(20)'
+                 + ');';
+       var create_followme_sql = 'CREATE TABLE IF NOT EXISTS ' + FOLLOW_ME_TABLE + '(' +//关注我的列表
+                 'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+                 'userid VARCHAR,' +
+                 'fansid VARCHAR,' +
+                 'head VARCHAR,' +
+                 'pseudonym VARCHAR,' +
+                 'fstate INTEGER,'+
+                 'tstate INTEGER,'+
+                 'time BIGINT(20)'
+                 + ');';
+      tx.executeSql(create_version_sql, [],()=> {
+                 console.log('@@@@@@创建verison成功');
+               }, (err)=> {
+                 console.error(err)
+               });
+       tx.executeSql(crate_mypoen_sql, [], ()=> {
+                 console.log('@@@@@@创建mypoem成功');
+               }, (err)=> {
+                 console.error(err)
+               });
+       tx.executeSql(create_allpoem_sql, [], ()=> {
+                   console.log('@@@@@@创建表allpoem成功');
+                 }, (err)=> {
+                   console.error(err)
+                 });
+       tx.executeSql(create_comment_sql, [], ()=> {
+                   console.log('@@@@@@创建表comment成功');
+                 }, (err)=> {
+                   console.error(err)
+                 });
+       tx.executeSql(create_love_sql, [], ()=> {
+                     console.log('@@@@@@创建表love成功');
+                   }, (err)=> {
+                     console.error(err)
+                   });
+       tx.executeSql(create_myfllow_sql, [], ()=> {
+                   console.log('@@@@@@创建表myfllow成功');
+                 }, (err)=> {
+                   console.error(err)
+                 });
+       tx.executeSql(create_followme_sql, [], ()=> {
+                   console.log('@@@@@@创建表followme成功');
+                 }, (err)=> {
+                   console.error(err)
+                 });
+      var inser_version_sql = 'INSERT INTO '+VERSION_TABLE+
+        '(oldVersion,newVersion) VALUES (?,?)';
+      if(newVersion == -1){
+        tx.executeSql(inser_version_sql, [curVersion,curVersion], (results)=> {
+                    console.log('@@@@@@插入版本信息'+JSON.stringify(results));
                   }, (err)=> {
-                    console.log(err)
+                    console.error(err)
                   });
-          tx.executeSql('CREATE TABLE IF NOT EXISTS ' + ALLPOEM_TABLE + '(' +//图书列表
-                    'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                    'userid VARCHAR,' +
-                    'head VARCHAR,' +
-                    'pseudonym VARCHAR,' +
-                    'poem LONGTEXT,'+
-                    'lovenum INTEGER,'+
-                    'commentnum INTEGER,'+
-                    'time BIGINT(20)'
-                    + ');'
-                    , [], ()=> {
-                    }, (err)=> {
-                      console.log(err)
-                    });
-          tx.executeSql('CREATE TABLE IF NOT EXISTS ' + COMMENT_TABLE + '(' +//评论列表
-                    'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                    'pid INT(11),'+
-                    'userid VARCHAR,' +
-                    'head VARCHAR,' +
-                    'pseudonym VARCHAR,' +
-                    'cid INT(11),'+
-                    'cuserid VARCHAR,'+
-                    'chead VARCHAR,' +
-                    'cpseudonym VARCHAR,' +
-                    'comment LONGTEXT,'+
-                    'time BIGINT(20)'
-                    + ');'
-                    , [], ()=> {
-                    }, (err)=> {
-                      console.log(err)
-                    });
-            tx.executeSql('CREATE TABLE IF NOT EXISTS ' + LOVE_TABLE + '(' +//点赞列表
-                      'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                      'pid INT(11),'+
-                      'userid VARCHAR,' +
-                      'head VARCHAR,' +
-                      'pseudonym VARCHAR,' +
-                      'love INTEGER,'+
-                      'time BIGINT(20)'
-                      + ');'
-                      , [], ()=> {
-                      }, (err)=> {
-                        console.log(err)
-                      });
-              tx.executeSql('CREATE TABLE IF NOT EXISTS ' + MY_FOLLOW_TABLE + '(' +//我的关注列表
-                        'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                        'userid VARCHAR,' +
-                        'fansid VARCHAR,' +
-                        'head VARCHAR,' +
-                        'pseudonym VARCHAR,' +
-                        'fstate INTEGER,'+
-                        'tstate INTEGER,'+
-                        'time BIGINT(20)'
-                        + ');'
-                        , [], ()=> {
-                        }, (err)=> {
-                          console.log(err)
-                        });
-              tx.executeSql('CREATE TABLE IF NOT EXISTS ' + FOLLOW_ME_TABLE + '(' +//关注我的列表
-                        'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
-                        'userid VARCHAR,' +
-                        'fansid VARCHAR,' +
-                        'head VARCHAR,' +
-                        'pseudonym VARCHAR,' +
-                        'fstate INTEGER,'+
-                        'tstate INTEGER,'+
-                        'time BIGINT(20)'
-                        + ');'
-                        , [], ()=> {
-                        }, (err)=> {
-                          console.log(err)
-                        });
-      }, (err) => {
-        console.log('创建表失败 err:',err);
-      } ,() => {
-        console.log('创建表成功');
-      })
-    }
+      }
+  }
+  /**
+   * 数据库升级
+   * @param   tx         [
+   * @param  oldVersion 旧版本
+   * @param   newVersion 新版本
+   */
+  onUpgrade(tx){
+      console.log('@@@@@@数据库升级 oldVersion:'+oldVersion+' newVersion:'+newVersion);
+      var inser_version_sql = 'INSERT INTO '+VERSION_TABLE+
+        '(oldVersion,newVersion) VALUES (?,?)';
+      tx.executeSql(inser_version_sql, [oldVersion,newVersion], (results)=> {
+                  console.log('@@@@@@插入版本信息'+results);
+                }, (err)=> {
+                  console.error(err)
+                });
+  }
+  /**
+   * 数据库降级
+   * @param   tx         [
+   * @param  oldVersion 旧版本
+   * @param   newVersion 新版本
+   */
+  onDowngrade(tx){
+      console.log('@@@@@@数据库降级 oldVersion:'+oldVersion+' newVersion:'+newVersion);
+      var inser_version_sql = 'INSERT INTO '+VERSION_TABLE+
+        '(oldVersion,newVersion) VALUES (?,?)';
+      tx.executeSql(inser_version_sql, [oldVersion,newVersion], (results)=> {
+                  console.log('@@@@@@插入版本信息'+results);
+                }, (err)=> {
+                  console.error(err)
+                });
+  }
+  // createTable(){  // 创建表
+  //     // if(!db){
+  //     //   this.open();
+  //     // }
+  //     // 创建列表
+  //     db.transaction((tx)=>{
+  //        var create_version_sql = 'CREATE TABLE IF NOT EXISTS '+VERSION_TABLE+'( '+//版本控制
+  //                 'id INTEGER PRIMARY KEY NOT NULL,'+
+  //                 'oldVersion INTEGER DEFAULT(-1),'+
+  //                 'newVersion INTEGER DEFAULT(1)'+
+  //                 '); ';
+  //        var crate_mypoen_sql = 'CREATE TABLE IF NOT EXISTS ' + MYPOEM_TABLE + '(' +//作品
+  //                 'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                 'userid VARCHAR,' +
+  //                 'head VARCHAR,' +
+  //                 'pseudonym VARCHAR,' +
+  //                 'poem LONGTEXT,'+
+  //                 'lovenum INTEGER,'+
+  //                 'commentnum INTEGER,'+
+  //                 'time BIGINT(20)'
+  //                 + ');';
+  //       var create_allpoem_sql = 'CREATE TABLE IF NOT EXISTS ' + ALLPOEM_TABLE + '(' +//图书列表
+  //                 'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                 'userid VARCHAR,' +
+  //                 'head VARCHAR,' +
+  //                 'pseudonym VARCHAR,' +
+  //                 'poem LONGTEXT,'+
+  //                 'lovenum INTEGER,'+
+  //                 'commentnum INTEGER,'+
+  //                 'time BIGINT(20)'
+  //                 + ');';
+  //         var create_comment_sql = 'CREATE TABLE IF NOT EXISTS ' + COMMENT_TABLE + '(' +//评论列表
+  //                   'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                   'pid INT(11),'+
+  //                   'userid VARCHAR,' +
+  //                   'head VARCHAR,' +
+  //                   'pseudonym VARCHAR,' +
+  //                   'cid INT(11),'+
+  //                   'cuserid VARCHAR,'+
+  //                   'chead VARCHAR,' +
+  //                   'cpseudonym VARCHAR,' +
+  //                   'comment LONGTEXT,'+
+  //                   'time BIGINT(20)'
+  //                   + ');'  ;
+  //           var create_love_sql = 'CREATE TABLE IF NOT EXISTS ' + LOVE_TABLE + '(' +//点赞列表
+  //                       'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                       'pid INT(11),'+
+  //                       'userid VARCHAR,' +
+  //                       'head VARCHAR,' +
+  //                       'pseudonym VARCHAR,' +
+  //                       'love INTEGER,'+
+  //                       'time BIGINT(20)'
+  //                       + ');';
+  //           var create_myfllow_sql = 'CREATE TABLE IF NOT EXISTS ' + MY_FOLLOW_TABLE + '(' +//我的关注列表
+  //                     'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                     'userid VARCHAR,' +
+  //                     'fansid VARCHAR,' +
+  //                     'head VARCHAR,' +
+  //                     'pseudonym VARCHAR,' +
+  //                     'fstate INTEGER,'+
+  //                     'tstate INTEGER,'+
+  //                     'time BIGINT(20)'
+  //                     + ');';
+  //           var create_followme_sql = 'CREATE TABLE IF NOT EXISTS ' + FOLLOW_ME_TABLE + '(' +//关注我的列表
+  //                     'id INTEGER PRIMARY KEY NOT NULL,' +      //id作为主键
+  //                     'userid VARCHAR,' +
+  //                     'fansid VARCHAR,' +
+  //                     'head VARCHAR,' +
+  //                     'pseudonym VARCHAR,' +
+  //                     'fstate INTEGER,'+
+  //                     'tstate INTEGER,'+
+  //                     'time BIGINT(20)'
+  //                     + ');';
+  //          tx.executeSql(create_version_sql, [],()=> {
+  //                     console.log('@@@@@@创建verison成功');
+  //                   }, (err)=> {
+  //                     console.error(err)
+  //                   });
+  //           tx.executeSql(crate_mypoen_sql, [], ()=> {
+  //                     console.log('@@@@@@创建mypoem成功');
+  //                   }, (err)=> {
+  //                     console.error(err)
+  //                   });
+  //           tx.executeSql(create_allpoem_sql, [], ()=> {
+  //                       console.log('@@@@@@创建表allpoem成功');
+  //                     }, (err)=> {
+  //                       console.error(err)
+  //                     });
+  //           tx.executeSql(create_comment_sql, [], ()=> {
+  //                       console.log('@@@@@@创建表comment成功');
+  //                     }, (err)=> {
+  //                       console.error(err)
+  //                     });
+  //           tx.executeSql(create_love_sql, [], ()=> {
+  //                         console.log('@@@@@@创建表love成功');
+  //                       }, (err)=> {
+  //                         console.error(err)
+  //                       });
+  //           tx.executeSql(create_myfllow_sql, [], ()=> {
+  //                       console.log('@@@@@@创建表myfllow成功');
+  //                     }, (err)=> {
+  //                       console.error(err)
+  //                     });
+  //           tx.executeSql(create_followme_sql, [], ()=> {
+  //                       console.log('@@@@@@创建表followme成功');
+  //                     }, (err)=> {
+  //                       console.error(err)
+  //                     });
+  //     }, (err) => {
+  //       console.error('创建表失败 err:',err);
+  //     } ,() => {
+  //       console.log('创建表成功');
+  //     })
+  //   }
     savePoem(poem){
       return new Promise( (resolve,reject) => {
             if(db){
@@ -229,24 +442,10 @@ class SQLite extends React.Component{
       }
   }
 
-  getServices(callback) {
-      db.executeSql("SELECT id FROM Service", [], function(results) {
-          console.log("Got service results "+JSON.stringify(results));
-          var len = results.rows.length;
-          console.log("len = "+len);
-          for (var i = 0; i < len; i++) {
-              let row = results.row.item(i);
-              console.log("row "+i+" = "+row.id);
-          }
-
-          callback(results);
-      });
-  }
-
   updatePoem(poem){
       return new Promise( (resolve,reject) => {
             if(db){
-                var sql = 'SELECT * FROM '+MYPOEM+' WHERE id = ?';
+                var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id = ?';
                 db.executeSql(sql,[poem.id],
                     (results)=>{
                         var len = results.rows.length;
@@ -277,7 +476,7 @@ class SQLite extends React.Component{
     queryPoems(userid){ // 查找缓存列表，找到所有需要展示的数据
        return new Promise((resolve, reject)=>{
            if(db){
-              let sql = 'SELECT * FROM '+MYPOEM+' WHERE userid = ? ORDER BY id DESC ';
+              let sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE userid = ? ORDER BY id DESC ';
                db.executeSql(sql,[userid],
                    (results)=>{
                        var len = results.rows.length;
@@ -295,7 +494,7 @@ class SQLite extends React.Component{
        });
    }
    queryMaxPoems(fromid){
-     var sql = 'SELECT * FROM '+MYPOEM+' WHERE id>? ORDER BY id DESC ';//最新
+     var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id>? ORDER BY id DESC ';//最新
      return new Promise((resolve, reject)=>{
          if(db){
              db.executeSql(sql,[fromid],
@@ -315,7 +514,7 @@ class SQLite extends React.Component{
      });
    }
    queryMinPoems(fromid){
-     var sql = 'SELECT * FROM '+MYPOEM+' WHERE id<? ORDER BY id DESC ';//历史
+     var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id<? ORDER BY id DESC ';//历史
      return new Promise((resolve, reject)=>{
          if(db){
              db.executeSql(sql,[fromid],
@@ -337,7 +536,7 @@ class SQLite extends React.Component{
    queryPoem(id){
       return new Promise((resolve, reject)=>{
           if(db){
-              db.executeSql('SELECT * FROM '+MYPOEM+' WHERE id = ?  ',[id],
+              db.executeSql('SELECT * FROM '+MYPOEM_TABLE+' WHERE id = ?  ',[id],
                   (results)=>{
                       var len = results.rows.length;
                       var data ;
@@ -357,7 +556,7 @@ class SQLite extends React.Component{
   queryPoemNum(poem){
     return new Promise( (resolve,reject) => {
           if(db){
-              var sql = 'SELECT * FROM '+MYPOEM+' WHERE id = ?';
+              var sql = 'SELECT * FROM '+MYPOEM_TABLE+' WHERE id = ?';
               db.executeSql(sql,[poem.id],
                   (results)=>{
                       var len = results.rows.length;
@@ -375,7 +574,7 @@ class SQLite extends React.Component{
   deletePoem(id){
     return new Promise((resolve,reject) => {
     		if(db){
-    			db.executeSql('DELETE FROM ' +MYPOEM+ ' WHERE id=? ',[id],
+    			db.executeSql('DELETE FROM ' +MYPOEM_TABLE+ ' WHERE id=? ',[id],
                     ()=>{
                         resolve();
                     },(err)=>{
@@ -747,8 +946,8 @@ class SQLite extends React.Component{
              let fansid = follow.fansid;
              let head = follow.head;
              let pseudonym = follow.pseudonym;
-             let fstate = follow.poem;
-             let tstate = follow.lovenum;
+             let fstate = follow.fstate;
+             let tstate = follow.tstate;
              let sql = 'INSERT INTO '+ MY_FOLLOW_TABLE +' (id,userid,fansid,head,pseudonym,fstate,tstate) VALUES(?,?,?,?,?,?,?)';
              tx.executeSql(sql,[id,userid,fansid,head,pseudonym,fstate,tstate],()=>{
 

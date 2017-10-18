@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TabNavigator,StackNavigator } from 'react-navigation';
-var SQLite = require('react-native-sqlite-storage');
+import { TabNavigator,StackNavigator,DrawerNavigator } from 'react-navigation';
 
-import {StyleConfig} from './Config';
+import {LoadUI} from './ui/LoadUI';//加载页
 import {WorksTab} from './tabs/WorksTab';//作品
 import {ReadingTab} from './tabs/ReadingTab';//欣赏
 import {MyTab} from './tabs/MyTab';//我的
@@ -20,22 +20,27 @@ import {CommentUI} from './ui/CommentUI';
 import {PerfectUI} from './ui/PerfectUI';
 import {PersonalUI} from './ui/PersonalUI';
 import {FollowUI} from './ui/FollowUI';
+import {HomeUI} from './ui/HomeUI';
+import {MyUI} from './ui/MyUI';
+
+import {Drawer} from './drawer/Drawer';
+
 
 const Tabs = TabNavigator({
-  // WorksTab: {
-  //   screen: WorksTab,
-  //   navigationOptions: {
-  //       tabBarLabel: '作品',
-  //       tabBarIcon: ({ tintColor, focused }) => (
-  //         <Icon
-  //           name='home'
-  //           size={26}
-  //           type="MaterialIcons"
-  //           color={tintColor}
-  //         />
-  //       ),
-  //     }
-  // },
+  WorksTab: {
+    screen: WorksTab,
+    navigationOptions: {
+        tabBarLabel: '作品',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='home'
+            size={26}
+            type="MaterialIcons"
+            color={tintColor}
+          />
+        ),
+      }
+  },
   ReadingTab: {
     screen: ReadingTab,
     navigationOptions: {
@@ -48,22 +53,6 @@ const Tabs = TabNavigator({
             color={tintColor}
           />
         ),
-      }
-  },
-  AddPoemUI: {
-    screen: AddPoemUI,
-    navigationOptions: {
-        tabBarLabel: '添加',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='add-box'
-            size={45}
-            type="MaterialIcons"
-            color={StyleConfig.C_1E8AE8}
-            style={{marginTop: -15}}
-          />
-        ),
-        // tabBarVisible:false,
       }
   },
   MyTab: {
@@ -93,12 +82,32 @@ const Tabs = TabNavigator({
     lazy:true,
 });
 
+
+const DrawerNav = DrawerNavigator({
+  HomeUI: {
+    screen: HomeUI,
+  },
+  // MyUI:{
+  //   screen:MyUI,
+  // }
+},{
+  drawerWidth: 200,
+  drawerPosition: 'left',
+  contentComponent: props => <Drawer {...props}/>,
+  drawerBackgroundColor: 'transparent'
+});
 const App = StackNavigator({
+  // LoadUI:{
+  //   screen: LoadUI,
+  //   navigationOptions:{
+  //     header:null,
+  //   }
+  // },
   Main: {
-    screen: Tabs,
-    // navigationOptions:{
-    //   header:null,
-    // }
+    screen: DrawerNav,
+    navigationOptions:{
+      header:null,
+    }
   },
   AddPoemUI:{
     screen:AddPoemUI,
@@ -128,7 +137,10 @@ const App = StackNavigator({
   },
   FollowUI:{
     screen:FollowUI,
-  }
+  },
+  MyUI:{
+    screen:MyUI,
+  },
 },{
   initialRouteName: 'Main', // 默认显示界面
 })

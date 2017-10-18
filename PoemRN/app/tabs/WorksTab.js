@@ -27,8 +27,34 @@ const sqlite = new SQLite();
 class FlatListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id,ftype:1});
+        this.props.navigate('DetailsUI',{id:this.props.id});
     };
+    renderNode(node, index, siblings, parent, defaultRenderer) {
+        // console.log('@@@@@@name:'+node.name);
+        // console.log('@@@@@@attribs:'+JSON.stringify(node.attribs));
+        if (node.name == 'div') {
+            const specialSyle = node.attribs.style
+            if(specialSyle == 'text-align: center;'){
+              specialSyle = {textAlign:'center',};
+              return (
+                <Text key={index} style={specialSyle}>
+                  {defaultRenderer(node.children, parent)}
+                </Text>
+              )
+            }
+          }
+        if(node.name == 'span'){
+          const specialSyle = node.attribs.style
+          if(specialSyle == 'font-size: 1em;'){
+            specialSyle = {fontSize:22,};
+            return (
+              <Text key={index} style={specialSyle}>
+                {defaultRenderer(node.children, parent)}
+              </Text>
+            )
+          }
+        }
+      }
     render() {
         return(
             <TouchableOpacity
@@ -37,9 +63,11 @@ class FlatListItem extends React.PureComponent {
                 >
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
-                  <View style={styles.poem_bg}>
+                  <View style={pstyles.htmlview_bg}>
                   <HTMLView
+                      style={pstyles.htmlview}
                       value={this.props.poem}
+                      renderNode={this.renderNode}
                       />
                   </View>
                   <View style={styles.fitem_more}>
@@ -61,6 +89,7 @@ class WorksTab extends React.Component {
         headerTintColor:StyleConfig.C_FFFFFF,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
+        headerLeft:null,
      });
 
      // 数据容器，用来存储数据
@@ -77,28 +106,19 @@ class WorksTab extends React.Component {
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-        sqlite.createTable();
+        sqlite.open();
         DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
            this._analysisObserver(obj);
         });
-        DeviceEventEmitter.addListener(Emitter.ADDPOEM, (poem)=>{
-          this._eventAddPoem(poem)
-        });
-        DeviceEventEmitter.addListener('DelPoem', (id)=>{
-          this._eventDeletePoem(id)
-        });
-        DeviceEventEmitter.addListener('UpPoem', (poem)=>{
-          this._eventUpPoem(poem)
-        });
         AsyncStorage.getItem(StorageConfig.USERID,(error,userid)=>{
           if(!error){
-            if(userid){
-              this._requestUserInfo(userid);
-              this._queryPoems();
-            }
             this.setState({
               userid:userid,
-            })
+            });
+            if(userid){
+              // this._queryPoems();
+              this._requestNewestPoem();
+            }
           }
         })
     }
@@ -232,11 +252,11 @@ class WorksTab extends React.Component {
              this.setState({
                sourceData: this.dataContainer
              });
-             sqlite.savePoems(poems).then((results)=>{
-               console.log('上拉数据保存成功:'+results)
-             }).catch((err)=>{
-               console.log(err);
-             })
+            //  sqlite.savePoems(poems).then((results)=>{
+            //    console.log('上拉数据保存成功:'+results)
+            //  }).catch((err)=>{
+            //    console.log(err);
+            //  })
            }
       }else{
         Alert.alert(res.errmsg);
@@ -358,11 +378,11 @@ class WorksTab extends React.Component {
             this.setState({
               sourceData: this.dataContainer
             });
-            sqlite.savePoems(poems).then((results)=>{
-              console.log('下拉数据保存成功:'+results)
-            }).catch((err)=>{
-              console.log(err);
-            })
+            // sqlite.savePoems(poems).then((results)=>{
+            //   console.log('下拉数据保存成功:'+results)
+            // }).catch((err)=>{
+            //   console.log(err);
+            // })
           }
        }else{
          Alert.alert(res.errmsg);
@@ -392,6 +412,15 @@ class WorksTab extends React.Component {
           sourceData: this.dataContainer,
         });
         break;
+      case Emitter.ADDPOEM:
+        this._eventAddPoem(param);
+        break;
+      case Emitter.DELPOEM:
+        this._eventDeletePoem(param.id)
+        break;
+      case Emitter.UPPOEM:
+        this._eventUpPoem(param)
+        break;
       default:
         break;
     }
@@ -417,9 +446,6 @@ const styles = StyleSheet.create({
     fontSize:14,
     color:'#d4d4d4',
     marginTop:4,
-  },
-  poem_bg:{
-
   },
   poem:{
 

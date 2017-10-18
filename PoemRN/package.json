@@ -7,23 +7,28 @@
     "test": "jest"
   },
   "dependencies": {
+    "autoresponsive-react-native": "^1.0.9",
     "prop-types": "^15.5.10",
-    "react": "16.0.0-alpha.12",
-    "react-native": "0.48.3",
+    "react": "16.0.0-beta.5",
+    "react-native": "0.49.3",
     "react-native-elements": "^0.16.0",
+    "react-native-fetch-blob": "^0.10.8",
     "react-native-htmlview": "^0.12.0",
     "react-native-image-crop-picker": "^0.16.1",
-    "react-native-keyboard-spacer": "^0.3.1",
+    "react-native-img-cache": "^1.4.0",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-markdown": "^0.1.1",
+    "react-native-pull": "latest",
     "react-native-simple-markdown": "^1.0.60-rc.3",
+    "react-native-splash-screen": "^3.0.1",
     "react-native-sqlite-storage": "^3.3.3",
+    "react-native-swRefresh": "^1.2.3",
     "react-native-tab-view": "^0.0.69",
     "react-native-textinput-effects": "^0.4.0",
     "react-native-vector-icons": "^4.3.0",
     "react-native-webview-bridge": "^0.33.0",
     "react-native-zss-rich-text-editor": "^1.0.2",
-    "react-navigation": "^1.0.0-beta.11",
-    "realm": "^1.12.0"
+    "react-navigation": "^1.0.0-beta.11"
   },
   "devDependencies": {
     "babel-jest": "21.0.2",
