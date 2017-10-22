@@ -40,6 +40,10 @@ class Drawer extends React.Component {
     this._eventUserInfo();
     this._onHome = this._onHome.bind(this);
     this._onPerson = this._onPerson.bind(this);
+    this._onWorks = this._onWorks.bind(this);
+    this._onStting = this._onStting.bind(this);
+
+
   }
   componentWillUnMount(){
     DeviceEventEmitter.remove();
@@ -65,7 +69,7 @@ class Drawer extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity onPress={()=>{
             if(this.state.userid){
-              navigate('PerfectUI',{go_back_key:state.key});
+              navigate('MyUI',{go_back_key:state.key});
             }else{
               navigate('LoginUI',{go_back_key:state.key});
             }
@@ -88,6 +92,7 @@ class Drawer extends React.Component {
         </View>
         {/* {this._renderItem('首页','apps',this._onHome)} */}
         {this._renderPerson()}
+        {this._renderItem('设置','settings',this._onStting)}
       </View>
     )
   }
@@ -115,7 +120,7 @@ class Drawer extends React.Component {
   }
   _renderPerson(){
     if(this.state.userid){
-      return(this._renderItem('个人','person',this._onPerson))
+      return(this._renderItem('作品','call-to-action',this._onWorks))
     }
   }
   _onHome(){
@@ -129,6 +134,12 @@ class Drawer extends React.Component {
     //   0
     // );
     this.props.navigation.navigate('MyUI')
+  }
+  _onWorks(){
+    this.props.navigation.navigate('WorksUI');
+  }
+  _onStting(){
+    this.props.navigation.navigate('SettingUI');
   }
   _eventUserInfo(){
     let user = Global.user;
@@ -169,12 +180,6 @@ class Drawer extends React.Component {
           userid:Global.user.userid,
         })
         this._eventUserInfo();
-        break;
-      case Emitter.ADDPOEM:
-        this._requestNewestAllPoem();
-        break;
-      case Emitter.DELPOEM:
-        this._eventDeletePoem(id);
         break;
       default:
         break;

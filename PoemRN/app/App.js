@@ -22,6 +22,8 @@ import {PersonalUI} from './ui/PersonalUI';
 import {FollowUI} from './ui/FollowUI';
 import {HomeUI} from './ui/HomeUI';
 import {MyUI} from './ui/MyUI';
+import {WorksUI} from './ui/WorksUI';
+import {SettingUI} from './ui/SettingUI';
 
 import {Drawer} from './drawer/Drawer';
 
@@ -140,6 +142,12 @@ const App = StackNavigator({
   },
   MyUI:{
     screen:MyUI,
+  },
+  WorksUI:{
+    screen:WorksUI,
+  },
+  SettingUI:{
+    screen:SettingUI,
   },
 },{
   initialRouteName: 'Main', // 默认显示界面

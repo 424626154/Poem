@@ -327,7 +327,8 @@ class WorksTab extends React.Component {
     let sourceData = this.state.sourceData
     for(var i = 0 ; i < sourceData.length ; i ++ ){
       if(sourceData[i].id == poem.id){
-        sourceData[i].poem = poem.poem
+        sourceData[i].title = poem.title;
+        sourceData[i].content = poem.content;
       }
     }
     this.setState({

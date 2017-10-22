@@ -13,10 +13,10 @@ module.exports = {
     /**
      * 添加作品
      */
-	addPoem:function(userid,poem,time,callback){
-		var sql = 'INSERT INTO '+POEM_TABLE+'(userid,poem,time) VALUES(?,?,?)';
+	addPoem:function(userid,title,content,time,callback){
+		var sql = 'INSERT INTO '+POEM_TABLE+'(userid,title,content,time) VALUES(?,?,?,?)';
 		pool.getConnection(function(err, connection) {
-            connection.query(sql, [userid,poem,time], function(err, result) {
+            connection.query(sql, [userid,title,content,time], function(err, result) {
                 if(err){
                     callback(err, result)
                     connection.release();
@@ -35,10 +35,10 @@ module.exports = {
     /**
      * 修改作品
      */
-    upPoem:function(id,userid,poem,callback){
-        var sql = 'UPDATE '+POEM_TABLE+' SET poem = ? WHERE id = ? AND userid = ? ';
+    upPoem:function(id,userid,title,content,callback){
+        var sql = 'UPDATE '+POEM_TABLE+' SET title = ? , content = ? WHERE id = ? AND userid = ? ';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, [poem,id,userid], function(err, result) {
+            connection.query(sql, [title,content,id,userid], function(err, result) {
                 if(err){
                     callback(err, result)
                     connection.release();
@@ -94,11 +94,13 @@ module.exports = {
     /**
      *查询最新作品圈
      */
-	queryNewestAllPoem(fromid,callback){
+	queryNewestAllPoem(fromid,userid,callback){
 		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id>?  AND del = 0  ORDER BY id DESC LIMIT '+LIMIT_NUM;
-		var sql = 'SELECT poem.id,poem.userid,poem.poem,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+		sql = 'SELECT poem.id,poem.userid,poem.title,poem.content,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+        var sql1 = 'SELECT * FROM '+LOVE_TABLE+' WHERE userid = ?'
+        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, [fromid], function(err, result) {
+            connection.query(sql, [fromid,userid], function(err, result) {
             	callback(err, result)
                 connection.release();
             });
@@ -107,11 +109,13 @@ module.exports = {
     /**
      *查询历史作品圈
      */
-	queryHistoryAllPoem(fromid,callback){
+	queryHistoryAllPoem(fromid,userid,callback){
 		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id < ?  AND del = 0 ORDER BY id DESC LIMIT '+LIMIT_NUM;
-        var sql = 'SELECT poem.id,poem.userid,poem.poem,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+        sql = 'SELECT poem.id,poem.userid,poem.title,poem.content,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
+        var sql1 = 'SELECT * FROM '+LOVE_TABLE+' WHERE userid = ?'
+        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, [fromid], function(err, result) {
+            connection.query(sql, [fromid,userid], function(err, result) {
             	callback(err, result)
                 connection.release();
             });

@@ -13,7 +13,7 @@ import {
       DeviceEventEmitter,
      } from 'react-native';
 import {CachedImage} from "react-native-img-cache";
-import HTMLView from 'react-native-htmlview';
+// import HTMLView from 'react-native-htmlview';
 
 import SQLite from '../db/Sqlite';
 const sqlite = new SQLite();
@@ -87,12 +87,17 @@ class FlatListItem extends React.PureComponent {
               </View>
               </TouchableOpacity>
               {/* 诗歌 */}
-              <View style={pstyles.htmlview_bg}>
+              {/* <View style={pstyles.htmlview_bg}>
                 <HTMLView
                     style={pstyles.htmlview}
                     value={this.props.poem}
                     renderNode={this.renderNode}
                     />
+              </View> */}
+              <View style={styles.poem}>
+                <Text style={styles.poem_title}>{this.props.title}</Text>
+                <Text style={styles.poem_content}
+                >{this.props.content}</Text>
               </View>
               {/* menu */}
               <View style={styles.menu}>
@@ -113,16 +118,18 @@ class FlatListItem extends React.PureComponent {
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={()=>Alert.alert('点赞')}>
+                    onPress={()=>{
+                      this.props._onLove(this.props.item);
+                    }}>
                     <View style={styles.menu_item}>
                       <Icon
                         name='thumb-up'
                         size={30}
                         type="MaterialIcons"
-                        color={'#7b8992'}
+                        color={this._renderLoveColor()}
                         />
                         <Text style={styles.menu_font}>
-                          {this.renderLivenum(this.props.livenum)}
+                          {this.renderLivenum(this.props.lovenum)}
                         </Text>
                     </View>
                   </TouchableOpacity>
@@ -135,8 +142,13 @@ class FlatListItem extends React.PureComponent {
     renderCommentnum(commentnum){
       return commentnum > 0 ? commentnum:'';
     }
-    renderLivenum(livenum){
-      return livenum > 0 ? livenum:'';
+    renderLivenum(lovenum){
+      // console.log('@@@lovenum:'+lovenum);
+      return lovenum > 0 ? lovenum:'';
+    }
+    _renderLoveColor(){
+      // console.log('@@@this.props.item.mylove:'+this.props.item.mylove);
+      return this.props.item.mylove > 0 ? '#1e8ae8':'#7b8992';
     }
 }
 
@@ -169,6 +181,7 @@ class HomeUI extends React.Component {
              refreshing: false,
              userid:'',
          }
+         this._onLove = this._onLove.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
@@ -183,9 +196,9 @@ class HomeUI extends React.Component {
           if(userid){
               this._requestUserInfo(userid);
           }
+          this._requestNewestAllPoem();
         }
       })
-      this._requestNewestAllPoem();
       // sqlite.queryAllPoems().then((results)=>{
       //     this.dataContainer = results;
       //     this.setState({
@@ -274,6 +287,7 @@ class HomeUI extends React.Component {
    // 加载item布局
    _renderItem = ({item}) =>{
       let headurl = item.head?{uri:HttpUtil.getHeadurl(item.head)}:nothead;
+      // console.log('@@@item:'+JSON.stringify(item));
        return(
            <FlatListItem
                id={item.id}
@@ -281,12 +295,14 @@ class HomeUI extends React.Component {
                selected={ !!this.state.selected.get(item.id) }
                pseudonym={ item.pseudonym }
                headurl={headurl}
-               poem={item.poem}
+               title={item.title}
+               content={item.content}
                time={Utils.dateStr(item.time)}
-               livenum={item.livenum}
+               lovenum={item.lovenum}
                commentnum={item.commentnum}
                item={item}
                navigate = {this.props.navigation.navigate}
+               _onLove={this._onLove}
            />
        );
    };
@@ -351,7 +367,45 @@ class HomeUI extends React.Component {
        console.error(error);
      });
  };
-
+_onLove(item){
+  var onlove = item.mylove == 0 ?1:0;
+  var json = JSON.stringify({
+    id:item.id,
+    userid:this.state.userid,
+    love:onlove,
+  });
+  HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
+    if(result.code == 0){
+      var love = result.data;
+      let sourceData = this.state.sourceData;
+      var isRefresh = false;
+      for(var i = 0 ; i < sourceData.length ; i ++ ){
+        if(sourceData[i].id == love.pid){
+          var lovenum = sourceData[i].lovenum;
+          if(love.love == 1){
+            lovenum += 1;
+          }else{
+            if(lovenum > 0 ){
+              lovenum -= 1;
+            }
+          }
+          sourceData[i].lovenum = lovenum;
+          sourceData[i].mylove = love.love;
+          isRefresh = true;
+        }
+      }
+      if(isRefresh){
+        this.setState({
+            sourceData: sourceData
+        });
+      }
+    }else{
+      Alert.alert(result.errmsg);
+    }
+  }).catch((err)=>{
+    console.error(err);
+  })
+}
   _eventDeletePoem(id){
     let sourceData = this.state.sourceData
     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
@@ -503,8 +557,15 @@ const styles = StyleSheet.create({
     paddingLeft:60,
   },
   poem:{
-    fontSize:18,
-    color:'#000000',
+
+  },
+  poem_title:{
+    fontSize:30,
+    textAlign:'center',
+  },
+  poem_content:{
+    fontSize:20,
+    textAlign:'center',
   },
   menu:{
     paddingLeft:60,

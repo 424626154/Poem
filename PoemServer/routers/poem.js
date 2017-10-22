@@ -45,12 +45,13 @@ router.get('/', function(req, res, next) {
 router.post('/addpoem', function(req, res, next) {
 	logReq(req);
     var userid = req.body.userid;
-    var poem = req.body.poem;
+    var title = req.body.title;
+    var content = req.body.content;
     var time = utils.getTime();
-    if(!poem||!userid){
+    if(!title||!content||!userid){
 		resError(res,'参数错误');
     }else{
-    	poemDao.addPoem(userid,poem,time,function(err,result){
+    	poemDao.addPoem(userid,title,content,time,function(err,result){
 	    	if(err){
 				resError(res,err);
 	    	}else{
@@ -71,11 +72,12 @@ router.post('/uppoem', function(req, res, next) {
   	logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
-    var poem = req.body.poem;
-    if(!poem||!id||!userid){
+    var title = req.body.title;
+    var content = req.body.content;
+    if(!title||!content||!id||!userid){
 		resError(res,'参数错误');
     }else{
-    	poemDao.upPoem(id,userid,poem,function(err,result){
+    	poemDao.upPoem(id,userid,title,content,function(err,result){
 	    	if(err){
 	    		resError(res,err);
 	    	}else{
@@ -173,11 +175,24 @@ router.post('/lovecomment', function(req, res, next) {
 });	
 /**
  * 最新作品集
+ * [{
+            "id": 58,
+            "userid": "userid_13671172337",
+            "title": "Gf",
+            "content": "Gh",
+            "lovenum": 0,
+            "commentnum": 0,
+            "head": "50fca5a28ff53e7b26338bc02d144c2d",
+            "pseudonym": "136",
+            "time": 1508306250,
+            "mylove": 0
+        }]
  */
 router.post('/newestallpoem', function(req, res, next) {
 	console.log('req /poem/newestallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
-    poemDao.queryNewestAllPoem(id,function(err,poems){
+    var userid = req.body.userid;
+    poemDao.queryNewestAllPoem(id,userid,function(err,poems){
     	if(err){
     		resError(res,err);
     	}else{
@@ -187,11 +202,24 @@ router.post('/newestallpoem', function(req, res, next) {
 });	
 /**
  * 历史作品集
+ * [{
+            "id": 58,
+            "userid": "userid_13671172337",
+            "title": "Gf",
+            "content": "Gh",
+            "lovenum": 0,
+            "commentnum": 0,
+            "head": "50fca5a28ff53e7b26338bc02d144c2d",
+            "pseudonym": "136",
+            "time": 1508306250,
+            "mylove": 0
+        }]
  */
 router.post('/historyallpoem', function(req, res, next) {
 	console.log('req /poem/historyallpoem body:'+JSON.stringify(req.body));
     var id = req.body.id;
-    poemDao.queryHistoryAllPoem(id,function(err,poems){
+    var userid = req.body.userid;
+    poemDao.queryHistoryAllPoem(id,userid,function(err,poems){
     	if(err){
 			resError(res,err);
     	}else{

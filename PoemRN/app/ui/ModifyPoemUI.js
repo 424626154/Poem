@@ -10,7 +10,7 @@ import {
   DeviceEventEmitter,
   AsyncStorage,
 } from 'react-native';
-import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
+// import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
@@ -40,7 +40,7 @@ class ModifyPoemUI extends React.Component {
          </TouchableOpacity>
        ),
        headerRight:(
-         <TouchableOpacity  onPress={()=>navigation.state.params.onGetContentHtml()}>
+         <TouchableOpacity  onPress={()=>navigation.state.params.onModify()}>
            <Text style={styles.nav_right}>修改</Text>
          </TouchableOpacity>
        ),
@@ -51,15 +51,18 @@ class ModifyPoemUI extends React.Component {
         console.log(params);
         this.state = {
             placeholder:'请输入内容',
-            value:params.poem.poem,
+            title:params.poem.title,
+            content:params.poem.content,
             id:params.id,
             userid:Global.user.userid,
             poem:params.poem,
         }
         this.onGetContentHtml = this.onGetContentHtml.bind(this);
+        this.onModify = this.onModify.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml})
+       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
+       this.props.navigation.setParams({onModify:this.onModify});
     }
     componentWillUnMount(){
     }
@@ -67,7 +70,7 @@ class ModifyPoemUI extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      <RichTextEditor
+      {/* <RichTextEditor
           ref={(r)=>this.richtext = r}
           style={styles.richText}
           contentInset={{right: 0, left: 0}}
@@ -88,7 +91,25 @@ class ModifyPoemUI extends React.Component {
             actions={['bold','italic','justifyLeft','justifyCenter']}
             iconMap={{bold:bold,italic:italic,justifyLeft:align_left,justifyCenter:align_center}}
             />
-        </View>
+        </View> */}
+        <TextInput
+          style={styles.title}
+          underlineColorAndroid={'transparent'}
+          placeholder={'请输入标题'}
+          onChangeText={(text) => this.setState({title:text})}
+          value={this.state.title}
+        />
+        <View style={styles.line}></View>
+        <TextInput
+          style={styles.content}
+          underlineColorAndroid={'transparent'}
+          placeholder={'请输入内容'}
+          onChangeText={(text) => this.setState({content:text})}
+          multiline={true}
+          textAlign={'center'}
+          textAlignVertical={'top'}
+          value={this.state.content}
+        />
         <KeyboardSpacer/>
       </View>
     );
@@ -135,7 +156,45 @@ class ModifyPoemUI extends React.Component {
         Alert.alert('保存诗歌失败:',err);
     });
   }
-
+  onModify(){
+    var title = this.state.title;
+    var content = this.state.content;
+    if(!this.state.userid){
+      Alert.alert('登录后再发布');
+      return;
+    }
+    if(!title){
+      Alert.alert('请输入标题');
+      return;
+    }
+    if(!content){
+      Alert.alert('请输入内容');
+      return;
+    }
+    var json = JSON.stringify({
+      id:this.state.id,
+      userid:this.state.userid,
+      title:title,
+      content:content,
+    });
+    HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
+      if(data.code == 0){
+        var poem = data.data;
+        // sqlite.updateAllPoem(poem).then((data)=>{
+        //
+        // })
+        // sqlite.updatePoem(poem).then((data)=>{
+        //
+        // })
+        Emitter.emit(Emitter.UPPOEM,poem);
+     	  this.props.navigation.goBack();
+      }else{
+        Alert.alert(data.errmsg);
+      }
+    }).catch((err)=>{
+        Alert.alert('保存诗歌失败:',err);
+    });
+  }
 
 }
 
@@ -157,7 +216,21 @@ const styles = StyleSheet.create({
   },
   input:{
     flex:1,
-  }
+  },
+  title:{
+    // height:30,
+    padding:0,
+    fontSize:30,
+  },
+  content:{
+    // height:height,
+    padding:0,
+    fontSize:20,
+  },
+  line:{
+    height:1,
+    backgroundColor:StyleConfig.C_D4D4D4,
+  },
 });
 
 export {ModifyPoemUI};

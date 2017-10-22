@@ -70,17 +70,16 @@ class LoveListView extends React.Component{
     super(props);
   }
   componentDidMount(){
-    this.loadPages();
+
   }
   componentWillUpdate(){
-    this.loadPages();
+
   }
   render(){
+    this.loadPages();
     return (
       <View style={styles.love_bg}>
-        {this.pages.map((elem, index) => {
-            return elem;
-          }) }
+        {this.pages.map((item, index) => this._renderItem(item)) }
       </View>
       );
   }
@@ -91,7 +90,8 @@ class LoveListView extends React.Component{
       var love = loves[i];
       love.key = i;
       love.type = i == loves.length -1?1:0;
-      this.pages.push(this._renderItem(love));
+      // this.pages.push(this._renderItem(love));
+      this.pages.push(love);
     }
   }
   _onLoveItem(item){
@@ -149,13 +149,12 @@ class DetailsUI extends React.Component{
     let params = this.props.navigation.state.params;
     this.state = {
         id:params.id,
-        poem:{userid:'',poem:'',lovenum:0,commentnum:0},
+        poem:{userid:'',poem:'',lovenum:0,commentnum:0,love:0},
         userid:Global.user.userid,
         ftype:params.ftype,
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
-        love:0,
         loves:[],//点赞列表
     }
   }
@@ -213,12 +212,17 @@ class DetailsUI extends React.Component{
     const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
-        <View style={pstyles.htmlview_bg}>
+        {/* <View style={pstyles.htmlview_bg}>
         <HTMLView
             style={pstyles.htmlview}
             value={this.state.poem.poem}
             renderNode={this.renderNode}
             />
+        </View> */}
+        <View style={styles.poem}>
+          <Text style={styles.poem_title}>{this.state.poem.title}</Text>
+          <Text style={styles.poem_content}
+          >{this.state.poem.content}</Text>
         </View>
         {/* ---menu--- */}
         {this._renderMenu()}
@@ -367,7 +371,8 @@ class DetailsUI extends React.Component{
     return lovenum > 0 ? lovenum:'';
   }
   _renderLoveColor(){
-    return this.state.love > 0 ? '#1e8ae8':'#7b8992';
+    console.log('@this.state.love:'+this.state.love)
+    return this.state.poem.love > 0 ? '#1e8ae8':'#7b8992';
   }
   /**
    * 点赞列表
@@ -474,7 +479,7 @@ class DetailsUI extends React.Component{
    * 点赞
    */
   _onLove(){
-    var onlove = this.state.love == 0 ?1:0;
+    var onlove = this.state.poem.love == 0 ?1:0;
     var json = JSON.stringify({
       id:this.state.id,
       userid:this.state.userid,
@@ -517,9 +522,9 @@ class DetailsUI extends React.Component{
           }
         }
         poem.lovenum = lovenum;
+        poem.love = love.love;
         this.setState({
           loves:loves,
-          love:love.love,
           poem:poem,
         });
         this._requestLoveComment();
@@ -645,7 +650,8 @@ class DetailsUI extends React.Component{
       case Emitter.UPPOEM:// 刷新作品
           var temp_poem = this.state.poem;
           if(temp_poem.id == param.id){
-            temp_poem.poem = param.poem;
+            temp_poem.title = param.title;
+            temp_poem.content = param.content;
             this.setState({
               poem:temp_poem,
             })
@@ -683,6 +689,17 @@ const styles = StyleSheet.create({
   menu_item:{
     flexDirection:'row',
     padding:10,
+  },
+  poem:{
+
+  },
+  poem_title:{
+    fontSize:30,
+    textAlign:'center',
+  },
+  poem_content:{
+    fontSize:20,
+    textAlign:'center',
   },
   comment:{
     flexDirection:'row',

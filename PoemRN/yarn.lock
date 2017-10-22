@@ -3498,6 +3498,10 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-device-info@^0.12.1:
+  version "0.12.1"
+  resolved "http://registry.npm.taobao.org/react-native-device-info/download/react-native-device-info-0.12.1.tgz#659ed145caa5a86a4815904381b25e9ebe0c24f6"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/react-native-dismiss-keyboard/download/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"

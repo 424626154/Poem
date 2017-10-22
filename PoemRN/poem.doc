@@ -12,4 +12,5 @@ yarn add react-native-image-crop-picker
 yarn add autoresponsive-react-native
 yarn add react-native-swRefresh
 yarn add react-native-pull@latest
+yarn add react-native-device-info
 --- yarn add ---

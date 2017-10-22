@@ -14,7 +14,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
+// import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import dismissKeyboard from 'dismissKeyboard'
 
@@ -44,7 +44,7 @@ class AddPoemUI extends React.Component {
          </TouchableOpacity>
        ),
        headerRight:(
-         <TouchableOpacity  onPress={()=>navigation.state.params.onGetContentHtml()}>
+         <TouchableOpacity  onPress={()=>navigation.state.params.onRelease()}>
            <Text style={pstyles.nav_right}>发布</Text>
          </TouchableOpacity>
        ),
@@ -59,9 +59,11 @@ class AddPoemUI extends React.Component {
             content:'',
         }
         this.onGetContentHtml = this.onGetContentHtml.bind(this);
+        this.onRelease = this.onRelease.bind(this);
     }
     componentDidMount(){
        this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
+       this.props.navigation.setParams({onRelease:this.onRelease});
        AsyncStorage.getItem('userid',(error,result)=>{
          if(!error){
            var islogin = false;
@@ -174,6 +176,44 @@ class AddPoemUI extends React.Component {
       console.error(err);
     })
   }
+
+  onRelease(){
+    var title = this.state.title;
+    var content = this.state.content;
+    if(!this.state.userid){
+      Alert.alert('登录后再发布');
+      return;
+    }
+    if(!title){
+      Alert.alert('请输入标题');
+      return;
+    }
+    if(!content){
+      Alert.alert('请输入内容');
+      return;
+    }
+    var json = JSON.stringify({
+      userid:this.state.userid,
+      title:title,
+      content:content
+    });
+    HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
+      if(res.code == 0){
+          var poem = res.data;
+          Emitter.emit(Emitter.ADDPOEM,poem);
+          this.props.navigation.goBack();
+          sqlite.savePoem(poem).then(()=>{
+            }).catch((err)=>{
+                console.error(err);
+            });
+      }else{
+        alert(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
+  }
+
 }
 // const markdownStyles = {
 //   heading1: {
