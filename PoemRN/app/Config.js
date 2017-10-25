@@ -36,4 +36,11 @@ var StorageConfig = {
 };
 StorageConfig.USERID = 'userid';
 
-export {StyleConfig,HeaderConfig,StorageConfig} ;
+const nothead = require('./images/ic_account_circle_black.png');
+
+var ImageConfig = {
+
+}
+ImageConfig.nothead = nothead;
+
+export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig} ;

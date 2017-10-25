@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var $conf = require('../conf/db');
-
+var utils = require('../utils/utils'); 
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
 const POEM_TABLE = 'poem'; 
@@ -98,7 +98,7 @@ module.exports = {
 		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id>?  AND del = 0  ORDER BY id DESC LIMIT '+LIMIT_NUM;
 		sql = 'SELECT poem.id,poem.userid,poem.title,poem.content,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
         var sql1 = 'SELECT * FROM '+LOVE_TABLE+' WHERE userid = ?'
-        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid';
+        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid ORDER BY id DESC';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,userid], function(err, result) {
             	callback(err, result)
@@ -113,7 +113,7 @@ module.exports = {
 		var sql = 'SELECT * FROM '+POEM_TABLE+' WHERE id < ?  AND del = 0 ORDER BY id DESC LIMIT '+LIMIT_NUM;
         sql = 'SELECT poem.id,poem.userid,poem.title,poem.content,poem.lovenum,poem.commentnum,user.head,user.pseudonym,poem.time FROM ('+sql+') AS poem LEFT JOIN '+USER_TABLE+' ON poem.userid = user.userid';
         var sql1 = 'SELECT * FROM '+LOVE_TABLE+' WHERE userid = ?'
-        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid';
+        sql = 'SELECT tpoem.*,IFNULL(love.love,0) as mylove FROM ('+sql+') AS tpoem LEFT JOIN ('+sql1+') AS love ON tpoem.id = love.pid ORDER BY id DESC';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,userid], function(err, result) {
             	callback(err, result)
@@ -229,7 +229,7 @@ module.exports = {
     queryNewestComment(fromid,pid,callback){
         var sql = 'SELECT * FROM '+COMMENT_TABLE+' WHERE id>?  AND pid = ? AND del = 0  ORDER BY id DESC LIMIT '+LIMIT_NUM;
         var sql = 'SELECT comment.*,user.head,user.pseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.userid = user.userid';
-        var sql = 'SELECT comment.*,user.head AS chead ,user.pseudonym AS cpseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.cuserid = user.userid';
+        var sql = 'SELECT comment.*,user.head AS chead ,user.pseudonym AS cpseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.cuserid = user.userid ORDER BY id DESC';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,pid], function(err, result) {
                 callback(err, result)
@@ -243,7 +243,7 @@ module.exports = {
      */
     queryHistoryComment(fromid,pid,callback){
         var sql = 'SELECT * FROM '+COMMENT_TABLE+' WHERE id<?  AND pid = ? AND del = 0 ORDER BY id DESC LIMIT '+LIMIT_NUM;
-        var sql = 'SELECT comment.*,user.head,user.pseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.userid = user.userid';
+        var sql = 'SELECT comment.*,user.head,user.pseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.userid = user.userid ORDER BY id DESC';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,pid], function(err, result) {
                 callback(err, result)
@@ -253,29 +253,52 @@ module.exports = {
     },
     /*------------点赞------------*/
     /**
-     * 添加点赞
+     * 点赞
      */
-    addLovePoem(id,userid,love,time,callback){
-        var sql = 'INSERT INTO '+LOVE_TABLE+'(pid,userid,love,time) VALUES (?,?,?,?)';
+    lovePoem(pid,userid,love,callback){
+        var time = utils.getTime();
+        var sql0 = 'INSERT INTO '+LOVE_TABLE+' (pid,userid,love,time) VALUES ('+pid+',"'+userid+'",'+love+','+time+') ON DUPLICATE KEY UPDATE love='+love+',time='+time;
+        
+        var sql1 = 'SELECT COUNT(*) FROM '+LOVE_TABLE +' WHERE pid = '+pid+' AND love = 1';
+        var sql2 = 'UPDATE '+POEM_TABLE+' SET lovenum = ('+sql1+') WHERE id = '+pid; 
+        var sql3 = 'SELECT * FROM '+LOVE_TABLE+' WHERE pid = '+pid+' AND userid = "'+userid+'"';
+        var sql4 = 'SELECT love.*,user.head,user.pseudonym FROM ('+sql3+') AS love LEFT JOIN '+USER_TABLE+' ON love.userid = user.userid';
+        var sql = sql0+';'+sql2+';'+sql4;
         pool.getConnection(function(err, connection) {
-            connection.query(sql, [id,userid,love,time], function(err, result) {
-                callback(err, result)
+            connection.query(sql, function(err, result) {
+                if(err){
+                    callback(err, result)
+                }else{
+                    callback(err, result[2][0])
+                }
                 connection.release();
             });
         });
     },
     /**
+     * 添加点赞
+     */
+    // addLovePoem(id,userid,love,time,callback){
+    //     var sql = 'INSERT INTO '+LOVE_TABLE+'(pid,userid,love,time) VALUES (?,?,?,?)';
+    //     pool.getConnection(function(err, connection) {
+    //         connection.query(sql, [id,userid,love,time], function(err, result) {
+    //             callback(err, result)
+    //             connection.release();
+    //         });
+    //     });
+    // },
+    /**
      * 修改点赞
      */
-    updateLovePoem(id,userid,love,time,callback){
-        var sql = 'UPDATE '+LOVE_TABLE+' SET love = ?,time = ?  WHERE id = ? AND userid = ?';
-        pool.getConnection(function(err, connection) {
-            connection.query(sql, [love,time,id,userid], function(err, result) {
-                callback(err, result)
-                connection.release();
-            });
-        });
-    },
+    // updateLovePoem(id,userid,love,time,callback){
+    //     var sql = 'UPDATE '+LOVE_TABLE+' SET love = ?,time = ?  WHERE id = ? AND userid = ?';
+    //     pool.getConnection(function(err, connection) {
+    //         connection.query(sql, [love,time,id,userid], function(err, result) {
+    //             callback(err, result)
+    //             connection.release();
+    //         });
+    //     });
+    // },
     /**
      * 查询用户点赞信息
      */

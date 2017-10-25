@@ -54,7 +54,18 @@ const ptyles = StyleSheet.create({
   },
   text_align_center:{
     textAlign:'center',
-  }
+  },
+  poem:{//作品样式
+
+  },
+  poem_title:{
+    fontSize:30,
+    textAlign:'center',
+  },
+  poem_content:{
+    fontSize:20,
+    textAlign:'center',
+  },
 });
 
 export {ptyles as default};

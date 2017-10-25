@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Icon,SocialIcon } from 'react-native-elements';
 import {CachedImage} from "react-native-img-cache";
-import HTMLView from 'react-native-htmlview';
+// import HTMLView from 'react-native-htmlview';
 
 import pstyles from '../style/PStyles';
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
@@ -40,9 +40,14 @@ class FlatListItem extends React.PureComponent {
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
                   <View style={styles.poem_bg}>
-                  <HTMLView
+                  {/* <HTMLView
                       value={this.props.poem}
-                      />
+                      /> */}
+                  <View style={styles.poem}>
+                    <Text style={styles.poem_title}>{this.props.poem.title}</Text>
+                    <Text style={styles.poem_content}
+                    >{this.props.poem.content}</Text>
+                  </View>
                   </View>
                   <View style={styles.fitem_more}>
                     <Text style={styles.fitem_time}>
@@ -150,7 +155,7 @@ class PersonalUI extends React.Component{
               onPressItem={ this._onPressItem }
               selected={ !!this.state.selected.get(item.id) }
               name= { item.name }
-              poem={item.poem}
+              poem={item}
               time={Utils.dateStr(item.time)}
               navigate = {this.props.navigation.navigate}
           />
@@ -441,6 +446,17 @@ const styles = StyleSheet.create({
   },
   poem_bg:{
 
+  },
+  poem:{
+
+  },
+  poem_title:{
+    fontSize:30,
+    textAlign:'center',
+  },
+  poem_content:{
+    fontSize:20,
+    textAlign:'center',
   },
 })
 export {PersonalUI};

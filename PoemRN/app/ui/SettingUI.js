@@ -90,6 +90,7 @@ import pstyles from '../style/PStyles';
                  this.setState({
                    userid:'',
                  })
+                 this.props.navigation.goBack();
                }
              });
            }}>

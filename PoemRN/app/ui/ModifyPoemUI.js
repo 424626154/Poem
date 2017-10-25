@@ -14,8 +14,8 @@ import {
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
+// import SQLite from '../db/Sqlite';
+// const sqlite = new SQLite();
 import HttpUtil  from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';

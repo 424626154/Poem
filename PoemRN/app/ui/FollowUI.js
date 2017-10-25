@@ -18,8 +18,8 @@ import Utils from '../utils/Utils';
 import Global from '../Global';
 import Emitter from '../utils/Emitter';
 import HttpUtil from '../utils/HttpUtil';
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
+// import SQLite from '../db/Sqlite';
+// const sqlite = new SQLite();
 
 class FollowListItem extends React.PureComponent {
     _onPress = () => {

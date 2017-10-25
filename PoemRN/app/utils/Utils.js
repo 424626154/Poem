@@ -1,8 +1,16 @@
+'use strict'
 import {
       AsyncStorage,
       } from 'react-native';
-const nothead = require('../images/ic_account_circle_black.png');
-import HttpUtil from './HttpUtil';
+import{
+  ImageConfig,
+  HttpUtil,
+  Global,
+} from '../AppUtil';
+// const nothead = require('../images/ic_account_circle_black.png');
+// import HttpUtil from './HttpUtil';
+// import Global from '../Global'
+
 
 var Utils = {};
 
@@ -38,9 +46,24 @@ Utils.log = function(key,value){
   console.log('~~~~~~'+key+':'+JSON.stringify(value)+'~~~~~');
 }
 
-
+/**
+ * 头像处理
+ * @param  {[string]} head [头像地址]
+ * @return {[object]}      [处理后的头像地址]
+ */
 Utils.getHead = function(head){
-  let headurl = head?{uri:HttpUtil.getHeadurl(head)}:nothead;
+  let headurl = head?{uri:HttpUtil.getHeadurl(head)}:ImageConfig.nothead;
   return headurl
 }
+
+Utils.isLogin = function(navigate){
+  var isLogin = false;
+  if(Global.user.userid){
+    isLogin = true;
+  }else{
+    navigate('LoginUI')
+  }
+  return isLogin;
+}
+
 export default Utils;

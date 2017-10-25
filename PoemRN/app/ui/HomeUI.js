@@ -1,4 +1,7 @@
-// 欣赏
+'use strict'
+/**
+ * 主页
+ */
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import {
@@ -12,164 +15,22 @@ import {
       AsyncStorage,
       DeviceEventEmitter,
      } from 'react-native';
-import {CachedImage} from "react-native-img-cache";
-// import HTMLView from 'react-native-htmlview';
+import HomeListItem from '../custom/HomeListItem';
 
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
-import Utils from '../utils/Utils';
-import HttpUtil from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
-import Global from '../Global';
-import pstyles from '../style/PStyles';
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
+import {
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  ImageConfig,
+  Utils,
+  HttpUtil,
+  Emitter,
+  Global,
+  pstyles
+} from '../AppUtil';
 
-
-const nothead = require('../images/ic_account_circle_black.png');
-
-// 封装Item组件
-class FlatListItem extends React.PureComponent {
-    _onPress = () => {
-        this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id});
-    };
-    renderNode(node, index, siblings, parent, defaultRenderer) {
-        // console.log('@@@@@@name:'+node.name);
-        // console.log('@@@@@@attribs:'+JSON.stringify(node.attribs));
-        if (node.name == 'div') {
-            const specialSyle = node.attribs.style
-            if(specialSyle == 'text-align: center;'){
-              specialSyle = {textAlign:'center',};
-              return (
-                <Text key={index} style={specialSyle}>
-                  {defaultRenderer(node.children, parent)}
-                </Text>
-              )
-            }
-          }
-        if(node.name == 'span'){
-          const specialSyle = node.attribs.style
-          if(specialSyle == 'font-size: 1em;'){
-            specialSyle = {fontSize:22,};
-            return (
-              <Text key={index} style={specialSyle}>
-                {defaultRenderer(node.children, parent)}
-              </Text>
-            )
-          }
-        }
-      }
-    render() {
-        return(
-            <TouchableOpacity
-                {...this.props}
-                onPress={this._onPress}
-            >
-            <View style={styles.fitem}>
-              {/* 个人信息 */}
-              <TouchableOpacity
-                onPress={()=>{
-                  this.props.navigate('PersonalUI',{userid:this.props.item.userid});
-                }}>
-              <View style={styles.fitem_header}>
-                <CachedImage
-                  style={pstyles.small_head}
-                  source={this.props.headurl}
-                  />
-                <View style={styles.fitem_header_info}>
-                  <Text style={styles.fitem_name}>
-                    {this.props.pseudonym}
-                  </Text>
-                  <Text style={styles.fitem_time}>
-                    {this.props.time}
-                  </Text>
-                </View>
-              </View>
-              </TouchableOpacity>
-              {/* 诗歌 */}
-              {/* <View style={pstyles.htmlview_bg}>
-                <HTMLView
-                    style={pstyles.htmlview}
-                    value={this.props.poem}
-                    renderNode={this.renderNode}
-                    />
-              </View> */}
-              <View style={styles.poem}>
-                <Text style={styles.poem_title}>{this.props.title}</Text>
-                <Text style={styles.poem_content}
-                >{this.props.content}</Text>
-              </View>
-              {/* menu */}
-              <View style={styles.menu}>
-                  <TouchableOpacity
-                    onPress={()=>{
-                      this.props.navigate('DetailsUI',{id:this.props.id});
-                    }}>
-                    <View style={styles.menu_item}>
-                      <Icon
-                        name='sms'
-                        size={30}
-                        type="MaterialIcons"
-                        color={'#7b8992'}
-                        />
-                        <Text style={styles.menu_font}>
-                          {this.renderCommentnum(this.props.commentnum)}
-                        </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={()=>{
-                      this.props._onLove(this.props.item);
-                    }}>
-                    <View style={styles.menu_item}>
-                      <Icon
-                        name='thumb-up'
-                        size={30}
-                        type="MaterialIcons"
-                        color={this._renderLoveColor()}
-                        />
-                        <Text style={styles.menu_font}>
-                          {this.renderLivenum(this.props.lovenum)}
-                        </Text>
-                    </View>
-                  </TouchableOpacity>
-              </View>
-            </View>
-            </TouchableOpacity>
-        );
-    }
-
-    renderCommentnum(commentnum){
-      return commentnum > 0 ? commentnum:'';
-    }
-    renderLivenum(lovenum){
-      // console.log('@@@lovenum:'+lovenum);
-      return lovenum > 0 ? lovenum:'';
-    }
-    _renderLoveColor(){
-      // console.log('@@@this.props.item.mylove:'+this.props.item.mylove);
-      return this.props.item.mylove > 0 ? '#1e8ae8':'#7b8992';
-    }
-}
 
 class HomeUI extends React.Component {
-  // static navigationOptions = ({navigation}) => ({
-  //       title: 'Poem',
-  //       headerTintColor:StyleConfig.C_FFFFFF,
-  //       headerTitleStyle:HeaderConfig.headerTitleStyle,
-  //       headerStyle:HeaderConfig.headerStyle,
-  //       headerLeft:(
-  //         <TouchableOpacity  onPress={()=>navigation.navigate('DrawerOpen')}>
-  //           <Icon
-  //             name='apps'
-  //             size={26}
-  //             type="MaterialIcons"
-  //             color={StyleConfig.C_FFFFFF}
-  //           />
-  //         </TouchableOpacity>
-  //       ),
-  //       drawerLabel: 'HomeUI',
-  //    });
      // 数据容器，用来存储数据
      dataContainer = [];
      constructor(props) {
@@ -199,12 +60,6 @@ class HomeUI extends React.Component {
           this._requestNewestAllPoem();
         }
       })
-      // sqlite.queryAllPoems().then((results)=>{
-      //     this.dataContainer = results;
-      //     this.setState({
-      //       sourceData: this.dataContainer,
-      //     });
-      //   });
     }
     componentWillUnMount(){
       DeviceEventEmitter.remove();
@@ -226,7 +81,7 @@ class HomeUI extends React.Component {
                 // ListFooterComponent={ this._renderFooter }
                 ItemSeparatorComponent={ this._renderItemSeparatorComponent }
                 ListEmptyComponent={ this._renderEmptyView }
-                refreshing={ this.state.refreshing }
+                refreshing={this.state.refreshing}
                 onRefresh={ this._renderRefresh }
                 // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
                 getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
@@ -234,6 +89,9 @@ class HomeUI extends React.Component {
       </View>
     );
   }
+  /**
+   * 渲染自定义nav
+   */
   _renderNav(){
     return(
       <View style={styles.header}>
@@ -266,6 +124,9 @@ class HomeUI extends React.Component {
       </View>
     )
   }
+  /**
+   * 渲染自定义nav系统区分
+   */
   _renderNavOS(){
     if(Platform.OS === 'ios'){
         return(<View style={HeaderConfig.iosNavStyle}></View>)
@@ -276,20 +137,19 @@ class HomeUI extends React.Component {
 
    _keyExtractor = (item, index) => index;
 
-
    _onPressItem = (id: string) => {
        this.setState((state) => {
            const selected = new Map(state.selected);
            selected.set(id, !selected.get(id));
            return {selected}
        });
+      this.props.navigation.navigate('DetailsUI',{id:id});
    };
    // 加载item布局
    _renderItem = ({item}) =>{
-      let headurl = item.head?{uri:HttpUtil.getHeadurl(item.head)}:nothead;
-      // console.log('@@@item:'+JSON.stringify(item));
+      let headurl = Utils.getHead(item.head);
        return(
-           <FlatListItem
+           <HomeListItem
                id={item.id}
                onPressItem={ this._onPressItem }
                selected={ !!this.state.selected.get(item.id) }
@@ -310,17 +170,14 @@ class HomeUI extends React.Component {
    _renderHeader = () => (
        <View><Text>Header</Text></View>
    );
-
    // Footer布局
    _renderFooter = () => (
        <View><Text>Footer</Text></View>
    );
-
    // 自定义分割线
    _renderItemSeparatorComponent = ({highlighted}) => (
        <View style={{ height:1, backgroundColor:'#d4d4d4' }}></View>
    );
-
    // 空布局
    _renderEmptyView = () => (
      <View style={styles.empty}>
@@ -329,83 +186,85 @@ class HomeUI extends React.Component {
      </View>
    );
      // 下拉刷新
- _renderRefresh = () => {
-   this._requestNewestAllPoem();
- };
+   _renderRefresh = () => {
+     if(this.state.refreshing){
+       return;
+     }
+     this._requestNewestAllPoem();
+   };
 
- // 上拉加载更多
- _onEndReached = () => {
-   this.setState({refreshing: true})
-   var fromid = 0;
-   if(this.state.sourceData.length > 0 ){
-     fromid = this.state.sourceData[this.state.sourceData.length-1].id;
-   }
-   var json = JSON.stringify({
-     id:fromid,
-     userid:this.state.userid,
-   });
-   HttpUtil.post(HttpUtil.POEM_HISTORY_ALLPOEM,json).then((res) => {
-       if(res.code == 0){
-           var poems = res.data;
-            if(poems.length > 0){
-              this.dataContainer = this.dataContainer.concat(poems);
-              this.setState({
-                sourceData: this.dataContainer
-              });
-              // sqlite.saveAllPoems(poems).then((results)=>{
-              //   console.log('reading 上拉数据保存成功:'+results)
-              // }).catch((err)=>{
-              //   console.log(err);
-              // })
-            }
-       }else{
-         Alert.alert(res.errmsg);
-       }
-       this.setState({refreshing: false});
-     })
-     .catch((error) => {
-       console.error(error);
+   // 上拉加载更多
+   _onEndReached = () => {
+     if(this.state.refreshing){
+       return;
+     }
+     this.setState({refreshing: true});
+     var fromid = 0;
+     if(this.state.sourceData.length > 0 ){
+       fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     }
+     var json = JSON.stringify({
+       id:fromid,
+       userid:this.state.userid,
      });
- };
-_onLove(item){
-  var onlove = item.mylove == 0 ?1:0;
-  var json = JSON.stringify({
-    id:item.id,
-    userid:this.state.userid,
-    love:onlove,
-  });
-  HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
-    if(result.code == 0){
-      var love = result.data;
-      let sourceData = this.state.sourceData;
-      var isRefresh = false;
-      for(var i = 0 ; i < sourceData.length ; i ++ ){
-        if(sourceData[i].id == love.pid){
-          var lovenum = sourceData[i].lovenum;
-          if(love.love == 1){
-            lovenum += 1;
-          }else{
-            if(lovenum > 0 ){
-              lovenum -= 1;
+      console.log(json);
+     HttpUtil.post(HttpUtil.POEM_HISTORY_ALLPOEM,json).then((res) => {
+         if(res.code == 0){
+             var poems = res.data;
+              if(poems.length > 0){
+                this.dataContainer = this.dataContainer.concat(poems);
+                this.setState({
+                  sourceData: this.dataContainer
+                });
+              }
+         }else{
+           Alert.alert(res.errmsg);
+         }
+         this.setState({refreshing: false});
+       })
+       .catch((error) => {
+         console.error(error);
+       });
+   };
+  _onLove(item){
+    var onlove = item.mylove == 0 ?1:0;
+    var json = JSON.stringify({
+      id:item.id,
+      userid:this.state.userid,
+      love:onlove,
+    });
+    HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
+      if(result.code == 0){
+        var love = result.data;
+        let sourceData = this.state.sourceData;
+        var isRefresh = false;
+        for(var i = 0 ; i < sourceData.length ; i ++ ){
+          if(sourceData[i].id == love.pid){
+            var lovenum = sourceData[i].lovenum;
+            if(love.love == 1){
+              lovenum += 1;
+            }else{
+              if(lovenum > 0 ){
+                lovenum -= 1;
+              }
             }
+            sourceData[i].lovenum = lovenum;
+            sourceData[i].mylove = love.love;
+            isRefresh = true;
           }
-          sourceData[i].lovenum = lovenum;
-          sourceData[i].mylove = love.love;
-          isRefresh = true;
         }
+        if(isRefresh){
+          this.setState({
+              sourceData: sourceData
+          });
+        }
+      }else{
+        Alert.alert(result.errmsg);
       }
-      if(isRefresh){
-        this.setState({
-            sourceData: sourceData
-        });
-      }
-    }else{
-      Alert.alert(result.errmsg);
-    }
-  }).catch((err)=>{
-    console.error(err);
-  })
-}
+    }).catch((err)=>{
+      console.error(err);
+    })
+  }
   _eventDeletePoem(id){
     let sourceData = this.state.sourceData
     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
@@ -532,53 +391,6 @@ const styles = StyleSheet.create({
     fontSize:StyleConfig.F_22,
     textAlign:'center',
     color:StyleConfig.C_FFFFFF,
-  },
-  fitem:{
-      flex:1,
-      padding:10,
-  },
-  fitem_header:{
-    flex:1,
-    flexDirection:'row',
-  },
-  fitem_header_info:{
-    paddingLeft:4,
-  },
-  fitem_name:{
-    fontSize:20,
-    color:'#000000'
-  },
-  fitem_time:{
-    fontSize:14,
-    color:'#d4d4d4',
-    marginTop:4,
-  },
-  poem_bg:{
-    paddingLeft:60,
-  },
-  poem:{
-
-  },
-  poem_title:{
-    fontSize:30,
-    textAlign:'center',
-  },
-  poem_content:{
-    fontSize:20,
-    textAlign:'center',
-  },
-  menu:{
-    paddingLeft:60,
-    flexDirection:'row',
-  },
-  menu_item:{
-    flexDirection:'row',
-    padding:10,
-  },
-  menu_font:{
-    fontSize:18,
-    color:'#7b8992',
-    marginLeft:4,
   },
   empty:{
       flex:1,

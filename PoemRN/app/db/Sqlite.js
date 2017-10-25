@@ -1,6 +1,6 @@
 import React from 'react';
 import SQLiteStorage from 'react-native-sqlite-storage';
-SQLiteStorage.DEBUG(true);
+SQLiteStorage.DEBUG(false);
 let database_name = "poem.db";
 let database_version = "1.0";
 var curVersion = 6;

@@ -91,7 +91,7 @@ class MyUI extends React.Component {
             {this._renderFollow()}
           </View>
         <View style={styles.interval}></View>
-        {this._renderLogout()}
+        {/* {this._renderLogout()} */}
       </View>
     );
   }

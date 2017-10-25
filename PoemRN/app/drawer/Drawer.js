@@ -143,8 +143,6 @@ class Drawer extends React.Component {
   }
   _eventUserInfo(){
     let user = Global.user;
-    // console.log('@@@@@@user:',JSON.stringify(user))
-    console.log('_eventUserInfo:'+JSON.stringify(user));
     if(user.userid){
       let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
       let pseudonym = user.pseudonym;

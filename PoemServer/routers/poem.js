@@ -306,42 +306,49 @@ router.post('/lovepoem', function(req, res, next) {
     	resError(res,'参数错误');
     	return ;
     }
-	 poemDao.queryLovePoem(id,userid,function(err,loves){
-    	if(err){
-    		resError(res,err)
-    	}else{
-    		if(loves.length > 0 ){
-    			var loveid = loves[0].id
-    			poemDao.updateLovePoem(loveid,userid,love,time,function(err,result){
-    				if(err){
-			    		resError(res,err);
-			    	}else{
-			    		var lovejson = {id:loveid,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
-			    		resSuccess(res,lovejson);
-			    	}
-    			})
-    		}else{
-    			poemDao.addLovePoem(id,userid,love,time,function(err,result){
-    				if(err){
-			    		resError(res,err)
-			    	}else{
-			    		var lovejson = {id:result.insertId,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
-			    		resSuccess(res,lovejson);
-			    	}
-    			})
-    		}
-    		if(love == 1){
-    			poemDao.addLoveNum(id,function(err,result){
+    poemDao.lovePoem(id,userid,love,function(err,love){
+  			if(err){
+	    		resError(res,err);
+	    	}else{
+	    		resSuccess(res,love);
+	    	}
+    });
+  // poemDao.queryLovePoem(id,userid,function(err,loves){ 
+  //   	if(err){
+  //   		resError(res,err)
+  //   	}else{
+  //   		if(loves.length > 0 ){
+  //   			var loveid = loves[0].id
+  //   			poemDao.updateLovePoem(loveid,userid,love,time,function(err,result){
+  //   				if(err){
+		// 	    		resError(res,err);
+		// 	    	}else{
+		// 	    		var lovejson = {id:loveid,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
+		// 	    		resSuccess(res,lovejson);
+		// 	    	}
+  //   			})
+  //   		}else{
+  //   			poemDao.addLovePoem(id,userid,love,time,function(err,result){
+  //   				if(err){
+		// 	    		resError(res,err)
+		// 	    	}else{
+		// 	    		var lovejson = {id:result.insertId,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
+		// 	    		resSuccess(res,lovejson);
+		// 	    	}
+  //   			})
+  //   		}
+  //   		if(love == 1){
+  //   			poemDao.addLoveNum(id,function(err,result){
 
-    			})
-    		}else{
-    			poemDao.reduceLoveNum(id,function(err,result){
+  //   			})
+  //   		}else{
+  //   			poemDao.reduceLoveNum(id,function(err,result){
 
-    			})
-    		}
+  //   			})
+  //   		}
 
-    	}
-    })
+  //   	}
+  //   })
 });	
 /**
  * 获取点赞列表
