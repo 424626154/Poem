@@ -43,7 +43,7 @@
 //         console.error(err);
 //       })
 //     }
-//     componentWillUnMount(){
+//     componentWillUnmount(){
 //       sqlite.close()
 //     }
 //     render(){

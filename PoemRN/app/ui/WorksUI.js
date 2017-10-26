@@ -134,9 +134,9 @@
            }
          })
      }
-     componentWillUnMount(){
+     componentWillUnmount(){
       //  sqlite.close()
-       DeviceEventEmitter.remove();
+       DeviceEventEmitter.removeAllListeners();
      }
 
    render() {

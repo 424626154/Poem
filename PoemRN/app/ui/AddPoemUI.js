@@ -80,7 +80,7 @@ class AddPoemUI extends React.Component {
          }
        })
     }
-    componentWillUnMount(){
+    componentWillUnmount(){
 
     }
   render() {

@@ -60,8 +60,8 @@ class CommentUI extends React.Component{
     });
   }
 
-  componentWillUnMount(){
-    DeviceEventEmitter.remove();
+  componentWillUnmount(){
+    DeviceEventEmitter.removeAllListeners();
   }
   render(){
     const { navigate } = this.props.navigation;

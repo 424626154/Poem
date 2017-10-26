@@ -64,7 +64,7 @@ class ModifyPoemUI extends React.Component {
        this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
        this.props.navigation.setParams({onModify:this.onModify});
     }
-    componentWillUnMount(){
+    componentWillUnmount(){
     }
   render() {
     const { navigate } = this.props.navigation;

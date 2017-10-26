@@ -14,9 +14,10 @@ import {
   DeviceEventEmitter,
   AsyncStorage,
   FlatList,
+  ScrollView,
 } from 'react-native';
-import { bindActionCreators } from 'redux';
-import {connect} from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import {connect} from 'react-redux';
 import * as Actions from '../redux/actions/Actions'
 // import SQLite from '../db/Sqlite';
 // const sqlite = new SQLite();
@@ -75,15 +76,17 @@ class DetailsUI extends React.Component{
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
+    console.log('@@@详情页componentDidMount')
   }
 
-  componentWillUnMount(){
-    DeviceEventEmitter.remove();
+  componentWillUnmount(){
+    DeviceEventEmitter.removeAllListeners();
+    console.log('@@@详情页componentWillUnmount')
   }
   render(){
     const { navigate } = this.props.navigation;
     return(
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.poem}>
           <Text style={styles.poem_title}>{this.state.poem.title}</Text>
           <Text style={styles.poem_content}
@@ -112,7 +115,7 @@ class DetailsUI extends React.Component{
                   // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
                   getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
               />
-      </View>
+      </ScrollView>
     )
   }
   /**
@@ -618,10 +621,10 @@ function mapStateToProps(state) {
   };
 }
 
-// export default DetailsUI;
-export default connect(
-    state => ({
-        love: state.love
-    }),
-    dispatch => bindActionCreators(Actions, dispatch)
-)(DetailsUI);
+export default DetailsUI;
+// export default connect(
+//     state => ({
+//         love: state.love
+//     }),
+//     dispatch => bindActionCreators(Actions, dispatch)
+// )(DetailsUI);

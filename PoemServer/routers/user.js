@@ -142,9 +142,10 @@ router.post('/validate',function(req,res,next){
 							}else{
 								var data = {phone:phone,code:code,time:max_time,max:max_time};
 								resSuccess(res,data)
+								console.log('------验证码为:'+code+'------')
 							}
 						})
-						sendAliSms(phone,validate.code,function(err,sms){
+						sendAliSms(phone,code,function(err,sms){
 							if(!err){
 								console.log('重新生成验证码/ali/sendcode2')
 								userDao.updateValidateSms(phone,sms.RequestId,sms.BizId,function(err,result){
@@ -155,6 +156,7 @@ router.post('/validate',function(req,res,next){
 					}else{
 						validate.time = max_time-diff_time;
 						validate.max = max_time,
+						console.log('------验证码为:'+validate.code+'------')
 						resSuccess(res,validate);
 					}
 				}else{
@@ -181,6 +183,7 @@ router.post('/validate',function(req,res,next){
 								time:max_time,
 								max:max_time,
 							}
+							console.log('------验证码为:'+code+'------')
 							resSuccess(res,validate)
 						}
 					})

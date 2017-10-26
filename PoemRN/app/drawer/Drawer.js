@@ -45,8 +45,8 @@ class Drawer extends React.Component {
 
 
   }
-  componentWillUnMount(){
-    DeviceEventEmitter.remove();
+  componentWillUnmount(){
+    DeviceEventEmitter.removeAllListeners();
     this.timer && clearTimeout(this.timer);
   }
   render(){
@@ -69,9 +69,9 @@ class Drawer extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity onPress={()=>{
             if(this.state.userid){
-              navigate('MyUI',{go_back_key:state.key});
+              navigate('MyUI');
             }else{
-              navigate('LoginUI',{go_back_key:state.key});
+              navigate('LoginUI');
             }
           }}>
           <View style={styles.personal}>
@@ -127,13 +127,13 @@ class Drawer extends React.Component {
     this.props.navigation.navigate('HomeUI')
   }
   _onPerson(){
-    // this.props.navigation.navigate('DrawerClose');
+    this.props.navigation.navigate('MyUI');
     // Emitter.emit(Emitter.DRAWER_CLOSE,'');
     // this.timer = setTimeout(
     //   () => {this.props.navigation.navigate('MyUI'); },
     //   0
     // );
-    this.props.navigation.navigate('MyUI')
+    // this.props.navigation.navigate('MyUI')
   }
   _onWorks(){
     this.props.navigation.navigate('WorksUI');

@@ -61,8 +61,8 @@ class HomeUI extends React.Component {
         }
       })
     }
-    componentWillUnMount(){
-      DeviceEventEmitter.remove();
+    componentWillUnmount(){
+      DeviceEventEmitter.removeAllListeners();
     }
   render() {
     return (
@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
   header_bg:{
     flexDirection:'row',
     alignItems:'center',
+    height:40,
   },
   header_left:{
     width:40,

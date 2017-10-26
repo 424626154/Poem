@@ -38,13 +38,17 @@ class RegisterUI extends React.Component {
         phone:'',
         password:'',
         code:'',
+        time:0,
+        code_tips:'发送验证码',
+        code_color:StyleConfig.C_1E8AE8,
       }
+      this._timer = null;
     }
     componentDidMount(){
 
     }
-    componentWillUnMount(){
-
+    componentWillUnmount(){
+        this._timer&&clearInterval(this._timer)
     }
   render() {
     const { state,navigate,goBack } = this.props.navigation;
@@ -100,9 +104,9 @@ class RegisterUI extends React.Component {
             value={this.state.code}
           />
           <Button
-            buttonStyle={{backgroundColor: '#1e8ae8', borderRadius: 5,margin:0}}
+            buttonStyle={{backgroundColor: this.state.code_color, borderRadius: 5,margin:0}}
             textStyle={{textAlign: 'center',fontSize:18,}}
-            title={'发送验证码'}
+            title={this.state.code_tips}
             onPress={()=>{
               this.onVerify()
             }}
@@ -167,6 +171,9 @@ class RegisterUI extends React.Component {
       });
   }
   onVerify(){
+    if(this.state.time > 0 ){
+      return;
+    }
     if(!this.state.phone){
       Alert.alert('请输入手机号');
       return;
@@ -177,7 +184,10 @@ class RegisterUI extends React.Component {
     HttpUtil.post(HttpUtil.USER_VALIDATE,json).then((res) => {
         if(res.code == 0){
             var validate = res.data;
-            Alert.alert(validate.code);
+            var time = validate.time;
+            console.log(time);
+            this.countTime(time);
+            // Alert.alert(validate.code);
         }else{
           alert(res.errmsg);
         }
@@ -185,6 +195,29 @@ class RegisterUI extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+  countTime(tiem){
+    if(tiem <= 0){
+      return;
+    }
+    this.setState({time:tiem,
+      code_tips:tiem+'秒后可发送',
+      code_color:StyleConfig.C_7B8992,
+    });
+    this._timer=setInterval(()=>{
+      var cur_time = this.state.time - 1;
+      this.setState({time:cur_time});
+      if(this.state.time<=0){
+        var tips = '发送验证码';
+        this.setState({code_tips:tips,
+        code_color:StyleConfig.C_1E8AE8
+        });
+        this._timer && clearInterval(this._timer);
+      }else{
+        var tips = cur_time+'秒后可发送'
+        this.setState({code_tips:tips});
+      }
+    },1000);
   }
 }
 

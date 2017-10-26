@@ -12,11 +12,15 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import HttpUtil from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
-import Global from '../Global';
-import pstyles from '../style/PStyles';
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  HttpUtil,
+  Emitter,
+  Global,
+  pstyles
+} from '../AppUtil'
 
 class LoginUI extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -40,7 +44,7 @@ class LoginUI extends React.Component {
     componentDidMount(){
 
     }
-    componentWillUnMount(){
+    componentWillUnmount(){
 
     }
   render() {

@@ -4,8 +4,8 @@ import {
   AsyncStorage,
   DeviceEventEmitter,
 } from 'react-native';
-import { connect,Provider } from 'react-redux';
-import {addNavigationHelpers} from 'react-navigation';
+// import { connect,Provider } from 'react-redux';
+// import {addNavigationHelpers} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 // import SQLite from './db/Sqlite';
 // const sqlite = new SQLite();
@@ -17,33 +17,33 @@ import {AppNavigator} from './AppNavigator';
 
 const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
 
-import getStore from './redux/store/ConfigureStore';
+// import getStore from './redux/store/ConfigureStore';
 
 // let store = configureStore();
-const navReducer = (state, action) => {
-    const newState = AppNavigator.router.getStateForAction(action, state);
-    return newState || state;
-};
+// const navReducer = (state, action) => {
+//     const newState = AppNavigator.router.getStateForAction(action, state);
+//     return newState || state;
+// };
 
-const mapStateToProps = (state) => ({
-    nav: state.nav
-});
+// const mapStateToProps = (state) => ({
+//     nav: state.nav
+// });
 
-class AppRoot extends Component {
-    render() {
-        return (
-            <AppNavigator
-                navigation={addNavigationHelpers({
-                    dispatch: this.props.dispatch,
-                    state: this.props.nav
-                })}
-            />
-        );
-    }
-}
+// class AppRoot extends Component {
+//     render() {
+//         return (
+//             <AppNavigator
+//                 navigation={addNavigationHelpers({
+//                     dispatch: this.props.dispatch,
+//                     state: this.props.nav
+//                 })}
+//             />
+//         );
+//     }
+// }
 
-const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
-const store = getStore(navReducer);
+// const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
+// const store = getStore(navReducer);
 /**
  * 程序入口
  */
@@ -76,14 +76,15 @@ export default class App extends Component {
     //     );
     SplashScreen.hide();
   }
-  componentWillUnMount(){
-      sqlite.close();
+  componentWillUnmount(){
+      // sqlite.close();
   }
   render() {
       return(
-        <Provider store={store}>
-            <AppWithNavigationState/>
-        </Provider>
+        // <Provider store={store}>
+        //     <AppWithNavigationState/>
+        // </Provider>
+        <AppNavigator/>
         )
   }
   /**

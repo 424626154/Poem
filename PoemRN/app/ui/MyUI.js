@@ -57,8 +57,8 @@ class MyUI extends React.Component {
         this._analysisObserver(obj);
      });
    }
-   componentWillUnMount(){
-     DeviceEventEmitter.remove();
+   componentWillUnmount(){
+     DeviceEventEmitter.removeAllListeners();
    }
   render() {
     const { state,navigate } = this.props.navigation;

@@ -18,8 +18,8 @@ import Utils from '../utils/Utils';
 import HttpUtil from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
+// import SQLite from '../db/Sqlite';
+// const sqlite = new SQLite();
 
 /**
  * 作品元素组件
@@ -106,7 +106,7 @@ class WorksTab extends React.Component {
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-        sqlite.open();
+        // sqlite.open();
         DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
            this._analysisObserver(obj);
         });
@@ -122,9 +122,9 @@ class WorksTab extends React.Component {
           }
         })
     }
-    componentWillUnMount(){
-      sqlite.close()
-      DeviceEventEmitter.remove();
+    componentWillUnmount(){
+      // sqlite.close()
+      DeviceEventEmitter.removeAllListeners();
     }
 
   render() {

@@ -46,10 +46,11 @@ import pstyles from '../style/PStyles';
         this.setState({
           userid:user.userid,
           version:version,
-        })
+        });
+        console.log('@@@设置componentDidMount')
      }
-     componentWillUnMount(){
-
+     componentWillUnmount(){
+      console.log('@@@设置componentWillUnmount')
      }
    render() {
      const { state,navigate,goBack } = this.props.navigation;

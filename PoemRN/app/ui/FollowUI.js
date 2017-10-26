@@ -83,7 +83,7 @@ class FollowUI extends React.Component {
     componentDidMount(){
         this._requestFollows();
     }
-    componentWillUnMount(){
+    componentWillUnmount(){
 
     }
     render() {

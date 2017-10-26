@@ -72,7 +72,7 @@ export default class LovesUI extends React.Component {
     componentDidMount(){
         this._requestLoves();
     }
-    componentWillUnMount(){
+    componentWillUnmount(){
 
     }
     render() {

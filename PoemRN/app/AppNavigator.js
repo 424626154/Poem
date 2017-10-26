@@ -89,9 +89,6 @@ const DrawerNav = DrawerNavigator({
   HomeUI: {
     screen: HomeUI,
   },
-  // MyUI:{
-  //   screen:MyUI,
-  // }
 },{
   drawerWidth: 200,
   drawerPosition: 'left',

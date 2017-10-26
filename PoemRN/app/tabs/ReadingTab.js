@@ -172,8 +172,8 @@ class ReadingTab extends React.Component {
       //     });
       //   });
     }
-    componentWillUnMount(){
-      DeviceEventEmitter.remove();
+    componentWillUnmount(){
+      DeviceEventEmitter.removeAllListeners();
     }
   render() {
     return (
