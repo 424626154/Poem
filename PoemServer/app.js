@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 var user = require('./routers/user');
 var poem = require('./routers/poem');
 var pimage = require('./routers/pimage');
+var wy = require('./routers/wy');
+var ali = require('./routers/ali');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
@@ -18,7 +20,8 @@ app.get('/', function(req, res){
 app.use('/user', user);
 app.use('/poem', poem);
 app.use('/pimage', pimage);
-
+app.use('/wy', wy);
+app.use('/ali', ali);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

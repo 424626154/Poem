@@ -1,3 +1,6 @@
+/**
+ * 图片服务器
+ */
 var express = require('express');
 var router = express.Router();
 //fs读取和写入文件

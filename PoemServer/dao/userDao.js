@@ -5,7 +5,7 @@ var pool  = mysql.createPool($conf.mysql);
 
 const FOLLOW_TABLE = 'follow';//关注表
 const USER_TABLE = 'user';
-
+const VALIDATE_TABLE = 'validate';//验证码
 module.exports = {
 	// 查询用户
 	queryUser:function(phone,callback){
@@ -126,6 +126,15 @@ module.exports = {
             });
         });
 	},
+    updateValidateSms:function(phone,RequestId,BizId,callback){
+        var sql = 'UPDATE validate SET RequestId = ? , BizId = ? WHERE phone = ?';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [RequestId,BizId,phone], function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
     updateUserInfo:function(userid,head,pseudonym,callback){
         var sql = 'UPDATE user SET head = ? , pseudonym = ? WHERE userid = ? ';
         pool.getConnection(function(err, connection) {

@@ -1,7 +1,11 @@
+/**
+ * 用户服务器
+ */
 var express = require('express');
 var router = express.Router();
 var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
+var http = require('http');
 /* GET user listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
@@ -38,7 +42,50 @@ function resSuccess(res,data){
 function logReq(req){
 	console.log('url:/user'+req.originalUrl+' body:'+JSON.stringify(req.body));
 }
-
+function sendAliSms(phone,code,callback){
+	var data = {  
+       phone:phone,
+       code:code,
+    };  
+    data = JSON.stringify(data);  
+    console.log(data);  
+    var opt = {  
+        method: "POST",  
+        host: 'localhost',  
+        port: 3000,  
+        path: "/ali/sendcode",  
+        headers: {  
+            "Content-Type": 'application/json;charset=utf-8',  
+            "Content-Length": data.length,
+        },
+    }; 
+    var req = http.request(opt, function (serverAli) {  
+        if (serverAli.statusCode == 200) {  
+            var body = "";  
+            serverAli
+            .on('data', function (data) { 
+            	body += data; 
+            })  
+                          
+            .on('end', function () { 
+             	// res.send(200, body); 
+             	// console.log('请求sms')
+             	var json_data = JSON.parse(body);
+             	if(json_data.code == 0){
+             		callback(null,json_data.data);   
+             	}else{
+             		callback(new Error(json_data.code),null)  
+             	}     
+            });  
+        }  
+        else {  
+            // res.send(500, "error");  
+            callback(new Error(serverAli.statusCode),null);   
+        }  
+    });  
+    req.write(data + "\n");  
+    req.end();  
+}
 /**
  * 登录
  */
@@ -72,63 +119,69 @@ router.post('/validate',function(req,res,next){
 	logReq(req);
 	var phone = req.body.phone; 
 	if(!phone){
-		var resjson = new ResJson();
-		resjson.code = 1;
-		resjson.errmsg = '参数错误';
-		res.json(resjson)
+		resError(res,'参数错误');
 	}else{
+		var max_time = 60;//秒级
 		userDao.queryValidate(phone,function(err,objs){
 			if(err){
-				var resjson = new ResJson();
-				resjson.code = 1;
-				resjson.errmsg = err.code;
-				res.json(resjson)
+				resError(res,err.code);
 			}else{
+				console.log('验证码已经存在')
 				var length = objs.length;
 				if(length > 0 ){
 					var validate = objs[0];
 					var current_time = utils.getTime();
-					if(current_time - validate.time > 300){
+					var diff_time =  current_time - validate.time
+					if( diff_time >= max_time){
 						//重新生成
+						console.log('重新生成验证码')
 						var code = utils.getCode();
 						userDao.updateValidate(phone,code,current_time,function(err,objs){
 							if(err){
-								var resjson = new ResJson();
-								resjson.code = 1;
-								resjson.errmsg = err.code;
-								res.json(resjson)
+								resError(res,err.code);
 							}else{
-								var resjson = new ResJson();
-								resjson.code = 0;
-								resjson.data = {phone:phone,code:code,time:current_time};
-								res.json(resjson)	
-								console.log('验证码生成成功 code:'+code)
+								var data = {phone:phone,code:code,time:max_time,max:max_time};
+								resSuccess(res,data)
+							}
+						})
+						sendAliSms(phone,validate.code,function(err,sms){
+							if(!err){
+								console.log('重新生成验证码/ali/sendcode2')
+								userDao.updateValidateSms(phone,sms.RequestId,sms.BizId,function(err,result){
+
+								})
 							}
 						})
 					}else{
-						var resjson = new ResJson();
-						resjson.code = 0;
-						resjson.data = validate;
-						res.json(resjson)	
-						console.log('验证码生成成功 code:'+code)
+						validate.time = max_time-diff_time;
+						validate.max = max_time,
+						resSuccess(res,validate);
 					}
 				}else{
+					console.log('初始生成验证码')
 					//生成
 					var code = utils.getCode();
 					var current_time = utils.getTime();
 					userDao.addValidate(phone,code,current_time,function(err,objs){
 						console.log(err)
 						if(err){
-							var resjson = new ResJson();
-							resjson.code = 1;
-							resjson.errmsg = err.code;
-							res.json(resjson)
+							resError(res,err.code);
 						}else{
-							var resjson = new ResJson();
-							resjson.code = 0;
-							resjson.data = {phone:phone,code:code,time:current_time};
-							res.json(resjson)	
-							console.log('验证码生成成功 code:'+code)
+							console.log('初始生成验证码/ali/sendcode3')
+							sendAliSms(phone,code,function(err,data){
+								if(!err){
+									userDao.updateValidateSms(phone,data.RequestId,data.BizId,function(err,result){
+
+									})
+								}
+							})
+							var validate ={
+								phone:phone,
+								code:code,
+								time:max_time,
+								max:max_time,
+							}
+							resSuccess(res,validate)
 						}
 					})
 				}
@@ -307,5 +360,7 @@ router.post('/follows',function(req,res,next){
 		});
 	}
 });
+
+
 
 module.exports = router;
