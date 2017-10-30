@@ -42,8 +42,7 @@ class Drawer extends React.Component {
     this._onPerson = this._onPerson.bind(this);
     this._onWorks = this._onWorks.bind(this);
     this._onStting = this._onStting.bind(this);
-
-
+    this._onMessage = this._onMessage.bind(this);
   }
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners();
@@ -92,6 +91,7 @@ class Drawer extends React.Component {
         </View>
         {/* {this._renderItem('首页','apps',this._onHome)} */}
         {this._renderPerson()}
+        {this._renderMessage()}
         {this._renderItem('设置','settings',this._onStting)}
       </View>
     )
@@ -123,6 +123,11 @@ class Drawer extends React.Component {
       return(this._renderItem('作品','call-to-action',this._onWorks))
     }
   }
+  _renderMessage(){
+    if(this.state.userid){
+      return(this._renderItem('消息','message',this._onMessage))
+    }
+  }
   _onHome(){
     this.props.navigation.navigate('HomeUI')
   }
@@ -137,6 +142,9 @@ class Drawer extends React.Component {
   }
   _onWorks(){
     this.props.navigation.navigate('WorksUI');
+  }
+  _onMessage(){
+    this.props.navigation.navigate('MessageUI');
   }
   _onStting(){
     this.props.navigation.navigate('SettingUI');

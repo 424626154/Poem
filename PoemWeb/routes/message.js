@@ -50,29 +50,28 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/send',function(req, res, next){
+  console.log('get send');
 	res.render('sendmsg');
 });
 
 router.post('/send',multipartMiddleware,function(req, res, next){
-	// console.log('post send');
+	console.log('post send');
 	// res.send('sendmsg');
 	console.log(req.body);
-	// var title = req.body.title;
-	// var content = req.body.info;
-	res.redirect('/message/send');
-	if(!title||!content){
-		return;
+	var title = req.body.title;
+	var content = req.body.info;
+	if(title&&content){
+    sendAllPush(title,content,function(err,data){
+       if(err){
+
+       }else{
+
+       }
+       console.log(err);
+       console.log(data);
+    });
 	}
-	sendAllPush(title,content,function(err,data){
-		if(err){
-
-		}else{
-
-		}
-		console.log(err);
-		console.log(data);
-	});
-
+  res.redirect(303, '/message'); 
 });
 
 module.exports = router;

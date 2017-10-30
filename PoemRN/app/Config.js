@@ -35,12 +35,13 @@ var StorageConfig = {
 
 };
 StorageConfig.USERID = 'userid';
-
+StorageConfig.PUSHIID = 'pushid';
 const nothead = require('./images/ic_account_circle_black.png');
+const official = require('./images/official.png');
 
 var ImageConfig = {
 
 }
 ImageConfig.nothead = nothead;
-
+ImageConfig.official = official;
 export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig} ;

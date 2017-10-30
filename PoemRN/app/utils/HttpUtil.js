@@ -25,12 +25,16 @@ HttpUtil.POEM_LOVE_COMMENT = 'poem/lovecomment';
 HttpUtil.POEM_NEWEST_ALLPOEM = 'poem/newestallpoem';
 HttpUtil.POEM_HISTORY_ALLPOEM = 'poem/historyallpoem';
 
+HttpUtil.MESSAGE_PUSHID = 'message/pushid';
+HttpUtil.MESSAGE_MESSAGES = 'message/messages';
+HttpUtil.MESSAGE_READ = 'message/read';
+
 HttpUtil.BASE_URL = 'http://192.168.1.6:3000';
 
 HttpUtil.post = function(rep_url,body){
   var baseurl = HttpUtil.BASE_URL;
   var url = baseurl+'/'+rep_url;
-  console.log('HttpUtil url:'+url+' body:'+body);
+  console.log('---request post url:'+rep_url+' body:'+body);
   var that = this;
   return new Promise(function (resolve, reject) {
     fetch(url,{
@@ -43,6 +47,7 @@ HttpUtil.post = function(rep_url,body){
       })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log('---response post  url:'+rep_url+' data:'+JSON.stringify(responseJson));
         resolve(responseJson);
       })
       .catch((error) => {

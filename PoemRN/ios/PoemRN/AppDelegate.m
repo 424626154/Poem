@@ -25,8 +25,8 @@
 JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
      entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
      [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-  [JPUSHService setupWithOption:launchOptions appKey:@"cc767f6ba7191d12afe767af"
-                        channel:nil apsForProduction:nil];
+  [JPUSHService setupWithOption:launchOptions appKey:appKey
+                        channel:channel apsForProduction:isProduction];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];

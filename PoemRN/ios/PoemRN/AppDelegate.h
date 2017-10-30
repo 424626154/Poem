@@ -9,6 +9,12 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString *appKey = @"cc767f6ba7191d12afe767af";    //填写appkey
+
+static NSString *channel = @"developer-default";    //填写channel  一般为nil
+
+static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;

@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
+var ru = require('../utils/routersutil');
 var http = require('http');
 /* GET user listing. */
 router.get('/', function(req, res, next) {
@@ -86,6 +87,51 @@ function sendAliSms(phone,code,callback){
     req.write(data + "\n");  
     req.end();  
 }
+
+function requstPoemPost(path,data,callback){
+    data = JSON.stringify(data);  
+    console.log('---requstPoemPost path:'+path+'data:'+data);  
+    var opt = {  
+        method: "POST",  
+        host: 'localhost',  
+        port: 3000,  
+        path: path,  
+        headers: {  
+            "Content-Type": 'application/json;charset=utf-8',  
+            "Content-Length": data.length,
+        },
+    }; 
+    var req = http.request(opt, function (server) {  
+        if (server.statusCode == 200) {  
+            var body = "";  
+            server
+            .on('data', function (data) { 
+            	body += data; 
+            })  
+                          
+            .on('end', function () { 
+             	var result = JSON.parse(body);
+             	console.log('---requstPoemPost path:'+path+'result:'+result);
+             	if(result.code == 0){
+             		callback(null,result.data);   
+             	}else{
+             		callback(new Error(result.errmsg),null)  
+             	}     
+            });  
+        }  
+        else {  
+            callback(new Error(server.statusCode),null);   
+        }  
+    });  
+    req.write(data + "\n");  
+    req.end();  
+}
+function sendRegisterMsg(data,callback){
+	// console.log('---sendRegisterMsg---')
+	// console.log(data)
+	// console.log(callback)
+	requstPoemPost('/message/register',data,callback);
+}
 /**
  * 登录
  */
@@ -101,6 +147,16 @@ router.post('/login',function(req,res,next){
 			if(length > 0 ){
 				var user = users[0];
 				if(user.password == password){
+					sendRegisterMsg({userid:user.userid},function(err,result){
+						console.log('---发送注册消息')
+						console.log(err)
+						console.log(result)
+						if(err){
+
+						}else{
+
+						}
+					})
 					resSuccess(res,user);
 				}else{
 					resError(res,'密码错误');

@@ -7,11 +7,18 @@ import {
 // import { connect,Provider } from 'react-redux';
 // import {addNavigationHelpers} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
+import JPushModule from 'jpush-react-native';
 // import SQLite from './db/Sqlite';
 // const sqlite = new SQLite();
-import HttpUtil from './utils/HttpUtil';
-import {StyleConfig,HeaderConfig,StorageConfig} from './Config';
-import Global from './Global';
+import {
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  UserConfig,
+  Storage,
+  HttpUtil,
+  Global
+} from './AppUtil';
 
 import {AppNavigator} from './AppNavigator';
 
@@ -74,10 +81,32 @@ export default class App extends Component {
     //         },
     //         3000
     //     );
+    JPushModule.getRegistrationID((registrationId) => {
+      console.log('@@@@@@registrationId:'+registrationId)
+      if(registrationId){
+        this._savePushId(registrationId);
+      }
+    })
+    // 点击推送事件
+    JPushModule.addReceiveOpenNotificationListener((map)=>{
+      console.log('---openNotificationCallback')
+      console.log(map.aps)
+    });
+    //接收推送事件
+    JPushModule.addReceiveNotificationListener((event) => {
+      console.log("alertContent: " + JSON.stringify(event));
+    });
+    //接收自定义消息事件
+    JPushModule.addReceiveCustomMsgListener((message) => {
+      console.log("alertContent: " + JSON.stringify(message));
+    });
     SplashScreen.hide();
   }
   componentWillUnmount(){
       // sqlite.close();
+      JPushModule.removeReceiveOpenNotificationListener();
+      JPushModule.removeReceiveNotificationListener();
+      JPushModule.removeReceiveCustomMsgListener();
   }
   render() {
       return(
@@ -106,7 +135,38 @@ export default class App extends Component {
       console.error(err);
     })
   }
-
+  _savePushId(pushid){
+    Storage.savePushId(pushid)
+    Storage.getUserid().then(userid=>{
+      if(userid){
+        this._requestPushId(userid,pushid);
+      }
+    });
+  }
+  _requestPushId(userid,pushid){
+    var os = '';
+    if(Platform.OS == 'ios'){
+      os = 'ios';
+    }
+    if(Platform.OS == 'android'){
+      os = ' android';
+    }
+    var json = JSON.stringify({
+      userid:userid,
+      pushid:pushid,
+      os:os,
+    })
+    HttpUtil.post(HttpUtil.MESSAGE_PUSHID,json).then(res=>{
+      if(res.code == 0){
+        var user = res.data;
+        Storage.saveUser(user.userid,{"pushid":user.pushid});
+      }else{
+        console.log(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
+  }
   _goHide(){
     if(!this.ishide){
       this.ishide = true;

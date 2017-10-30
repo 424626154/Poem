@@ -25,6 +25,8 @@ import {MyUI} from './ui/MyUI';
 import {WorksUI} from './ui/WorksUI';
 import {SettingUI} from './ui/SettingUI';
 import LovesUI from './ui/LovesUI';
+import MessageUI from './ui/MessageUI';
+import MsgContentUI from './ui/MsgContentUI';
 
 import {Drawer} from './drawer/Drawer';
 
@@ -148,7 +150,13 @@ const AppNavigator = StackNavigator({
   },
   LovesUI:{
     screen:LovesUI,
-  }
+  },
+  MessageUI:{
+    screen:MessageUI,
+  },
+  MsgContentUI:{
+    screen:MsgContentUI,
+  },
 },{
   initialRouteName: 'Main', // 默认显示界面
 })
