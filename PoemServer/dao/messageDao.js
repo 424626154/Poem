@@ -35,6 +35,25 @@ module.exports = {
             });
         });
 	},
+    addMessages:function(userids,title,content,type,extend,callback){
+        if(userids.length == 0 ){
+            callback(new Error('userids 参数错误'), null);
+            return;
+        }
+        var time = utils.getTime();
+        var sql = 'INSERT INTO '+MESSAGE_TABLE+' (userid,title,content,type,extend,time) VALUES ';
+        for(var i = 0 ; i < userids.length ; i ++){
+            sql = sql+'("'+userids[i]+'","'+title+'","'+content+'",'+type+',"'+extend+'",'+time+'),';
+        }
+        sql = sql.substr(0,sql.length-1)
+        console.log(sql);
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
 	getMessage:function(msgid,callback){
 		var sql = 'SELECT * FROM '+MESSAGE_TABLE+' WHERE id = '+msgid;
         pool.getConnection(function(err, connection) {

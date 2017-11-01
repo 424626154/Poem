@@ -1,4 +1,7 @@
-// 登录
+'use strict'
+/**
+ * 登录
+ */
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
 import {
@@ -10,6 +13,7 @@ import {
   TextInput,
   AsyncStorage,
   DeviceEventEmitter,
+  Platform,
 } from 'react-native';
 
 import{
@@ -128,6 +132,7 @@ class LoginUI extends React.Component {
     var json = JSON.stringify({
       phone:this.state.phone,
       password:this.state.password,
+      os:Platform.OS,
     });
     HttpUtil.post(HttpUtil.USER_LOGIN,json)
     .then((res) => {

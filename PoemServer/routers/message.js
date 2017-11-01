@@ -139,17 +139,33 @@ router.post('/pushall', function(req, res, next) {
   	ru.resError(res,'参数错误');
   	return;
   }
-  if(server.push){
-      sendAllPush(title,content,os,function(err,data){
-         if(err){
-           ru.resError(res,err);
-         }else{
-           ru.resSuccess(res,data);
-         }
-      });
+  userDao.queryAllUserIdFromOs(os,function(err,result){
+    if(err){
+      ru.resError(res,err);
     }else{
-      ru.resSuccess(res,{sendno:'sendno',msg_id:'msg_id'}); 
+      if(result.length > 0){
+        var userids = [];
+        for(var i = 0 ; i < result.length;i++){
+          userids[i]= result[i].userid;
+        }
+         messageDao.addMessages(userids,title,content,0,'',function(err,result){
+              if(server.push){
+                sendAllPush(title,content,os,function(err,data){
+                   if(err){
+                     ru.resError(res,err);
+                   }else{
+                     ru.resSuccess(res,data);
+                   }
+                });
+              }else{
+                ru.resSuccess(res,{sendno:'sendno',msg_id:'msg_id'}); 
+              }
+         })
+      }else{
+        ru.resError(res,'无可推送用户');
+      }
     }
+  });
 });
 router.post('/pushuser', function(req, res, next) {
   ru.logReq(req);

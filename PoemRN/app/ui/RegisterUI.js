@@ -1,3 +1,7 @@
+'use strict'
+/**
+ * 注册
+ */
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
 import {
@@ -9,6 +13,7 @@ import {
   TextInput,
   AsyncStorage,
   DeviceEventEmitter,
+  Platform,
 } from 'react-native';
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
@@ -150,6 +155,7 @@ class RegisterUI extends React.Component {
       phone:this.state.phone,
       password:this.state.password,
       code:this.state.code,
+      os:Platform.OS ,
     });
     HttpUtil.post(HttpUtil.USER_REGISTER,json).then((res) => {
         if(res.code == 0){

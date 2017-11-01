@@ -84,10 +84,28 @@ module.exports = {
             });
         });
     },
-	addUser:function(userid,phone,password,callback){
-		var sql = 'INSERT INTO user(userid,phone,password) VALUES(?,?,?)';
+    queryAllUserIdFromOs(os,callback){
+        var sql = '';
+        if(os == 'all'){
+            sql = 'SELECT user.userid FROM '+USER_TABLE;
+        }else if(os == 'andoid'||os == 'ios'){
+            sql = 'SELECT user.userid FROM '+USER_TABLE+' WHERE os ='+os;
+        }else{
+            callback(new Error('os 参数错误'),null);
+            return;
+        }
+        console.log(sql);
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
+	addUser:function(userid,phone,password,os,callback){
+		var sql = 'INSERT INTO user(userid,phone,password,os) VALUES(?,?,?,?)';
 		pool.getConnection(function(err, connection) {
-            connection.query(sql, [userid,phone,password], function(err, result) {
+            connection.query(sql, [userid,phone,password,os], function(err, result) {
             	if(err){
                     callback(err, result)
                     connection.release();                   
@@ -158,6 +176,15 @@ module.exports = {
                         connection.release();
                     });
                 }
+            });
+        });
+    },
+    updateUserOs:function(userid,os,callback){
+        var sql = 'UPDATE user SET os = ?  WHERE userid = ? ';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [os,userid], function(err, result) {
+                callback(err, result)
+                connection.release();
             });
         });
     },

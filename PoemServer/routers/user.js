@@ -139,6 +139,7 @@ router.post('/login',function(req,res,next){
 	logReq(req);
 	var phone = req.body.phone; 
 	var password = req.body.password;
+	var os = req.body.os;
 	userDao.queryUser(phone,function(err,users){
 		if(err){
 			resError(res,err);
@@ -147,16 +148,11 @@ router.post('/login',function(req,res,next){
 			if(length > 0 ){
 				var user = users[0];
 				if(user.password == password){
-					sendRegisterMsg({userid:user.userid},function(err,result){
-						console.log('---发送注册消息')
-						console.log(err)
-						console.log(result)
-						if(err){
+					if(user.os != os){
+						userDao.updateUserOs(user.userid,os,function(err,result){
 
-						}else{
-
-						}
-					})
+						})
+					}
 					resSuccess(res,user);
 				}else{
 					resError(res,'密码错误');
@@ -257,6 +253,7 @@ router.post('/register',function(req,res,next){
 	var phone = req.body.phone; 
 	var password = req.body.password;
 	var code = req.body.code;
+	var os = req.body.os;
 	var userid = utils.getUserid(phone)
 	if(!phone||!password||!code){
 		resError(res,err);
@@ -276,10 +273,20 @@ router.post('/register',function(req,res,next){
 								if(length > 0 ){
 									var validate = objs[0];
 									if(validate.phone == phone && validate.code == code){
-											userDao.addUser(userid,phone,password,function(err,result){
+											userDao.addUser(userid,phone,password,os,function(err,result){
 												if(err){
 													resError(res,err);
 												}else{
+													sendRegisterMsg({userid:user.userid},function(err,result){
+														console.log('---发送注册消息')
+														console.log(err)
+														console.log(result)
+														if(err){
+
+														}else{
+
+														}
+													})
 													var user = result.length > 0 ?result[0]:{};
 													resSuccess(res,user);
 												}

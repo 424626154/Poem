@@ -1,3 +1,7 @@
+'use strict'
+/**
+ * 关注
+ */
 import React from 'react';
 import {
         StyleSheet,

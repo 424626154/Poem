@@ -128,14 +128,64 @@ export default class App extends Component {
     HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
       if(res.code == 0){
         Global.user = res.data ;
-        this._goHide();
+        this._reuqestMessages();
       }else{
+        this._goHide();
         Alert.alert(res.errmsg);
       }
     }).catch(err=>{
       console.error(err);
     })
   }
+  /**
+   * 请求消息列表
+   */
+   _requestMessages(){
+     var json = JSON.stringify({
+       userid:this.state.userid,
+     });
+     HttpUtil.post(HttpUtil.MESSAGE_MESSAGES,json).then(res=>{
+       if(res.code == 0){
+         var messages = res.data;
+         if(messages.length > 0){
+           MessageDao.addMessages(messages);
+           var reads = [];
+           for(var i = 0 ; i < messages.length ; i ++){
+             var id = messages[i].id;
+             reads[i]= id;
+           }
+           if(reads.length >0){
+             this._requestMsgRead(reads);
+           }
+         }
+       }else{
+         this._goHide();
+         Alert.alert(res.errmsg);
+       }
+     }).catch(err=>{
+       console.error(err);
+     })
+   }
+   /**
+    * 设置消息已读
+    */
+   _requestMsgRead(reads){
+     var json = JSON.stringify({
+       userid:this.state.userid,
+       reads:reads
+     });
+     HttpUtil.post(HttpUtil.MESSAGE_READ,json).then(res=>{
+       if(res.code == 0){
+         console.log(res.data);
+       }else{
+         Alert.alert(res.errmsg);
+       }
+       this._goHide();
+     }).catch(err=>{
+       console.error(err);
+     })
+   }
+
   _savePushId(pushid){
     Storage.savePushId(pushid)
     Storage.getUserid().then(userid=>{
