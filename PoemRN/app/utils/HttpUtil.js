@@ -29,7 +29,7 @@ HttpUtil.MESSAGE_PUSHID = 'message/pushid';
 HttpUtil.MESSAGE_MESSAGES = 'message/messages';
 HttpUtil.MESSAGE_READ = 'message/read';
 
-HttpUtil.BASE_URL = 'http://192.168.1.6:3000';
+HttpUtil.BASE_URL = 'http://192.168.1.8:3000';
 
 HttpUtil.post = function(rep_url,body){
   var baseurl = HttpUtil.BASE_URL;

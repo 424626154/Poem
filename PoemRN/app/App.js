@@ -17,7 +17,7 @@ import {
   UserConfig,
   Storage,
   HttpUtil,
-  Global
+  Global,
 } from './AppUtil';
 
 import {AppNavigator} from './AppNavigator';
@@ -81,6 +81,7 @@ export default class App extends Component {
     //         },
     //         3000
     //     );
+
     JPushModule.getRegistrationID((registrationId) => {
       console.log('@@@@@@registrationId:'+registrationId)
       if(registrationId){

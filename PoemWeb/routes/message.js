@@ -1,77 +1,96 @@
 var express = require('express');
 var router = express.Router();
-var http = require('http');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
-function sendAllPush(title,content,callback){
-	var data = {
-		title:title,
-		content:content,
-	}
-	data = JSON.stringify(data);  
-	var opt = {  
-        method: "POST",  
-        host: 'localhost',  
-        port: 3000,  
-        path: "/message/sendall",  
-        headers: {  
-            "Content-Type": 'application/json;charset=utf-8',  
-            "Content-Length": data.length,
-        },
-    }; 
-    var req = http.request(opt, function (serverJG) {  
-        if (serverJG.statusCode == 200) {  
-            var body = "";  
-            serverJG
-            .on('data', function (data) { 
-            	body += data; 
-            })  
-                          
-            .on('end', function () { 
-             	var json_data = JSON.parse(body);
-             	if(json_data.code == 0){
-             		callback(null,json_data.data);   
-             	}else{
-             		callback(new Error(json_data.code),null)  
-             	}     
-            });  
-        }  
-        else {  
-            // res.send(500, "error");  
-            callback(new Error(serverJG.statusCode),null);   
-        }  
-    });  
-    req.write(data + "\n");  
-    req.end(); 
-}
+var httputil = require('../util/httputil');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('message');
+  var user = req.cookies.user;
+  if(!user){
+    res.redirect("/login");
+    return ;
+  }
+  res.render('message',{ user: user });
 });
 
 router.get('/send',function(req, res, next){
-  console.log('get send');
-	res.render('sendmsg');
+  console.log('---get '+req.originalUrl+' body:'+JSON.stringify(req.body));
+  var user = req.cookies.user;
+  if(!user){
+    res.redirect("/login");
+    return ;
+  }
+	res.render('sendmsg',{ user: user,err:""});
 });
 
 router.post('/send',multipartMiddleware,function(req, res, next){
-	console.log('post send');
-	// res.send('sendmsg');
-	console.log(req.body);
-	var title = req.body.title;
-	var content = req.body.info;
-	if(title&&content){
-    sendAllPush(title,content,function(err,data){
+  console.log('---post /message/send body:'+JSON.stringify(req.body));
+  var user = req.cookies.user;
+  if(!user){
+    res.redirect("/login");
+    return ;
+  }
+  var body = req.body;
+  var userid = body.userid;
+	var title = body.title;
+	var content = body.content;
+	if(!userid||!title||!content){
+      err = "参数错误!";
+      res.render('sendmsg',{ user: user,err:err });
+      return;
+	}else{
+      httputil.sendPost('/admin/pushuser',body,function(err,data){
        if(err){
-
+          res.render('sendmsg',{ user: user,err:err.message });
        }else{
-
+          res.redirect("/message");
        }
-       console.log(err);
-       console.log(data);
-    });
-	}
-  res.redirect(303, '/message'); 
+      });
+  }
 });
+
+
+router.get('/sendall',function(req, res, next){
+  var user = req.cookies.user;
+  if(!user){
+    res.redirect("/login");
+    return ;
+  }
+  console.log('get sendall');
+  res.render('sendall',{ user: user,err:"" });
+});
+
+router.post('/sendall',multipartMiddleware,function(req, res, next){
+  var user = req.cookies.user;
+  if(!user){
+    res.redirect("/login");
+    return ;
+  }
+  console.log('post sendall');
+  // res.send('sendmsg');
+  console.log(req.body);
+  var body = req.body;
+  var title = body.title;
+  var content = body.content;
+  var os = body.os;
+  var err = "";
+  if(!title||!content||!os){
+    err = "参数错误!";
+    res.render('sendall',{ user: user,err:err });
+    return;
+  }else{
+      httputil.sendPost('/admin/pushall',body,function(err,data){
+       if(err){
+          res.render('sendall',{ user: user,err:err });
+          return;
+       }else{
+          res.redirect("/message");
+          return;
+       }
+      });
+  }
+});
+
+
 
 module.exports = router;

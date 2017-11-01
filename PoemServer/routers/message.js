@@ -4,18 +4,28 @@
 var express = require('express');
 var router = express.Router();
 var messageDao = require('../dao/messageDao');
+var userDao = require('../dao/userDao');
 var JPush = require('jpush-sdk');
 var jiguang = require('../conf/jiguang');
 var ru = require('../utils/routersutil');
+var conf = require('../conf/config')
+var server = conf.server;
 
 var client = JPush.buildClient(jiguang.appKey, jiguang.masterSecret);
 
-function sendAllPush(title,content,callback){
+function sendAllPush(title,content,os,callback){
 	console.log('---发送极光推送')
 	console.log('---title:'+title)
 	console.log('---content:'+content)
+  console.log('---os:'+os)
+  var platform = JPush.ALL;
+  if(os == 'andoid'){
+      platform = 'android'
+  }else if (os == 'ios'){
+      platform = 'ios'
+  }
 	//easy push
-	client.push().setPlatform(JPush.ALL)
+	client.push().setPlatform(platform)
 	    .setAudience(JPush.ALL)
 	    .setNotification(content, JPush.ios(content,title, 5))
 	    .send(function(err, res) {
@@ -44,7 +54,9 @@ function sendAllPush(title,content,callback){
   //       }
   //   });   
 }
-
+/**
+ * 发送单个推送
+ */
 function sendPush(msgid,pushid,os,title,content,callback){
   console.log('---发送极光推送')
   console.log('---msgid:'+msgid)
@@ -56,38 +68,106 @@ function sendPush(msgid,pushid,os,title,content,callback){
       .setAudience(JPush.registration_id(pushid))
       .setNotification(content, JPush.ios(content,title,msgid))
       .send(function(err, res) {
+          console.error(err)
           if (err) {
               callback(err,null)
           } else {
               callback(null,res)
           }
       });
-  
 }
+
+/**
+ * 添加消息
+ */
+function addMessage(userid,title,content,callback){
+  userDao.queryUserFromId(userid,function(err,result){
+    if(err){
+      callback(err,null);
+    }else{
+      if(result.length > 0 ){
+          messageDao.addMessage(userid,title,content,0,'',function(err,result){
+              if(err){
+                  callback(err,null);
+              }else{
+                  var msgid = result.insertId;
+                  messageDao.getPush(userid,function(err,result){
+                      if(err){
+                        callback(err,null);
+                      }else{
+                        if(result.length > 0){
+                          var push =  result[0];
+                          if(server.push){
+                            sendPush(msgid,push.pushid,os,title,content,function(err,data){
+                                 if(err){
+                                   callback(err,null);
+                                 }else{
+                                  callback(null,data);
+                                 }
+                            });
+                          }else{
+                            callback(null,{sendno:'sendno',msg_id:'msg_id'});
+                          } 
+                        }else{
+                          callback('获取用户pushid失败',null);
+                        }
+                        // console.log(result[0])
+                        // ru.resSuccess(res,result);
+                      }
+                  });
+              }    
+          });
+      }else{
+        callback('用户不存在',null);
+      }
+    }
+  })
+}
+
+
 router.get('/', function(req, res, next) {
 	ru.logReq(req);
     res.send('message');
 });
 
-router.post('/sendall', function(req, res, next) {
-  //res.send('respond with a resource');
+router.post('/pushall', function(req, res, next) {
   ru.logReq(req);
   var title = req.body.title;
   var content = req.body.content;
-  console.log(title)
-  console.log(content)
-  if(!title||!content){
+  var os = req.body.os;
+  if(!title||!content||!os){
   	ru.resError(res,'参数错误');
   	return;
   }
-  sendAllPush(title,content,function(err,data){
-  		if(err){
-  			ru.resError(res,err);
-  		}else{
-  			ru.resSuccess(res,data);
-  		}
-  });
-    
+  if(server.push){
+      sendAllPush(title,content,os,function(err,data){
+         if(err){
+           ru.resError(res,err);
+         }else{
+           ru.resSuccess(res,data);
+         }
+      });
+    }else{
+      ru.resSuccess(res,{sendno:'sendno',msg_id:'msg_id'}); 
+    }
+});
+router.post('/pushuser', function(req, res, next) {
+  ru.logReq(req);
+  var body = req.body;
+  var userid = body.userid;
+  var title = body.title;
+  var content = body.content;
+  if(!userid||!title||!content){
+    ru.resError(res,'参数错误');
+  }else{
+    addMessage(userid,title,content,function(err,result){
+        if(err){
+          ru.resError(res,err);
+        }else{
+          ru.resSuccess(res,result);
+        }
+    });
+  }
 });
 
 
@@ -128,36 +208,18 @@ router.post('/register',function(req,res,next){
   }else{
     var title = '注册成功';
     var content = '欢迎来到Poem！';
-    messageDao.addMessage(userid,title,content,0,'',function(err,result){
+    addMessage(userid,title,content,function(err,result){
         if(err){
-            ru.resError(res,err);
+          ru.resError(res,err);
         }else{
-            var msgid = result.insertId;
-            messageDao.getPush(userid,function(err,result){
-                if(err){
-                  ru.resError(res,err);
-                }else{
-                  if(result.length > 0){
-                    var push =  result[0];
-                    sendPush(msgid,push.pushid,push.os,title,content,function(err,result){
-                      if(err){
-                        ru.resError(res,err);
-                      }else{
-                        ru.resSuccess(res,result);
-                      }
-                    }); 
-                  }else{
-                    ru.resSuccess(res,result);
-                  }
-                  // console.log(result[0])
-                  // ru.resSuccess(res,result);
-                }
-            });
-        }    
+          ru.resSuccess(res,result);
+        }
     });
   }
 });
-
+/**
+ * 获得消息列表
+ */
 router.post('/messages',function(req,res,next){
   ru.logReq(req);
   var userid = req.body.userid;
@@ -173,7 +235,9 @@ router.post('/messages',function(req,res,next){
     });
   }
 });
-
+/**
+ * 设置消息已读
+ */
 router.post('/read',function(req,res,next){
   ru.logReq(req);
   var userid = req.body.userid;

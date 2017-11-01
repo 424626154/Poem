@@ -419,7 +419,55 @@ router.post('/follows',function(req,res,next){
 		});
 	}
 });
-
+/**
+ * 查询
+ */
+router.post('/query',function(req,res,next){
+	logReq(req);
+	var op = req.body.op;
+	if(!op){
+		resError(res,'参数错误');
+	}else{
+		if(op == 'userid'){
+			var userid = req.body.userid;
+			userDao.queryUserFromId(userid,function(err,result){
+			if(err){
+				resError(res,err);
+			}else{
+				if(result.length >0){
+					var data = {
+						op:'userid',
+						phone:result[0].phone,
+					}
+					resSuccess(res,data);
+				}else{
+					resError(res,'用户ID不存在');
+				}
+				
+			}
+		});
+		}else if(op == 'phone'){
+			var phone = req.body.phone;
+			userDao.queryUser(phone,function(err,result){
+				if(err){
+					resError(res,err);
+				}else{
+					if(result.length >0){
+						var data = {
+							op:'phone',
+							userid:result[0].userid,
+						}
+						resSuccess(res,data);
+					}else{
+						resError(res,'手机号未组成');
+					}
+				}
+			});
+		}else{
+			resError(res,'操作类型错误');	
+		}
+	}
+});
 
 
 module.exports = router;

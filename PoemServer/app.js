@@ -8,6 +8,7 @@ var pimage = require('./routers/pimage');
 var wy = require('./routers/wy');
 var ali = require('./routers/ali');
 var message = require('./routers/message');
+var admin = require('./routers/admin');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
@@ -24,7 +25,7 @@ app.use('/pimage', pimage);
 app.use('/wy', wy);
 app.use('/ali', ali);
 app.use('/message', message);
-
+app.use('/admin', admin);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

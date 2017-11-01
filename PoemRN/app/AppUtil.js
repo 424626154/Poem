@@ -14,6 +14,9 @@ import Emitter from './utils/Emitter';//监听
 import Global from './Global';//全局数据
 import pstyles from './style/PStyles';//公共样式
 import Storage from './utils/Storage';
+import MessageDao from './db/MessageDao';
+
+
 var Utils = {};
 
 Utils.dateStr = function(date){
@@ -80,4 +83,5 @@ export {
   Global,
   pstyles,
   Storage,
+  MessageDao,
 }

@@ -16,8 +16,10 @@ import {
   HeaderConfig,
   Global,
   HttpUtil,
-  pstyles
+  pstyles,
+  MessageDao,
 } from '../AppUtil';
+
 export default class MessageUI extends Component {
   static navigationOptions = ({navigation}) => ({
         title:'消息',
@@ -43,7 +45,14 @@ export default class MessageUI extends Component {
        }
      }
      componentDidMount(){
-         this._requestMessages();
+        let msgs = MessageDao.getMessages();
+        if(msgs.length > 0){
+          this.dataContainer = msgs.concat(this.dataContainer);
+          this.setState({
+            sourceData: this.dataContainer
+          });
+        }
+        this._requestMessages();
      }
      componentWillUnmount(){
 
@@ -62,6 +71,8 @@ export default class MessageUI extends Component {
                     ListEmptyComponent={ this._renderEmptyView }
                     refreshing={ this.state.refreshing }
                     onRefresh={ this._renderRefresh }
+                    onSwipeStart={() => this.setState({isSwiping: true})}
+                    onSwipeRelease={() => this.setState({isSwiping: false})}
                 />
 
         </View>
@@ -84,13 +95,32 @@ export default class MessageUI extends Component {
             selected.set(id, !selected.get(id));
             return {selected}
         });
+        message.state = 1;
+        MessageDao.updateMessageState(message);
         this.props.navigation.navigate('MsgContentUI',{message:message})
     };
+    _onDelItem = (id: int,message:Object) => {
+      var del = false;
+      this.dataContainer = this.state.sourceData;
+      for(var i = this.dataContainer.length-1 ; i >= 0 ; i -- ){
+        if(this.dataContainer[i].id == id){
+          this.dataContainer.splice(i,1);
+          MessageDao.deleteMessage(id);
+          del = true;
+        }
+      }
+      if(del){
+        this.setState({
+          sourceData: this.dataContainer,
+        });
+      }
+    }
     _renderItem = ({item}) =>{
         return(
             <MessageListItem
                 id={item.id}
                 onPressItem={ this._onPressItem }
+                onDelItem={this._onDelItem}
                 selected={ !!this.state.selected.get(item.id) }
                 message= {item}
             />
@@ -113,7 +143,8 @@ export default class MessageUI extends Component {
         if(res.code == 0){
           var messages = res.data;
           if(messages.length > 0){
-            this.dataContainer = messages.concat(this.dataContainer);
+            MessageDao.addMessages(messages);
+            this.dataContainer = messages.concat(this.state.sourceData);
             this.setState({
               sourceData: this.dataContainer
             });

@@ -34,6 +34,7 @@ class Drawer extends React.Component {
     }
   }
   componentDidMount(){
+    console.log('@@@Drawer()componentDidMount')
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
@@ -45,6 +46,7 @@ class Drawer extends React.Component {
     this._onMessage = this._onMessage.bind(this);
   }
   componentWillUnmount(){
+    console.log('@@@Drawer()componentWillUnmount')
     DeviceEventEmitter.removeAllListeners();
     this.timer && clearTimeout(this.timer);
   }
@@ -177,10 +179,10 @@ class Drawer extends React.Component {
   _analysisObserver(obj){
     var action = obj.action;
     var param = obj.param;
+    console.log('@@@Drawer()action:'+action)
     switch (action) {
+      case Emitter.LOGIN:
       case Emitter.UPINFO:
-        this._eventUserInfo();
-        break;
       case Emitter.LOGOUT:
         this.setState({
           userid:Global.user.userid,

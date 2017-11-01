@@ -28,6 +28,16 @@ module.exports ={
 	 * 打印
 	 */
 	logReq:function(req){
-		console.log('url:'+req.originalUrl+' body:'+JSON.stringify(req.body));
+		// console.log(req.hostname)
+		// console.log(req.ip)
+		// console.log(req.protocol)
+		// console.log(req.method)
+		// console.log('url:'+req.originalUrl+' body:'+JSON.stringify(req.body));
+		var log = '---hostname:'+req.hostname+' ip:'+req.ip;
+		// console.log(log)
+		log = '---'+req.method+'_'+req.originalUrl;
+		console.log(log)
+		var log = '---body:'+JSON.stringify(req.body);
+		console.log(log)
 	}
 }

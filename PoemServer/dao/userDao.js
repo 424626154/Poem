@@ -18,6 +18,15 @@ module.exports = {
             });
         });
 	},
+    queryUserFromId:function(userid,callback){
+        var sql = 'SELECT * FROM user WHERE userid = ? LIMIT 1';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, userid, function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
     queryUserInfo:function(userid,callback){
         var userinfo = 'SELECT user.userid,user.head,user.pseudonym FROM '+USER_TABLE+' WHERE userid = "'+userid+'"';
         var myfollow = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND fstate = 1';
