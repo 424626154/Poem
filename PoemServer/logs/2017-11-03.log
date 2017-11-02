@@ -1,0 +1,26 @@
+[2017-11-03 02:24:33.626] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.11","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-03 02:24:33.750] [ERROR] /dao/userDao.js - aa
+[2017-11-03 02:24:43.756] [ERROR] /dao/dao.js - { Error: connect ETIMEDOUT
+    at PoolConnection.Connection._handleConnectTimeout (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:419:13)
+    at Socket.g (events.js:292:16)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:185:7)
+    at Socket._onTimeout (net.js:342:8)
+    at ontimeout (timers.js:365:14)
+    at tryOnTimeout (timers.js:237:5)
+    at Timer.listOnTimeout (timers.js:207:5)
+    --------------------
+    at Protocol._enqueue (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at Protocol.handshake (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:52:23)
+    at PoolConnection.connect (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:130:18)
+    at Pool.getConnection (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Pool.js:48:16)
+    at Object.<anonymous> (/Users/bingbing/Poem/PoemServer/dao/dao.js:16:6)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:488:32)
+    at tryModuleLoad (module.js:447:12)
+    at Function.Module._load (module.js:439:3)
+  errorno: 'ETIMEDOUT',
+  code: 'ETIMEDOUT',
+  syscall: 'connect',
+  fatal: true }
