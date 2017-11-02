@@ -1,8 +1,6 @@
-var mysql = require('mysql');
-var $conf = require('../conf/db');
+var pool = require('./dao');
 var utils = require('../utils/utils'); 
-// 使用连接池，提升性能
-var pool  = mysql.createPool($conf.mysql);
+
 const POEM_TABLE = 'poem'; 
 const USER_TABLE = 'user';
 const COMMENT_TABLE = 'comment';

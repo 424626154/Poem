@@ -1,8 +1,6 @@
-var mysql = require('mysql');
-var $conf = require('../conf/db');
-// 使用连接池，提升性能
-var pool  = mysql.createPool($conf.mysql);
-
+var pool = require('./dao');
+var utils = require('../utils/utils');
+var logger = require('../utils/log4jsutil').logger(__dirname+'/userDao.js');
 const FOLLOW_TABLE = 'follow';//关注表
 const USER_TABLE = 'user';
 const VALIDATE_TABLE = 'validate';//验证码
@@ -12,10 +10,15 @@ module.exports = {
 		console.log("phone:",phone)
 		var sql = 'SELECT * FROM user WHERE phone = ? LIMIT 1';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, phone, function(err, result) {
-            	callback(err, result)
-                connection.release();
-            });
+            try{
+                connection.query(sql, phone, function(err, result) {
+                    callback(err, result)
+                    connection.release();
+                });
+            }catch(err){
+                logger.error(err);
+                callback(err,null);
+            }
         });
 	},
     queryUserFromId:function(userid,callback){

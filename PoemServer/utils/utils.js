@@ -61,5 +61,21 @@ module.exports = {
 	   } else {  
 	     return true;  
 	   }  
+	 },
+	 isJsName:function(temp_jsname){
+	 	console.log(temp_jsname)
+	 	var jsname = 'default';
+	 	var isfull = false;
+ 		if(isfull){
+ 			jsname = temp_jsname;
+ 		}else{
+ 			var strarr = temp_jsname.split('/');
+	 		if(strarr.length > 0 ){
+	 			jsname = strarr[strarr.length-1];
+	 		}else{
+	 			jsname = temp_jsname;
+	 		}
+ 		}
+	 	return jsname;
 	 }
 }

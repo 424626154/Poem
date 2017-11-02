@@ -9,6 +9,9 @@ var wy = require('./routers/wy');
 var ali = require('./routers/ali');
 var message = require('./routers/message');
 var admin = require('./routers/admin');
+var log4js = require('./utils/log4jsutil');
+
+log4js.use(app);
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
@@ -26,6 +29,11 @@ app.use('/wy', wy);
 app.use('/ali', ali);
 app.use('/message', message);
 app.use('/admin', admin);
+
+app.use(function(err, req, res, next) {
+  // 业务逻辑
+  console.log(err)
+});
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

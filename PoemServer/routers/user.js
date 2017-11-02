@@ -7,6 +7,8 @@ var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
 var ru = require('../utils/routersutil');
 var http = require('http');
+var utils = require('../utils/utils');
+var logger = require('../utils/log4jsutil').logger(__dirname+'/user.js');
 /* GET user listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
@@ -439,6 +441,7 @@ router.post('/query',function(req,res,next){
 			var userid = req.body.userid;
 			userDao.queryUserFromId(userid,function(err,result){
 			if(err){
+
 				resError(res,err);
 			}else{
 				if(result.length >0){
