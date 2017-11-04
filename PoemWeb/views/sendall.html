@@ -8,10 +8,15 @@
       <%if(err){%>  
          <div class="alert alert-danger" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <%= err %>
+          <h5><%= err %></h5>
         </div>
-      <%}else{%>  
       <%}%>  
+      <%if(success){%> 
+        <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5><%= success %></h5>
+        </div> 
+      <%}%> 
       <form id="add" name="add" method="post" action="/message/sendall" enctype="multipart/form-data" >
         <div class="form-group">
           <label for="">标题</label>

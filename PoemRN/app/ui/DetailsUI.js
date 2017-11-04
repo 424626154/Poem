@@ -19,8 +19,7 @@ import {
 // import { bindActionCreators } from 'redux';
 // import {connect} from 'react-redux';
 import * as Actions from '../redux/actions/Actions'
-// import SQLite from '../db/Sqlite';
-// const sqlite = new SQLite();
+
 import {
   CommentListItem,
   LoveListView,
@@ -54,7 +53,7 @@ class DetailsUI extends React.Component{
     let params = this.props.navigation.state.params;
     this.state = {
         id:params.id,
-        poem:{userid:'',poem:'',lovenum:0,commentnum:0,love:0},
+        poem:{userid:'',content:'',lovenum:0,commentnum:0,love:0},
         userid:Global.user.userid,
         ftype:params.ftype,
         sourceData : [],
@@ -67,6 +66,7 @@ class DetailsUI extends React.Component{
     this._onLove = this._onLove.bind(this);
     this._onLoveItem = this._onLoveItem.bind(this);
     this._onLoves= this._onLoves.bind(this);
+    this._onPoemLayout = this._onPoemLayout.bind(this);
   }
 
   componentDidMount(){
@@ -76,26 +76,34 @@ class DetailsUI extends React.Component{
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
-    console.log('@@@详情页componentDidMount')
   }
 
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners();
-    console.log('@@@详情页componentWillUnmount')
   }
   render(){
     const { navigate } = this.props.navigation;
     return(
-      <ScrollView style={styles.container}>
-        <View style={styles.poem}>
+      <ScrollView
+        ref="ScrollView"
+        style={styles.container}>
+        <View
+          ref="poem"
+          style={styles.poem}
+          onLayout={this._onPoemLayout}>
           <Text style={styles.poem_title}>{this.state.poem.title}</Text>
-          <Text style={styles.poem_content}
-          >{this.state.poem.content}</Text>
+          <Text style={styles.poem_content}>
+            {this.state.poem.content}
+          </Text>
         </View>
         {/* ---menu--- */}
         {this._renderMenu()}
         {/* --点赞列表-- */}
+        <View
+          ref="love"
+        >
         {this._renderLove()}
+        </View>
         {/* ---评论列表--- */}
         <FlatList
                   data={ this.state.sourceData }
@@ -124,7 +132,10 @@ class DetailsUI extends React.Component{
   _renderMenu(){
     if(this.state.poem.userid == Global.user.userid){
       return(
-        <View style={styles.menu}>
+        <View
+          ref="menu"
+          style={styles.menu}
+        >
             <TouchableOpacity
               onPress={()=>{
                 this.props.navigation.navigate('ModifyPoemUI',{id:this.state.id,poem:this.state.poem})
@@ -197,7 +208,10 @@ class DetailsUI extends React.Component{
       )
     }else{
       return(
-        <View style={styles.menu}>
+        <View
+          ref="menu"
+          style={styles.menu}
+        >
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.navigate)){
@@ -269,6 +283,18 @@ class DetailsUI extends React.Component{
         />
     )
   }
+  _onPoemLayout(event){
+    if(this.state.ftype == 1){
+      //使用大括号是为了限制let结构赋值得到的变量的作用域，因为接来下还要结构解构赋值一次
+      //  {
+         //获取根View的宽高，以及左上角的坐标值
+         let {x, y, width, height} = event.nativeEvent.layout;
+         if(this.state.poem.content){
+           this.refs.ScrollView.scrollTo({x: 0, y: height+10, animated: false})
+         }
+      //  }
+    }
+  }
   _keyExtractor = (item, index) => index;
   _onPressItem = (id: string) => {
       this.setState((state) => {
@@ -337,20 +363,6 @@ class DetailsUI extends React.Component{
     HttpUtil.post(HttpUtil.POEM_DELPOEM,json).then((data)=>{
       if(data.code == 0){
         var poem = data.data;
-        // sqlite.queryAllPoemNum(poem).then((num)=>{
-        //     if(num > 0 ){
-        //       sqlite.deleteAllPoem(poem.id)
-        //     }
-        // }).catch((err)=>{
-        //   console.error(err)
-        // })
-        // sqlite.queryPoemNum(poem).then((num)=>{
-        //   if(num > 0 ){
-        //     sqlite.deletePoem(poem.id)
-        //   }
-        // }).catch((err)=>{
-        //   console.error(err)
-        // })
         DeviceEventEmitter.emit('DelPoem',this.state.id);
      	  this.props.navigation.goBack();
       }else{
@@ -380,7 +392,6 @@ class DetailsUI extends React.Component{
         var love = result.data;
         console.log('result love:'+JSON.stringify(love));
         let id  = love.id;
-        // sqlite.AddLove(love)
         var loves = this.state.loves;
         if(love.love == 0){//删除
           if(loves.length > 0 ){
@@ -455,7 +466,7 @@ class DetailsUI extends React.Component{
           var poem = res.data;
           this.setState({
               poem:poem,
-          })
+          });
         }else{
           Alert.alert(res.errmsg);
         }
@@ -478,15 +489,6 @@ class DetailsUI extends React.Component{
             loves:loves,
           })
           this.refs.lovelistview.loadPages();
-          // sqlite.deleteLoves().then(()=>{
-          //     sqlite.saveLoves(loves).then(()=>{
-          //
-          //     }).catch((err)=>{
-          //       console.error(err);
-          //     })
-          // }).catch((err)=>{
-          //   console.error(err);
-          // })
         }else{
           Alert.alert(data.errmsg);
         }

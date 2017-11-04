@@ -10,11 +10,14 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-// import SQLite from '../db/Sqlite';
-// const sqlite = new SQLite();
-import HttpUtil  from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
+import{
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      HttpUtil,
+      Emitter,
+} from '../AppUtil';
+
 /**
  * 评论
  */
@@ -89,12 +92,6 @@ class CommentUI extends React.Component{
     HttpUtil.post(HttpUtil.POEM_COMMENTPOEM,json).then((data)=>{
       if(data.code == 0){
         var comment = data.data;
-        // sqlite.saveComment(comment).then((data)=>{
-        //   Emitter.emit(Emitter.COMMENT,comment);
-       // 	  this.props.navigation.goBack();
-        // }).catch((err)=>{
-        //   console.error(err);
-        // })
         Emitter.emit(Emitter.COMMENT,comment);
         this.props.navigation.goBack();
       }else{

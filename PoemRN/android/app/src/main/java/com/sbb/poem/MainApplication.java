@@ -41,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
             new WebViewBridgePackage(),
             new SQLitePluginPackage(),
             new VectorIconsPackage(),
-              new JPushPackage(true,false)//第一个参数设置为 true 表示关闭 toast 提示，第二个设置为 true 表示关闭日志打印，建议在 debug 版本中打开
+              new JPushPackage(false,false)//第一个参数设置为 true 表示关闭 toast 提示，第二个设置为 true 表示关闭日志打印，建议在 debug 版本中打开
       );
     }
   };

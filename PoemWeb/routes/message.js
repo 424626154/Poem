@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
-var httputil = require('../util/httputil');
+var httputil = require('../utils/httputil');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var user = req.cookies.user;
@@ -20,7 +20,7 @@ router.get('/send',function(req, res, next){
     res.redirect("/login");
     return ;
   }
-	res.render('sendmsg',{ user: user,err:""});
+	res.render('sendmsg',{ user: user,err:'',success:''});
 });
 
 router.post('/send',multipartMiddleware,function(req, res, next){
@@ -36,14 +36,22 @@ router.post('/send',multipartMiddleware,function(req, res, next){
 	var content = body.content;
 	if(!userid||!title||!content){
       err = "参数错误!";
-      res.render('sendmsg',{ user: user,err:err });
+      res.render('sendmsg',{ user: user,err:err,success:'' });
       return;
 	}else{
       httputil.sendPost('/admin/pushuser',body,function(err,data){
        if(err){
-          res.render('sendmsg',{ user: user,err:err.message });
+          res.render('sendmsg',{ user: user,err:err.message,success:'' });
        }else{
-          res.redirect("/message");
+          // res.redirect("/message");
+          var success = {
+            userid:userid,
+            title:title,
+            content:content,
+            sendno:data.sendno,
+            msg_id:data.msg_id,
+          }
+          res.render('sendmsg',{ user: user,err:'',success:JSON.stringify(success)});
        }
       });
   }
@@ -57,7 +65,7 @@ router.get('/sendall',function(req, res, next){
     return ;
   }
   console.log('get sendall');
-  res.render('sendall',{ user: user,err:"" });
+  res.render('sendall',{ user: user,err:'',success:'' });
 });
 
 router.post('/sendall',multipartMiddleware,function(req, res, next){
@@ -76,16 +84,20 @@ router.post('/sendall',multipartMiddleware,function(req, res, next){
   var err = "";
   if(!title||!content||!os){
     err = "参数错误!";
-    res.render('sendall',{ user: user,err:err });
-    return;
+    res.render('sendall',{ user: user,err:err,success:'' });
   }else{
       httputil.sendPost('/admin/pushall',body,function(err,data){
        if(err){
-          res.render('sendall',{ user: user,err:err });
-          return;
+          res.render('sendall',{ user: user,err:err,success:'' });
        }else{
-          res.redirect("/message");
-          return;
+          // res.redirect("/message");
+          var success = {
+            title:title,
+            content:content,
+            sendno:data.sendno,
+            msg_id:data.msg_id,
+          }
+          res.render('sendall',{ user: user,err:'',success:JSON.stringify(success)});
        }
       });
   }

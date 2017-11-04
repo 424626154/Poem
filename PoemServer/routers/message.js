@@ -10,24 +10,24 @@ var jiguang = require('../conf/jiguang');
 var ru = require('../utils/routersutil');
 var conf = require('../conf/config')
 var server = conf.server;
+var http = require('http');
+var logger = require('../utils/log4jsutil').logger(__dirname+'/message.js');
 
 var client = JPush.buildClient(jiguang.appKey, jiguang.masterSecret);
 
 function sendAllPush(title,content,os,callback){
-	console.log('---发送极光推送')
-	console.log('---title:'+title)
-	console.log('---content:'+content)
-  console.log('---os:'+os)
+	logger.info('---发送极光推送')
+	logger.info('---title:'+title)
+	logger.info('---content:'+content)
+  logger.info('---os:'+os)
   var platform = JPush.ALL;
-  if(os == 'andoid'){
-      platform = 'android'
-  }else if (os == 'ios'){
-      platform = 'ios'
+  if(os == 'andoid'||os == 'ios'){
+      platform = os;
   }
 	//easy push
 	client.push().setPlatform(platform)
 	    .setAudience(JPush.ALL)
-	    .setNotification(content, JPush.ios(content,title, 5))
+	    .setNotification(content)
 	    .send(function(err, res) {
 	        if (err) {
 	            // console.log(err.message)
@@ -58,15 +58,25 @@ function sendAllPush(title,content,os,callback){
  * 发送单个推送
  */
 function sendPush(msgid,pushid,os,title,content,callback){
-  console.log('---发送极光推送')
-  console.log('---msgid:'+msgid)
-  console.log('---pushid:'+pushid)
-  console.log('---os:'+os)
-  console.log('---title:'+title)
-  console.log('---content:'+content)
-  client.push().setPlatform(os)
+  logger.info('---发送极光推送 msgid:'+msgid+' pushid:'+pushid+' os:'+os);
+  logger.info('---title:'+title);
+  logger.info('---content:'+content);
+  try{
+    var platform = JPush.ALL;
+    console.log(typeof os);
+    console.log(os == 'android');
+    console.log(os === 'android');
+    console.log(os);
+    console.log('android');
+    if(os == 'ios'){
+        platform = 'ios';
+    }else if(os == 'android'){
+        platform = 'android';
+    }
+    console.log(platform);
+    client.push().setPlatform(platform)
       .setAudience(JPush.registration_id(pushid))
-      .setNotification(content, JPush.ios(content,title,msgid))
+      .setNotification(content)
       .send(function(err, res) {
           console.error(err)
           if (err) {
@@ -75,6 +85,10 @@ function sendPush(msgid,pushid,os,title,content,callback){
               callback(null,res)
           }
       });
+  }catch(err){
+      logger.error(err);
+      callback(err,null);
+  }
 }
 
 /**
@@ -98,7 +112,7 @@ function addMessage(userid,title,content,callback){
                         if(result.length > 0){
                           var push =  result[0];
                           if(server.push){
-                            sendPush(msgid,push.pushid,os,title,content,function(err,data){
+                            sendPush(msgid,push.pushid,push.os,title,content,function(err,data){
                                  if(err){
                                    callback(err,null);
                                  }else{

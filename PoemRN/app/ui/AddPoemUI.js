@@ -16,14 +16,17 @@ import {
 } from 'react-native';
 // import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import dismissKeyboard from 'dismissKeyboard'
+import dismissKeyboard from 'dismissKeyboard';
 
-import pstyles from '../style/PStyles';
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-// import SQLite from '../db/Sqlite';
-// const sqlite = new SQLite();
-import HttpUtil from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
+import {
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  pstyles,
+  HttpUtil,
+  Emitter,
+} from '../AppUtil';
+
 
 const bold = require('../images/ic_format_bold_black.png');
 const italic = require('../images/ic_format_italic_black.png');
@@ -165,10 +168,6 @@ class AddPoemUI extends React.Component {
           var poem = res.data;
           Emitter.emit(Emitter.ADDPOEM,poem);
           this.props.navigation.goBack();
-          // sqlite.savePoem(poem).then(()=>{
-          //   }).catch((err)=>{
-          //       console.error(err);
-          //   });
       }else{
         alert(res.errmsg);
       }
@@ -202,10 +201,6 @@ class AddPoemUI extends React.Component {
           var poem = res.data;
           Emitter.emit(Emitter.ADDPOEM,poem);
           this.props.navigation.goBack();
-          // sqlite.savePoem(poem).then(()=>{
-          //   }).catch((err)=>{
-          //       console.error(err);
-          //   });
       }else{
         alert(res.errmsg);
       }

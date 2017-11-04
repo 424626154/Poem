@@ -26,7 +26,8 @@ import {
   HttpUtil,
   Emitter,
   Global,
-  pstyles
+  pstyles,
+  HomePoemDao,
 } from '../AppUtil';
 
 
@@ -43,23 +44,30 @@ class HomeUI extends React.Component {
              userid:'',
          }
          this._onLove = this._onLove.bind(this);
+         this._onComment = this._onComment.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
       DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
          this._analysisObserver(obj);
       });
-      AsyncStorage.getItem(StorageConfig.USERID,(error,userid)=>{
-        if(!error){
-          this.setState({
-            userid:userid,
-          });
-          if(userid){
-              this._requestUserInfo(userid);
-          }
-          this._requestNewestAllPoem();
-        }
-      })
+
+      if(Global.user.userid){
+        this._requestUserInfo(userid);
+      }
+      let homepoems = HomePoemDao.getHomePoems();
+      if(homepoems.length > 0){
+        this.dataContainer = homepoems.concat(this.dataContainer);
+        this.setState({
+          sourceData: this.dataContainer,
+          userid:Global.user.userid,
+        });
+      }else{
+        this.setState({
+          userid:Global.user.userid,
+        });
+      }
+      this._requestInitAllPoem(homepoems);
     }
     componentWillUnmount(){
       DeviceEventEmitter.removeAllListeners();
@@ -162,7 +170,8 @@ class HomeUI extends React.Component {
                commentnum={item.commentnum}
                item={item}
                navigate = {this.props.navigation.navigate}
-               _onLove={this._onLove}
+               onLove={this._onLove}
+               onComment={this._onComment}
            />
        );
    };
@@ -216,6 +225,7 @@ class HomeUI extends React.Component {
                 this.setState({
                   sourceData: this.dataContainer
                 });
+                HomePoemDao.addHomePoems(poems);
               }
          }else{
            Alert.alert(res.errmsg);
@@ -226,6 +236,15 @@ class HomeUI extends React.Component {
          console.error(error);
        });
    };
+   /**
+    * 点击评论
+    */
+   _onComment(item){
+     this.props.navigation.navigate('DetailsUI',{id:item.id,ftype:1});
+   }
+   /**
+    * 点赞
+    */
   _onLove(item){
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
@@ -251,6 +270,7 @@ class HomeUI extends React.Component {
             sourceData[i].lovenum = lovenum;
             sourceData[i].mylove = love.love;
             isRefresh = true;
+            HomePoemDao.updateHomePoemLove(sourceData[i]);
           }
         }
         if(isRefresh){
@@ -297,6 +317,39 @@ class HomeUI extends React.Component {
     })
   }
   /**
+   * 初始化时请求
+   */
+   _requestInitAllPoem(poems){
+     this.setState({refreshing: true}) // 开始刷新
+     var fromid = 0;
+     if(poems.length > 0 ){
+       fromid = poems[0].id;
+     }
+     var json = JSON.stringify({
+       id:fromid,
+       userid:this.state.userid,
+     });
+     HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
+         if(res.code == 0){
+             var poems = res.data;
+              if(poems.length > 0){
+                this.dataContainer = poems.concat(this.dataContainer);
+                this.setState({
+                  sourceData: this.dataContainer
+                });
+                HomePoemDao.addHomePoems(poems);
+              }
+         }else{
+           Alert.alert(res.errmsg);
+         }
+         this.setState({refreshing: false});
+       })
+       .catch((error) => {
+         console.error(error);
+       });
+   }
+
+  /**
    * 请求最新的作品集
    */
   _requestNewestAllPoem(){
@@ -317,11 +370,7 @@ class HomeUI extends React.Component {
                this.setState({
                  sourceData: this.dataContainer
                });
-              //  sqlite.saveAllPoems(poems).then((results)=>{
-              //    console.log('reading 下拉数据保存成功:'+results)
-              //  }).catch((err)=>{
-              //    console.log(err);
-              //  })
+               HomePoemDao.addHomePoems(poems);
              }
         }else{
           Alert.alert(res.errmsg);

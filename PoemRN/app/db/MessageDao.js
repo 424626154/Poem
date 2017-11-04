@@ -1,6 +1,11 @@
+'use strict'
+/**
+ * 消息DAO
+ */
 import realm from './RealmDB';
 import RealmName from './RealmName';
-
+console.log('---realm path---');
+console.log(JSON.stringify(realm.path));
 class MessageDao{
   addMessages(messages){
     try {
@@ -38,8 +43,6 @@ class MessageDao{
     }
   }
   getMessages(){
-    console.log('---path---')
-    console.log(JSON.stringify(realm.path))
     let msgs = [];
     try{
       let realmMsg = realm.objects(RealmName.Message);
@@ -69,6 +72,16 @@ class MessageDao{
       } finally {
 
       }
+   }
+
+   getUnreadNum(){
+     try {
+        return realm.objects(RealmName.Message).filtered('state = 0').length;
+     } catch (e) {
+       console.error(e);
+     } finally {
+
+     }
    }
 }
 

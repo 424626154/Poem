@@ -17,16 +17,29 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import "SplashScreen.h"
+#import <AdSupport/ASIdentifierManager.h>
+
+//@interface AppDelegate ()<JPUSHRegisterDelegate>
+//
+//@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+//  极光推送 start
+  JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
      entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
-     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+  [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+  [JPUSHService setDebugMode];
+  // Optional
+  // 获取IDFA
+  // 如需使用IDFA功能请添加此代码并在初始化方法的advertisingIdentifier参数中填写对应值
+  NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+
   [JPUSHService setupWithOption:launchOptions appKey:appKey
-                        channel:channel apsForProduction:isProduction];
+                        channel:channel apsForProduction:isProduction advertisingIdentifier:advertisingId];
+//  极光推送end
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -54,13 +67,13 @@ JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-[JPUSHService registerDeviceToken:deviceToken];
+  [JPUSHService registerDeviceToken:deviceToken];
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
-[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
  NSDictionary * userInfo = notification.request.content.userInfo;

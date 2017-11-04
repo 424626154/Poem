@@ -11,8 +11,9 @@ Emitter.LOGOUT = 'logout';
 Emitter.DELPOEM = 'delpoem';
 Emitter.UPPOEM = 'uppoem';
 Emitter.DRAWER_CLOSE = 'drawer_close';
+Emitter.READMSG = 'readmsg';
 
-Emitter.emit = function(action,param){
+Emitter.emit = function(action,param='{}'){
     var param_obj = {
       action:action,
       param:param,

@@ -21,8 +21,6 @@
  import HttpUtil from '../utils/HttpUtil';
  import Emitter from '../utils/Emitter';
  import Global from '../Global';
- // import SQLite from '../db/Sqlite';
- // const sqlite = new SQLite();
 
  /**
   * 作品元素组件
@@ -118,7 +116,6 @@
       }
     // 当视图全部渲染完毕之后执行该生命周期方法
      componentDidMount() {
-        //  sqlite.open();
          DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
             this._analysisObserver(obj);
          });
@@ -135,7 +132,6 @@
          })
      }
      componentWillUnmount(){
-      //  sqlite.close()
        DeviceEventEmitter.removeAllListeners();
      }
 
@@ -265,11 +261,6 @@
               this.setState({
                 sourceData: this.dataContainer
               });
-             //  sqlite.savePoems(poems).then((results)=>{
-             //    console.log('上拉数据保存成功:'+results)
-             //  }).catch((err)=>{
-             //    console.log(err);
-             //  })
             }
        }else{
          Alert.alert(res.errmsg);
@@ -300,15 +291,6 @@
     * 初始化作品数据
     */
    _queryPoems(){
-    //  sqlite.queryPoems(this.state.userid).then((results)=>{
-    //      this.dataContainer = results;
-    //      this.setState({
-    //        sourceData: this.dataContainer,
-    //      });
-    //      this._requestNewestPoem();
-    //  }).catch(err=>{
-    //    console.error(err);
-    //  })
       this._requestNewestPoem();
    }
    /**
@@ -393,11 +375,6 @@
              this.setState({
                sourceData: this.dataContainer
              });
-             // sqlite.savePoems(poems).then((results)=>{
-             //   console.log('下拉数据保存成功:'+results)
-             // }).catch((err)=>{
-             //   console.log(err);
-             // })
            }
         }else{
           Alert.alert(res.errmsg);

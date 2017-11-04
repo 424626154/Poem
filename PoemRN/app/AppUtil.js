@@ -8,14 +8,13 @@ import {
   StorageConfig,
   ImageConfig,
 } from './Config';
-import SQLite from './db/Sqlite';
 import HttpUtil from './utils/HttpUtil';
 import Emitter from './utils/Emitter';//监听
 import Global from './Global';//全局数据
 import pstyles from './style/PStyles';//公共样式
 import Storage from './utils/Storage';
 import MessageDao from './db/MessageDao';
-
+import HomePoemDao from './db/HomePoemDao';
 
 var Utils = {};
 
@@ -76,7 +75,6 @@ export {
   HeaderConfig,
   StorageConfig,
   ImageConfig,
-  SQLite,
   Utils,
   HttpUtil,
   Emitter,
@@ -84,4 +82,5 @@ export {
   pstyles,
   Storage,
   MessageDao,
+  HomePoemDao,
 }

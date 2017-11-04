@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
-var httputil = require('../util/httputil');
+var httputil = require('../utils/httputil');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

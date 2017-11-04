@@ -14,8 +14,6 @@ import {
 import {CachedImage} from "react-native-img-cache";
 import HTMLView from 'react-native-htmlview';
 
-import SQLite from '../db/Sqlite';
-const sqlite = new SQLite();
 import Utils from '../utils/Utils';
 import HttpUtil from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
@@ -165,12 +163,7 @@ class ReadingTab extends React.Component {
          this._analysisObserver(obj);
       });
       this._requestNewestAllPoem();
-      // sqlite.queryAllPoems().then((results)=>{
-      //     this.dataContainer = results;
-      //     this.setState({
-      //       sourceData: this.dataContainer,
-      //     });
-      //   });
+
     }
     componentWillUnmount(){
       DeviceEventEmitter.removeAllListeners();
@@ -292,11 +285,7 @@ class ReadingTab extends React.Component {
               this.setState({
                 sourceData: this.dataContainer
               });
-              // sqlite.saveAllPoems(poems).then((results)=>{
-              //   console.log('reading 上拉数据保存成功:'+results)
-              // }).catch((err)=>{
-              //   console.log(err);
-              // })
+
             }
        }else{
          Alert.alert(res.errmsg);
@@ -360,11 +349,7 @@ class ReadingTab extends React.Component {
                this.setState({
                  sourceData: this.dataContainer
                });
-              //  sqlite.saveAllPoems(poems).then((results)=>{
-              //    console.log('reading 下拉数据保存成功:'+results)
-              //  }).catch((err)=>{
-              //    console.log(err);
-              //  })
+      
              }
         }else{
           Alert.alert(res.errmsg);

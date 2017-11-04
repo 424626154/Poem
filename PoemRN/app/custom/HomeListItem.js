@@ -47,14 +47,19 @@ class HomeListItem extends React.PureComponent {
               {/* 诗歌 */}
               <View style={pstyles.poem}>
                 <Text style={pstyles.poem_title}>{this.props.title}</Text>
-                <Text style={pstyles.poem_content}
-                >{this.props.content}</Text>
+                <Text
+                  style={pstyles.poem_content}
+                  numberOfLines={8}
+                  ellipsizeMode='tail'
+                >
+                  {this.props.content}
+                </Text>
               </View>
               {/* menu */}
               <View style={styles.menu}>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.navigate('DetailsUI',{id:this.props.id});
+                      this.props.onComment(this.props.item)
                     }}>
                     <View style={styles.menu_item}>
                       <Icon
@@ -70,7 +75,7 @@ class HomeListItem extends React.PureComponent {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props._onLove(this.props.item);
+                      this.props.onLove(this.props.item);
                     }}>
                     <View style={styles.menu_item}>
                       <Icon

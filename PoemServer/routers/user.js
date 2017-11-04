@@ -7,7 +7,6 @@ var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
 var ru = require('../utils/routersutil');
 var http = require('http');
-var utils = require('../utils/utils');
 var logger = require('../utils/log4jsutil').logger(__dirname+'/user.js');
 /* GET user listing. */
 router.get('/', function(req, res, next) {

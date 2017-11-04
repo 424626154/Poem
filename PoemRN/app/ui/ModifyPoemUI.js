@@ -14,8 +14,7 @@ import {
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-// import SQLite from '../db/Sqlite';
-// const sqlite = new SQLite();
+
 import HttpUtil  from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
@@ -141,12 +140,6 @@ class ModifyPoemUI extends React.Component {
     HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
       if(data.code == 0){
         var poem = data.data;
-        // sqlite.updateAllPoem(poem).then((data)=>{
-        //
-        // })
-        // sqlite.updatePoem(poem).then((data)=>{
-        //
-        // })
         Emitter.emit(Emitter.UPPOEM,poem);
      	  this.props.navigation.goBack();
       }else{
@@ -180,12 +173,6 @@ class ModifyPoemUI extends React.Component {
     HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
       if(data.code == 0){
         var poem = data.data;
-        // sqlite.updateAllPoem(poem).then((data)=>{
-        //
-        // })
-        // sqlite.updatePoem(poem).then((data)=>{
-        //
-        // })
         Emitter.emit(Emitter.UPPOEM,poem);
      	  this.props.navigation.goBack();
       }else{

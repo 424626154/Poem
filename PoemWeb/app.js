@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
+var log4js = require('./utils/log4jsutil');
 
 var home = require('./routes/home');
 var user = require('./routes/user');
@@ -12,6 +13,7 @@ var message = require('./routes/message');
 
 var app = express();
 
+log4js.use(app);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // // app.set('view engine', 'jade');

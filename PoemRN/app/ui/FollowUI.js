@@ -16,48 +16,18 @@ import {
 import { SocialIcon } from 'react-native-elements';
 import {CachedImage} from "react-native-img-cache";
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-import Utils from '../utils/Utils';
-import Global from '../Global';
-import Emitter from '../utils/Emitter';
-import HttpUtil from '../utils/HttpUtil';
-// import SQLite from '../db/Sqlite';
-// const sqlite = new SQLite();
+import{
+    StyleConfig,
+    HeaderConfig,
+    StorageConfig,
+    pstyles,
+    Utils,
+    Global,
+    Emitter,
+    HttpUtil,
+} from '../AppUtil';
 
-class FollowListItem extends React.PureComponent {
-    _onPress = () => {
-        this.props.onPressItem(this.props.id);
-    };
-    render() {
-        return(
-            <TouchableOpacity
-                {...this.props}
-                onPress={this._onPress}
-                >
-                <View style={styles.follow}>
-                    <CachedImage
-                      style={pstyles.small_head}
-                      source={this.props.head}
-                      />
-                    <Text style={styles.follow_pseudonym}>
-                      {this.props.follow.pseudonym}
-                    </Text>
-                    <SocialIcon
-                      title={this.props.followbut}
-                      button={true}
-                      onPress={()=>{
-                        this.props.onFollow(this.props);
-                      }}
-                      fontStyle={styles.follow_font}
-                      light
-                      style={styles.follow_button}
-                      />
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
+import FollowListItem from '../custom/FollowListItem';
 
 class FollowUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
@@ -228,21 +198,6 @@ const styles = StyleSheet.create({
     follow_head:{
       height:60,
       width:60,
-    },
-    follow_pseudonym:{
-      flex:1,
-      fontSize:StyleConfig.F_18,
-      color:StyleConfig.C_000000,
-      padding:4,
-    },
-    follow_button:{
-      width:80,
-      height:30,
-    },
-    follow_font:{
-      fontSize:StyleConfig.F_18,
-      color:StyleConfig.C_1E8AE8,
-      marginLeft:-2,
     },
 });
 

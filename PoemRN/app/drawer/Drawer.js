@@ -12,13 +12,17 @@ import {
 import { Icon } from 'react-native-elements';
 import {CachedImage} from "react-native-img-cache";
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-import Utils from '../utils/Utils';
-import Global from '../Global';
-import Emitter from '../utils/Emitter';
-import HttpUtil from '../utils/HttpUtil';
-
+import {
+    StyleConfig,
+    HeaderConfig,
+    StorageConfig,
+    pstyles,
+    Utils,
+    Global,
+    Emitter,
+    HttpUtil,
+    MessageDao,
+  } from '../AppUtil';
 const nothead = require('../images/ic_account_circle_black.png');
 
 class Drawer extends React.Component {
@@ -31,10 +35,10 @@ class Drawer extends React.Component {
       tips:'',
       myfollow:0,
       followme:0,
+      unread:0,
     }
   }
   componentDidMount(){
-    console.log('@@@Drawer()componentDidMount')
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
@@ -44,9 +48,12 @@ class Drawer extends React.Component {
     this._onWorks = this._onWorks.bind(this);
     this._onStting = this._onStting.bind(this);
     this._onMessage = this._onMessage.bind(this);
+    var unread = MessageDao.getUnreadNum();
+    this.setState({
+      unread:unread,
+    });
   }
   componentWillUnmount(){
-    console.log('@@@Drawer()componentWillUnmount')
     DeviceEventEmitter.removeAllListeners();
     this.timer && clearTimeout(this.timer);
   }
@@ -94,14 +101,14 @@ class Drawer extends React.Component {
         {/* {this._renderItem('首页','apps',this._onHome)} */}
         {this._renderPerson()}
         {this._renderMessage()}
-        {this._renderItem('设置','settings',this._onStting)}
+        {this._renderItem('设置','settings',this._onStting,false)}
       </View>
     )
   }
   _renderNavOS(){
     return(Platform.OS === 'ios'?<View style={HeaderConfig.iosNavStyle }></View>:null)
   }
-  _renderItem(title,icon,func){
+  _renderItem(title,icon,func,rot){
     return(
       <TouchableOpacity onPress={()=>{
           func();
@@ -116,18 +123,34 @@ class Drawer extends React.Component {
         <Text style={styles.item_title}>
           {title}
         </Text>
+        {this._renderRot(rot)}
         </View>
       </TouchableOpacity>
     )
   }
+  _renderRot(rot){
+    if(rot){
+      return(
+        <Icon
+          name="brightness-1"
+          style={styles.dot}
+          size={6}
+          type="MaterialIcons"
+          color={"#ff4040"}
+        />
+      )
+    }else{
+      return null
+    }
+  }
   _renderPerson(){
     if(this.state.userid){
-      return(this._renderItem('作品','call-to-action',this._onWorks))
+      return(this._renderItem('作品','call-to-action',this._onWorks,false))
     }
   }
   _renderMessage(){
     if(this.state.userid){
-      return(this._renderItem('消息','message',this._onMessage))
+      return(this._renderItem('消息','message',this._onMessage,this.state.unread > 0))
     }
   }
   _onHome(){
@@ -189,6 +212,12 @@ class Drawer extends React.Component {
         })
         this._eventUserInfo();
         break;
+      case Emitter.READMSG:
+        var unread = MessageDao.getUnreadNum();
+        this.setState({
+          unread:unread,
+        });
+        break;
       default:
         break;
     }
@@ -239,6 +268,11 @@ const styles = StyleSheet.create({
     marginLeft:6,
     fontSize:StyleConfig.F_22,
     color:StyleConfig.C_FFFFFF,
+  },
+  dot:{
+    position: 'absolute',
+    top: 10,
+    left: 90,
   }
 });
 

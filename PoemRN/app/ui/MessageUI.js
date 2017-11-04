@@ -18,6 +18,7 @@ import {
   HttpUtil,
   pstyles,
   MessageDao,
+  Emitter,
 } from '../AppUtil';
 
 export default class MessageUI extends Component {
@@ -95,8 +96,11 @@ export default class MessageUI extends Component {
             selected.set(id, !selected.get(id));
             return {selected}
         });
-        message.state = 1;
-        MessageDao.updateMessageState(message);
+        if(message.state == 0){
+          message.state = 1;
+          MessageDao.updateMessageState(message);
+          Emitter.emit(Emitter.READMSG);
+        }
         this.props.navigation.navigate('MsgContentUI',{message:message})
     };
     _onDelItem = (id: int,message:Object) => {
