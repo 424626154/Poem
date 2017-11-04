@@ -51,4 +51,5 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-/andorid/Poem.jks
+andorid/Poem.jks
+android/gradle.properties
