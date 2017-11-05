@@ -53,3 +53,4 @@ fastlane/Preview.html
 fastlane/screenshots
 android/gradle.properties
 android/Poem.jks
+android/app/release/
