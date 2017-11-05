@@ -1,0 +1,2331 @@
+[2017-11-05 00:04:59.106] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 00:05:04.166] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:05:04.217] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:05:04.857] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:05:04.861] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 00:05:04.863] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 00:05:04.864] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:04.864] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 00:05:04.866] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 00:05:04.866] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 00:05:04.868] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 00:05:04.868] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:04.869] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 00:05:04.870] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 00:05:04.872] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 00:05:04.873] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:04.873] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 00:05:04.875] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 00:05:04.889] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:04.889] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 00:05:04.931] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:05:04.955] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 00:05:04.962] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_INVALID_JSON_TEXT","errno":3140,"sqlMessage":"Invalid JSON text: \"Invalid value.\" at position 1 in value for column 'message.extend'.","sqlState":"22032","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的[你好]\",1,\"[object Object]\",1509811504)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 00:05:04.973] [DEBUG] /routers/poem.js - null
+[2017-11-05 00:05:54.652] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 00:05:58.785] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:05:58.838] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:05:59.405] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:05:59.407] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 00:05:59.410] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 00:05:59.410] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:59.410] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 00:05:59.412] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 00:05:59.413] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 00:05:59.414] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 00:05:59.415] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:59.415] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 00:05:59.417] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 00:05:59.419] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 00:05:59.420] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:59.420] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 00:05:59.421] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 00:05:59.421] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:05:59.421] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 00:05:59.456] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 00:05:59.459] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:05:59.475] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 00:05:59.479] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的[你好]\",1,\"{\"title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"}\",1509811559)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 00:05:59.489] [DEBUG] /routers/poem.js - null
+[2017-11-05 00:06:31.932] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 00:06:33.938] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:06:33.985] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:06:35.038] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:06:35.045] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 00:06:35.047] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 00:06:35.047] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:06:35.048] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 00:06:35.050] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 00:06:35.050] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 00:06:35.052] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 00:06:35.052] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:06:35.052] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 00:06:35.054] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 00:06:35.056] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 00:06:35.057] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:06:35.057] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 00:06:35.059] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 00:06:35.059] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:06:35.059] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 00:06:35.086] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:06:35.093] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 00:06:35.102] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 00:06:35.112] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c5' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的[你好]\",1,{\"title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"},1509811595)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 00:06:35.120] [DEBUG] /routers/poem.js - null
+[2017-11-05 00:08:02.858] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 00:08:06.998] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:08:07.050] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:08:07.728] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:08:07.731] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 00:08:07.733] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 00:08:07.733] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:07.734] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 00:08:07.736] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 00:08:07.736] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 00:08:07.738] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 00:08:07.738] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:07.738] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 00:08:07.740] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 00:08:07.743] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 00:08:07.744] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:07.744] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 00:08:07.746] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 00:08:07.746] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:07.747] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 00:08:07.780] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:08:07.807] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 00:08:07.814] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[object Object],1509811687)' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的[你好]\",1,[object Object],1509811687)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 00:08:07.831] [DEBUG] /routers/poem.js - null
+[2017-11-05 00:08:55.778] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 00:08:57.412] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:08:57.452] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:08:58.043] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 00:08:58.046] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 00:08:58.048] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 00:08:58.049] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:58.049] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 00:08:58.052] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 00:08:58.052] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 00:08:58.055] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 00:08:58.055] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:58.055] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 00:08:58.057] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 00:08:58.060] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 00:08:58.061] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:58.061] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 00:08:58.063] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 00:08:58.063] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 00:08:58.064] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 00:08:58.176] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 00:08:58.205] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 00:08:58.210] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[object Object],1509811738)' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的你好\",1,[object Object],1509811738)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 00:08:58.223] [DEBUG] /routers/poem.js - null
+[2017-11-05 09:21:28.987] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 09:28:54.158] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:28:54.484] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-05 09:28:54.486] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-05 09:33:37.294] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:36:08.465] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:50:02.801] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 09:54:41.080] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:54:41.566] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-05 09:54:41.568] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-05 09:54:45.458] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:55:06.284] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 09:55:35.343] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 09:55:35.566] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 09:55:35.616] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-05 09:55:45.341] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 09:55:45.355] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 09:55:45.365] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 09:55:45.881] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 09:55:45.899] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 09:55:48.089] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 09:55:48.094] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 09:55:48.096] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 09:55:48.097] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 09:55:48.097] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 09:55:48.098] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 09:55:48.099] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 09:55:48.107] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 09:55:48.109] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 09:55:48.110] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 09:55:48.111] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 09:55:48.119] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 09:55:48.121] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 09:55:48.122] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 09:55:48.124] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 09:55:48.128] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 09:55:48.128] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 09:55:48.153] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 09:55:48.170] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 09:55:48.175] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c5' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人赞了你的作品\",\"13276赞了你的[你好]\",1,{\"title\":\"你好\",\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"},1509846948)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 09:55:48.212] [DEBUG] /routers/poem.js - null
+[2017-11-05 09:59:57.262] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 09:59:59.067] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 09:59:59.101] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 09:59:59.148] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 09:59:59.425] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 09:59:59.445] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 10:00:01.016] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 10:00:02.802] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 10:00:02.804] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 10:00:02.806] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 10:00:02.806] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:02.807] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 10:00:02.808] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 10:00:02.808] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 10:00:02.810] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 10:00:02.810] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:02.811] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 10:00:02.813] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 10:00:02.816] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 10:00:02.816] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:02.817] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 10:00:02.819] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 10:00:02.819] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:02.838] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 10:00:02.853] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 10:00:02.853] [DEBUG] /dao/messageDao.js - INSERT INTO message (userid,title,content,type,extend,time) VALUES ("userid_13671172337","有人赞了你的作品","13276赞了你的[你好]",1,'{"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}',1509847202)
+[2017-11-05 10:00:02.861] [INFO] /routers/message.js - ---发送极光推送 msgid:2 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 10:00:02.862] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 10:00:02.863] [INFO] /routers/message.js - ---content:13276赞了你的[你好]
+[2017-11-05 10:00:03.287] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 10:00:03.290] [DEBUG] /routers/poem.js - null
+[2017-11-05 10:00:03.290] [DEBUG] /routers/poem.js - { sendno: '973686473', msg_id: '36028797235723473' }
+[2017-11-05 10:00:38.932] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 10:00:38.981] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 10:00:38.999] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 10:00:39.442] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 10:00:41.013] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 10:00:41.773] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 10:00:41.777] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 10:00:41.779] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 10:00:41.779] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:41.780] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 10:00:41.781] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 10:00:41.781] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 10:00:41.782] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 10:00:41.783] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:41.783] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 10:00:41.784] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 10:00:41.786] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 10:00:41.786] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:41.787] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 10:00:41.789] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 10:00:41.789] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:00:41.789] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 10:00:41.799] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 10:00:41.799] [DEBUG] /dao/messageDao.js - INSERT INTO message (userid,title,content,type,extend,time) VALUES ("userid_13671172337","有人赞了你的作品","13276赞了你的[你好]",1,'{"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}',1509847241)
+[2017-11-05 10:00:41.813] [INFO] /routers/message.js - ---发送极光推送 msgid:3 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 10:00:41.813] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 10:00:41.814] [INFO] /routers/message.js - ---content:13276赞了你的[你好]
+[2017-11-05 10:00:42.086] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 10:00:42.088] [DEBUG] /routers/poem.js - null
+[2017-11-05 10:00:42.088] [DEBUG] /routers/poem.js - { sendno: '1383048140', msg_id: '36028797235803437' }
+[2017-11-05 10:01:21.943] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 10:01:40.722] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:01:43.292] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:01:43.529] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 10:03:00.838] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:03:01.004] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:03:01.408] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:05:02.820] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:05:03.017] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:05:03.242] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:05:20.228] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:05:20.370] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:05:24.209] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:06:05.824] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:06:20.831] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:06:21.283] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:06:22.227] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:06:38.537] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:06:38.682] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:06:43.045] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:07:50.800] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:07:51.193] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:07:51.506] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:08:03.266] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:08:03.437] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:08:07.389] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:08:35.738] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:08:36.058] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:08:36.433] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:09:00.566] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:09:00.687] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:09:02.496] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:13:40.339] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:13:41.095] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-05 10:13:41.099] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-05 10:14:04.663] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:31:05.855] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:55:27.479] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:58:22.487] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:58:37.143] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:58:37.209] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:58:40.843] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:58:43.604] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:59:05.198] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:59:05.242] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-05 10:59:31.215] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:59:31.432] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:59:31.748] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:59:37.441] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 10:59:37.690] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:59:37.999] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 10:59:50.918] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 10:59:51.063] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 10:59:57.526] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 10:59:57.559] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 10:59:57.566] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 10:59:57.566] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:59:57.567] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 10:59:57.567] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 10:59:57.568] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 10:59:57.570] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 10:59:57.570] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:59:57.571] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 10:59:57.571] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 10:59:57.576] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 10:59:57.576] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:59:57.576] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 10:59:57.580] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 10:59:57.580] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 10:59:57.581] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 10:59:57.602] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 10:59:57.620] [INFO] /routers/message.js - ---发送极光推送 msgid:4 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 10:59:57.627] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 10:59:57.633] [INFO] /routers/message.js - ---content:13276赞了你的[你好]
+[2017-11-05 10:59:58.071] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 10:59:58.073] [DEBUG] /routers/poem.js - null
+[2017-11-05 10:59:58.074] [DEBUG] /routers/poem.js - { sendno: '2630675360', msg_id: '27021597981112323' }
+[2017-11-05 11:00:12.574] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:00:18.266] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:00:18.426] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:00:21.320] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:00:22.490] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:00:22.494] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:00:22.498] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:00:22.499] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:00:22.499] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:00:22.501] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:00:22.502] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:00:22.514] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:00:22.514] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:00:22.515] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:00:22.516] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:00:22.519] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:00:22.519] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:00:22.520] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:00:22.523] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:00:22.524] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:00:22.524] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:00:22.547] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 11:00:22.559] [INFO] /routers/message.js - ---发送极光推送 msgid:5 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:00:22.560] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:00:22.560] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:00:22.939] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:00:22.942] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:00:22.942] [DEBUG] /routers/poem.js - { sendno: '3172990575', msg_id: '36028797235874242' }
+[2017-11-05 11:00:38.396] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:00:38.538] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:00:42.288] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:00:42.518] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 11:01:21.401] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:01:21.977] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:01:23.008] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:01:33.523] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:01:33.877] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:01:35.556] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:02:12.081] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:02:12.125] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:02:12.135] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:02:12.702] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:04:50.697] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:05:53.441] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:15:09.209] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:15:10.108] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:15:10.448] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:15:18.523] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:15:18.672] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:15:20.041] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:17:15.777] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:17:16.101] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:17:16.757] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:17:24.978] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:17:25.124] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:17:26.686] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:17:28.242] [ERROR] /routers/poem.js - null
+[2017-11-05 11:17:28.244] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-05 11:17:28.254] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-05 11:17:51.019] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:17:51.189] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:17:53.855] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:17:54.498] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:17:54.499] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:17:54.500] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:17:54.501] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:54.502] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:17:54.504] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:17:54.505] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:17:54.511] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:17:54.511] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:54.511] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:17:54.512] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:17:54.513] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:17:54.514] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:54.514] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:17:54.515] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:17:54.515] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:54.516] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:17:54.528] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 11:17:54.532] [INFO] /routers/message.js - ---发送极光推送 msgid:6 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:17:54.532] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:17:54.533] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:17:54.968] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:17:54.969] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:17:54.970] [DEBUG] /routers/poem.js - { sendno: '2890766111', msg_id: '27021597981148794' }
+[2017-11-05 11:17:55.230] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:17:55.994] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:17:55.998] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:17:56.001] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:17:56.002] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:56.002] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:17:56.021] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:17:56.022] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:17:56.023] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:17:56.024] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:56.024] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:17:56.025] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:17:56.027] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:17:56.027] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:56.028] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:17:56.030] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:17:56.030] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:17:56.030] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:17:56.069] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-05 11:17:56.078] [INFO] /routers/message.js - ---发送极光推送 msgid:7 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:17:56.079] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:17:56.079] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:17:56.289] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:17:56.291] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:17:56.292] [DEBUG] /routers/poem.js - { sendno: '2543902831', msg_id: '27021597981126295' }
+[2017-11-05 11:18:12.104] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:18:16.176] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:18:21.207] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:23.317] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:23.331] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:18:23.335] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:18:23.336] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:23.336] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:18:23.338] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:18:23.338] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:18:23.385] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:18:23.386] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:23.387] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:18:23.388] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:18:23.405] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:18:23.408] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:23.410] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:18:23.413] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:18:23.414] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:23.442] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:18:23.471] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:18:23.482] [INFO] /routers/message.js - ---发送极光推送 msgid:8 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:18:23.484] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:18:23.484] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:18:23.925] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:18:23.927] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:18:23.928] [DEBUG] /routers/poem.js - { sendno: '3903718171', msg_id: '27021597981211073' }
+[2017-11-05 11:18:29.486] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:18:29.492] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:18:29.504] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:18:30.048] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:18:30.067] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:18:31.871] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:32.547] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:32.552] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:18:32.554] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:18:32.554] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:32.557] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:18:32.558] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:18:32.558] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:18:32.560] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:18:32.561] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:32.562] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:18:32.563] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:18:32.565] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:18:32.565] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:32.566] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:18:32.569] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:18:32.569] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:32.569] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:18:32.589] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:18:32.596] [INFO] /routers/message.js - ---发送极光推送 msgid:9 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:18:32.599] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:18:32.599] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:18:32.906] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:18:32.907] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:18:32.907] [DEBUG] /routers/poem.js - { sendno: '1333654960', msg_id: '27021597980743569' }
+[2017-11-05 11:18:33.273] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:33.915] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 11:18:33.922] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:18:33.924] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:18:33.927] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:33.927] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 4,
+    del: 0 } ]
+[2017-11-05 11:18:33.929] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:18:33.929] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:18:33.930] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:18:33.931] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:33.933] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:18:33.934] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:18:33.935] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:18:33.936] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:33.936] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:18:33.937] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:18:33.937] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:18:33.937] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 4,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  loveuser: 'userid_13212345676',
+  lovehead: '04ebfc8602015b0b4033e18c56548735',
+  lovepseudonym: '13276' }
+[2017-11-05 11:18:33.942] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:18:33.951] [INFO] /routers/message.js - ---发送极光推送 msgid:10 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:18:33.952] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 11:18:33.952] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 11:18:34.189] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:18:34.192] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:18:34.193] [DEBUG] /routers/poem.js - { sendno: '81879395', msg_id: '36028797235916068' }
+[2017-11-05 11:18:47.181] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:18:49.988] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:18:50.699] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 11:18:52.897] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-05 11:18:52.898] [ERROR] /routers/poem.js - null
+[2017-11-05 11:18:52.899] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-05 11:18:54.756] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:18:54.758] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:18:54.766] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:19:04.069] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:19:04.850] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:19:05.368] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:19:21.308] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:19:26.309] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:19:31.337] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:19:31.474] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:19:33.242] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:21:16.713] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:21:16.934] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:21:17.625] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:21:30.737] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:21:30.897] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:21:34.773] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:22:57.238] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:24:29.829] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:24:30.167] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:24:31.448] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:24:41.131] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:24:41.303] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:24:43.184] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:24:51.599] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:24:51.612] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:24:51.617] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:24:52.565] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:36:04.772] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:36:26.726] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:36:27.025] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:36:27.382] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:36:38.216] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:36:38.404] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:37:35.252] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:37:35.328] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:37:35.343] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:37:36.041] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:37:51.839] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:39:22.284] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:40:10.756] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:40:11.736] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:40:12.144] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:41:20.958] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:41:21.373] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:41:21.887] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:41:37.452] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:41:46.324] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:41:46.465] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:41:52.907] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:41:52.910] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:41:52.918] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:11.256] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:47:11.580] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:47:12.314] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:47:25.832] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:47:26.099] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:47:30.814] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:47:30.828] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:47:30.906] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:31.369] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:31.393] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:33.607] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:47:33.613] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:47:33.670] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:34.220] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:47:42.226] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:47:42.230] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:47:42.234] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:47:42.235] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:47:42.236] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 5,
+    del: 0 } ]
+[2017-11-05 11:47:42.248] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:47:42.248] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:47:42.254] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:47:42.254] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:47:42.255] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:47:42.255] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:47:42.258] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:47:42.258] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:47:42.262] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:47:42.266] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:47:42.267] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:47:42.268] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 5,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 11:47:42.302] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:47:42.307] [INFO] /routers/message.js - ---发送极光推送 msgid:11 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:47:42.308] [INFO] /routers/message.js - ---title:有人评论了你的作品
+[2017-11-05 11:47:42.308] [INFO] /routers/message.js - ---content:13276评论[object Object]
+[2017-11-05 11:47:42.384] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 11:47:42.839] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:47:42.843] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:47:42.843] [DEBUG] /routers/poem.js - { sendno: '4047715163', msg_id: '27021597981140959' }
+[2017-11-05 11:47:43.032] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:49:30.634] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:49:51.337] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:49:51.525] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:49:51.760] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:50:05.254] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:50:05.427] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:50:12.870] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:50:12.892] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:50:12.898] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:50:13.380] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:50:13.408] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:50:42.649] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:51:02.045] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:51:06.297] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:51:06.302] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:51:06.305] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:51:06.305] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:51:06.306] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 6,
+    del: 0 } ]
+[2017-11-05 11:51:06.309] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:51:06.309] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:51:06.311] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:51:06.311] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:51:06.311] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:51:06.313] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:51:06.316] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:51:06.317] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:51:06.318] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:51:06.320] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:51:06.320] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:51:06.321] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 6,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 11:51:06.368] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:51:06.377] [INFO] /routers/message.js - ---发送极光推送 msgid:12 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:51:06.378] [INFO] /routers/message.js - ---title:有人评论了你的作品
+[2017-11-05 11:51:06.379] [INFO] /routers/message.js - ---content:13276评论p1
+[2017-11-05 11:51:06.528] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 11:51:06.845] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:51:06.852] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:51:06.853] [DEBUG] /routers/poem.js - { sendno: '2397829098', msg_id: '36028797235916245' }
+[2017-11-05 11:51:07.130] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:51:32.341] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 11:51:51.638] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:51:51.967] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:51:52.754] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:52:01.802] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:52:01.971] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:52:05.599] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:52:05.614] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:52:05.644] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:52:06.171] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:52:15.496] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:52:15.500] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:52:15.502] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:52:15.502] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:52:15.502] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 7,
+    del: 0 } ]
+[2017-11-05 11:52:15.504] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:52:15.504] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:52:15.506] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:52:15.506] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:52:15.506] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:52:15.509] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:52:15.512] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:52:15.512] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:52:15.513] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:52:15.518] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:52:15.519] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:52:15.519] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 7,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 11:52:15.538] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 11:52:15.542] [INFO] /routers/message.js - ---发送极光推送 msgid:13 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:52:15.543] [INFO] /routers/message.js - ---title:有人评论了你的作品
+[2017-11-05 11:52:15.544] [INFO] /routers/message.js - ---content:13276评论:p3
+[2017-11-05 11:52:15.657] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 11:52:15.881] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:52:15.884] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:52:15.885] [DEBUG] /routers/poem.js - { sendno: '3871688349', msg_id: '27021597981018834' }
+[2017-11-05 11:52:16.257] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:52:52.003] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:52:52.399] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:52:52.768] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:53:03.046] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:53:03.408] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:53:07.533] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:53:07.547] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:53:07.567] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:53:08.109] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:53:17.366] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 11:53:17.370] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 11:53:17.374] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 11:53:17.374] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:53:17.374] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 8,
+    del: 0 } ]
+[2017-11-05 11:53:17.375] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 11:53:17.375] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 11:53:17.376] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 11:53:17.377] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:53:17.377] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 11:53:17.378] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 11:53:17.380] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 11:53:17.381] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:53:17.381] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 11:53:17.382] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 11:53:17.382] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 11:53:17.383] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 8,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 11:53:17.390] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":15}
+[2017-11-05 11:53:17.406] [INFO] /routers/message.js - ---发送极光推送 msgid:14 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 11:53:17.407] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 11:53:17.407] [INFO] /routers/message.js - ---content:13276回复:123
+[2017-11-05 11:53:17.564] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 11:53:17.645] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 11:53:17.647] [DEBUG] /routers/poem.js - null
+[2017-11-05 11:53:17.647] [DEBUG] /routers/poem.js - { sendno: '796240325', msg_id: '36028797235632954' }
+[2017-11-05 11:53:18.152] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:59:13.697] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 11:59:14.225] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:59:14.998] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 11:59:26.307] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 11:59:26.453] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 11:59:33.045] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 11:59:33.118] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 11:59:33.145] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:59:34.052] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 11:59:34.147] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 12:00:01.826] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 12:00:02.425] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 12:00:03.017] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 12:00:16.017] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 12:00:16.189] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 12:00:19.190] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 12:00:19.226] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 12:00:19.238] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 12:00:19.774] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 12:00:30.431] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 12:00:30.434] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 12:00:30.436] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 12:00:30.437] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 12:00:30.438] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 9,
+    del: 0 } ]
+[2017-11-05 12:00:30.442] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 12:00:30.443] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 12:00:30.449] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 12:00:30.453] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 12:00:30.455] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 12:00:30.457] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 12:00:30.492] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 12:00:30.493] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 12:00:30.494] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 12:00:30.498] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 12:00:30.512] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 12:00:30.514] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 9,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 12:00:30.539] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":15}
+[2017-11-05 12:00:30.543] [INFO] /routers/message.js - ---发送极光推送 msgid:15 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 12:00:30.544] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 12:00:30.544] [INFO] /routers/message.js - ---content:13276回复:asasa1111
+[2017-11-05 12:00:30.784] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 12:00:31.352] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 12:00:33.339] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 12:00:33.341] [DEBUG] /routers/poem.js - null
+[2017-11-05 12:00:33.342] [DEBUG] /routers/poem.js - { sendno: '71569382', msg_id: '36028797235668777' }
+[2017-11-05 12:01:04.094] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 12:01:04.505] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 12:01:05.137] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 12:01:15.435] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 12:01:15.607] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 12:01:21.300] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 12:01:21.823] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 13:21:43.663] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:22:12.230] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 13:22:12.339] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:22:12.883] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:22:23.053] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 13:22:23.285] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:22:26.828] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 13:22:26.841] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 13:22:26.853] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:22:30.123] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 13:22:30.131] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 13:22:30.135] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 63 LIMIT 1
+[2017-11-05 13:22:30.135] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:22:30.136] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 63,
+    title: '2',
+    content: '2',
+    userid: 'userid_13112345671',
+    time: 1508945681,
+    lovenum: 0,
+    commentnum: 1,
+    del: 0 } ]
+[2017-11-05 13:22:30.137] [DEBUG] /dao/poemDao.js - userid_13112345671
+[2017-11-05 13:22:30.137] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 13:22:30.141] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13112345671" LIMIT 1
+[2017-11-05 13:22:30.142] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:22:30.142] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 18,
+    phone: '13112345671',
+    password: '123456',
+    userid: 'userid_13112345671',
+    head: 'e1dc2d16cd7a666714a2ea9e986d05f8',
+    pseudonym: '71',
+    os: null } ]
+[2017-11-05 13:22:30.143] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 13:22:30.148] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 13:22:30.149] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:22:30.149] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 13:22:30.153] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 13:22:30.155] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:22:30.155] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 63,
+  title: '2',
+  content: '2',
+  userid: 'userid_13112345671',
+  time: 1508945681,
+  lovenum: 0,
+  commentnum: 1,
+  del: 0,
+  head: 'e1dc2d16cd7a666714a2ea9e986d05f8',
+  pseudonym: '71',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 13:22:30.270] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 13:22:30.332] [DEBUG] /dao/messageDao.js - {"title":"2","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":63,"comment":"1"}
+[2017-11-05 13:22:30.345] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 13:22:30.349] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":"获取用户pushid失败"}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 13:22:30.357] [DEBUG] /routers/poem.js - null
+[2017-11-05 13:22:47.024] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 13:22:47.335] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:22:47.860] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:22:56.651] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 13:22:56.812] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:23:18.471] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-05 13:23:18.487] [ERROR] /routers/poem.js - null
+[2017-11-05 13:23:18.492] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-05 13:23:18.760] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-05 13:23:18.803] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-05 13:23:18.864] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-05 13:23:21.707] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-05 13:23:21.708] [ERROR] /routers/poem.js - null
+[2017-11-05 13:23:21.717] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-05 13:23:22.140] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-05 13:23:26.077] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-05 13:23:28.034] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 13:23:28.037] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 13:23:28.089] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:23:28.588] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:23:33.471] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 13:23:33.486] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 13:23:33.491] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 59 LIMIT 1
+[2017-11-05 13:23:33.494] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:23:33.496] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 59,
+    title: '实打实打算的',
+    content: '撒打算打\n哈哈哈哈哈\n哥哥噶师大',
+    userid: 'userid_13671172337',
+    time: 1508306878,
+    lovenum: 1,
+    commentnum: 7,
+    del: 0 } ]
+[2017-11-05 13:23:33.498] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 13:23:33.499] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 13:23:33.502] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 13:23:33.502] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:23:33.503] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 13:23:33.503] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 13:23:33.504] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 13:23:33.504] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:23:33.505] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 13:23:33.506] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 13:23:33.510] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:23:33.511] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 59,
+  title: '实打实打算的',
+  content: '撒打算打\n哈哈哈哈哈\n哥哥噶师大',
+  userid: 'userid_13671172337',
+  time: 1508306878,
+  lovenum: 1,
+  commentnum: 7,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 13:23:33.521] [DEBUG] /dao/messageDao.js - {"title":"实打实打算的","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":59,"comment":"11111"}
+[2017-11-05 13:23:33.542] [INFO] /routers/message.js - ---发送极光推送 msgid:17 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 13:23:33.543] [INFO] /routers/message.js - ---title:有人评论了你的作品
+[2017-11-05 13:23:33.544] [INFO] /routers/message.js - ---content:13276评论:11111
+[2017-11-05 13:23:33.998] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 13:23:34.083] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 13:23:34.086] [DEBUG] /routers/poem.js - null
+[2017-11-05 13:23:34.087] [DEBUG] /routers/poem.js - { sendno: '2534473168', msg_id: '36028797236047969' }
+[2017-11-05 13:23:34.636] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:23:36.576] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-05 13:24:01.856] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 13:24:02.258] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:24:02.768] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:24:05.642] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 13:24:05.794] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 13:24:05.836] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:24:06.791] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:24:11.887] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 13:24:11.889] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 13:24:11.893] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 13:24:11.894] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:24:11.894] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 10,
+    del: 0 } ]
+[2017-11-05 13:24:11.895] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 13:24:11.895] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 13:24:11.896] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 13:24:11.896] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:24:11.897] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 13:24:11.897] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 13:24:11.904] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 13:24:11.913] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:24:11.914] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 13:24:11.915] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 13:24:11.915] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 13:24:11.915] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 10,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 13:24:11.970] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":17,"comment":"asdasd"}
+[2017-11-05 13:24:11.980] [INFO] /routers/message.js - ---发送极光推送 msgid:18 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 13:24:11.980] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 13:24:11.980] [INFO] /routers/message.js - ---content:13276回复:asdasd
+[2017-11-05 13:24:12.132] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 13:24:12.219] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 13:24:12.220] [DEBUG] /routers/poem.js - null
+[2017-11-05 13:24:12.220] [DEBUG] /routers/poem.js - { sendno: '3557310343', msg_id: '36028797235904838' }
+[2017-11-05 13:24:12.803] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 13:24:56.601] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 13:24:56.714] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:24:57.072] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:25:13.277] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 13:25:13.426] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:25:19.549] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:25:20.243] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 13:26:01.512] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 13:26:02.052] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 13:26:02.730] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 13:48:55.876] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:49:58.594] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:50:11.544] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:50:43.413] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:50:43.690] [DEBUG] /routers/poem.js - Module {}
+[2017-11-05 13:51:08.304] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:51:08.552] [DEBUG] /routers/poem.js - Module { LoveExtend: [Function: LoveExtend] }
+[2017-11-05 13:51:26.711] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:51:26.975] [DEBUG] /routers/poem.js - [Function: LoveExtend]
+[2017-11-05 13:52:07.915] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:52:08.140] [DEBUG] /routers/poem.js - LoveExtend {}
+[2017-11-05 13:58:18.802] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 13:58:19.088] [DEBUG] /routers/poem.js - LoveExtend { title: 'a' }
+[2017-11-05 14:03:40.848] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:03:41.109] [DEBUG] /routers/poem.js - undefined
+[2017-11-05 14:04:14.497] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:04:14.736] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: '', head: '', pseudonym: '', pid: '' }
+[2017-11-05 14:05:09.307] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:05:09.551] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: '', head: '', pseudonym: '', pid: '' }
+[2017-11-05 14:05:37.516] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:05:37.883] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: '', pseudonym: '', pid: '' }
+[2017-11-05 14:05:51.364] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:05:51.609] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: 'c', pseudonym: 'd', pid: '' }
+[2017-11-05 14:06:03.281] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:06:03.503] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: 'c', pseudonym: 'd', pid: 'e' }
+[2017-11-05 14:06:25.599] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:06:25.827] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: 'c', pseudonym: 'd', pid: 'e' }
+[2017-11-05 14:08:04.073] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:08:04.323] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: 'c', pseudonym: 'd', pid: 'e' }
+[2017-11-05 14:08:18.956] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:08:19.211] [DEBUG] /routers/poem.js - LoveExtend { title: 'a', userid: 'b', head: 'c', pseudonym: 'd', pid: 'e' }
+[2017-11-05 14:08:41.553] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:08:41.782] [DEBUG] /routers/poem.js - CommentExtend {
+  title: 'a',
+  userid: 'b',
+  head: 'c',
+  pseudonym: 'd',
+  pid: 'e',
+  cid: 'f',
+  comment: '' }
+[2017-11-05 14:09:43.910] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:09:44.157] [DEBUG] /routers/poem.js - CommentExtend {
+  title: 'a',
+  userid: 'b',
+  head: 'c',
+  pseudonym: 'd',
+  pid: 'e',
+  cid: 'f',
+  comment: '' }
+[2017-11-05 14:09:44.167] [DEBUG] /routers/poem.js - Message {
+  type: 1,
+  userid: '2',
+  title: '3',
+  content: '4',
+  extend: 
+   CommentExtend {
+     title: 'a',
+     userid: 'b',
+     head: 'c',
+     pseudonym: 'd',
+     pid: 'e',
+     cid: 'f',
+     comment: '' } }
+[2017-11-05 14:10:30.196] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:10:30.460] [DEBUG] /routers/poem.js - CommentExtend {
+  title: 'a',
+  userid: 'b',
+  head: 'c',
+  pseudonym: 'd',
+  pid: 'e',
+  cid: 'f',
+  comment: '' }
+[2017-11-05 14:10:30.470] [DEBUG] /routers/poem.js - {"type":1,"userid":"2","title":"3","content":"4","extend":{"title":"a","userid":"b","head":"c","pseudonym":"d","pid":"e","cid":"f","comment":""}}
+[2017-11-05 14:17:18.357] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:17:30.671] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:18:21.510] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:18:27.918] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:18:27.949] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:18:27.969] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:18:28.506] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:18:28.616] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:18:34.845] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:18:34.852] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:18:34.863] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 14:18:34.865] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:18:34.866] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 11,
+    del: 0 } ]
+[2017-11-05 14:18:34.868] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:18:34.869] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:18:34.873] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:18:34.874] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:18:34.874] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:18:34.875] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:18:34.886] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:18:34.888] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:18:34.888] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:18:34.903] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 14:18:34.905] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:18:34.906] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 11,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13671172337',
+  ophead: '50fca5a28ff53e7b26338bc02d144c2d',
+  oppseudonym: '136' }
+[2017-11-05 14:18:35.177] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:18:35.898] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:19:03.660] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:19:03.996] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:19:04.282] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:19:16.010] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:19:16.181] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:19:19.828] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:19:19.843] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:19:19.878] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:19:20.572] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:19:24.284] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:19:24.286] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:19:24.287] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 14:19:24.288] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:19:24.288] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 12,
+    del: 0 } ]
+[2017-11-05 14:19:24.288] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:19:24.289] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:19:24.292] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:19:24.292] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:19:24.292] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:19:24.293] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:19:24.295] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 14:19:24.295] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:19:24.295] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 14:19:24.297] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 14:19:24.297] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:19:24.297] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 12,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 14:19:24.332] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"comment":"123"}
+[2017-11-05 14:19:24.341] [INFO] /routers/message.js - ---发送极光推送 msgid:19 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:19:24.342] [INFO] /routers/message.js - ---title:有人评论了你的作品
+[2017-11-05 14:19:24.342] [INFO] /routers/message.js - ---content:13276评论:123
+[2017-11-05 14:19:24.511] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:19:24.859] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:19:24.862] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:19:24.864] [DEBUG] /routers/poem.js - { sendno: '3909659075', msg_id: '36028797236048314' }
+[2017-11-05 14:19:25.192] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:28:54.758] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:29:17.116] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:29:17.394] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:29:17.829] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:29:29.392] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:29:29.592] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:29:32.190] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:29:32.206] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:29:32.250] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:29:32.883] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:29:32.916] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:29:39.077] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:29:39.086] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:29:39.088] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 14:29:39.088] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:29:39.088] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 13,
+    del: 0 } ]
+[2017-11-05 14:29:39.089] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:29:39.090] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:29:39.096] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:29:39.096] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:29:39.096] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:29:39.100] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:29:39.102] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 14:29:39.103] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:29:39.103] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 14:29:39.105] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 14:29:39.105] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:29:39.105] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 13,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 14:30:20.031] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:30:32.429] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:30:32.783] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:30:33.423] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:30:36.150] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:30:36.159] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:30:36.172] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:30:38.502] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:30:38.538] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:30:44.003] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:30:44.005] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:30:44.009] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 14:30:44.009] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:30:44.009] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 14,
+    del: 0 } ]
+[2017-11-05 14:30:44.010] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:30:44.010] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:30:44.012] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:30:44.012] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:30:44.013] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:30:44.062] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:30:44.064] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 14:30:44.065] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:30:44.065] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 14:30:44.070] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 14:30:44.071] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:30:44.071] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 14,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 14:30:44.122] [ERROR] /routers/poem.js - { Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 22 LIMIT 1' at line 1
+    at Query.Sequence._packetToError (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at PoolConnection.query (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:208:25)
+    at /Users/bingbing/Poem/PoemServer/dao/poemDao.js:339:24
+    at Ping.onOperationComplete [as _callback] (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Pool.js:110:5)
+    at Ping.Sequence.end (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:88:24)
+    at Ping.Sequence.OkPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:97:8)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlMessage: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'= 22 LIMIT 1\' at line 1',
+  sqlState: '42000',
+  index: 0,
+  sql: 'SELECT comment.userid FROM commentWHERE id = 22 LIMIT 1' }
+[2017-11-05 14:30:44.155] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":22,"comment":"11"}
+[2017-11-05 14:30:44.173] [INFO] /routers/message.js - ---发送极光推送 msgid:20 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:30:44.174] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 14:30:44.178] [INFO] /routers/message.js - ---content:13276回复:11
+[2017-11-05 14:30:44.309] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:30:44.728] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:30:44.736] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:30:44.736] [DEBUG] /routers/poem.js - { sendno: '2369398565', msg_id: '27021597981295799' }
+[2017-11-05 14:30:45.067] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:30:45.181] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:32:51.949] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:33:02.842] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:33:02.962] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:33:03.378] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:33:04.893] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:33:04.901] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:33:04.910] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:33:06.527] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:33:14.011] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:33:14.013] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:33:14.016] [DEBUG] /dao/poemDao.js - SELECT * FROM poem WHERE id = 64 LIMIT 1
+[2017-11-05 14:33:14.017] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:33:14.017] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 64,
+    title: '你好',
+    content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+    userid: 'userid_13671172337',
+    time: 1508946456,
+    lovenum: 2,
+    commentnum: 15,
+    del: 0 } ]
+[2017-11-05 14:33:14.018] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:33:14.019] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:33:14.023] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13671172337" LIMIT 1
+[2017-11-05 14:33:14.024] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:33:14.024] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 1,
+    phone: '13671172337',
+    password: '123456',
+    userid: 'userid_13671172337',
+    head: '50fca5a28ff53e7b26338bc02d144c2d',
+    pseudonym: '136',
+    os: 'ios' } ]
+[2017-11-05 14:33:14.024] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:33:14.027] [DEBUG] /dao/poemDao.js - SELECT * FROM user WHERE userid = "userid_13212345676" LIMIT 1
+[2017-11-05 14:33:14.027] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:33:14.027] [DEBUG] /dao/poemDao.js - [ RowDataPacket {
+    id: 21,
+    phone: '13212345676',
+    password: '123456',
+    userid: 'userid_13212345676',
+    head: '04ebfc8602015b0b4033e18c56548735',
+    pseudonym: '13276',
+    os: 'ios' } ]
+[2017-11-05 14:33:14.030] [DEBUG] /dao/poemDao.js - ---queryOpLovePoem事务完成---
+[2017-11-05 14:33:14.030] [DEBUG] /dao/poemDao.js - null
+[2017-11-05 14:33:14.031] [DEBUG] /dao/poemDao.js - RowDataPacket {
+  id: 64,
+  title: '你好',
+  content: '1\nw\nert\nr\nt\nd\nF\nF\nF\nF\nF\nF\nF\nF\nF\nF\n\nD\nF\nD\nD\n\nD\nD\n\nDid\n\nD',
+  userid: 'userid_13671172337',
+  time: 1508946456,
+  lovenum: 2,
+  commentnum: 15,
+  del: 0,
+  head: '50fca5a28ff53e7b26338bc02d144c2d',
+  pseudonym: '136',
+  opuser: 'userid_13212345676',
+  ophead: '04ebfc8602015b0b4033e18c56548735',
+  oppseudonym: '13276' }
+[2017-11-05 14:33:14.051] [DEBUG] /routers/poem.js - [ RowDataPacket { userid: 'userid_13212345676' } ]
+[2017-11-05 14:33:14.102] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":24,"comment":"qweqwe"}
+[2017-11-05 14:33:14.106] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":24,"comment":"qweqwe"}
+[2017-11-05 14:33:14.115] [INFO] /routers/message.js - ---发送极光推送 msgid:21 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:33:14.118] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 14:33:14.118] [INFO] /routers/message.js - ---content:13276回复:qweqwe
+[2017-11-05 14:33:14.208] [INFO] /routers/message.js - ---发送极光推送 msgid:22 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:33:14.208] [INFO] /routers/message.js - ---title:有人回复了[你好]
+[2017-11-05 14:33:14.208] [INFO] /routers/message.js - ---content:13276回复:qweqwe
+[2017-11-05 14:33:14.315] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:33:14.596] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:33:14.605] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:33:14.608] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:33:14.608] [DEBUG] /routers/poem.js - { sendno: '678002162', msg_id: '36028797235720889' }
+[2017-11-05 14:33:14.613] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:33:14.616] [DEBUG] /routers/poem.js - { sendno: '3480514702', msg_id: '27021597981346549' }
+[2017-11-05 14:33:15.003] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:36:21.465] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:36:29.875] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:36:30.138] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:36:30.349] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:36:46.220] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:36:46.364] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:36:49.568] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:36:49.583] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:36:49.623] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:36:50.435] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:36:56.610] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:36:56.612] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:36:56.614] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:36:56.615] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:36:56.619] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:36:56.632] [DEBUG] /routers/poem.js - ------comment_userid
+[2017-11-05 14:36:56.646] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":25,"comment":"asdasdasd"}
+[2017-11-05 14:36:56.659] [INFO] /routers/message.js - ---发送极光推送 msgid:23 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:36:56.660] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 14:36:56.660] [INFO] /routers/message.js - ---content:13276回复:asdasdasd
+[2017-11-05 14:36:56.773] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:36:56.778] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":"用户不存在"}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 14:36:56.787] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:36:56.891] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:36:57.099] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:36:57.105] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:36:57.106] [DEBUG] /routers/poem.js - { sendno: '2913323717', msg_id: '27021597981428120' }
+[2017-11-05 14:37:53.428] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:38:02.424] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:38:02.624] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:38:03.310] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:38:15.783] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:38:15.936] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:38:19.137] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:38:19.148] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:38:19.166] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:38:20.020] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:38:26.223] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:38:26.225] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:38:26.228] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:38:26.228] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:38:26.232] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:38:26.279] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":26,"comment":"haha"}
+[2017-11-05 14:38:26.281] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":26,"comment":"haha"}
+[2017-11-05 14:38:26.298] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:38:26.305] [INFO] /routers/message.js - ---发送极光推送 msgid:25 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:38:26.307] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 14:38:26.308] [INFO] /routers/message.js - ---content:13276回复:haha
+[2017-11-05 14:38:26.332] [DEBUG] /routers/poem.js - Error: {"code":1,"errmsg":"获取用户pushid失败"}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-05 14:38:26.358] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:38:26.529] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:38:26.822] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:38:26.824] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:38:26.824] [DEBUG] /routers/poem.js - { sendno: '1290229241', msg_id: '36028797235364559' }
+[2017-11-05 14:38:27.161] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:38:27.182] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:39:02.324] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:39:02.645] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:39:03.022] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:39:03.317] [DEBUG] logInfo - POST /message/read 200
+[2017-11-05 14:39:14.852] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:39:22.019] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:39:22.259] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:39:32.393] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:39:54.152] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:39:54.501] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:39:55.245] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:40:11.032] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:40:11.182] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:40:13.438] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:40:17.595] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:40:17.617] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:40:17.754] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:40:18.264] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:40:44.173] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:40:53.131] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:40:53.172] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:40:53.362] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:41:04.723] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:41:04.906] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:41:07.080] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:41:11.330] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-05 14:41:11.340] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-05 14:41:11.356] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:41:12.050] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:41:18.917] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-05 14:41:18.922] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:41:18.932] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:41:18.932] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:41:18.937] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:41:18.998] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64,"cid":27,"comment":"hihi"}
+[2017-11-05 14:41:19.012] [INFO] /routers/message.js - ---发送极光推送 msgid:26 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:41:19.013] [INFO] /routers/message.js - ---title:有人回复了你的作品
+[2017-11-05 14:41:19.014] [INFO] /routers/message.js - ---content:13276回复:hihi
+[2017-11-05 14:41:19.158] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-05 14:41:19.518] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:41:19.524] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:41:19.524] [DEBUG] /routers/poem.js - { sendno: '3679261199', msg_id: '36028797236065345' }
+[2017-11-05 14:41:19.838] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-05 14:45:25.761] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:45:36.775] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-05 14:45:36.906] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:45:37.629] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-05 14:45:49.099] [DEBUG] logInfo - POST /user/login 200
+[2017-11-05 14:45:49.282] [DEBUG] logInfo - POST /user/info 200
+[2017-11-05 14:45:52.900] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:45:54.446] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:45:54.450] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:45:54.455] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:45:54.455] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:45:54.460] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:46:09.810] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:46:11.633] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:12.433] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:12.438] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:46:12.444] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:46:12.444] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:46:12.448] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:46:12.527] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 14:46:12.536] [INFO] /routers/message.js - ---发送极光推送 msgid:27 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:46:12.536] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 14:46:12.537] [INFO] /routers/message.js - ---content:undefined赞了[你好]
+[2017-11-05 14:46:12.975] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:46:12.978] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:46:12.978] [DEBUG] /routers/poem.js - { sendno: '1853719646', msg_id: '36028797236091217' }
+[2017-11-05 14:46:18.283] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:18.793] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:18.796] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:46:18.800] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:46:18.801] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:46:18.804] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:46:18.817] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 14:46:18.826] [INFO] /routers/message.js - ---发送极光推送 msgid:28 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:46:18.827] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 14:46:18.827] [INFO] /routers/message.js - ---content:undefined赞了[你好]
+[2017-11-05 14:46:19.136] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:46:19.137] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:46:19.139] [DEBUG] /routers/poem.js - { sendno: '1138625924', msg_id: '36028797235715950' }
+[2017-11-05 14:46:53.671] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-05 14:46:56.947] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:57.823] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-05 14:46:57.827] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-05 14:46:57.832] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-05 14:46:57.832] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-05 14:46:57.836] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-05 14:46:57.877] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-05 14:46:57.889] [INFO] /routers/message.js - ---发送极光推送 msgid:29 pushid:1a1018970aa26f42422 os:ios
+[2017-11-05 14:46:57.890] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-05 14:46:57.890] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-05 14:46:58.368] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-05 14:46:58.373] [DEBUG] /routers/poem.js - null
+[2017-11-05 14:46:58.374] [DEBUG] /routers/poem.js - { sendno: '882229150', msg_id: '27021597981409233' }
