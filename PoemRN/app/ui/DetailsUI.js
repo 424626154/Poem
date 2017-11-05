@@ -215,7 +215,7 @@ class DetailsUI extends React.Component{
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.navigate)){
-                  this.props.navigation.navigate('CommentUI',{id:this.props.id});
+                  this.props.navigation.navigate('CommentUI',{id:this.state.id});
                 }
               }}>
               <View style={styles.menu_item}>

@@ -11,11 +11,13 @@ import {
 } from 'react-native';
 import {CachedImage} from "react-native-img-cache";
 import Swipeable from 'react-native-swipeable';
+import HTMLView from 'react-native-htmlview';
 import {
       StyleConfig,
       ImageConfig,
       Utils,
-      pstyles
+      pstyles,
+      HttpUtil
     } from '../AppUtil';
 export default class MessageListItem extends React.Component{
   swipeable = null;
@@ -37,6 +39,9 @@ export default class MessageListItem extends React.Component{
     console.log(this.props.onPressItem)
     this.props.onDelItem(this.props.id,this.props.message);
   };
+  _onIcon = ()=>{
+    this.props.onIconItem(this.props.id,this.props.message);
+  }
   render(){
     const message = this.props.message
     return (
@@ -48,15 +53,16 @@ export default class MessageListItem extends React.Component{
         onPress={this._onPress}
         >
         <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:StyleConfig.C_D4D4D4}]}>
-          <View style={styles.msg_icon}>
+          <TouchableOpacity
+            style={styles.msg_icon}
+            onPress={this._onIcon}>
             <CachedImage
               style={pstyles.small_head}
               source={this._logicSource(message)}
               />
-          </View>
+          </TouchableOpacity>
           <View style={styles.msg_text}>
-            <Text style={styles.msg_title}>{message.id}_{message.title}</Text>
-            <Text style={styles.msg_content} numberOfLines={1}>{message.content}</Text>
+            {this._renderMsg(message)}
           </View>
           <View style={styles.msg_more}>
             <Text style={styles.msg_time}>{Utils.dateStr(message.time)}</Text>
@@ -66,12 +72,58 @@ export default class MessageListItem extends React.Component{
     </Swipeable>
       );
   }
+  _renderMsg(message){
+    var extend = JSON.parse(message.extend);
+    if(message.type == 1||message.type == 2){//点赞 评论
+      var msg_html =  '';
+      if(message.type == 1){
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>赞了</msg_love></span>'+
+                      '<span><msg_title>['+extend.title+']</msg_title></span></div>';
 
+      }
+      if(message.type == 2){
+        var op_str = '评论:';
+        if(extend.cid > 0){
+          op_str = '回复:'
+        }
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>'+op_str+'</msg_love></span>'+
+                      '<span><msg_title>'+extend.comment+'</msg_title></span></div>';
+
+      }
+      // console.log(msg_html);
+      return(
+        <HTMLView
+            style={styles.msg_html}
+            value={msg_html}
+            stylesheet={styles}
+            />
+      )
+    }else{
+      return(
+        <View>
+          <Text style={styles.msg_title}>{message.title}</Text>
+          <Text style={styles.msg_content} numberOfLines={1}>{message.content}</Text>
+        </View>
+      )
+    }
+  }
   _logicSource(message){
-    var source ;
+    var source = ImageConfig.nothead;
       if(message.type == 0){
         source = ImageConfig.official;
+      }else if (message.type == 1||message.type == 2){
+        // console.log('---extend---');
+        var extend = JSON.parse(message.extend);
+        // console.log(extend);
+        var head = extend.head;
+        // console.log(head);
+        if(head){
+          source = {uri:HttpUtil.getHeadurl(head)};
+        }
       }
+      // console.log(source);
     return source;
   }
   _renserRightButtons(){
@@ -112,6 +164,17 @@ const styles = StyleSheet.create({
   },
   msg_titme:{
 
+  },
+  msg_html:{
+
+  },
+  msg_name:{
+    fontSize:18,
+    color:StyleConfig.C_1E8AE8,
+  },
+  msg_love:{
+    fontSize:18,
+    color:StyleConfig.C_7B8992,
   },
   delete:{
     justifyContent:'center',

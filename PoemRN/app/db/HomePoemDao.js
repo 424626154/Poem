@@ -13,9 +13,11 @@ class HomePoemDao{
           let temp_homepoem = homepoems[i];
           let msg = {
                 id: temp_homepoem.id,
+                userid:temp_homepoem.userid,
+                head:temp_homepoem.head,
+                pseudonym:temp_homepoem.pseudonym,
                 title: temp_homepoem.title,
                 content: temp_homepoem.content,
-                userid:temp_homepoem.userid,
                 lovenum:temp_homepoem.lovenum,
                 commentnum:temp_homepoem.commentnum,
                 mylove:temp_homepoem.mylove,

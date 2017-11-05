@@ -3,10 +3,11 @@
  */
 var express = require('express');
 var router = express.Router();
+var http = require('http');
 var userDao = require('../dao/userDao');
 var utils = require('../utils/utils'); 
+var httputil = require('../utils/httputil'); 
 var ru = require('../utils/routersutil');
-var http = require('http');
 var logger = require('../utils/log4jsutil').logger(__dirname+'/user.js');
 /* GET user listing. */
 router.get('/', function(req, res, next) {
@@ -20,37 +21,14 @@ var ResJson = function(){
 	this.data;
 	this.errmsg ;
 }
-/**
- * 返回错误
- */
-function resError(res,err){
-	console.error(err)
-	var resjson = new ResJson();
-	resjson.code = 1;
-	resjson.errmsg = err;
-	res.json(resjson)
-}
-/**
- * 返回成功
- */
-function resSuccess(res,data){
-	var resjson = new ResJson();
-	resjson.code = 0;
-	resjson.data = data;
-	console.log('---res succes--- data:',data)
-	res.json(resjson)
-}
 
-function logReq(req){
-	console.log('url:/user'+req.originalUrl+' body:'+JSON.stringify(req.body));
-}
 function sendAliSms(phone,code,callback){
 	var data = {  
        phone:phone,
        code:code,
     };  
     data = JSON.stringify(data);  
-    console.log(data);  
+    logger.debug(data);  
     var opt = {  
         method: "POST",  
         host: 'localhost',  
@@ -89,61 +67,18 @@ function sendAliSms(phone,code,callback){
     req.end();  
 }
 
-function requstPoemPost(path,data,callback){
-    data = JSON.stringify(data);  
-    console.log('---requstPoemPost path:'+path+'data:'+data);  
-    var opt = {  
-        method: "POST",  
-        host: 'localhost',  
-        port: 3000,  
-        path: path,  
-        headers: {  
-            "Content-Type": 'application/json;charset=utf-8',  
-            "Content-Length": data.length,
-        },
-    }; 
-    var req = http.request(opt, function (server) {  
-        if (server.statusCode == 200) {  
-            var body = "";  
-            server
-            .on('data', function (data) { 
-            	body += data; 
-            })  
-                          
-            .on('end', function () { 
-             	var result = JSON.parse(body);
-             	console.log('---requstPoemPost path:'+path+'result:'+result);
-             	if(result.code == 0){
-             		callback(null,result.data);   
-             	}else{
-             		callback(new Error(result.errmsg),null)  
-             	}     
-            });  
-        }  
-        else {  
-            callback(new Error(server.statusCode),null);   
-        }  
-    });  
-    req.write(data + "\n");  
-    req.end();  
-}
-function sendRegisterMsg(data,callback){
-	// console.log('---sendRegisterMsg---')
-	// console.log(data)
-	// console.log(callback)
-	requstPoemPost('/message/register',data,callback);
-}
+
 /**
  * 登录
  */
 router.post('/login',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var phone = req.body.phone; 
 	var password = req.body.password;
 	var os = req.body.os;
 	userDao.queryUser(phone,function(err,users){
 		if(err){
-			resError(res,err);
+			ru.resError(res,err);
 		}else{
 			var length = users.length;
 			if(length > 0 ){
@@ -154,12 +89,12 @@ router.post('/login',function(req,res,next){
 
 						})
 					}
-					resSuccess(res,user);
+					ru.resSuccess(res,user);
 				}else{
-					resError(res,'密码错误');
+					ru.resError(res,'密码错误');
 				}
 			}else{
-				resError(res,'用户未注册');
+				ru.resError(res,'用户未注册');
 			}
 		}
 	})
@@ -169,17 +104,17 @@ router.post('/login',function(req,res,next){
  * 请求验证码
  */
 router.post('/validate',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var phone = req.body.phone; 
 	if(!phone){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
 	}else{
 		var max_time = 60;//秒级
 		userDao.queryValidate(phone,function(err,objs){
 			if(err){
-				resError(res,err.code);
+				ru.resError(res,err.code);
 			}else{
-				console.log('验证码已经存在')
+				logger.debug('验证码已经存在')
 				var length = objs.length;
 				if(length > 0 ){
 					var validate = objs[0];
@@ -187,20 +122,20 @@ router.post('/validate',function(req,res,next){
 					var diff_time =  current_time - validate.time
 					if( diff_time >= max_time){
 						//重新生成
-						console.log('重新生成验证码')
+						loogger.debug('重新生成验证码')
 						var code = utils.getCode();
 						userDao.updateValidate(phone,code,current_time,function(err,objs){
 							if(err){
-								resError(res,err.code);
+								ru.resError(res,err.code);
 							}else{
 								var data = {phone:phone,code:code,time:max_time,max:max_time};
-								resSuccess(res,data)
-								console.log('------验证码为:'+code+'------')
+								ru.resSuccess(res,data)
+								logger.debug('------验证码为:'+code+'------')
 							}
 						})
 						sendAliSms(phone,code,function(err,sms){
 							if(!err){
-								console.log('重新生成验证码/ali/sendcode2')
+								logger.debug('重新生成验证码/ali/sendcode2')
 								userDao.updateValidateSms(phone,sms.RequestId,sms.BizId,function(err,result){
 
 								})
@@ -209,20 +144,20 @@ router.post('/validate',function(req,res,next){
 					}else{
 						validate.time = max_time-diff_time;
 						validate.max = max_time,
-						console.log('------验证码为:'+validate.code+'------')
-						resSuccess(res,validate);
+						logger.debug('------验证码为:'+validate.code+'------')
+						ru.resSuccess(res,validate);
 					}
 				}else{
-					console.log('初始生成验证码')
+					logger.debug('初始生成验证码')
 					//生成
 					var code = utils.getCode();
 					var current_time = utils.getTime();
 					userDao.addValidate(phone,code,current_time,function(err,objs){
-						console.log(err)
+						logger.debug(err)
 						if(err){
-							resError(res,err.code);
+							ru.resError(res,err.code);
 						}else{
-							console.log('初始生成验证码/ali/sendcode3')
+							logger.debug('初始生成验证码/ali/sendcode3')
 							sendAliSms(phone,code,function(err,data){
 								if(!err){
 									userDao.updateValidateSms(phone,data.RequestId,data.BizId,function(err,result){
@@ -237,7 +172,7 @@ router.post('/validate',function(req,res,next){
 								max:max_time,
 							}
 							console.log('------验证码为:'+code+'------')
-							resSuccess(res,validate)
+							ru.resSuccess(res,validate)
 						}
 					})
 				}
@@ -250,25 +185,25 @@ router.post('/validate',function(req,res,next){
  * 注册
  */
 router.post('/register',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var phone = req.body.phone; 
 	var password = req.body.password;
 	var code = req.body.code;
 	var os = req.body.os;
-	var userid = utils.getUserid(phone)
+	var userid = utils.getUserid(phone);
 	if(!phone||!password||!code){
-		resError(res,err);
+		ru.resError(res,err);
 	}else{
 		userDao.queryUser(phone,function(err,result){
 			if(err){
-				resError(res,err)
+				ru.resError(res,err)
 			}else{
 				if(result.length >0){
 					resError(res,'用户已经注册')
 				}else{
 						userDao.queryValidate(phone,function(err,objs){
 							if(err){
-								resError(res,err);
+								ru.resError(res,err);
 							}else{
 								var length = objs.length;
 								if(length > 0 ){
@@ -276,27 +211,31 @@ router.post('/register',function(req,res,next){
 									if(validate.phone == phone && validate.code == code){
 											userDao.addUser(userid,phone,password,os,function(err,result){
 												if(err){
-													resError(res,err);
+													ru.resError(res,err);
 												}else{
-													sendRegisterMsg({userid:user.userid},function(err,result){
-														console.log('---发送注册消息')
-														console.log(err)
-														console.log(result)
+													var title = '注册成功';
+												    var content = '欢迎来到Poem！';
+													var data = {
+														type:0,
+														userid:userid,
+														title:title,
+														content:content,
+														extend:{},
+														};
+													httputil.requstPSPost('/message/actionmsg',data,function(err,result){
 														if(err){
-
-														}else{
-
+															logger.error(err)
 														}
 													})
 													var user = result.length > 0 ?result[0]:{};
-													resSuccess(res,user);
+													ru.resSuccess(res,user);
 												}
 											});
 									}else{
-										resError(res,'验证码错误');
+										ru.resError(res,'验证码错误');
 									}
 								}else{
-									resError(res,'验证码错误');
+									ru.resError(res,'验证码错误');
 								}
 							}
 						});
@@ -309,23 +248,23 @@ router.post('/register',function(req,res,next){
  * 修改用户信息
  */
 router.post('/upinfo',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var userid = req.body.userid;
 	var head = req.body.head||'';
 	var pseudonym = req.body.pseudonym||'';
 	if(!userid){
-		resError(res,'参数错误')
+		ru.resError(res,'参数错误')
 		return;
 	}
 	userDao.updateUserInfo(userid,head,pseudonym,function(err,result){
 		if(err){
-			resError(res,err);
+			ru.resError(res,err);
 		}else{
 			var user = {};
 			if(result.length > 0){
 				user = result[0];
 			}
-			resSuccess(res,user);
+			ru.resSuccess(res,user);
 		}
 	})
 });
@@ -334,7 +273,7 @@ router.post('/upinfo',function(req,res,next){
  * 获取用户信息
  */
 router.post('/info',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var userid = req.body.userid;
 	if(!userid){
 		resError(res,'参数错误')
@@ -342,9 +281,9 @@ router.post('/info',function(req,res,next){
 	}
 	userDao.queryUserInfo(userid,function(err,result){
 		if(err){
-			resError(res,err);
+			ru.resError(res,err);
 		}else{
-			resSuccess(res,result);
+			ru.resSuccess(res,result);
 		}
 	})
 });
@@ -352,18 +291,18 @@ router.post('/info',function(req,res,next){
  * 获取他人信息
  * */
 router.post('/otherinfo',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var userid = req.body.userid;
 	var myid = req.body.myid;
 	if(!userid){
-		resError(res,'参数错误')
+		ru.resError(res,'参数错误')
 		return;
 	}
 	userDao.queryOtherInfo(myid,userid,function(err,result){
 		if(err){
-			resError(res,err);
+			ru.resError(res,err);
 		}else{
-			resSuccess(res,result);
+			ru.resSuccess(res,result);
 		}
 	})
 });
@@ -372,7 +311,7 @@ router.post('/otherinfo',function(req,res,next){
  * @param op 1 关注 0 取消关注
  */
 router.post('/follow',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var userid = req.body.userid;
 	var fansid = req.body.fansid;
 	var op = req.body.op;
@@ -381,9 +320,9 @@ router.post('/follow',function(req,res,next){
 	}else{
 		userDao.upFollow(userid,fansid,op,function(err,result){
 			if(err){
-				resError(res,err);
+				ru.resError(res,err);
 			}else{
-				resSuccess(res,result);
+				ru.resSuccess(res,result);
 			}
 		});
 	}
@@ -411,7 +350,7 @@ router.post('/follow',function(req,res,next){
  * @param  0我的关注1关注我的
  */
 router.post('/follows',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var myid = req.body.myid;
 	var userid = req.body.userid;
 	var type = req.body.type;
@@ -420,9 +359,9 @@ router.post('/follows',function(req,res,next){
 	}else{
 		userDao.queryFollowType(myid,userid,type,function(err,result){
 			if(err){
-				resError(res,err);
+				ru.resError(res,err);
 			}else{
-				resSuccess(res,result);
+				ru.resSuccess(res,result);
 			}
 		});
 	}
@@ -431,7 +370,7 @@ router.post('/follows',function(req,res,next){
  * 查询
  */
 router.post('/query',function(req,res,next){
-	logReq(req);
+	ru.logReq(req);
 	var op = req.body.op;
 	if(!op){
 		resError(res,'参数错误');
@@ -440,17 +379,16 @@ router.post('/query',function(req,res,next){
 			var userid = req.body.userid;
 			userDao.queryUserFromId(userid,function(err,result){
 			if(err){
-
-				resError(res,err);
+				ru.resError(res,err);
 			}else{
 				if(result.length >0){
 					var data = {
 						op:'userid',
 						phone:result[0].phone,
 					}
-					resSuccess(res,data);
+					ru.resSuccess(res,data);
 				}else{
-					resError(res,'用户ID不存在');
+					ru.resError(res,'用户ID不存在');
 				}
 				
 			}
@@ -459,21 +397,21 @@ router.post('/query',function(req,res,next){
 			var phone = req.body.phone;
 			userDao.queryUser(phone,function(err,result){
 				if(err){
-					resError(res,err);
+					ru.resError(res,err);
 				}else{
 					if(result.length >0){
 						var data = {
 							op:'phone',
 							userid:result[0].userid,
 						}
-						resSuccess(res,data);
+						ru.resSuccess(res,data);
 					}else{
-						resError(res,'手机号未组成');
+						ru.resError(res,'手机号未组成');
 					}
 				}
 			});
 		}else{
-			resError(res,'操作类型错误');	
+			ru.resError(res,'操作类型错误');	
 		}
 	}
 });

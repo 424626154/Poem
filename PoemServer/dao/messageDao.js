@@ -1,5 +1,6 @@
 var pool = require('./dao');
 var utils = require('../utils/utils'); 
+var logger = require('../utils/log4jsutil').logger(__dirname+'/messageDao.js');
 
 const PUSH_TABLE = 'push'; 
 const MESSAGE_TABLE = 'message'; 
@@ -23,9 +24,13 @@ module.exports = {
             });
         });
 	},
-	addMessage:function(userid,title,content,type,extend,callback){
-		var time = utils.getTime();
-        var sql = 'INSERT INTO '+MESSAGE_TABLE+' (userid,title,content,type,extend,time) VALUES ("'+userid+'","'+title+'","'+content+'",'+type+',"'+extend+'",'+time+')';
+	addMessage:function(type,userid,title,content,extend,callback){
+		if(extend instanceof Object){
+            extend = JSON.stringify(extend);
+        }
+        logger.debug(extend);
+        var time = utils.getTime();
+        var sql = 'INSERT INTO '+MESSAGE_TABLE+' (userid,title,content,type,extend,time) VALUES ("'+userid+'","'+title+'","'+content+'",'+type+',\''+extend+'\','+time+')';
         pool.getConnection(function(err, connection) {
             connection.query(sql, function(err, result) {
                 callback(err, result)
@@ -33,7 +38,11 @@ module.exports = {
             });
         });
 	},
-    addMessages:function(userids,title,content,type,extend,callback){
+    addMessages:function(type,userids,title,content,extend,callback){
+        if(extend instanceof Object){
+            extend = JSON.stringify(extend);
+        }
+        logger.debug(extend);
         if(userids.length == 0 ){
             callback(new Error('userids 参数错误'), null);
             return;
@@ -41,7 +50,7 @@ module.exports = {
         var time = utils.getTime();
         var sql = 'INSERT INTO '+MESSAGE_TABLE+' (userid,title,content,type,extend,time) VALUES ';
         for(var i = 0 ; i < userids.length ; i ++){
-            sql = sql+'("'+userids[i]+'","'+title+'","'+content+'",'+type+',"'+extend+'",'+time+'),';
+            sql = sql+'("'+userids[i]+'","'+title+'","'+content+'",'+type+',\''+extend+'\','+time+'),';
         }
         sql = sql.substr(0,sql.length-1)
         console.log(sql);

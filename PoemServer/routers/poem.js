@@ -5,38 +5,10 @@ var express = require('express');
 var router = express.Router();
 var poemDao = require('../dao/poemDao');
 var utils = require('../utils/utils'); 
-var ResJson = function(){
-	this.code;
-	this.data;
-	this.errmsg ;
-}
-
-/**
- * 返回错误
- */
-function resError(res,err){
-	console.error(err)
-	var resjson = new ResJson();
-	resjson.code = 1;
-	resjson.errmsg = err;
-	res.json(resjson)
-	console.log(err);
-}
-/**
- * 返回成功
- */
-function resSuccess(res,data){
-	var resjson = new ResJson();
-	resjson.code = 0;
-	resjson.data = data;
-	console.log('---res succes--- data:',data)
-	res.json(resjson)
-}
-
-function logReq(req){
-	console.log('url:/poem'+req.originalUrl+' body:'+JSON.stringify(req.body));
-}
-
+var httputil = require('../utils/httputil'); 
+var ru = require('../utils/routersutil');
+var logger = require('../utils/log4jsutil').logger(__dirname+'/poem.js');
+var {LoveExtend,CommentExtend,Message,MessageType} = require('../utils/module');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
@@ -46,23 +18,23 @@ router.get('/', function(req, res, next) {
  * 添加作品
  */
 router.post('/addpoem', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
     var userid = req.body.userid;
     var title = req.body.title;
     var content = req.body.content;
     var time = utils.getTime();
     if(!title||!content||!userid){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
     }else{
     	poemDao.addPoem(userid,title,content,time,function(err,result){
 	    	if(err){
-				resError(res,err);
+				ru.resError(res,err);
 	    	}else{
 	    		var poem = {};
 	    		if(result.length > 0){
 	    			poem = result[0];
 	    		}
-				resSuccess(res,poem);
+				ru.resSuccess(res,poem);
 	    	}
 	    })
     }
@@ -72,23 +44,23 @@ router.post('/addpoem', function(req, res, next) {
  * 修改作品
  */
 router.post('/uppoem', function(req, res, next) {
-  	logReq(req);
+  	ru.logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     var title = req.body.title;
     var content = req.body.content;
     if(!title||!content||!id||!userid){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
     }else{
     	poemDao.upPoem(id,userid,title,content,function(err,result){
 	    	if(err){
-	    		resError(res,err);
+	    		ru.resError(res,err);
 	    	}else{
 	    		var poem = {};
 	    		if(result.length > 0){
 	    			poem = result[0];
 	    		}
-				resSuccess(res,poem);
+				ru.resSuccess(res,poem);
 	    	}
 	    })
     }
@@ -98,18 +70,18 @@ router.post('/uppoem', function(req, res, next) {
  * 删除作品
  */
 router.post('/delpoem', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
     var userid = req.body.userid;
     var id = req.body.id;
     if(!id||!userid){
-    	resError(res,'参数错误');
+    	ru.resError(res,'参数错误');
     }else{
     	poemDao.delPoem(id,userid,function(err,result){
 	    	if(err){
-	    		resError(res,err);
+	    		ru.resError(res,err);
 	    	}else{
 	    		var poem = {id:parseInt(id),userid:userid};
-				resSuccess(res,poem);
+				ru.resSuccess(res,poem);
 	    	}
 	    })
     }
@@ -119,18 +91,18 @@ router.post('/delpoem', function(req, res, next) {
  * 最新作品
  */
 router.post('/newestpoem', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
 	var userid = req.body.userid;
     var id = req.body.id;
     if(!userid){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
     }else{
     	 poemDao.queryNewestPoem(userid,id,function(err,poems){
-    	 	console.log(err)
+    	 	logger.error(err)
 	    	if(err){
-				resError(res,err);
+				ru.resError(res,err);
 	    	}else{
-	    		resSuccess(res,poems);
+	    		ru.resSuccess(res,poems);
 	    	}
 	    })
     }
@@ -139,7 +111,7 @@ router.post('/newestpoem', function(req, res, next) {
  * 历史作品
  */
 router.post('/historypoem', function(req, res, next) {
-	console.log('req /poem/historypoem body:'+JSON.stringify(req.body));
+	ru.logReq(req)
 	var userid = req.body.userid;
     var id = req.body.id;
     if(!userid){
@@ -147,9 +119,9 @@ router.post('/historypoem', function(req, res, next) {
     }else{
     	poemDao.queryHistoryPoem(userid,id,function(err,poems){
 	    	if(err){
-				resError(res,err);
+				ru.resError(res,err);
 	    	}else{
-	    		resSuccess(res,poems);
+	    		ru.resSuccess(res,poems);
 	    	}
 	    });
     }
@@ -158,20 +130,20 @@ router.post('/historypoem', function(req, res, next) {
  * 作品点赞数和评论数
  */
 router.post('/lovecomment', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
 	var pid = req.body.pid;
 	if(!pid){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
 	}else{
 		poemDao.queryLoveComment(pid,function(err,result){
 	    	if(err){
-				resError(res,err);
+				ru.resError(res,err);
 	    	}else{
 	    		var poem = {};
 	    		if(result.length > 0 ){
 	    			poem = result[0];
 	    		}
-	    		resSuccess(res,poem);
+	    		ru.resSuccess(res,poem);
 	    	}
 	    });
 	}
@@ -192,14 +164,14 @@ router.post('/lovecomment', function(req, res, next) {
         }]
  */
 router.post('/newestallpoem', function(req, res, next) {
-	console.log('req /poem/newestallpoem body:'+JSON.stringify(req.body));
+	ru.logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     poemDao.queryNewestAllPoem(id,userid,function(err,poems){
     	if(err){
-    		resError(res,err);
+    		ru.resError(res,err);
     	}else{
-    		resSuccess(res,poems);
+    		ru.resSuccess(res,poems);
     	}
     })
 });	
@@ -219,14 +191,14 @@ router.post('/newestallpoem', function(req, res, next) {
         }]
  */
 router.post('/historyallpoem', function(req, res, next) {
-	console.log('req /poem/historyallpoem body:'+JSON.stringify(req.body));
+	ru.logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     poemDao.queryHistoryAllPoem(id,userid,function(err,poems){
     	if(err){
-			resError(res,err);
+			ru.resError(res,err);
     	}else{
-    		resSuccess(res,poems);
+    		ru.resSuccess(res,poems);
     	}
     });
 });	
@@ -235,20 +207,55 @@ router.post('/historyallpoem', function(req, res, next) {
  * 评论作品
  */
 router.post('/commentpoem', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     var cid = req.body.cid;
-    var comment = req.body.comment;
+    var comment_str = req.body.comment;
     var time = utils.getTime();
-	if(!id||!userid||!comment){
-		resError(res,'参数错误');
+	if(!id||!userid||!comment_str){
+		ru.resError(res,'参数错误');
 	}else{
-		 poemDao.addPoemComment(id,userid,cid,comment,time,function(err,comment){
+		 poemDao.addPoemComment(id,userid,cid,comment_str,time,function(err,comment){
 	    	if(err){
-	    		resError(res,err);
+	    		ru.resError(res,err);
 	    	}else{
-	    		resSuccess(res,comment);
+	    		poemDao.queryOpPoem(id,userid,function(err,poem){
+    				if(userid != poem.userid){//自己点赞自己不发消息
+						var op_srt = '评论';
+						if(cid > 0){
+							op_srt = '回复';
+						}
+						var title = '有人'+op_srt+'了你的作品';
+					    var content = poem.oppseudonym+op_srt+':'+comment_str;
+					    var commentExtend = new CommentExtend(poem.title,poem.opuser,
+					    	poem.ophead,poem.oppseudonym,id,cid,comment_str);
+					    var message = new Message(MessageType.COMMENT_MSG,poem.userid,title,content,commentExtend);
+				    	httputil.requstPSPost('/message/actionmsg',message,function(err,result){
+				    		logger.debug(err);
+				    		logger.debug(result);
+				    	}); 
+				    	if(cid > 0 ){
+				    		poemDao.queryCommentUserid(cid,function(err,result){
+				    			if(err){
+				    				logger.error(err);
+				    			}else{
+	
+				    				var comment_userid = result.length > 0?result[0].userid:0;
+				    				if(comment_userid&&comment_userid != userid&&comment_userid != poem.userid){// 屏蔽回复自己跟作者本身
+				    					title = '有人'+op_srt+'了['+poem.title+']';
+							    		var message1 = new Message(MessageType.COMMENT_MSG,comment_userid,title,content,commentExtend);
+								    	httputil.requstPSPost('/message/actionmsg',message1,function(err,result){
+								    		logger.debug(err);
+								    		logger.debug(result);
+								    	});
+				    				}
+				    			}
+				    		})
+				    	}
+    				}
+		    	});
+	    		ru.resSuccess(res,comment);
 	    	}
 	    })
 		poemDao.addCommentNum(id,function(err,comment){})
@@ -259,7 +266,7 @@ router.post('/commentpoem', function(req, res, next) {
  * 最新评论
  */
 router.post('/newestcomment', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
     var id = req.body.id;
     var pid = req.body.pid;
     if(!pid){
@@ -267,9 +274,9 @@ router.post('/newestcomment', function(req, res, next) {
     }else{
     	poemDao.queryNewestComment(id,pid,function(err,comments){
 	    	if(err){
-				resError(res,err);
+				ru.resError(res,err);
 	    	}else{
-				resSuccess(res,comments);
+				ru.resSuccess(res,comments);
 	    	}
 	    })
     }
@@ -279,18 +286,18 @@ router.post('/newestcomment', function(req, res, next) {
  * 历史评论
  */
 router.post('/historycomment', function(req, res, next) {
-	console.log('req /poem/historycomment body:'+JSON.stringify(req.body));
+	ru.logReq(req);
     var id = req.body.id;
     var pid = req.body.pid;
     if(!pid){
     	resError(res,'参数错误');
     }else{
     	poemDao.queryHistoryComment(id,pid,function(err,comments){
-		 	console.log(err)
+		 	logger.error(err)
 	    	if(err){
-	    		resError(res,err);
+	    		ru.resError(res,err);
 	    	}else{
-	    		resSuccess(res,comments);
+	    		ru.resSuccess(res,comments);
 	    	}
 	    })
     }
@@ -300,73 +307,52 @@ router.post('/historycomment', function(req, res, next) {
  * 点赞
  */
 router.post('/lovepoem', function(req, res, next) {
-	console.log('req /poem/lovepoem body:'+JSON.stringify(req.body))
+	ru.logReq(req);
     var id = req.body.id;
     var userid = req.body.userid;
     var love = req.body.love;
     var time = utils.getTime();
     if(!id||!userid){
-    	resError(res,'参数错误');
+    	ru.resError(res,'参数错误');
     	return ;
     }
-    poemDao.lovePoem(id,userid,love,function(err,love){
-  			if(err){
-	    		resError(res,err);
-	    	}else{
-	    		resSuccess(res,love);
-	    	}
+    poemDao.lovePoem(id,userid,love,function(err,love){  	
+		if(err){
+    		ru.resError(res,err);
+    	}else{
+    		if(love.love == 1){
+    			poemDao.queryOpPoem(id,userid,function(err,poem){
+    				if(userid != poem.userid){//自己点赞自己不发消息
+						var title = '有人赞了你的作品';
+					    var content = poem.oppseudonym+'赞了['+poem.title+']';
+						var loveExtend = new LoveExtend(poem.title,poem.opuser,
+					    	poem.ophead,poem.oppseudonym,id);
+					    var message = new Message(MessageType.LOVE_MSG,poem.userid,title,content,loveExtend);
+				    	httputil.requstPSPost('/message/actionmsg',message,function(err,result){
+				    		logger.debug(err);
+				    		logger.debug(result);
+				    	}); 
+    				}
+		    	});
+    		}
+    		ru.resSuccess(res,love);
+    	}
     });
-  // poemDao.queryLovePoem(id,userid,function(err,loves){ 
-  //   	if(err){
-  //   		resError(res,err)
-  //   	}else{
-  //   		if(loves.length > 0 ){
-  //   			var loveid = loves[0].id
-  //   			poemDao.updateLovePoem(loveid,userid,love,time,function(err,result){
-  //   				if(err){
-		// 	    		resError(res,err);
-		// 	    	}else{
-		// 	    		var lovejson = {id:loveid,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
-		// 	    		resSuccess(res,lovejson);
-		// 	    	}
-  //   			})
-  //   		}else{
-  //   			poemDao.addLovePoem(id,userid,love,time,function(err,result){
-  //   				if(err){
-		// 	    		resError(res,err)
-		// 	    	}else{
-		// 	    		var lovejson = {id:result.insertId,pid:parseInt(id),userid:userid,love:parseInt(love),time:time}
-		// 	    		resSuccess(res,lovejson);
-		// 	    	}
-  //   			})
-  //   		}
-  //   		if(love == 1){
-  //   			poemDao.addLoveNum(id,function(err,result){
-
-  //   			})
-  //   		}else{
-  //   			poemDao.reduceLoveNum(id,function(err,result){
-
-  //   			})
-  //   		}
-
-  //   	}
-  //   })
 });	
 /**
  * 获取点赞列表
  */
 router.post('/getloves', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
 	var pid = req.body.id;
 	if(!pid){
 		resError(res,'参数错误')
 	}else{
 		poemDao.queryLoves(pid,function(err,result){
 			if(err){
-	    		resError(res,err)
+	    		ru.resError(res,err)
 	    	}else{
-	    		resSuccess(res,result);
+	    		ru.resSuccess(res,result);
 	    	}
 		});
 	}
@@ -375,21 +361,21 @@ router.post('/getloves', function(req, res, next) {
  *我的点赞
  */
 router.post('/mylove', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
 	var pid = req.body.id;
 	var userid = req.body.userid;
 	if(!pid){
-		resError(res,'参数错误')
+		ru.resError(res,'参数错误')
 	}else{
 		poemDao.queryLovePoem(pid,userid,function(err,result){
 			if(err){
-	    		resError(res,err)
+	    		ru.resError(res,err)
 	    	}else{
 	    		var love = {id:0};
 	    		if(result.length){
 	    			love = result[0];
 	    		}
-	    		resSuccess(res,love);
+	    		ru.resSuccess(res,love);
 	    	}
 		});
 	}
@@ -398,7 +384,7 @@ router.post('/mylove', function(req, res, next) {
  * 作品详情
  */
 router.post('/info', function(req, res, next) {
-	logReq(req);
+	ru.logReq(req);
 	var pid = req.body.pid;
 	var userid = req.body.userid;
 	if(!pid){
@@ -406,9 +392,9 @@ router.post('/info', function(req, res, next) {
 	}else{
 		poemDao.queryPoemInfo(pid,userid,function(err,result){
 			if(err){
-	    		resError(res,err)
+	    		ru.resError(res,err)
 	    	}else{
-	    		resSuccess(res,result);
+	    		ru.resSuccess(res,result);
 	    	}
 		});
 	}

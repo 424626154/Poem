@@ -1,6 +1,6 @@
 var pool = require('./dao');
 var utils = require('../utils/utils'); 
-
+var logger = require('../utils/log4jsutil').logger(__dirname+'/poemDao.js');
 const POEM_TABLE = 'poem'; 
 const USER_TABLE = 'user';
 const COMMENT_TABLE = 'comment';
@@ -147,6 +147,87 @@ module.exports = {
             });
         });
     },
+    /**
+     * 根据id查询点赞作品
+     * return peom{
+     *     id,
+     *     title,
+     *     content,
+     *     userid,
+     *     loveuser,
+     *     lovehead,
+     *     loepseudonym,
+     *     tiem,
+     * }
+     */
+    queryOpPoem(pid,opuserid,callback){
+        pool.getConnection(function(err, connection) {
+            connection.beginTransaction(function(err){
+                var poem = {};
+                var user = {};
+                var opuser = {};
+                var userid = '';
+                var sql0 = 'SELECT * FROM '+POEM_TABLE+' WHERE id = '+pid+' LIMIT 1';
+                logger.debug('---sql0---');
+                connection.query(sql0, function(err, result) {
+                    // logger.debug(sql0);
+                    // logger.debug(err);
+                    // logger.debug(result);
+                    if(err){
+
+                    }else{
+                        if(result.length > 0){
+                         poem = result[0];
+                         userid = poem.userid;
+                         logger.debug(userid);
+                            logger.debug('---sql1---');
+                            var sql1 = 'SELECT * FROM '+USER_TABLE+' WHERE userid = "'+userid+'" LIMIT 1';
+                            connection.query(sql1, function(err, result) {
+                                // logger.debug(sql1);
+                                // logger.debug(err);
+                                // logger.debug(result);
+                                if(err){
+
+                                }else{
+                                    if(result.length > 0){
+                                     user = result[0];
+                                     poem.head = user.head;
+                                     poem.pseudonym = user.pseudonym;
+                                        logger.debug('---sql2---');
+                                        var sql2 = 'SELECT * FROM '+USER_TABLE+' WHERE userid = "'+opuserid+'" LIMIT 1';
+                                        connection.query(sql2, function(err, result) {
+                                            // logger.debug(sql2);
+                                            // logger.debug(err);
+                                            // logger.debug(result);
+                                            if(err){
+
+                                            }else{
+                                                if(result.length > 0){
+                                                 opuser = result[0];
+                                                 poem.opuser = opuser.userid
+                                                 poem.ophead = opuser.head;
+                                                 poem.oppseudonym = opuser.pseudonym;
+                                                }
+                                                connection.commit(function(err){
+                                                    // logger.debug('---queryOpLovePoem事务完成---');
+                                                    // logger.debug(err);
+                                                    // logger.debug(poem);
+                                                    callback(err,poem);
+                                                });
+                                                connection.release();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+    
+                    }
+                });
+            });
+        });
+
+    },
     /*------------评论------------*/
     /**
      * 添加作品评论
@@ -244,6 +325,18 @@ module.exports = {
         var sql = 'SELECT comment.*,user.head,user.pseudonym FROM ('+sql+') AS comment LEFT JOIN '+USER_TABLE+' ON comment.userid = user.userid ORDER BY id DESC';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [fromid,pid], function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
+    /**
+     * 根据id查询评论人的userid
+     */
+    queryCommentUserid(id,callback){
+        var sql = 'SELECT comment.userid FROM '+COMMENT_TABLE+' WHERE id = ? LIMIT 1';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [id], function(err, result) {
                 callback(err, result)
                 connection.release();
             });

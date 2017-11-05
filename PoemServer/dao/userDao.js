@@ -92,7 +92,7 @@ module.exports = {
         if(os == 'all'){
             sql = 'SELECT user.userid FROM '+USER_TABLE;
         }else if(os == 'andoid'||os == 'ios'){
-            sql = 'SELECT user.userid FROM '+USER_TABLE+' WHERE os ='+os;
+            sql = 'SELECT user.userid FROM '+USER_TABLE+' WHERE os = "'+os+'"';
         }else{
             callback(new Error('os 参数错误'),null);
             return;

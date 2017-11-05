@@ -19,7 +19,7 @@ class CommentListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
         if(Utils.isLogin(this.props.navigate)){
-            this.props.navigate('CommentUI',{id:this.props.comment.pid,cid:this.props.comment.id});
+            this.props.navigate('CommentUI',{id:this.props.comment.pid,cid:this.props.comment.id,cpseudonym:this.props.comment.pseudonym});
         }
     };
 

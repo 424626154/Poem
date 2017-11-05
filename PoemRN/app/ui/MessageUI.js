@@ -101,8 +101,27 @@ export default class MessageUI extends Component {
           MessageDao.updateMessageState(message);
           Emitter.emit(Emitter.READMSG);
         }
-        this.props.navigation.navigate('MsgContentUI',{message:message})
+        if(message.type == 1||message.type == 2){
+          var extend = JSON.parse(message.extend);
+          console.log("------extend------");
+          console.log(extend);
+          var pid = extend.pid;
+          if(pid){
+            this.props.navigation.navigate('DetailsUI',{id:pid});
+          }
+        }else{
+          this.props.navigation.navigate('MsgContentUI',{message:message});
+        }
     };
+    _onIconItem = (id: string,message:Object) => {
+      if(message.type == 1){
+        var extend = JSON.parse(message.extend);
+        var userid = extend.userid;
+        if(userid){
+          this.props.navigation.navigate('PersonalUI',{userid:userid})
+        }
+      }
+    }
     _onDelItem = (id: int,message:Object) => {
       var del = false;
       this.dataContainer = this.state.sourceData;
@@ -125,6 +144,7 @@ export default class MessageUI extends Component {
                 id={item.id}
                 onPressItem={ this._onPressItem }
                 onDelItem={this._onDelItem}
+                onIconItem={this._onIconItem}
                 selected={ !!this.state.selected.get(item.id) }
                 message= {item}
             />

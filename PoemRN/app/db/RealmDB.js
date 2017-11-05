@@ -3,7 +3,7 @@ import React from 'react';
 import Realm from 'realm';
 import RealmName from './RealmName';
 
-let SchemaVersion = 6;//数据库版本
+let SchemaVersion = 8;//数据库版本
 // const MessageName = 'message';
 // let realm;
 
@@ -27,9 +27,11 @@ const HomePoem = {
     primaryKey: 'id',
     properties:{
       id:'int',
+      userid:{type: 'string', default: ''},
+      head:{type: 'string', default: ''},
+      pseudonym:{type: 'string', default: ''},
       title:{type: 'string', default: ''},
       content:{type: 'string', default: ''},
-      userid:{type: 'string', default: ''},
       lovenum:{type: 'int', default: 0},
       commentnum:{type: 'int', default: 0},
       mylove:{type: 'int', default: 0},

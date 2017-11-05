@@ -42,10 +42,16 @@ class CommentUI extends React.Component{
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
+    console.log(params);
+    var placeholder = '发表评论...';
+    if(params.cid > 0 ){
+      placeholder = '回复'+params.cpseudonym+'...';
+    }
     this.state = {
       id:params.id,
       cid:params.cid,
       userid:'',
+      placeholder:placeholder,
     }
     this._onRelease = this._onRelease.bind(this);
   }
@@ -72,7 +78,7 @@ class CommentUI extends React.Component{
       <View style={styles.container}>
           <TextInput
             style={styles.input}
-            placeholder={'请输入评论'}
+            placeholder={this.state.placeholder}
             multiline={true}
             onChangeText={(text) => this.setState({comment:text})}
             value={this.state.comment}

@@ -63,11 +63,6 @@ function sendPush(msgid,pushid,os,title,content,callback){
   logger.info('---content:'+content);
   try{
     var platform = JPush.ALL;
-    console.log(typeof os);
-    console.log(os == 'android');
-    console.log(os === 'android');
-    console.log(os);
-    console.log('android');
     if(os == 'ios'){
         platform = 'ios';
     }else if(os == 'android'){
@@ -94,13 +89,13 @@ function sendPush(msgid,pushid,os,title,content,callback){
 /**
  * 添加消息
  */
-function addMessage(userid,title,content,callback){
+function addMessage(type,userid,title,content,extend,callback){
   userDao.queryUserFromId(userid,function(err,result){
     if(err){
       callback(err,null);
     }else{
       if(result.length > 0 ){
-          messageDao.addMessage(userid,title,content,0,'',function(err,result){
+          messageDao.addMessage(type,userid,title,content,extend,function(err,result){
               if(err){
                   callback(err,null);
               }else{
@@ -162,7 +157,7 @@ router.post('/pushall', function(req, res, next) {
         for(var i = 0 ; i < result.length;i++){
           userids[i]= result[i].userid;
         }
-         messageDao.addMessages(userids,title,content,0,'',function(err,result){
+         messageDao.addMessages(0,userids,title,content,'',function(err,result){
               if(server.push){
                 sendAllPush(title,content,os,function(err,data){
                    if(err){
@@ -190,7 +185,7 @@ router.post('/pushuser', function(req, res, next) {
   if(!userid||!title||!content){
     ru.resError(res,'参数错误');
   }else{
-    addMessage(userid,title,content,function(err,result){
+    addMessage(0,userid,title,content,'',function(err,result){
         if(err){
           ru.resError(res,err);
         }else{
@@ -230,15 +225,17 @@ router.post('/pushid',function(req,res,next){
   }
 });
 
-router.post('/register',function(req,res,next){
+router.post('/actionmsg',function(req,res,next){
   ru.logReq(req);
+  var type = req.body.type;
   var userid = req.body.userid;
-  if(!userid){
+  var title = req.body.title;
+  var content = req.body.content;
+  var extend = req.body.extend;
+  if(!userid||!title||!content){
     ru.resError(res,'参数错误');
   }else{
-    var title = '注册成功';
-    var content = '欢迎来到Poem！';
-    addMessage(userid,title,content,function(err,result){
+    addMessage(type,userid,title,content,extend,function(err,result){
         if(err){
           ru.resError(res,err);
         }else{
