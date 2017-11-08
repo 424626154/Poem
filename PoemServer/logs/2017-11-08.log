@@ -999,3 +999,8 @@
 [2017-11-08 12:20:00.439] [DEBUG] logInfo - POST /chat/chats 200
 [2017-11-08 12:20:00.894] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
 [2017-11-08 15:01:23.827] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-08 15:21:04.834] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-08 15:22:41.520] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 15:22:42.205] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-08 15:22:42.219] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 15:22:42.223] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
