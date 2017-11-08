@@ -55,3 +55,4 @@ android/gradle.properties
 android/Poem.jks
 android/app/release/
 android/key.png
+.update
