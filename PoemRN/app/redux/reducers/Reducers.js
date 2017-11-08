@@ -37,7 +37,7 @@ function love(state=initialState, action){
 // export default rootReducer;
 export default function getReducers(navReducer) {
     return combineReducers({
-        love:love,
+        // love:love,
         nav: navReducer
     });
 }

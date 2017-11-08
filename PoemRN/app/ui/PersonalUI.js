@@ -1,3 +1,4 @@
+'use strict'
 /**
  * 个人信息
  */
@@ -12,53 +13,21 @@ import {
         FlatList,
 } from 'react-native';
 import { Icon,SocialIcon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
-// import HTMLView from 'react-native-htmlview';
-
-import pstyles from '../style/PStyles';
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import HttpUtil  from '../utils/HttpUtil';
-import Global from '../Global';
-import Utils from '../utils/Utils';
+import PersonalListItem from '../custom/PersonalListItem';
+import {
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  HttpUtil,
+  Global,
+  Utils,
+  pstyles,
+  PImage,
+  UIName,
+} from '../AppUtil';
 
 const nothead = require('../images/ic_account_circle_black.png');
 
-/**
- * 作品元素组件
- */
-class FlatListItem extends React.PureComponent {
-    _onPress = () => {
-        this.props.onPressItem(this.props.id);
-        this.props.navigate('DetailsUI',{id:this.props.id});
-    };
-    render() {
-        return(
-            <TouchableOpacity
-                {...this.props}
-                onPress={this._onPress}
-                >
-                <View style={styles.fitem}>
-                  {/* 诗歌 */}
-                  <View style={styles.poem_bg}>
-                  {/* <HTMLView
-                      value={this.props.poem}
-                      /> */}
-                  <View style={styles.poem}>
-                    <Text style={styles.poem_title}>{this.props.poem.title}</Text>
-                    <Text style={styles.poem_content}
-                    >{this.props.poem.content}</Text>
-                  </View>
-                  </View>
-                  <View style={styles.fitem_more}>
-                    <Text style={styles.fitem_time}>
-                      {this.props.time}
-                    </Text>
-                  </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
 
 class PersonalUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
@@ -68,7 +37,7 @@ class PersonalUI extends React.Component{
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
           <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={styles.nav_left}>返回</Text>
+            <Text style={pstyles.nav_left}>返回</Text>
           </TouchableOpacity>
         ),
      });
@@ -80,6 +49,7 @@ class PersonalUI extends React.Component{
     let userid = params.userid;
     this.state = {
       headurl:nothead,
+      head:'',
       pseudonym:'',
       userid:userid,
       follow:'已关注',
@@ -110,7 +80,7 @@ class PersonalUI extends React.Component{
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.personal}>
-              <CachedImage
+              <PImage
                 style={pstyles.big_head}
                 source={this.state.headurl}
                 />
@@ -147,17 +117,17 @@ class PersonalUI extends React.Component{
           selected.set(id, !selected.get(id));
           return {selected}
       });
+      this.props.navigation.navigate(UIName.DetailsUI,{id:this.props.id});
   };
   _renderItem = ({item}) =>{
       return(
-          <FlatListItem
+          <PersonalListItem
               id={item.id}
               onPressItem={ this._onPressItem }
               selected={ !!this.state.selected.get(item.id) }
               name= { item.name }
               poem={item}
               time={Utils.dateStr(item.time)}
-              navigate = {this.props.navigation.navigate}
           />
       );
   };
@@ -238,24 +208,38 @@ class PersonalUI extends React.Component{
   }
   _renderFollowOP(){
     return(
-      <View style={styles.follow}>
-      <SocialIcon
-        title={this.state.follow}
-        button={true}
-        onPress={()=>{
-          this._onFollow();
-        }}
-        fontStyle={styles.follow_font}
-        light
-        style={styles.follow_button}
-        />
+    <View style={styles.follow}>
+        <SocialIcon
+          title={this.state.follow}
+          button={true}
+          onPress={()=>{
+            this._onFollow();
+          }}
+          fontStyle={styles.follow_font}
+          light
+          style={styles.follow_button}
+          />
+          <SocialIcon
+            title={'私信'}
+            button={true}
+            onPress={()=>{
+              this._onChat();
+            }}
+            fontStyle={styles.follow_font}
+            light
+            style={styles.follow_button}
+            />
       </View>
     )
   }
   _onFollow(){
+      if(!Utils.isLogin(this.props.navigation.navigate))return;
       this._requestFollow();
   }
-
+  _onChat(){
+    if(!Utils.isLogin(this.props.navigation.navigate))return;
+    this.props.navigation.navigate(UIName.ChatUI,{tuserid:this.state.userid,head:this.state.head,pseudonym:this.state.pseudonym});
+  }
   _requestOtherInfo(userid){
     var json = JSON.stringify({
       myid:Global.user.userid,
@@ -270,6 +254,7 @@ class PersonalUI extends React.Component{
           headurl:headurl,
           pseudonym:pseudonym,
           user:user,
+          head:user.head,
           follow:this._getFollowStr(user),
         })
       }else{
@@ -403,12 +388,15 @@ const styles = StyleSheet.create({
   },
   //关注按钮
   follow:{
+    flex:1,
+    flexDirection:'row',
     padding:5,
     alignItems:'flex-end',
+    justifyContent:'flex-end',
   },
   follow_button:{
-    width:100,
-    height:40,
+    width:80,
+    height:30,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,
@@ -431,32 +419,6 @@ const styles = StyleSheet.create({
     marginTop:10,
     fontSize:StyleConfig.F_12,
     color:StyleConfig.C_D4D4D4,
-  },
-  fitem:{
-      flex:1,
-      padding:10,
-  },
-  fitem_more:{
-    alignItems:'flex-end'
-  },
-  fitem_time:{
-    fontSize:14,
-    color:'#d4d4d4',
-    marginTop:4,
-  },
-  poem_bg:{
-
-  },
-  poem:{
-
-  },
-  poem_title:{
-    fontSize:30,
-    textAlign:'center',
-  },
-  poem_content:{
-    fontSize:20,
-    textAlign:'center',
   },
 })
 export {PersonalUI};

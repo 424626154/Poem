@@ -10,14 +10,18 @@ import {
         Alert,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-import Utils from '../utils/Utils';
-import Global from '../Global';
-import Emitter from '../utils/Emitter';
-import HttpUtil from '../utils/HttpUtil';
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  pstyles,
+  Utils,
+  Global,
+  Emitter,
+  HttpUtil,
+  PImage,
+} from '../AppUtil'
 
 import {CustomNav} from '../custom/CustomNav';
 
@@ -68,13 +72,13 @@ class MyUI extends React.Component {
           <View style={styles.header}>
             <TouchableOpacity onPress={()=>{
               if(this.state.userid){
-                navigate('PerfectUI',{go_back_key:state.key});
+                navigate('PerfectUI');
               }else{
-                navigate('LoginUI',{go_back_key:state.key});
+                navigate('LoginUI');
               }
             }}>
             <View style={styles.personal}>
-                <CachedImage
+                <PImage
                   style={pstyles.big_head}
                   source={this.state.headurl}
                   />

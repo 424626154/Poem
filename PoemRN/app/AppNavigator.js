@@ -5,12 +5,12 @@ import {
   ScrollView,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TabNavigator,StackNavigator,DrawerNavigator } from 'react-navigation';
+import { /*TabNavigator,*/StackNavigator,DrawerNavigator } from 'react-navigation';
 
 // import {LoadUI} from './ui/LoadUI';//加载页
-import {WorksTab} from './tabs/WorksTab';//作品
-import {ReadingTab} from './tabs/ReadingTab';//欣赏
-import {MyTab} from './tabs/MyTab';//我的
+// import {WorksTab} from './tabs/WorksTab';//作品
+// import {ReadingTab} from './tabs/ReadingTab';//欣赏
+// import {MyTab} from './tabs/MyTab';//我的
 import {AddPoemUI} from './ui/AddPoemUI';//添加诗词
 import {LoginUI} from './ui/LoginUI';
 import {RegisterUI} from './ui/RegisterUI';
@@ -27,64 +27,66 @@ import {SettingUI} from './ui/SettingUI';
 import LovesUI from './ui/LovesUI';
 import MessageUI from './ui/MessageUI';
 import MsgContentUI from './ui/MsgContentUI';
+import ChatUI from './ui/ChatUI';
+import FeedbackUI from './ui/FeedbackUI';
 
 import {Drawer} from './drawer/Drawer';
 
-const Tabs = TabNavigator({
-  WorksTab: {
-    screen: WorksTab,
-    navigationOptions: {
-        tabBarLabel: '作品',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='home'
-            size={26}
-            type="MaterialIcons"
-            color={tintColor}
-          />
-        ),
-      }
-  },
-  ReadingTab: {
-    screen: ReadingTab,
-    navigationOptions: {
-        tabBarLabel: '欣赏',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='import-contacts'
-            size={26}
-            type="MaterialIcons"
-            color={tintColor}
-          />
-        ),
-      }
-  },
-  MyTab: {
-    screen: MyTab,
-    navigationOptions: {
-        tabBarLabel: '我的',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='perm-identity'
-            size={26}
-            type="MaterialIcons"
-            color={tintColor}
-          />
-        ),
-      }
-  }
-},{
-    tabBarPosition: 'bottom',
-    tabBarOptions:{
-        showIcon: true,
-        indicatorStyle: {height: 0},
-        labelStyle:{
-          margin:0,
-        }
-    },
-    // tabBarVisible:false,
-    lazy:true,
-});
+// const Tabs = TabNavigator({
+//   WorksTab: {
+//     screen: WorksTab,
+//     navigationOptions: {
+//         tabBarLabel: '作品',
+//         tabBarIcon: ({ tintColor, focused }) => (
+//           <Icon
+//             name='home'
+//             size={26}
+//             type="MaterialIcons"
+//             color={tintColor}
+//           />
+//         ),
+//       }
+//   },
+//   ReadingTab: {
+//     screen: ReadingTab,
+//     navigationOptions: {
+//         tabBarLabel: '欣赏',
+//         tabBarIcon: ({ tintColor, focused }) => (
+//           <Icon
+//             name='import-contacts'
+//             size={26}
+//             type="MaterialIcons"
+//             color={tintColor}
+//           />
+//         ),
+//       }
+//   },
+//   MyTab: {
+//     screen: MyTab,
+//     navigationOptions: {
+//         tabBarLabel: '我的',
+//         tabBarIcon: ({ tintColor, focused }) => (
+//           <Icon
+//             name='perm-identity'
+//             size={26}
+//             type="MaterialIcons"
+//             color={tintColor}
+//           />
+//         ),
+//       }
+//   }
+// },{
+//     tabBarPosition: 'bottom',
+//     tabBarOptions:{
+//         showIcon: true,
+//         indicatorStyle: {height: 0},
+//         labelStyle:{
+//           margin:0,
+//         }
+//     },
+//     // tabBarVisible:false,
+//     lazy:true,
+// });
 
 
 const DrawerNav = DrawerNavigator({
@@ -157,6 +159,12 @@ const AppNavigator = StackNavigator({
   MsgContentUI:{
     screen:MsgContentUI,
   },
+  ChatUI:{
+    screen:ChatUI,
+  },
+  FeedbackUI:{
+    screen:FeedbackUI,
+  }
 },{
   initialRouteName: 'Main', // 默认显示界面
 })

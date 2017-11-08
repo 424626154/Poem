@@ -1,0 +1,1001 @@
+[2017-11-08 00:01:47.894] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:01:48.617] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:01:49.200] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:01:51.640] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:01:52.834] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:05:27.194] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:05:27.824] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:05:28.688] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:05:30.662] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:05:31.839] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:06:28.652] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:06:29.201] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:06:29.923] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:06:36.226] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:06:40.341] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:09:36.042] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:09:36.374] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:09:37.007] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:09:42.309] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:09:43.463] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:09:44.613] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:09:45.163] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:09:45.226] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-08 00:09:47.570] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:09:51.576] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:09:51.783] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 00:10:31.285] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-08 00:10:31.293] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-08 00:10:31.505] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:10:31.533] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:10:31.625] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:10:34.699] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-08 00:10:34.706] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-08 00:10:35.035] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:10:35.068] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:10:35.112] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-08 00:11:04.600] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:11:04.855] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:11:05.528] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:11:09.979] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:11:10.950] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:11:21.331] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:11:22.776] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:11:36.838] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:11:37.843] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:29:08.420] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:29:08.921] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:29:09.556] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:29:12.783] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:29:14.246] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:29:35.414] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:29:35.423] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:29:35.430] [INFO] /push/jpush.js - ---发送极光推送 msgid:60 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:29:35.430] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:29:35.430] [INFO] /push/jpush.js - ---content:1
+[2017-11-08 00:29:35.431] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:29:35.434] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:29:35.434] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:29:39.600] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:29:40.765] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:30:26.792] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:30:26.797] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:31:02.043] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:31:03.099] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:31:10.393] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:31:10.763] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:31:11.392] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:31:13.493] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:31:14.375] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:31:14.400] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:31:40.375] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:31:40.378] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:31:43.440] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:31:49.083] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:31:49.624] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:31:50.422] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:31:53.226] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:31:53.230] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:31:53.232] [INFO] /push/jpush.js - ---发送极光推送 msgid:61 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:31:53.232] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:31:53.232] [INFO] /push/jpush.js - ---content:2
+[2017-11-08 00:31:53.233] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:31:53.250] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:31:53.250] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:31:59.868] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:32:00.899] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:32:01.011] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:33:48.622] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:33:49.153] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:33:49.628] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:35:03.772] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:35:47.157] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:35:47.360] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:35:47.934] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:35:51.006] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:35:52.043] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:37:48.416] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:37:48.795] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:37:49.718] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:37:53.093] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:37:54.207] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:38:09.245] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:38:09.255] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:38:09.258] [INFO] /push/jpush.js - ---发送极光推送 msgid:62 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:38:09.262] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:38:09.262] [INFO] /push/jpush.js - ---content:3
+[2017-11-08 00:38:09.262] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:38:09.264] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:38:09.264] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:38:13.378] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:38:14.956] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:38:15.106] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:38:37.741] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:38:38.596] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:38:39.431] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:38:41.167] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:38:42.254] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:38:53.718] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:38:53.728] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:38:53.731] [INFO] /push/jpush.js - ---发送极光推送 msgid:63 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:38:53.731] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:38:53.731] [INFO] /push/jpush.js - ---content:4
+[2017-11-08 00:38:53.731] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:38:53.731] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:38:53.735] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:38:58.372] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:39:01.135] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:39:01.323] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:39:26.298] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:39:27.365] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:40:28.115] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:40:28.429] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:40:29.255] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:41:00.655] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:41:21.004] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:41:21.800] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:41:22.447] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:41:26.049] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:41:27.195] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:41:35.411] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:41:35.418] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - ---发送极光推送 msgid:64 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - ---content:5
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:41:35.419] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:41:39.115] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:41:40.115] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:41:40.207] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:41:44.275] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:41:45.238] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:43:31.241] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:43:31.547] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:43:32.140] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:43:34.350] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:43:34.359] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - ---发送极光推送 msgid:65 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - ---content:a1
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:43:34.360] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:43:38.715] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:43:39.718] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:43:39.878] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:44:43.113] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:44:43.117] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:44:43.122] [INFO] /push/jpush.js - ---发送极光推送 msgid:66 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:44:43.122] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:44:43.122] [INFO] /push/jpush.js - ---content:b1
+[2017-11-08 00:44:43.122] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:44:43.122] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:44:43.123] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:44:48.265] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:44:49.262] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:44:49.467] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:45:22.690] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:45:22.701] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:45:22.703] [INFO] /push/jpush.js - ---发送极光推送 msgid:67 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:45:22.703] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:45:22.703] [INFO] /push/jpush.js - ---content:a1
+[2017-11-08 00:45:22.703] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:45:22.704] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:45:22.704] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:45:27.605] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:45:28.659] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:45:28.794] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:45:35.326] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:45:35.374] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:45:35.375] [INFO] /push/jpush.js - ---发送极光推送 msgid:68 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:45:35.375] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:45:35.375] [INFO] /push/jpush.js - ---content:a2
+[2017-11-08 00:45:35.375] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:45:35.376] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:45:35.379] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:45:41.506] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:45:43.008] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:45:43.137] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:45:49.245] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:45:49.247] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:45:49.249] [INFO] /push/jpush.js - ---发送极光推送 msgid:69 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:45:49.250] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:45:49.254] [INFO] /push/jpush.js - ---content:a3
+[2017-11-08 00:45:49.254] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:45:49.254] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:45:49.254] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:45:53.672] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:45:54.964] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:45:55.124] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:46:04.771] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:46:04.774] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:46:04.775] [INFO] /push/jpush.js - ---发送极光推送 msgid:70 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:46:04.775] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:46:04.775] [INFO] /push/jpush.js - ---content:6
+[2017-11-08 00:46:04.775] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:46:04.776] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:46:04.776] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:46:09.290] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:46:10.602] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:46:10.895] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:46:35.128] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:46:36.459] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:54:26.265] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:54:26.269] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:57:24.574] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:57:24.863] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:57:25.866] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:57:26.787] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:57:26.800] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - ---发送极光推送 msgid:71 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - ---content:7
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:57:26.801] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:57:31.240] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:57:32.860] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:57:33.081] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:58:14.754] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:58:14.967] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:58:15.762] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:58:20.286] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:58:22.593] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:59:03.079] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 00:59:03.437] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 00:59:03.928] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:06.028] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:07.720] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:59:19.721] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:20.622] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:59:31.734] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:59:31.738] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:59:31.740] [INFO] /push/jpush.js - ---发送极光推送 msgid:72 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:59:31.742] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:59:31.742] [INFO] /push/jpush.js - ---content:8
+[2017-11-08 00:59:31.742] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:59:31.742] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:59:31.742] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:59:35.288] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:36.372] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:59:36.475] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:59:42.458] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 00:59:42.462] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 00:59:42.468] [INFO] /push/jpush.js - ---发送极光推送 msgid:73 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 00:59:42.469] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 00:59:42.469] [INFO] /push/jpush.js - ---content:9
+[2017-11-08 00:59:42.469] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 00:59:42.471] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 00:59:42.471] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 00:59:45.575] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:46.925] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 00:59:47.012] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 00:59:56.339] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 00:59:57.422] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:00:19.349] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:00:20.049] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:01:43.565] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:01:50.302] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:11:27.345] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:11:27.349] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:14:44.577] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:14:44.858] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:14:45.948] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:14:54.294] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:14:54.303] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:14:54.305] [INFO] /push/jpush.js - ---发送极光推送 msgid:74 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:14:54.305] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:14:54.307] [INFO] /push/jpush.js - ---content:10
+[2017-11-08 01:14:54.307] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:14:54.307] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:14:54.307] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:15:28.410] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:15:30.165] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:15:30.315] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:15:52.269] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:15:52.273] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - ---发送极光推送 msgid:75 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - ---content:11
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:15:52.274] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:16:00.184] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:16:01.436] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:16:01.579] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:17:35.610] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:17:35.612] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:19:01.444] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:19:01.768] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:19:02.524] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:19:16.844] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:19:17.167] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:19:18.342] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:19:29.501] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:19:29.508] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:19:29.509] [INFO] /push/jpush.js - ---发送极光推送 msgid:76 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:19:29.509] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:19:29.509] [INFO] /push/jpush.js - ---content:12
+[2017-11-08 01:19:29.509] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:19:29.510] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:19:29.510] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:19:34.834] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:19:39.078] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:19:39.432] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:22:11.923] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:22:12.394] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:22:13.843] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:22:19.352] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:22:28.078] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:22:28.127] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:22:28.128] [INFO] /push/jpush.js - ---发送极光推送 msgid:77 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:22:28.129] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:22:28.129] [INFO] /push/jpush.js - ---content:14
+[2017-11-08 01:22:28.129] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:22:28.129] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:22:28.129] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:22:34.118] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:22:34.463] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:22:50.110] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:22:50.115] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:22:50.119] [INFO] /push/jpush.js - ---发送极光推送 msgid:78 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:22:50.120] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:22:50.121] [INFO] /push/jpush.js - ---content:15
+[2017-11-08 01:22:50.140] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:22:50.141] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:22:50.141] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:22:53.181] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:22:53.186] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:22:53.187] [INFO] /push/jpush.js - ---发送极光推送 msgid:79 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:22:53.188] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:22:53.189] [INFO] /push/jpush.js - ---content:16
+[2017-11-08 01:22:53.189] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:22:53.189] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:22:53.189] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:22:56.589] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:22:56.592] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:22:56.593] [INFO] /push/jpush.js - ---发送极光推送 msgid:80 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:22:56.593] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:22:56.593] [INFO] /push/jpush.js - ---content:17
+[2017-11-08 01:22:56.593] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:22:56.593] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:22:56.594] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:23:16.352] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:23:16.355] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:23:16.355] [INFO] /push/jpush.js - ---发送极光推送 msgid:81 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:23:16.356] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:23:16.356] [INFO] /push/jpush.js - ---content:a4
+[2017-11-08 01:23:16.356] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:23:16.356] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:23:16.356] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:23:19.161] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:23:19.164] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:23:19.166] [INFO] /push/jpush.js - ---发送极光推送 msgid:82 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:23:19.166] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:23:19.166] [INFO] /push/jpush.js - ---content:a5
+[2017-11-08 01:23:19.167] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:23:19.167] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:23:19.167] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:23:23.659] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:23:23.664] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:23:23.668] [INFO] /push/jpush.js - ---发送极光推送 msgid:83 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:23:23.668] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:23:23.668] [INFO] /push/jpush.js - ---content:b2
+[2017-11-08 01:23:23.668] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:23:23.668] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:23:23.669] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:23:29.406] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:23:31.139] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:23:31.623] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:24:57.503] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:24:57.793] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:24:58.605] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:25:01.451] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:25:02.978] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:25:20.664] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:25:21.800] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:25:40.801] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:25:40.811] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - ---发送极光推送 msgid:84 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - ---content:b3
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:25:40.814] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:25:49.173] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:25:49.177] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:25:49.178] [INFO] /push/jpush.js - ---发送极光推送 msgid:85 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:25:49.179] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:25:49.179] [INFO] /push/jpush.js - ---content:a6
+[2017-11-08 01:25:49.179] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:25:49.180] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:25:49.180] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:25:53.413] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:25:53.415] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - ---发送极光推送 msgid:86 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - ---content:18
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:25:53.417] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:26:01.461] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:26:02.953] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:26:03.384] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:28:11.746] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:28:11.858] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:28:12.666] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:28:39.938] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-08 01:28:39.952] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-08 01:28:39.997] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-08 01:30:18.797] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:30:19.474] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:30:20.331] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:30:33.535] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:30:33.556] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:30:33.558] [INFO] /push/jpush.js - ---发送极光推送 msgid:87 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:30:33.558] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:30:33.558] [INFO] /push/jpush.js - ---content:19
+[2017-11-08 01:30:33.559] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:30:33.559] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:30:33.559] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:30:43.264] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:30:43.278] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:30:43.279] [INFO] /push/jpush.js - ---发送极光推送 msgid:88 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:30:43.279] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:30:43.280] [INFO] /push/jpush.js - ---content:a7
+[2017-11-08 01:30:43.280] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:30:43.280] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:30:43.280] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:30:48.357] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:30:48.373] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - ---发送极光推送 msgid:89 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - ---content:b3
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:30:48.380] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:30:59.845] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:31:05.244] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:31:05.915] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:32:07.576] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:32:08.370] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:32:09.180] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:32:12.812] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:32:14.130] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:32:30.916] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:32:30.925] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:32:30.926] [INFO] /push/jpush.js - ---发送极光推送 msgid:90 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:32:30.927] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:32:30.927] [INFO] /push/jpush.js - ---content:20
+[2017-11-08 01:32:30.927] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:32:30.927] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:32:30.927] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:32:35.144] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:32:35.149] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:32:35.150] [INFO] /push/jpush.js - ---发送极光推送 msgid:91 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:32:35.150] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:32:35.150] [INFO] /push/jpush.js - ---content:a8
+[2017-11-08 01:32:35.150] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:32:35.151] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:32:35.151] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:32:39.430] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:32:39.438] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:32:39.443] [INFO] /push/jpush.js - ---发送极光推送 msgid:92 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:32:39.444] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:32:39.444] [INFO] /push/jpush.js - ---content:b4
+[2017-11-08 01:32:39.445] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:32:39.445] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:32:39.445] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:32:46.732] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:32:51.863] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:32:52.399] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:35:46.044] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:35:46.367] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:35:47.207] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:35:50.370] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:35:50.379] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - ---发送极光推送 msgid:93 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - ---content:21
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:35:50.382] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:35:55.429] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:35:55.446] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - ---发送极光推送 msgid:94 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - ---content:a9
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:35:55.448] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:36:11.174] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:36:11.187] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:36:11.189] [INFO] /push/jpush.js - ---发送极光推送 msgid:95 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:36:11.190] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:36:11.190] [INFO] /push/jpush.js - ---content:b5
+[2017-11-08 01:36:11.190] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:36:11.190] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:36:11.190] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:36:41.987] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:36:42.706] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:36:43.385] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:37:14.925] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:37:14.939] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:37:14.941] [INFO] /push/jpush.js - ---发送极光推送 msgid:96 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:37:14.942] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:37:14.942] [INFO] /push/jpush.js - ---content:22
+[2017-11-08 01:37:14.942] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:37:14.942] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:37:14.942] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:37:19.785] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:37:19.792] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:37:19.794] [INFO] /push/jpush.js - ---发送极光推送 msgid:97 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:37:19.795] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:37:19.795] [INFO] /push/jpush.js - ---content:a10
+[2017-11-08 01:37:19.795] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:37:19.796] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:37:19.796] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:37:24.664] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:37:24.669] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:37:24.672] [INFO] /push/jpush.js - ---发送极光推送 msgid:98 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:37:24.673] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:37:24.680] [INFO] /push/jpush.js - ---content:b6
+[2017-11-08 01:37:24.680] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:37:24.680] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:37:24.680] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:37:28.458] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:37:33.974] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:37:34.584] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:38:01.502] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:38:01.505] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - ---发送极光推送 msgid:99 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - ---content:23
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:38:01.506] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:38:07.995] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:38:09.918] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:38:10.127] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 01:38:21.102] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:38:21.210] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:44:31.575] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:44:31.581] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:44:31.586] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:48:34.823] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:48:35.294] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:48:36.222] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:48:46.344] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:48:48.080] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:48:51.181] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:48:51.336] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:48:57.842] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:48:57.904] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:48:57.925] [INFO] /push/jpush.js - ---发送极光推送 msgid:100 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:48:57.970] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:48:57.970] [INFO] /push/jpush.js - ---content:2
+[2017-11-08 01:48:57.970] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:48:57.979] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:48:57.980] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:50:50.283] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:50:50.298] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:50:50.302] [INFO] /push/jpush.js - ---发送极光推送 msgid:101 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:50:50.304] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:50:50.304] [INFO] /push/jpush.js - ---content:1
+[2017-11-08 01:50:50.304] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:50:50.306] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:50:50.306] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:50:58.507] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:50:59.612] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:51:38.410] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:51:38.582] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:51:46.614] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:51:46.626] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:51:46.642] [INFO] /push/jpush.js - ---发送极光推送 msgid:102 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:51:46.642] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:51:46.642] [INFO] /push/jpush.js - ---content:3
+[2017-11-08 01:51:46.642] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:51:46.643] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:51:46.643] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:54:00.319] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 01:54:00.459] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 01:54:01.931] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:54:13.775] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:54:15.189] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:54:16.612] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:54:16.788] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:54:23.532] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:54:23.545] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - ---发送极光推送 msgid:103 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - ---content:4
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:54:23.548] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:54:29.897] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 01:54:31.171] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:55:39.801] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 01:55:40.146] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 01:55:44.746] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:55:44.754] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:55:44.756] [INFO] /push/jpush.js - ---发送极光推送 msgid:104 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:55:44.757] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:55:44.757] [INFO] /push/jpush.js - ---content:6
+[2017-11-08 01:55:44.757] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:55:44.758] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:55:44.758] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:55:58.847] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:55:58.869] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:55:58.873] [INFO] /push/jpush.js - ---发送极光推送 msgid:105 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:55:58.874] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:55:58.874] [INFO] /push/jpush.js - ---content:7
+[2017-11-08 01:55:58.874] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:55:58.874] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:55:58.874] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 01:59:54.977] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 01:59:55.010] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 01:59:55.016] [INFO] /push/jpush.js - ---发送极光推送 msgid:106 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 01:59:55.017] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 01:59:55.017] [INFO] /push/jpush.js - ---content:8
+[2017-11-08 01:59:55.017] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 01:59:55.017] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 01:59:55.017] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:02:06.703] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:02:07.246] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:02:08.010] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:03:07.745] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:03:08.847] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:03:10.657] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:03:10.967] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:03:14.694] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:03:14.706] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:03:14.722] [INFO] /push/jpush.js - ---发送极光推送 msgid:107 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 02:03:14.722] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:03:14.722] [INFO] /push/jpush.js - ---content:9
+[2017-11-08 02:03:14.722] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:03:14.730] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:03:14.730] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:06:21.862] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:06:21.867] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:06:21.888] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:08:26.139] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:08:28.015] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:08:28.330] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:08:33.727] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:08:35.580] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:08:37.610] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:08:38.006] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:09:58.150] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:09:58.284] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:09:59.150] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:10:05.888] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:10:07.176] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:10:09.319] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:10:09.816] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:12:06.112] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:12:06.581] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:12:07.480] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:12:09.937] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:12:13.094] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:12:15.043] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:12:15.337] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:12:19.095] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:12:19.107] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:12:19.112] [INFO] /push/jpush.js - ---发送极光推送 msgid:108 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 02:12:19.112] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:12:19.112] [INFO] /push/jpush.js - ---content:1
+[2017-11-08 02:12:19.112] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:12:19.114] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:12:19.114] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:12:28.986] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:12:30.050] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:17:34.272] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:17:34.428] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:17:35.154] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:23:21.211] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:26:11.877] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:26:12.153] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:26:13.241] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:26:16.423] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:26:17.748] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:26:20.538] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:26:21.091] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:26:30.426] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:26:30.461] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:26:30.472] [INFO] /push/jpush.js - ---发送极光推送 msgid:109 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 02:26:30.472] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:26:30.481] [INFO] /push/jpush.js - ---content:9
+[2017-11-08 02:26:30.483] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:26:30.485] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:26:30.486] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:35:48.691] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:35:49.025] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:35:49.836] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:35:59.182] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:36:00.415] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:36:18.156] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:36:18.220] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:36:18.222] [INFO] /push/jpush.js - ---发送极光推送 msgid:110 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 02:36:18.222] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:36:18.222] [INFO] /push/jpush.js - ---content:24
+[2017-11-08 02:36:18.222] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:36:18.229] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:36:18.229] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:36:22.373] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:36:23.660] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:36:24.065] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 02:36:56.530] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:36:56.553] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:36:56.559] [INFO] /push/jpush.js - ---发送极光推送 msgid:111 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 02:36:56.571] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:36:56.627] [INFO] /push/jpush.js - ---content:25
+[2017-11-08 02:36:56.627] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:36:56.627] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:36:56.627] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:37:01.273] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:37:02.488] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:37:02.894] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 02:38:26.922] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:38:26.925] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:40:57.199] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:40:57.659] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-08 02:40:57.660] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 02:40:57.662] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-08 02:41:10.876] [DEBUG] logInfo - POST /user/login 200
+[2017-11-08 02:41:10.979] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:41:10.984] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:41:21.185] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:41:21.724] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:41:22.250] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:41:29.545] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-08 02:41:29.548] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-08 02:41:29.579] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-08 02:41:43.401] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:41:47.535] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-08 02:41:47.538] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-08 02:41:47.544] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-08 02:42:33.753] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:42:34.120] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:42:35.281] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:43:32.520] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:43:32.737] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:43:33.416] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:43:43.630] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 02:43:43.659] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 02:43:43.665] [INFO] /push/jpush.js - ---发送极光推送 msgid:112 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 02:43:43.674] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 02:43:43.683] [INFO] /push/jpush.js - ---content:1
+[2017-11-08 02:43:43.683] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 02:43:43.684] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 02:43:43.684] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 02:43:47.571] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 02:43:48.952] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 02:43:49.157] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 02:47:19.875] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 02:47:20.658] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 02:47:21.569] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:32:58.771] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 09:32:58.798] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 09:32:59.450] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:33:07.048] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:33:08.053] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 09:33:28.988] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 09:33:29.088] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 09:33:29.095] [INFO] /push/jpush.js - ---发送极光推送 msgid:113 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 09:33:29.095] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 09:33:29.095] [INFO] /push/jpush.js - ---content:1
+[2017-11-08 09:33:29.095] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 09:33:29.097] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 09:33:29.097] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 09:33:32.333] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:33:33.472] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 09:33:33.824] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 09:41:30.006] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:41:40.955] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 09:42:18.419] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 09:42:18.432] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 09:42:18.444] [INFO] /push/jpush.js - ---发送极光推送 msgid:114 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 09:42:18.444] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 09:42:18.444] [INFO] /push/jpush.js - ---content:2
+[2017-11-08 09:42:18.445] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 09:42:18.445] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 09:42:18.445] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 09:42:26.159] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:43:16.526] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 09:43:16.825] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 09:46:24.587] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 09:46:24.956] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 09:46:25.371] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:53:12.479] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 09:53:12.548] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 09:53:13.421] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:53:24.420] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 09:53:24.511] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - ---发送极光推送 msgid:115 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - ---content:3
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 09:53:24.516] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 09:53:29.129] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:53:30.521] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 09:53:31.208] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 09:55:04.219] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 09:55:04.996] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 09:55:05.549] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:56:24.516] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 09:56:24.557] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 09:56:24.593] [INFO] /push/jpush.js - ---发送极光推送 msgid:116 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 09:56:24.593] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 09:56:24.593] [INFO] /push/jpush.js - ---content:4
+[2017-11-08 09:56:24.593] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 09:56:24.594] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 09:56:24.594] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 09:56:27.929] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:57:02.120] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 09:57:02.846] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 09:57:03.978] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:57:12.789] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:58:46.546] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 09:58:50.880] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:02:00.712] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 10:02:00.965] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 10:02:01.213] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:02:15.510] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:02:16.823] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:07:21.107] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 10:07:21.445] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 10:07:21.765] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:07:30.460] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:07:31.905] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:07:32.288] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 10:09:11.384] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:09:13.014] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:20:04.773] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 10:20:05.003] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 10:20:05.391] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:20:16.500] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:20:18.338] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:28:27.157] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 10:28:27.178] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 10:28:27.743] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:28:36.484] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:28:38.019] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:29:54.013] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:29:54.643] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 10:30:00.784] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 10:30:00.827] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 10:30:00.851] [INFO] /push/jpush.js - ---发送极光推送 msgid:117 pushid:1a1018970aa26f42422 os:ios
+[2017-11-08 10:30:00.851] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 10:30:00.851] [INFO] /push/jpush.js - ---content:Nihao
+[2017-11-08 10:30:00.851] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 10:30:00.854] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 10:30:00.854] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 10:30:12.932] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:30:14.377] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 10:53:25.997] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 10:53:26.019] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:23:10.704] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:23:10.757] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:23:11.216] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:26:10.562] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:26:10.563] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:26:10.809] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:31:53.356] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:31:54.566] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:33:06.655] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:33:06.907] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:33:07.461] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:33:10.442] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:33:11.854] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:33:16.268] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:33:16.270] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:35:28.482] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:35:28.606] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:35:29.243] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:35:33.027] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:35:34.196] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:35:38.516] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:35:38.531] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:35:39.393] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 11:36:12.432] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:36:12.819] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 11:37:17.790] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:37:18.141] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:37:19.079] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:37:28.837] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:37:30.883] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:37:43.382] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 11:37:43.477] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 11:37:43.500] [INFO] /push/jpush.js - ---发送极光推送 msgid:118 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 11:37:43.501] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 11:37:43.502] [INFO] /push/jpush.js - ---content:6
+[2017-11-08 11:37:43.502] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 11:37:43.512] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 11:37:43.513] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 11:37:53.129] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:37:56.748] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:37:57.559] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 11:39:09.468] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:39:09.995] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 11:39:09.996] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 11:41:39.800] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 11:41:39.840] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 11:41:39.855] [INFO] /push/jpush.js - ---发送极光推送 msgid:119 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 11:41:39.855] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 11:41:39.855] [INFO] /push/jpush.js - ---content:23
+[2017-11-08 11:41:39.856] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 11:41:39.856] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 11:41:39.856] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 11:45:40.824] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:45:43.933] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:45:44.431] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:45:46.566] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:45:48.317] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 11:45:48.770] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 11:51:19.028] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:51:19.792] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:51:20.032] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 11:58:52.874] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 11:58:53.234] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 11:58:53.458] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:06:53.463] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:06:53.660] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 12:06:53.822] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:07:09.324] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:07:10.527] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:16:43.133] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:16:43.396] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 12:16:43.685] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:16:47.663] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:16:47.704] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 12:16:48.086] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:17:09.864] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:17:11.003] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:17:12.679] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:17:12.687] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:17:13.130] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 12:17:13.131] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 12:18:36.509] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:18:36.961] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 12:18:37.345] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:18:44.114] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 12:18:44.124] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 12:18:44.127] [INFO] /push/jpush.js - ---发送极光推送 msgid:120 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 12:18:44.128] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 12:18:44.128] [INFO] /push/jpush.js - ---content:24
+[2017-11-08 12:18:44.128] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 12:18:44.128] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 12:18:44.128] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 12:18:47.022] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 12:18:47.027] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 12:18:47.028] [INFO] /push/jpush.js - ---发送极光推送 msgid:121 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 12:18:47.028] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 12:18:47.029] [INFO] /push/jpush.js - ---content:25
+[2017-11-08 12:18:47.029] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 12:18:47.029] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 12:18:47.029] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 12:18:50.862] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:18:51.976] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:18:52.401] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 12:18:57.039] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:18:58.329] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 12:18:58.331] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 12:19:43.147] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-08 12:19:43.460] [DEBUG] logInfo - POST /user/info 200
+[2017-11-08 12:19:43.779] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:19:53.206] [DEBUG] /dao/messageDao.js - {}
+[2017-11-08 12:19:53.211] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-08 12:19:53.212] [INFO] /push/jpush.js - ---发送极光推送 msgid:122 pushid:1507bfd3f7c397e76cd os:android
+[2017-11-08 12:19:53.212] [INFO] /push/jpush.js - ---title:您有一条私信
+[2017-11-08 12:19:53.212] [INFO] /push/jpush.js - ---content:26
+[2017-11-08 12:19:53.212] [INFO] /push/jpush.js - ---pushtype:chat
+[2017-11-08 12:19:53.213] [INFO] /push/jpush.js - ---extras:
+[2017-11-08 12:19:53.213] [INFO] /push/jpush.js - { type: 'chat' }
+[2017-11-08 12:19:55.279] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-08 12:19:56.320] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:19:56.631] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-08 12:20:00.439] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-08 12:20:00.894] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-08 15:01:23.827] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}

@@ -91,7 +91,7 @@ module.exports = {
         var sql = '';
         if(os == 'all'){
             sql = 'SELECT user.userid FROM '+USER_TABLE;
-        }else if(os == 'andoid'||os == 'ios'){
+        }else if(os == 'android'||os == 'ios'){
             sql = 'SELECT user.userid FROM '+USER_TABLE+' WHERE os = "'+os+'"';
         }else{
             callback(new Error('os 参数错误'),null);
@@ -193,6 +193,12 @@ module.exports = {
     },
     /**
      * 关注取关操作
+     * return        {
+              id: 50,
+              userid: 'userid_13212345676',
+              fansid: 'userid_13671172337',
+              fstate: 1,
+            }
      */
     upFollow:function(userid,fansid,op,callback){
         pool.getConnection(function(err, connection) {

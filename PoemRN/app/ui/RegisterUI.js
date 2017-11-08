@@ -16,12 +16,16 @@ import {
   Platform,
 } from 'react-native';
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import HttpUtil from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
-import Global from '../Global';
-import pstyles from '../style/PStyles';
-
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  HttpUtil,
+  Emitter,
+  Global,
+  pstyles,
+  Storage,
+} from '../AppUtil'
 /**
  * 注册
  */
@@ -162,12 +166,9 @@ class RegisterUI extends React.Component {
             var user = res.data;
             Global.user = user;
             var userid = user.userid;
-            AsyncStorage.setItem(StorageConfig.USERID,userid,(error,result)=>{
-              if (!error) {
-                Emitter.emit(Emitter.LOGIN,user);
-                this.props.navigation.navigate('PerfectUI');
-              }
-            });
+            Storage.saveUserid(userid);
+            Emitter.emit(Emitter.LOGIN,user);
+            this.props.navigation.navigate('PerfectUI');
         }else{
           Alert.alert(res.errmsg);
         }

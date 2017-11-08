@@ -9,6 +9,8 @@ var wy = require('./routers/wy');
 var ali = require('./routers/ali');
 var message = require('./routers/message');
 var admin = require('./routers/admin');
+var chat = require('./routers/chat');
+
 var log4js = require('./utils/log4jsutil');
 
 log4js.use(app);
@@ -29,6 +31,7 @@ app.use('/wy', wy);
 app.use('/ali', ali);
 app.use('/message', message);
 app.use('/admin', admin);
+app.use('/chat', chat);
 
 app.use(function(err, req, res, next) {
   // 业务逻辑

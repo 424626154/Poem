@@ -25,9 +25,14 @@ HttpUtil.POEM_LOVE_COMMENT = 'poem/lovecomment';
 HttpUtil.POEM_NEWEST_ALLPOEM = 'poem/newestallpoem';
 HttpUtil.POEM_HISTORY_ALLPOEM = 'poem/historyallpoem';
 
+HttpUtil.CHAT_SEND = 'chat/send';
+HttpUtil.CHAT_CHATS = 'chat/chats';
+HttpUtil.CHAT_READ = 'chat/read';
+
 HttpUtil.MESSAGE_PUSHID = 'message/pushid';
 HttpUtil.MESSAGE_MESSAGES = 'message/messages';
 HttpUtil.MESSAGE_READ = 'message/read';
+HttpUtil.MESSAGE_FEEDBACK = 'message/feedback';
 
 HttpUtil.BASE_URL = 'http://192.168.1.8:3000';
 
@@ -47,7 +52,8 @@ HttpUtil.post = function(rep_url,body){
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log('---response post  url:'+rep_url+' data:'+JSON.stringify(responseJson));
+        console.log('---response post  url:'+rep_url+' data:');
+        console.log(responseJson);
         resolve(responseJson);
       })
       .catch((error) => {
@@ -119,6 +125,9 @@ HttpUtil.uploadImageData = function(imagedata){
 };
 
 HttpUtil.getHeadurl = function(url){
+  if(!url){
+    return url;
+  }
   var baseurl = HttpUtil.BASE_URL;
   var rep_url = 'pimage/file'
   var head_url = baseurl+'/'+rep_url+'/'+url;

@@ -4,8 +4,8 @@ import {
   AsyncStorage,
   DeviceEventEmitter,
 } from 'react-native';
-// import { connect,Provider } from 'react-redux';
-// import {addNavigationHelpers} from 'react-navigation';
+import { connect,Provider } from 'react-redux';
+import {addNavigationHelpers} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import JPushModule from 'jpush-react-native';
 
@@ -23,13 +23,14 @@ import {
   HttpUtil,
   Global,
   MessageDao,
+  ChatDao,
   Emitter,
 } from './AppUtil';
 
 import {AppNavigator} from './AppNavigator';
 
 const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
-
+import store from './redux/store/ConfigureStore';
 // import getStore from './redux/store/ConfigureStore';
 
 // let store = configureStore();
@@ -38,25 +39,25 @@ const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
 //     return newState || state;
 // };
 
-// const mapStateToProps = (state) => ({
-//     nav: state.nav
-// });
+const mapStateToProps = (state) => ({
+    nav: state.nav
+});
 
-// class AppRoot extends Component {
-//     render() {
-//         return (
-//             <AppNavigator
-//                 navigation={addNavigationHelpers({
-//                     dispatch: this.props.dispatch,
-//                     state: this.props.nav
-//                 })}
-//             />
-//         );
-//     }
-// }
+class AppRoot extends Component {
+    render() {
+        return (
+            <AppNavigator
+                navigation={addNavigationHelpers({
+                    dispatch: this.props.dispatch,
+                    state: this.props.nav
+                })}
+            />
+        );
+    }
+}
 
-// const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
-// const store = getStore(navReducer);
+const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
+
 /**
  * 程序入口
  */
@@ -69,6 +70,7 @@ export default class App extends Component {
     this._requestMsgRead = this._requestMsgRead.bind(this);
   }
   componentDidMount() {
+    SplashScreen.hide();
     Storage.getUserid().then(userid=>{
       if(userid){
         Global.user.userid = userid;
@@ -104,7 +106,7 @@ export default class App extends Component {
     }
 
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-       this._analysisObserver(obj);
+       this._parseObserver(obj);
     });
     /*
       极光推送
@@ -128,11 +130,15 @@ export default class App extends Component {
     //接收自定义消息事件
 		JPushModule.addReceiveCustomMsgListener((map) => {
       console.log('---JPushModule Custom Msg')
+      console.log(map)
       // console.log("pushMsg: "+ map.message);
 			// console.log("extras: " + map.extras);
 			// console.log(map.aps);
 		});
-    //接收推送事件
+    /**
+     * 接收推送事件
+     * android     {extras: "{"type":"news"}", alertContent: "nihao1", id: 531497865}
+     */
 		JPushModule.addReceiveNotificationListener((map) => {
       console.log('---JPushModule Receive Notification')
       console.log(map)
@@ -141,7 +147,7 @@ export default class App extends Component {
 			// console.log("extras: " + map.extras);
       // var extra = JSON.parse(map.extras);
       // console.log(extra.key + ": " + extra.value);
-      this._requestMessages();
+      this._parseJPushExtras(map);
 		});
     //点击推送事件
 		JPushModule.addReceiveOpenNotificationListener((map) => {
@@ -149,7 +155,7 @@ export default class App extends Component {
       console.log(map);
 			// console.log("map.extra: " + map.extras);
 			// JPushModule.jumpToPushActivity("SecondActivity");
-			this._requestMessages();
+			this._parseJPushExtras(map);
       if(Platform.OS == 'android'){
         var id = map.id;
         JPushModule.clearNotificationById(id);
@@ -160,7 +166,7 @@ export default class App extends Component {
 			console.log("---JPushModule Device register succeed, registrationId " + registrationId);
 		});
 
-    SplashScreen.hide();
+    // SplashScreen.hide();
   }
   componentWillUnmount(){
     JPushModule.removeReceiveCustomMsgListener(receiveCustomMsgEvent);
@@ -171,14 +177,15 @@ export default class App extends Component {
   }
   render() {
       return(
-        // <Provider store={store}>
-        //     <AppWithNavigationState/>
-        // </Provider>
-        <AppNavigator/>
+        <Provider store={store}>
+            <AppWithNavigationState/>
+        </Provider>
         )
   }
   _setMsgState(){
-    var num = MessageDao.getUnreadNum();
+    let news_num = MessageDao.getUnreadNum();
+    let chat_nume = ChatDao.getAllUnreadNum();
+    let num = news_num + chat_nume;
     console.log('---_setMsgState num:'+num);
     if(Platform.OS == 'ios'){
       JPushModule.setBadge(num, (success) => {
@@ -206,10 +213,11 @@ export default class App extends Component {
       if(res.code == 0){
         Global.user = res.data ;
         this._requestMessages();
+        Emitter.emit(Emitter.UPINFO,res.data);
       }else{
-        this._goHide();
         Alert.alert(res.errmsg);
       }
+      this._goHide();
     }).catch(err=>{
       console.error(err);
     })
@@ -240,7 +248,6 @@ export default class App extends Component {
            }
          }
        }else{
-         this._goHide();
          Alert.alert(res.errmsg);
        }
      }).catch(err=>{
@@ -264,7 +271,69 @@ export default class App extends Component {
        }else{
          Alert.alert(res.errmsg);
        }
-       this._goHide();
+     }).catch(err=>{
+       console.error(err);
+     })
+   }
+   /**
+    * 请求私信列表
+    */
+   _requestChats(){
+     if(!Global.user.userid){
+       return;
+     }
+     var json = JSON.stringify({
+       userid:Global.user.userid,
+     });
+     HttpUtil.post(HttpUtil.CHAT_CHATS,json).then(res=>{
+       if(res.code == 0){
+         let chats = res.data;
+         console.log(chats);
+         if(chats.length > 0){
+           var reads = [];
+           var chatsMap = new Map();
+           for(var i = 0 ; i < chats.length;i++){
+              var chat = chats[i];
+              reads[i] = chat.id;
+              chatsMap.set(chat.fuserid,chat);
+           }
+           if(reads.length >0){//设置私信已读
+             this._requestChatRead(reads);
+           }
+           var chatlist = [];
+           for (var [key, value] of chatsMap) {
+                // console.log(key + '---' + value);
+                chatlist.push(value);
+            }
+            ChatDao.addChats(chats,0);
+            ChatDao.addChatLists(chatlist);
+            Emitter.emit(Emitter.NEWCHAT);
+            this._setMsgState();
+         }
+       }else{
+         console.log(res.errmsg);
+       }
+     }).catch(err=>{
+       console.error(err);
+     })
+   }
+   /**
+    * 设置私信已读
+    */
+   _requestChatRead(reads){
+     if(!Global.user.userid){
+       return;
+     }
+     var json = JSON.stringify({
+       userid:Global.user.userid,
+       reads:reads
+     });
+     HttpUtil.post(HttpUtil.CHAT_READ,json).then(res=>{
+       if(res.code == 0){
+         console.log(res.data);
+       }else{
+         Alert.alert(res.errmsg);
+       }
      }).catch(err=>{
        console.error(err);
      })
@@ -307,17 +376,30 @@ export default class App extends Component {
       console.error(err);
     })
   }
+  /**
+   * 解析推送
+   */
+  _parseJPushExtras(map){
+    var extras = JSON.parse(map.extras);
+    var type = extras.type;
+    if(type == 'chat'){
+        this._requestChats();
+    }else if(type == 'news'){
+        this._requestMessages();
+    }
+  }
   _goHide(){
     if(!this.ishide){
       this.ishide = true;
       SplashScreen.hide();
     }
   }
-  _analysisObserver(obj){
+  _parseObserver(obj){
     var action = obj.action;
     var param = obj.param;
     switch (action) {
       case Emitter.READMSG:
+      case Emitter.READCHAT:
         this._setMsgState();
         break;
       default:

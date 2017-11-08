@@ -8,9 +8,9 @@ import {
       DeviceEventEmitter,
       AsyncStorage,
       Alert,
+      Image,
      } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
 
 import {
     StyleConfig,
@@ -22,6 +22,9 @@ import {
     Emitter,
     HttpUtil,
     MessageDao,
+    Storage,
+    ImageConfig,
+    PImage,
   } from '../AppUtil';
 const nothead = require('../images/ic_account_circle_black.png');
 
@@ -42,7 +45,12 @@ class Drawer extends React.Component {
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
-    this._eventUserInfo();
+    Storage.getUserid().then(userid=>{
+      if(userid){
+        Global.user.userid = userid;
+      }
+      this._eventUserInfo();
+    });
     this._onHome = this._onHome.bind(this);
     this._onPerson = this._onPerson.bind(this);
     this._onWorks = this._onWorks.bind(this);
@@ -52,10 +60,12 @@ class Drawer extends React.Component {
     this.setState({
       unread:unread,
     });
+    // console.log('@@@Drawer()componentDidMount');
   }
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners();
     this.timer && clearTimeout(this.timer);
+    // console.log('@@@Drawer()componentWillUnmount')
   }
   render(){
     const { state,navigate } = this.props.navigation;
@@ -76,6 +86,7 @@ class Drawer extends React.Component {
         </TouchableOpacity>
         <View style={styles.header}>
           <TouchableOpacity onPress={()=>{
+            navigate('DrawerClose');
             if(this.state.userid){
               navigate('MyUI');
             }else{
@@ -83,7 +94,7 @@ class Drawer extends React.Component {
             }
           }}>
           <View style={styles.personal}>
-              <CachedImage
+            <PImage
                 style={pstyles.big_head}
                 source={this.state.headurl}
                 />
@@ -108,6 +119,7 @@ class Drawer extends React.Component {
   _renderNavOS(){
     return(Platform.OS === 'ios'?<View style={HeaderConfig.iosNavStyle }></View>:null)
   }
+
   _renderItem(title,icon,func,rot){
     return(
       <TouchableOpacity onPress={()=>{
@@ -153,11 +165,16 @@ class Drawer extends React.Component {
       return(this._renderItem('消息','message',this._onMessage,this.state.unread > 0))
     }
   }
+  navigate(routeName){
+      this.props.navigation.navigate(routeName);
+  }
   _onHome(){
-    this.props.navigation.navigate('HomeUI')
+    navigate('DrawerClose');
+    navigate('HomeUI')
   }
   _onPerson(){
-    this.props.navigation.navigate('MyUI');
+    navigate('DrawerClose');
+    navigate('MyUI');
     // Emitter.emit(Emitter.DRAWER_CLOSE,'');
     // this.timer = setTimeout(
     //   () => {this.props.navigation.navigate('MyUI'); },
@@ -166,15 +183,19 @@ class Drawer extends React.Component {
     // this.props.navigation.navigate('MyUI')
   }
   _onWorks(){
-    this.props.navigation.navigate('WorksUI');
+    this.navigate('DrawerClose');
+    this.navigate('WorksUI');
   }
   _onMessage(){
-    this.props.navigation.navigate('MessageUI');
+    this.navigate('DrawerClose');
+    this.navigate('MessageUI');
   }
   _onStting(){
-    this.props.navigation.navigate('SettingUI');
+    this.navigate('DrawerClose');
+    this.navigate('SettingUI');
   }
   _eventUserInfo(){
+    console.log('----_eventUserInfo----')
     let user = Global.user;
     if(user.userid){
       let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
@@ -202,7 +223,7 @@ class Drawer extends React.Component {
   _analysisObserver(obj){
     var action = obj.action;
     var param = obj.param;
-    console.log('@@@Drawer()action:'+action)
+    console.log('@@@Drawer()action:'+action);
     switch (action) {
       case Emitter.LOGIN:
       case Emitter.UPINFO:

@@ -5,7 +5,7 @@ var multipartMiddleware = multipart();
 var adminUserDao = require('../dao/adminUserDao');
 /* GET home page. */
 router.get('/', function(req, res, next) {
- var user = req.cookies.user;
+  var user = req.cookies.user;
   if(!user){
   	res.redirect("/login");
   	return ;

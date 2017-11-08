@@ -1,0 +1,428 @@
+[2017-11-07 00:00:52.941] [DEBUG] logInfo - GET /feedback?op=del&id=9 304
+[2017-11-07 00:00:52.989] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:00:52.999] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:05:21.245] [DEBUG] logInfo - GET /feedback?op=del&id=9 304
+[2017-11-07 00:06:16.188] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:06:16.211] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:06:16.224] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:06:23.053] [DEBUG] logInfo - GET /feedback?op=del&id=4 200
+[2017-11-07 00:07:39.013] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:07:39.064] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:07:39.069] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:07:42.055] [DEBUG] logInfo - GET /feedback?op=del&id=5 302
+[2017-11-07 00:07:42.078] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:07:42.102] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:07:42.105] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:07:56.379] [DEBUG] logInfo - GET /feedback?op=del&id=6 200
+[2017-11-07 00:08:38.856] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:08:38.876] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:08:38.880] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:08:41.131] [DEBUG] logInfo - GET /feedback?op=del&id=7 302
+[2017-11-07 00:08:41.147] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:08:41.164] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:08:41.166] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:09:34.032] [DEBUG] logInfo - GET /feedback?op=del&id=8 200
+[2017-11-07 00:09:41.577] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:42.075] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:42.515] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:42.682] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:42.932] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:43.376] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:43.696] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:43.888] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:44.071] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:44.234] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:44.446] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 00:09:49.228] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:09:49.253] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:09:49.257] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:09:53.575] [DEBUG] logInfo - GET /feedback?op=del&id=20 302
+[2017-11-07 00:09:53.594] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:09:53.619] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:09:53.621] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:09:56.078] [DEBUG] logInfo - GET /feedback?op=del&id=19 200
+[2017-11-07 00:10:36.019] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:10:36.042] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:36.047] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:37.866] [DEBUG] logInfo - GET /feedback?op=del&id=18 200
+[2017-11-07 00:10:37.891] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:37.893] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:41.303] [DEBUG] logInfo - GET /feedback?op=del&id=18 200
+[2017-11-07 00:10:41.324] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:41.326] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:42.518] [DEBUG] logInfo - GET /feedback?op=del&id=17 200
+[2017-11-07 00:10:42.542] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:42.544] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:44.341] [DEBUG] logInfo - GET /feedback?op=del&id=17 200
+[2017-11-07 00:10:44.362] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:44.364] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:45.472] [DEBUG] logInfo - GET /feedback?op=del&id=16 200
+[2017-11-07 00:10:45.492] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:45.495] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:10:49.656] [DEBUG] logInfo - GET /feedback?op=del&id=10 200
+[2017-11-07 00:10:49.675] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:10:49.677] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:12:17.056] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:12:17.093] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:12:17.110] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:12:18.758] [DEBUG] logInfo - GET /feedback?op=del&id=15 200
+[2017-11-07 00:13:09.652] [DEBUG] logInfo - GET /feedback?op=del&id=15 301
+[2017-11-07 00:13:09.702] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:13:09.719] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:13:09.735] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:13:12.751] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 00:13:12.769] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:13:12.771] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:13:14.117] [DEBUG] logInfo - GET /feedback?op=del&id=14 200
+[2017-11-07 00:14:40.428] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 00:14:40.452] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 00:14:40.456] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 00:14:41.929] [DEBUG] logInfo - GET /feedback?op=del&id=13 200
+[2017-11-07 08:14:02.473] [DEBUG] logInfo - GET / 304
+[2017-11-07 08:14:03.085] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:14:03.088] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:14:03.734] [DEBUG] logInfo - GET /favicon.ico 404
+[2017-11-07 08:14:05.135] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:14:05.150] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:14:05.152] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:14:14.152] [DEBUG] logInfo - GET /feedback?op=del&id=11 200
+[2017-11-07 08:15:50.584] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:15:50.602] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:15:50.605] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:15:52.637] [DEBUG] logInfo - GET /feedback?op=del&id=12 200
+[2017-11-07 08:18:59.938] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:00.589] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:00.834] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:01.034] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:01.223] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:01.554] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:01.751] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:01.930] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:02.115] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:02.299] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:02.469] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 08:19:10.917] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:19:10.928] [DEBUG] logInfo - GET /feedback?op=del&id=12 301
+[2017-11-07 08:19:10.945] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:19:10.949] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:19:10.966] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:19:10.971] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:20:05.331] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:20:05.348] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:20:05.351] [DEBUG] logInfo - GET /feedback?op=del&id=31 301
+[2017-11-07 08:20:05.368] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:20:05.371] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:20:05.384] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:20:05.402] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:20:05.407] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:38:58.859] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:38:58.883] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:38:58.904] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:38:58.906] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:39:18.707] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:39:18.731] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:39:18.750] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:39:18.752] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:39:35.738] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:39:35.748] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:39:35.748] [DEBUG] logInfo - GET /feedback?op=del&id=30 304
+[2017-11-07 08:40:44.461] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:40:44.484] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:40:44.506] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:40:44.509] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:40:52.534] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:40:52.539] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:40:52.545] [DEBUG] logInfo - GET /feedback?op=del&id=29 301
+[2017-11-07 08:40:52.555] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:40:52.561] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:40:52.576] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:40:52.579] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:41:45.098] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:41:45.107] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:41:45.117] [DEBUG] logInfo - GET /feedback?op=del&id=27 302
+[2017-11-07 08:41:45.135] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:41:45.139] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:41:45.150] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:41:45.165] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:41:45.167] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:47:10.427] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:10.450] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:47:10.468] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:47:10.470] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:47:13.539] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:13.549] [DEBUG] logInfo - GET /feedback?op=del&id=28 200
+[2017-11-07 08:47:41.084] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:41.106] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:47:41.122] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:47:41.128] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:47:41.752] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:41.758] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:47:41.771] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:47:41.772] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:47:45.626] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:45.635] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:47:45.648] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:47:45.650] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:47:59.121] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:47:59.127] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:47:59.141] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:47:59.142] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:48:09.701] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:48:09.705] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:48:09.711] [DEBUG] logInfo - GET /feedback?op=del&id=26 302
+[2017-11-07 08:48:09.717] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:48:09.721] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:48:09.733] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:48:09.740] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:49:45.198] [ERROR] /routes/feedback.js - {}
+[2017-11-07 08:49:45.202] [ERROR] /routes/feedback.js - ------op:undefined
+[2017-11-07 08:49:45.202] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:49:45.225] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:49:45.243] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:49:45.245] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:49:58.603] [ERROR] /routes/feedback.js - { op: 'del', id: '25' }
+[2017-11-07 08:49:58.604] [ERROR] /routes/feedback.js - ------op:del
+[2017-11-07 08:49:58.605] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:49:58.609] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:49:58.619] [DEBUG] logInfo - GET /feedback?op=del&id=25 302
+[2017-11-07 08:49:58.626] [ERROR] /routes/feedback.js - {}
+[2017-11-07 08:49:58.627] [ERROR] /routes/feedback.js - ------op:undefined
+[2017-11-07 08:49:58.627] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:49:58.634] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:49:58.654] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:49:58.656] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:50:51.447] [ERROR] /routes/feedback.js - {}
+[2017-11-07 08:50:51.450] [ERROR] /routes/feedback.js - ------op:undefined
+[2017-11-07 08:50:51.450] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:50:51.470] [DEBUG] logInfo - GET /feedback 304
+[2017-11-07 08:50:51.490] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:50:51.492] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:50:59.128] [ERROR] /routes/feedback.js - { op: 'del', id: '24' }
+[2017-11-07 08:50:59.128] [ERROR] /routes/feedback.js - ------op:del
+[2017-11-07 08:50:59.134] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:50:59.139] [DEBUG] logInfo - GET /feedback?op=del&id=24 302
+[2017-11-07 08:50:59.142] [ERROR] /routes/feedback.js - {}
+[2017-11-07 08:50:59.143] [ERROR] /routes/feedback.js - ------op:undefined
+[2017-11-07 08:50:59.143] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:50:59.152] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:50:59.169] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:50:59.170] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:51:11.934] [ERROR] /routes/feedback.js - { op: 'del', id: '23' }
+[2017-11-07 08:51:11.934] [ERROR] /routes/feedback.js - ------op:del
+[2017-11-07 08:51:11.937] [ERROR] /routes/feedback.js - -----重定向
+[2017-11-07 08:51:11.938] [DEBUG] logInfo - GET /feedback?op=del&id=23 302
+[2017-11-07 08:51:11.941] [ERROR] /routes/feedback.js - {}
+[2017-11-07 08:51:11.941] [ERROR] /routes/feedback.js - ------op:undefined
+[2017-11-07 08:51:11.941] [ERROR] /routes/feedback.js - -----查询
+[2017-11-07 08:51:11.945] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:51:11.958] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:51:11.960] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:52:03.307] [DEBUG] logInfo - GET /feedback?op=del&id=22 302
+[2017-11-07 08:52:03.327] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:52:03.341] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:52:03.345] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 08:52:04.045] [DEBUG] logInfo - GET /feedback?op=del&id=21 302
+[2017-11-07 08:52:04.052] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 08:52:04.064] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 08:52:04.065] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 09:40:54.106] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 09:41:00.172] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 09:41:00.195] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 09:41:00.199] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 09:41:12.085] [DEBUG] logInfo - POST /feedback/send 200
+[2017-11-07 09:41:15.253] [DEBUG] logInfo - GET /feedback 200
+[2017-11-07 09:41:15.271] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 09:41:15.273] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 09:56:38.918] [DEBUG] logInfo - GET /message 304
+[2017-11-07 09:56:38.939] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 09:56:38.941] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 09:56:40.261] [DEBUG] logInfo - GET /message/send 304
+[2017-11-07 09:56:40.274] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 09:56:40.275] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 09:56:47.734] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 09:56:47.750] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 09:56:47.752] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:01:45.385] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:01:45.400] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:01:45.402] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:05:23.351] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:05:23.376] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:05:23.380] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:07:24.974] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:07:25.001] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:07:25.009] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:09:12.628] [DEBUG] logInfo - GET /message/send 200
+[2017-11-07 10:09:12.646] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:09:12.649] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:09:12.757] [DEBUG] logInfo - GET /message/send 304
+[2017-11-07 10:09:12.774] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:09:12.776] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:09:18.641] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:09:18.661] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:09:18.663] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:10:27.129] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:10:27.148] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:10:27.149] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:11:15.182] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:11:15.197] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:11:15.202] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:12:07.899] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:12:07.916] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:12:07.918] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:12:28.221] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:12:28.237] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:12:28.238] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:12:58.184] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:12:58.205] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:12:58.208] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:13:07.788] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:13:07.806] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:13:07.808] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:15:40.789] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:15:40.806] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:15:40.810] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:23:36.240] [DEBUG] logInfo - GET /message/send 200
+[2017-11-07 10:23:36.258] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:23:36.263] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:23:42.302] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:23:42.322] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:23:42.324] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:25:03.118] [DEBUG] logInfo - GET /message/send 200
+[2017-11-07 10:25:03.134] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:25:03.138] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:25:08.755] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:25:08.772] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:25:08.774] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 10:32:46.606] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 10:32:46.629] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 10:32:46.633] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:40:48.018] [DEBUG] logInfo - GET / 304
+[2017-11-07 13:40:48.095] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:40:48.097] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:40:48.328] [DEBUG] logInfo - GET /favicon.ico 404
+[2017-11-07 13:40:49.747] [DEBUG] logInfo - GET /message 304
+[2017-11-07 13:40:49.760] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:40:49.762] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:40:50.894] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 13:40:50.905] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:40:50.906] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:40:55.941] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 13:40:55.956] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:40:55.958] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:41:04.405] [DEBUG] logInfo - GET /user 304
+[2017-11-07 13:41:04.417] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:41:04.419] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:41:05.909] [DEBUG] logInfo - GET /message 304
+[2017-11-07 13:41:05.922] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:41:05.924] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:41:06.856] [DEBUG] logInfo - GET /message/send 200
+[2017-11-07 13:41:06.869] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:41:06.872] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:41:13.875] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 13:41:13.890] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:41:13.891] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:53:05.366] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 13:53:05.381] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:53:05.382] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:53:07.807] [DEBUG] logInfo - GET /message 304
+[2017-11-07 13:53:07.819] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:53:07.821] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:53:08.675] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 13:53:08.690] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:53:08.692] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 13:53:13.822] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 13:53:13.836] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 13:53:13.838] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:02:18.411] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 14:02:18.428] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:02:18.431] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:02:20.245] [DEBUG] logInfo - GET /message 304
+[2017-11-07 14:02:20.261] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:02:20.262] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:02:21.249] [DEBUG] logInfo - GET /message/send 200
+[2017-11-07 14:02:21.260] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:02:21.261] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:03:02.734] [DEBUG] logInfo - GET /message/send 304
+[2017-11-07 14:03:02.752] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:03:02.755] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:05:04.979] [DEBUG] logInfo - GET /message/send 304
+[2017-11-07 14:05:05.012] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:05:05.017] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 14:05:12.048] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 14:05:12.079] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 14:05:12.083] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 19:50:44.207] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 19:50:44.310] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 19:50:44.312] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 19:51:08.886] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 19:51:08.903] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 19:51:08.905] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 19:51:32.392] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 19:51:32.410] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 19:51:32.418] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 19:52:09.935] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 19:52:09.952] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 19:52:09.953] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:28:45.121] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 20:28:45.140] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:28:45.141] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:33:08.019] [DEBUG] logInfo - POST /message/send 200
+[2017-11-07 20:33:08.065] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:33:08.067] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:34:07.754] [DEBUG] logInfo - GET /message 304
+[2017-11-07 20:34:07.773] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:34:07.774] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:34:09.343] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 20:34:09.363] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:34:09.364] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:39:46.540] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:39:46.559] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:39:46.560] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:44:27.250] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:44:27.272] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:44:27.274] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:46:37.002] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:46:37.027] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:46:37.037] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:46:54.582] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 20:46:54.598] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:46:54.603] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:47:06.601] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:47:06.623] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:47:06.628] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:48:21.096] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:48:21.143] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:48:21.146] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:49:07.550] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:49:07.593] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:49:07.597] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:54:24.244] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 20:54:24.263] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:54:24.266] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:54:31.796] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:54:31.811] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:54:31.814] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 20:57:03.477] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 20:57:03.498] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 20:57:03.501] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:02:35.030] [DEBUG] logInfo - GET /message/sendall 200
+[2017-11-07 21:02:35.050] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:02:35.057] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:02:43.400] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:02:43.422] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:02:43.424] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:03:02.463] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:03:02.499] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:03:02.501] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:03:28.089] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:03:28.111] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:03:28.114] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:03:43.354] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:03:43.394] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:03:43.397] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:04:59.648] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:04:59.664] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:04:59.666] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304
+[2017-11-07 21:05:22.335] [DEBUG] logInfo - POST /message/sendall 200
+[2017-11-07 21:05:22.347] [DEBUG] logInfo - GET /bootstrap/css/bootstrap.min.css 304
+[2017-11-07 21:05:22.348] [DEBUG] logInfo - GET /bootstrap/js/bootstrap.min.js 304

@@ -7,6 +7,7 @@ import {
   HeaderConfig,
   StorageConfig,
   ImageConfig,
+  UIName,
 } from './Config';
 import HttpUtil from './utils/HttpUtil';
 import Emitter from './utils/Emitter';//监听
@@ -15,7 +16,8 @@ import pstyles from './style/PStyles';//公共样式
 import Storage from './utils/Storage';
 import MessageDao from './db/MessageDao';
 import HomePoemDao from './db/HomePoemDao';
-
+import ChatDao from './db/ChatDao';
+import PImage from './custom/PImage';
 var Utils = {};
 
 Utils.dateStr = function(date){
@@ -65,16 +67,40 @@ Utils.isLogin = function(navigate){
   if(Global.user.userid){
     isLogin = true;
   }else{
-    navigate('LoginUI')
+    navigate(UIName.LoginUI)
+  }
+  return isLogin;
+}
+Utils.isLogin1 = function(ui){
+  var isLogin = false;
+  if(Global.user.userid){
+    isLogin = true;
+  }else{
+      ui.props.navigation.navigate(UIName.LoginUI)
   }
   return isLogin;
 }
 
+Utils.getTime = function(){
+  return new Date().getTime()/1000;
+}
+
+
+export function goPersonalUI(navigate,userid){
+    var routeName = UIName.PersonalUI;
+    if(Global.user.userid == userid){
+      routeName = UIName.MyUI;
+    }
+    if(navigate){
+      navigate(routeName,{userid:userid});
+    }
+  }
 export {
   StyleConfig,
   HeaderConfig,
   StorageConfig,
   ImageConfig,
+  UIName,
   Utils,
   HttpUtil,
   Emitter,
@@ -83,4 +109,6 @@ export {
   Storage,
   MessageDao,
   HomePoemDao,
+  ChatDao,
+  PImage,
 }

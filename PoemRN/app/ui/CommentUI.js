@@ -14,6 +14,7 @@ import{
       StyleConfig,
       HeaderConfig,
       StorageConfig,
+      UIName,
       HttpUtil,
       Emitter,
 } from '../AppUtil';

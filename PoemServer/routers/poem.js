@@ -98,8 +98,8 @@ router.post('/newestpoem', function(req, res, next) {
 		ru.resError(res,'参数错误');
     }else{
     	 poemDao.queryNewestPoem(userid,id,function(err,poems){
-    	 	logger.error(err)
 	    	if(err){
+	    	 	logger.error(err);
 				ru.resError(res,err);
 	    	}else{
 	    		ru.resSuccess(res,poems);

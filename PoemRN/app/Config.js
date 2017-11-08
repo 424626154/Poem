@@ -36,6 +36,7 @@ var StorageConfig = {
 };
 StorageConfig.USERID = 'userid';
 StorageConfig.PUSHIID = 'pushid';
+StorageConfig.LAST_PHONE = 'last_phone';//上次登录手机号
 const nothead = require('./images/ic_account_circle_black.png');
 const official = require('./images/official.png');
 
@@ -44,4 +45,18 @@ var ImageConfig = {
 }
 ImageConfig.nothead = nothead;
 ImageConfig.official = official;
-export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig} ;
+
+var UIName = {}
+UIName.LoginUI = 'LoginUI';
+UIName.PersonalUI = 'PersonalUI';
+UIName.DetailsUI = 'DetailsUI';
+UIName.AddPoemUI = 'AddPoemUI';
+UIName.ModifyPoemUI = 'ModifyPoemUI';
+UIName.CommentUI = 'CommentUI';
+UIName.LovesUI = 'LovesUI';
+UIName.MsgContentUI = 'MsgContentUI';
+UIName.MyUI = 'MyUI';
+UIName.ChatUI = 'ChatUI';
+UIName.FeedbackUI = 'FeedbackUI';
+
+export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig,UIName} ;

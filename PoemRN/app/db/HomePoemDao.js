@@ -4,15 +4,23 @@
  */
 import realm from './RealmDB';
 import RealmName from './RealmName';
-
+import uuid from 'uuid';
+import {
+  Global
+} from '../AppUtil';
 class HomePoemDao{
+  isAccount(){
+    return Global.user.userid||'';
+  }
   addHomePoems(homepoems){
     try {
       realm.write(() => {
         for(var i = 0 ; i < homepoems.length ; i++){
           let temp_homepoem = homepoems[i];
           let msg = {
+                rid:uuid.v1(),
                 id: temp_homepoem.id,
+                account:this.isAccount(),
                 userid:temp_homepoem.userid,
                 head:temp_homepoem.head,
                 pseudonym:temp_homepoem.pseudonym,
@@ -34,10 +42,11 @@ class HomePoemDao{
     }
   }
   updateHomePoemLove(homepoem){
+    console.log(homepoem);
     try {
       realm.write(()=> {
           realm.create(RealmName.HomePoem, {
-            id: homepoem.id,
+            rid: homepoem.rid,
             lovenum: homepoem.lovenum,
             mylove:homepoem.mylove
           }, true);
@@ -51,7 +60,7 @@ class HomePoemDao{
   getHomePoems(){
     let homepoems = [];
     try{
-      let realmHomePoem = realm.objects(RealmName.HomePoem);
+      let realmHomePoem = realm.objects(RealmName.HomePoem).filtered('account = "'+this.isAccount()+'"');
       // .sorted('id');
       realmHomePoem.map(function(realmHomePoem) {
           if (typeof realmHomePoem.snapshot == 'function') {
@@ -65,13 +74,15 @@ class HomePoemDao{
     }
     return homepoems;
   }
-  deleteMessage(id){
+  deleteMessage(rid){
       try {
         realm.write(() => {
-            let msgToBeDeleted = realm.objectForPrimaryKey(RealmName.HomePoem, id);
-            if(msgToBeDeleted){
-                realm.delete(msgToBeDeleted);
-            }
+            // let msgToBeDeleted = realm.objectForPrimaryKey(RealmName.HomePoem, id);
+            // if(msgToBeDeleted){
+            //     realm.delete(msgToBeDeleted);
+            // }
+            let del = realm.create(RealmName.HomePoem, {rid: rid});
+            realm.delete(del);
         });
       } catch (e) {
           console.error(e);
@@ -79,6 +90,20 @@ class HomePoemDao{
 
       }
    }
+
+   deleteAll(){
+     try {
+       realm.write(() => {
+          let all = realm.objects(RealmName.HomePoem);
+          realm.delete(all);
+       });
+     } catch (e) {
+         console.error(e);
+     } finally {
+
+     }
+   }
+
 }
 
 export default new HomePoemDao();

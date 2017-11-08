@@ -25,6 +25,7 @@ import {
   pstyles,
   HttpUtil,
   Emitter,
+  Global,
 } from '../AppUtil';
 
 
@@ -57,7 +58,7 @@ class AddPoemUI extends React.Component {
         this.state = {
             placeholder:'请输入内容',
             value:'',
-            userid:'',
+            userid:Global.user.userid,
             title:'',
             content:'',
         }
@@ -67,21 +68,6 @@ class AddPoemUI extends React.Component {
     componentDidMount(){
        this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
        this.props.navigation.setParams({onRelease:this.onRelease});
-       AsyncStorage.getItem('userid',(error,result)=>{
-         if(!error){
-           var islogin = false;
-           if(result){
-             islogin = true;
-           }
-           this.setState({
-             islogin:islogin,
-             userid:result,
-           })
-           if(!islogin){
-             this.props.navigation.navigate('LoginUI')
-           }
-         }
-       })
     }
     componentWillUnmount(){
 
@@ -90,28 +76,6 @@ class AddPoemUI extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <ScrollView style={styles.container}>
-      {/* <RichTextEditor
-          ref={(r)=>this.richtext = r}
-          style={styles.richText}
-          contentInset={{right: 0, left: 0}}
-          bounces={false}
-          hiddenTitle={true}
-          enableOnChange={true}
-          contentPlaceholder={this.state.placeholder}
-          initialContentHTML={this.state.value}
-          editorInitializedCallback={() => this.onEditorInitialized()}
-          />
-        <View style={styles.toolbar}>
-          <RichTextToolbar
-            style={{backgroundColor:'#ffffff', borderTopWidth: 1,borderTopColor:'#d4d4d4'}}
-            getEditor={() => this.richtext}
-            iconTint='#d4d4d4'
-            selectedButtonStyle={{backgroundColor:'#0f88eb'}}
-            selectedIconTint={'#ffffff'}
-            actions={['bold','italic','justifyLeft','justifyCenter']}
-            iconMap={{bold:bold,italic:italic,justifyLeft:align_left,justifyCenter:align_center}}
-            />
-        </View> */}
         <TextInput
           style={styles.title}
           underlineColorAndroid={'transparent'}

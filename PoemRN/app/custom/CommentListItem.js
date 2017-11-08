@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {
+      UIName,
       Utils,
       pstyles
     } from '../AppUtil';
@@ -19,7 +20,7 @@ class CommentListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
         if(Utils.isLogin(this.props.navigate)){
-            this.props.navigate('CommentUI',{id:this.props.comment.pid,cid:this.props.comment.id,cpseudonym:this.props.comment.pseudonym});
+            this.props.navigate(UIName.CommentUI,{id:this.props.comment.pid,cid:this.props.comment.id,cpseudonym:this.props.comment.pseudonym});
         }
     };
 

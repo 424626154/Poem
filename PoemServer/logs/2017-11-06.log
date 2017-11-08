@@ -1,0 +1,1253 @@
+[2017-11-06 02:21:59.440] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 02:22:05.565] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 02:22:06.026] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 02:22:06.032] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 02:23:05.086] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 02:23:17.704] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:09:13.521] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:09:13.876] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 03:09:13.881] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 03:10:56.640] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:11:04.258] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 03:17:46.704] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:18:33.556] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:26:50.601] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:26:55.907] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 03:26:55.927] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 03:26:55.974] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 03:26:56.583] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 03:26:56.603] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 03:26:58.154] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 03:26:58.159] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 03:26:58.162] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 03:27:01.562] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 03:27:03.357] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 03:27:03.360] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 03:27:03.423] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 03:27:04.686] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 03:39:59.756] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 03:40:00.266] [DEBUG] logInfo - GET /pimage/file11/50fca5a28ff53e7b26338bc02d144c2d 404
+[2017-11-06 03:40:00.297] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:00:32.761] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 04:04:47.994] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:05:26.815] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:06:43.602] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:07:16.633] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:10:45.599] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:11:10.662] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:11:24.900] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:11:24.921] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:11:24.923] [DEBUG] logInfo - GET /pimage/file11/50fca5a28ff53e7b26338bc02d144c2d 404
+[2017-11-06 04:11:24.924] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:11:24.925] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:11:25.028] [DEBUG] logInfo - GET /pimage/file11/50fca5a28ff53e7b26338bc02d144c2d 404
+[2017-11-06 04:11:25.031] [DEBUG] logInfo - GET /pimage/file11/50fca5a28ff53e7b26338bc02d144c2d 404
+[2017-11-06 04:12:42.975] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:12:43.111] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:12:43.279] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:12:43.280] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:12:43.282] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:12:43.313] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:12:43.323] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:12:43.329] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:13:03.030] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:13:03.099] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:13:03.137] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:13:03.138] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:13:03.140] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:13:03.199] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:13:03.200] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:13:03.200] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:14:44.059] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:14:44.169] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:14:44.192] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:14:44.193] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:14:44.255] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:14:44.352] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:14:44.353] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:14:44.360] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:22:18.128] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:22:18.202] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:22:18.210] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:22:18.212] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:22:18.238] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:22:18.273] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:22:18.276] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:22:18.276] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:01.674] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:26:01.754] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:01.851] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:01.852] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:01.857] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:01.914] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:01.915] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:01.915] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:28.833] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:26:28.909] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:28.926] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:28.927] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:28.938] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:28.953] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:26:28.956] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:26:28.958] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:27:10.241] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:27:10.308] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:27:10.347] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:27:10.348] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:27:10.360] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:27:10.361] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:27:10.373] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:27:10.374] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:30:25.126] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:30:25.762] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:30:25.793] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 04:31:04.800] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:31:05.086] [DEBUG] logInfo - GET /pimage/file11/50fca5a28ff53e7b26338bc02d144c2d 404
+[2017-11-06 04:31:05.116] [DEBUG] logInfo - GET /pimage/file11/e1dc2d16cd7a666714a2ea9e986d05f8 404
+[2017-11-06 04:31:30.420] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:37:50.997] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:38:19.308] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:44:40.517] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:44:54.107] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 04:44:54.363] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 04:44:54.430] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:44:54.436] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:50:12.095] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:50:12.397] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:50:12.963] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 04:50:44.527] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:50:44.584] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:50:45.055] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 04:51:05.585] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:51:05.775] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:51:06.092] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 04:57:57.826] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:57:58.365] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:57:58.490] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 04:58:10.743] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:58:11.294] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 04:58:11.946] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 04:58:15.592] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 04:58:30.268] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:06:14.451] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:06:25.165] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:06:25.816] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:06:25.819] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:11:56.358] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:13:04.002] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:13:04.093] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:13:04.614] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 05:13:14.076] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:13:43.509] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:13:51.888] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:13:52.504] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:13:52.505] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:16:45.105] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:16:45.246] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:16:45.548] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 05:16:49.754] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:20:40.062] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:20:46.585] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 05:20:46.591] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 05:20:46.632] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 05:20:49.186] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 05:20:49.187] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 05:20:49.191] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 05:20:53.606] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 05:20:53.614] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 05:20:53.620] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 05:20:56.026] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 05:20:56.929] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 05:20:56.938] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 05:20:56.950] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 05:20:59.314] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 05:21:04.479] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:21:24.726] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:21:34.646] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:23:38.134] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:23:38.261] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:23:38.623] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 05:25:30.367] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:25:30.437] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:25:30.894] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 05:25:54.506] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:27:26.551] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:27:26.837] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:27:27.275] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 05:27:43.000] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:28:13.545] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:28:14.492] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:28:14.496] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:28:34.132] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:29:01.951] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:29:02.963] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:29:02.968] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:29:06.016] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:29:15.361] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:29:16.595] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:29:16.597] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:29:22.003] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:31:35.508] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:31:49.441] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:31:50.078] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:31:50.089] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:31:53.092] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:36:05.508] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:36:15.334] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 05:36:16.090] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:36:16.103] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 05:36:21.562] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 05:47:54.436] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 08:42:39.781] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 08:42:45.844] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 08:42:45.851] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 08:42:45.886] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 08:42:46.698] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 08:42:46.733] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 08:42:56.332] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 08:42:57.069] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 08:42:57.070] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 08:43:01.501] [DEBUG] logInfo - POST /poem/commentpoem 200
+[2017-11-06 08:43:01.505] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-06 08:43:01.510] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-06 08:43:01.510] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-06 08:43:01.511] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-06 08:43:01.721] [DEBUG] logInfo - POST /poem/lovecomment 200
+[2017-11-06 08:43:02.372] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:22:49.183] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 09:22:49.216] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 09:22:49.807] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 09:22:53.120] [DEBUG] logInfo - POST /poem/historyallpoem 200
+[2017-11-06 09:24:40.324] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 09:24:40.338] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 09:24:40.401] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:24:41.466] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:24:41.536] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:30:43.131] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 09:30:43.366] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 09:30:43.802] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 09:30:50.063] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 09:30:50.067] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 09:30:50.074] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:30:50.933] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 09:30:50.986] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:03:22.757] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 10:03:23.169] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 10:03:23.471] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 10:03:42.320] [ERROR] /routers/poem.js - null
+[2017-11-06 10:03:42.356] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 10:03:42.523] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 10:03:52.580] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 10:03:52.599] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 10:03:52.637] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:03:53.487] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:03:53.534] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:12:16.791] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 10:12:16.990] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 10:12:17.292] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 10:12:26.128] [ERROR] /routers/poem.js - null
+[2017-11-06 10:12:26.162] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 10:12:26.313] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 10:26:48.029] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 10:26:48.033] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 10:26:48.111] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:26:49.023] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:26:49.079] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:03.517] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 10:27:03.518] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 10:27:03.528] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:04.246] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:04.283] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:13.886] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 10:27:13.888] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 10:27:13.895] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:14.624] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:27:14.706] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 10:28:29.308] [ERROR] /routers/poem.js - null
+[2017-11-06 10:28:29.321] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 10:28:29.452] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 10:30:45.785] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 10:30:46.020] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 10:30:46.242] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 10:39:10.047] [ERROR] /routers/poem.js - null
+[2017-11-06 10:39:10.088] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 10:39:10.415] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 10:47:10.974] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 10:47:11.463] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 10:47:12.144] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 10:47:16.915] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 10:47:20.060] [ERROR] /routers/poem.js - null
+[2017-11-06 10:47:20.077] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 10:47:20.183] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 10:48:47.419] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 10:48:47.830] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 10:48:48.115] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:03:23.176] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:03:23.759] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:03:24.537] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:03:59.840] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:04:09.420] [ERROR] /routers/poem.js - null
+[2017-11-06 11:04:09.456] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:04:09.656] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:09:16.132] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:09:16.760] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:09:17.477] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:10:06.364] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:10:06.824] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:10:06.877] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:10:38.505] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:10:38.715] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:10:38.961] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:10:59.936] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:11:00.246] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:11:00.371] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:11:28.532] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:11:28.789] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:11:28.880] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:11:36.294] [ERROR] /routers/poem.js - null
+[2017-11-06 11:11:36.302] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:11:36.397] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:13:50.590] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:13:50.766] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:13:50.977] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:14:46.091] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:14:46.273] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:14:46.435] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:15:07.853] [ERROR] /routers/poem.js - null
+[2017-11-06 11:15:07.856] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:15:07.973] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:15:20.346] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:15:20.351] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:15:20.447] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:15:20.996] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:15:21.012] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:15:37.901] [ERROR] /routers/poem.js - null
+[2017-11-06 11:15:37.903] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:15:49.336] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:16:34.883] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:16:35.156] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:16:35.254] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:16:47.310] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:16:47.332] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:16:47.381] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:16:48.001] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:16:48.017] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:17.142] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:17:17.150] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:17:17.220] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:17.931] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:17.950] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:20.822] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:17:20.856] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:17:20.925] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:21.529] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:21.592] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:17:23.855] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:17:23.857] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:17:23.865] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:19:00.919] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:19:01.106] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:19:01.306] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:19:12.504] [ERROR] /routers/poem.js - null
+[2017-11-06 11:19:12.505] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:19:12.532] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:19:12.634] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:19:14.585] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:26:16.771] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:26:16.961] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:26:17.316] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:26:19.839] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:26:19.841] [ERROR] /routers/poem.js - null
+[2017-11-06 11:26:19.845] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:26:19.967] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:26:19.979] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:26:20.029] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:26:23.576] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:27:36.996] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:27:37.641] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:27:38.090] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:27:51.392] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:27:51.402] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:27:51.405] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:27:51.748] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:27:54.195] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:27:54.197] [ERROR] /routers/poem.js - null
+[2017-11-06 11:27:54.201] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:27:54.577] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:27:54.619] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:27:54.707] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:27:59.042] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:27:59.045] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:27:59.057] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:27:59.862] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:27:59.889] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:28:01.918] [ERROR] /routers/poem.js - null
+[2017-11-06 11:28:01.920] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:28:01.927] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:28:02.288] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:28:02.414] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:28:08.349] [ERROR] /routers/poem.js - null
+[2017-11-06 11:28:08.351] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:28:08.352] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:28:08.713] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:28:08.849] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:28:14.926] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:28:14.926] [ERROR] /routers/poem.js - null
+[2017-11-06 11:28:14.929] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:28:15.196] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:28:15.310] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:48:34.812] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:48:35.381] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:48:35.524] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:50:23.978] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:50:24.724] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:50:25.168] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:50:35.524] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:50:35.543] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:50:35.697] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:50:36.773] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:50:36.937] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:56:11.150] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 11:56:11.749] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 11:56:12.704] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 11:57:23.580] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 11:57:23.582] [ERROR] /routers/poem.js - null
+[2017-11-06 11:57:23.588] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 11:57:25.065] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 11:57:27.030] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 11:57:27.031] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 11:57:27.050] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 11:57:28.081] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 12:27:58.229] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 12:27:58.352] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 12:27:58.751] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 12:27:59.576] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 12:27:59.839] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 12:28:59.889] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 12:28:59.896] [ERROR] /routers/poem.js - null
+[2017-11-06 12:28:59.898] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 12:29:00.192] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 12:32:32.896] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:32:33.202] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 12:32:33.738] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 12:32:35.782] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 12:32:35.784] [ERROR] /routers/poem.js - null
+[2017-11-06 12:32:35.786] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 12:32:36.571] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 12:42:46.712] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:42:47.152] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 12:42:47.600] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 12:45:16.710] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:45:20.682] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:47:13.462] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:47:14.180] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 12:47:14.453] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 12:47:17.335] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:47:17.339] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-06 12:47:17.341] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-06 12:47:17.341] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-06 12:47:17.342] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-06 12:47:18.493] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:47:33.756] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:47:53.214] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 12:47:58.610] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 12:47:59.166] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 12:47:59.269] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:47:59.376] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-06 12:48:01.020] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:49:19.589] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 12:49:19.797] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 12:49:20.143] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 12:49:23.273] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:49:23.274] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-06 12:49:23.275] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-06 12:49:23.276] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-06 12:49:23.278] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-06 12:49:23.528] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-06 12:49:23.614] [INFO] /routers/message.js - ---发送极光推送 msgid:30 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 12:49:23.617] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-06 12:49:23.618] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-06 12:49:24.284] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 12:49:24.298] [DEBUG] /routers/poem.js - null
+[2017-11-06 12:49:24.307] [DEBUG] /routers/poem.js - { sendno: '3485316636', msg_id: '27021597982337322' }
+[2017-11-06 12:49:24.429] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:49:25.145] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:49:25.146] [DEBUG] /dao/poemDao.js - ---sql0---
+[2017-11-06 12:49:25.147] [DEBUG] /dao/poemDao.js - userid_13671172337
+[2017-11-06 12:49:25.147] [DEBUG] /dao/poemDao.js - ---sql1---
+[2017-11-06 12:49:25.148] [DEBUG] /dao/poemDao.js - ---sql2---
+[2017-11-06 12:49:25.153] [DEBUG] /dao/messageDao.js - {"title":"你好","userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276","pid":64}
+[2017-11-06 12:49:25.156] [INFO] /routers/message.js - ---发送极光推送 msgid:31 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 12:49:25.157] [INFO] /routers/message.js - ---title:有人赞了你的作品
+[2017-11-06 12:49:25.157] [INFO] /routers/message.js - ---content:13276赞了[你好]
+[2017-11-06 12:49:25.375] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 12:49:25.380] [DEBUG] /routers/poem.js - null
+[2017-11-06 12:49:25.380] [DEBUG] /routers/poem.js - { sendno: '1322596938', msg_id: '36028797236998734' }
+[2017-11-06 12:49:25.877] [DEBUG] logInfo - POST /poem/lovepoem 200
+[2017-11-06 12:49:39.912] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 12:49:40.018] [ERROR] /routers/poem.js - null
+[2017-11-06 12:49:40.038] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 12:49:40.413] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 12:49:41.353] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:42.313] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:43.242] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:44.308] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:45.465] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:48.683] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:49.963] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:49:50.979] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 12:51:24.133] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:02:04.559] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 13:02:28.224] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 13:02:28.231] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 13:02:28.413] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 13:02:33.926] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 13:02:33.934] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 13:02:33.966] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 13:02:35.342] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 13:02:35.544] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 13:02:36.610] [ERROR] /routers/poem.js - null
+[2017-11-06 13:02:36.622] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 13:02:36.694] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 13:02:37.216] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 13:02:38.542] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:02:40.652] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:03:14.984] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 13:03:18.577] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:03:23.718] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:03:23.763] [DEBUG] /dao/messageDao.js - {"userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-06 13:03:23.773] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 13:03:23.778] [DEBUG] /routers/user.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseud' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人关注了你\",\"13276关注了你\",,'{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"}',1509944603)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-06 13:03:23.786] [DEBUG] /routers/user.js - null
+[2017-11-06 13:06:16.579] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 13:06:19.384] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:06:21.368] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:06:21.405] [DEBUG] /dao/messageDao.js - {"userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-06 13:06:21.412] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 13:06:21.416] [DEBUG] /routers/user.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseud' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人关注了你\",\"13276关注了你\",,'{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"}',1509944781)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-06 13:06:21.426] [DEBUG] /routers/user.js - null
+[2017-11-06 13:08:12.933] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 13:08:15.872] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:08:17.616] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:08:17.668] [DEBUG] /dao/messageDao.js - {"userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-06 13:08:17.674] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 13:08:17.678] [DEBUG] /routers/user.js - Error: {"code":1,"errmsg":{"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseud' at line 1","sqlState":"42000","index":0,"sql":"INSERT INTO message (userid,title,content,type,extend,time) VALUES (\"userid_13671172337\",\"有人关注了你\",\"13276关注了你\",,'{\"userid\":\"userid_13212345676\",\"head\":\"04ebfc8602015b0b4033e18c56548735\",\"pseudonym\":\"13276\"}',1509944897)"}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemServer/utils/httputil.js:33:26)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+[2017-11-06 13:08:17.684] [DEBUG] /routers/user.js - null
+[2017-11-06 13:09:29.225] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 13:09:31.629] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:09:32.970] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:09:33.004] [DEBUG] /dao/messageDao.js - {"userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-06 13:09:33.013] [INFO] /routers/message.js - ---发送极光推送 msgid:32 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 13:09:33.014] [INFO] /routers/message.js - ---title:有人关注了你
+[2017-11-06 13:09:33.014] [INFO] /routers/message.js - ---content:13276关注了你
+[2017-11-06 13:09:33.384] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 13:09:33.387] [DEBUG] /routers/user.js - null
+[2017-11-06 13:09:33.387] [DEBUG] /routers/user.js - { sendno: '1202071864', msg_id: '36028797237103018' }
+[2017-11-06 13:09:52.761] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:09:53.866] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 13:09:53.876] [DEBUG] /dao/messageDao.js - {"userid":"userid_13212345676","head":"04ebfc8602015b0b4033e18c56548735","pseudonym":"13276"}
+[2017-11-06 13:09:53.884] [INFO] /routers/message.js - ---发送极光推送 msgid:33 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 13:09:53.884] [INFO] /routers/message.js - ---title:有人关注了你
+[2017-11-06 13:09:53.884] [INFO] /routers/message.js - ---content:13276关注了你
+[2017-11-06 13:09:54.123] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 13:09:54.125] [DEBUG] /routers/user.js - null
+[2017-11-06 13:09:54.125] [DEBUG] /routers/user.js - { sendno: '2332873629', msg_id: '27021597982150892' }
+[2017-11-06 13:10:11.311] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 13:11:00.773] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 13:11:16.215] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 13:11:16.928] [DEBUG] logInfo - POST /message/read 200
+[2017-11-06 13:17:51.769] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 13:17:52.114] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 13:17:52.819] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 13:18:04.216] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 13:18:23.162] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 13:18:23.175] [ERROR] /routers/poem.js - null
+[2017-11-06 13:18:23.185] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 13:19:01.937] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 13:19:01.943] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 13:19:02.626] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 13:26:14.773] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 13:26:14.917] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 13:26:15.667] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 13:26:20.390] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 15:07:28.735] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:09:48.101] [DEBUG] logInfo - GET / 200
+[2017-11-06 15:10:16.544] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:10:27.228] [DEBUG] logInfo - GET /chat 200
+[2017-11-06 15:20:23.786] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:20:33.871] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:20:42.604] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:20:53.322] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:21:17.092] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:21:56.769] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:21:59.589] [ERROR] /routers/chat.js - { Error: ER_INVALID_JSON_TEXT: Invalid JSON text: "The document is empty." at position 0 in value for column 'chat.extend'.
+    at Query.Sequence._packetToError (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at PoolConnection.query (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:208:25)
+    at /Users/bingbing/Poem/PoemServer/dao/chatDao.js:15:24
+    at Handshake.onConnect [as _callback] (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Pool.js:64:7)
+    at Handshake.Sequence.end (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:88:24)
+    at Handshake.Sequence.OkPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:97:8)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+  code: 'ER_INVALID_JSON_TEXT',
+  errno: 3140,
+  sqlMessage: 'Invalid JSON text: "The document is empty." at position 0 in value for column \'chat.extend\'.',
+  sqlState: '22032',
+  index: 0,
+  sql: 'INSERT INTO chat (type,fuserid,tuserid,msg,extend,time) VALUES (\'0\',\'a\',\'b\',\'aa\',\'\',1509952919)' }
+[2017-11-06 15:21:59.602] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:24:17.488] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:24:20.346] [DEBUG] /dao/messageDao.js - 
+[2017-11-06 15:24:20.394] [ERROR] /routers/chat.js - { Error: ER_INVALID_JSON_TEXT: Invalid JSON text: "The document is empty." at position 0 in value for column 'chat.extend'.
+    at Query.Sequence._packetToError (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at PoolConnection.query (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:208:25)
+    at /Users/bingbing/Poem/PoemServer/dao/chatDao.js:19:24
+    at Handshake.onConnect [as _callback] (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Pool.js:64:7)
+    at Handshake.Sequence.end (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:88:24)
+    at Handshake.Sequence.OkPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:97:8)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+  code: 'ER_INVALID_JSON_TEXT',
+  errno: 3140,
+  sqlMessage: 'Invalid JSON text: "The document is empty." at position 0 in value for column \'chat.extend\'.',
+  sqlState: '22032',
+  index: 0,
+  sql: 'INSERT INTO chat (type,fuserid,tuserid,msg,extend,time) VALUES (\'0\',\'a\',\'b\',\'aa\',\'\',1509953060)' }
+[2017-11-06 15:24:20.418] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:26:03.825] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:26:08.226] [DEBUG] /dao/messageDao.js - 
+[2017-11-06 15:26:08.277] [ERROR] /routers/chat.js - { Error: ER_INVALID_JSON_TEXT: Invalid JSON text: "The document is empty." at position 0 in value for column 'chat.extend'.
+    at Query.Sequence._packetToError (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at PoolConnection.query (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:208:25)
+    at /Users/bingbing/Poem/PoemServer/dao/chatDao.js:20:24
+    at Handshake.onConnect [as _callback] (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Pool.js:64:7)
+    at Handshake.Sequence.end (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:88:24)
+    at Handshake.Sequence.OkPacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/sequences/Sequence.js:97:8)
+    at Protocol._parsePacket (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/bingbing/Poem/PoemServer/node_modules/mysql/lib/Connection.js:103:28)
+  code: 'ER_INVALID_JSON_TEXT',
+  errno: 3140,
+  sqlMessage: 'Invalid JSON text: "The document is empty." at position 0 in value for column \'chat.extend\'.',
+  sqlState: '22032',
+  index: 0,
+  sql: 'INSERT INTO chat (type,fuserid,tuserid,msg,extend,time) VALUES (\'0\',\'a\',\'b\',\'aa\',\'\',1509953168)' }
+[2017-11-06 15:26:08.290] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:27:15.897] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:27:17.787] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 15:27:17.853] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:28:00.844] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 15:28:00.869] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:29:54.739] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:29:57.025] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 15:29:57.069] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:30:06.798] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:30:08.784] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 15:30:08.812] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 15:37:07.122] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:37:09.496] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 15:37:17.820] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 15:37:33.820] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:37:35.145] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 15:39:32.261] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 15:39:35.521] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 15:39:57.963] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:40:12.059] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:40:19.513] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:40:51.710] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:41:02.098] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:41:21.198] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:41:47.200] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 15:41:55.217] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 16:36:01.020] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 16:37:26.458] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:37:26.799] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:37:27.125] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:37:33.935] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 16:37:33.952] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 16:37:34.050] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 16:37:34.847] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 16:37:34.902] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 16:37:36.551] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:37:36.554] [ERROR] /routers/poem.js - null
+[2017-11-06 16:37:36.557] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:37:36.910] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:37:37.297] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:40:41.838] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:40:42.298] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:40:42.938] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:40:49.941] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:40:50.157] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:40:50.706] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:40:54.876] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:40:54.880] [ERROR] /routers/poem.js - null
+[2017-11-06 16:40:54.888] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:40:55.211] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:42:38.266] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:42:38.554] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:42:39.050] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:42:41.698] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:42:41.702] [ERROR] /routers/poem.js - null
+[2017-11-06 16:42:41.704] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:42:41.918] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:42:41.965] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:42:42.022] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:43:49.821] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:43:49.823] [ERROR] /routers/poem.js - null
+[2017-11-06 16:43:50.022] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:43:50.267] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:44:16.357] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:44:16.762] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:44:17.170] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:44:27.067] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:44:27.247] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:44:27.796] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:44:28.920] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:44:28.921] [ERROR] /routers/poem.js - null
+[2017-11-06 16:44:29.032] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:44:29.258] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:44:34.878] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 16:44:34.909] [DEBUG] /dao/messageDao.js - {"userid":"userid_13671172337","head":"50fca5a28ff53e7b26338bc02d144c2d","pseudonym":"136"}
+[2017-11-06 16:44:34.923] [INFO] /routers/message.js - ---发送极光推送 msgid:34 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 16:44:34.924] [INFO] /routers/message.js - ---title:有人关注了你
+[2017-11-06 16:44:34.924] [INFO] /routers/message.js - ---content:136关注了你
+[2017-11-06 16:44:35.320] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 16:44:35.323] [DEBUG] /routers/user.js - null
+[2017-11-06 16:44:35.323] [DEBUG] /routers/user.js - { sendno: '843225554', msg_id: '36028797237063820' }
+[2017-11-06 16:44:35.879] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 16:44:37.308] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 16:44:37.328] [DEBUG] /dao/messageDao.js - {"userid":"userid_13671172337","head":"50fca5a28ff53e7b26338bc02d144c2d","pseudonym":"136"}
+[2017-11-06 16:44:37.340] [INFO] /routers/message.js - ---发送极光推送 msgid:35 pushid:1a1018970aa26f42422 os:ios
+[2017-11-06 16:44:37.340] [INFO] /routers/message.js - ---title:有人关注了你
+[2017-11-06 16:44:37.340] [INFO] /routers/message.js - ---content:136关注了你
+[2017-11-06 16:44:37.586] [DEBUG] logInfo - POST /message/actionmsg 200
+[2017-11-06 16:44:37.587] [DEBUG] /routers/user.js - null
+[2017-11-06 16:44:37.588] [DEBUG] /routers/user.js - { sendno: '776373668', msg_id: '27021597982596073' }
+[2017-11-06 16:44:38.241] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 16:47:21.677] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:47:21.685] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:47:21.705] [ERROR] /routers/poem.js - null
+[2017-11-06 16:47:21.727] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:54:17.591] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:54:17.969] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:54:18.235] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:54:18.607] [DEBUG] logInfo - POST /message/read 200
+[2017-11-06 16:54:20.289] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:54:20.301] [ERROR] /routers/poem.js - null
+[2017-11-06 16:54:20.637] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:54:20.770] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:56:54.836] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:56:55.296] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:56:55.579] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:56:57.572] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:56:57.575] [ERROR] /routers/poem.js - null
+[2017-11-06 16:56:57.576] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:56:57.997] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:56:58.108] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:56:58.155] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:57:51.373] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:57:51.776] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:57:52.290] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:57:53.198] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:57:53.201] [ERROR] /routers/poem.js - null
+[2017-11-06 16:57:53.204] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:57:53.552] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:57:53.605] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:57:53.632] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:58:53.514] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 16:58:54.254] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 16:58:54.465] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 16:58:58.235] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 16:58:58.239] [ERROR] /routers/poem.js - null
+[2017-11-06 16:58:58.240] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 16:58:58.512] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:58:58.561] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 16:58:58.614] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 17:10:07.057] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 17:10:07.463] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 17:10:07.619] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 17:12:03.846] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 17:12:03.847] [ERROR] /routers/poem.js - null
+[2017-11-06 17:12:03.849] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 17:12:04.195] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 17:12:04.227] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 17:30:00.502] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 17:30:00.504] [ERROR] /routers/poem.js - null
+[2017-11-06 17:30:00.506] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 17:30:00.508] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 17:30:11.805] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 17:30:12.140] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 17:30:12.522] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 17:30:13.725] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 17:30:13.729] [ERROR] /routers/poem.js - null
+[2017-11-06 17:30:13.732] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 17:30:14.213] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 17:30:18.322] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 17:30:32.226] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 17:30:32.249] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 17:31:41.260] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 17:31:41.263] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 17:31:41.267] [ERROR] /routers/poem.js - null
+[2017-11-06 17:31:41.403] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 17:37:20.781] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 17:51:15.602] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 17:51:15.628] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:12:41.268] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:12:41.738] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:12:42.162] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:12:44.813] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:12:44.834] [ERROR] /routers/poem.js - null
+[2017-11-06 18:12:44.843] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:12:45.344] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:13:36.923] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:13:36.929] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:13:48.781] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 18:13:52.695] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:13:52.745] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:15:37.623] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:15:37.633] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:15:37.636] [ERROR] /routers/poem.js - null
+[2017-11-06 18:15:37.754] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:15:59.973] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:16:00.512] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:16:00.790] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:16:03.858] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:16:03.859] [ERROR] /routers/poem.js - null
+[2017-11-06 18:16:03.863] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:16:04.313] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:16:10.757] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:16:10.786] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:16:46.100] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:16:46.650] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:16:46.926] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:16:48.845] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:16:48.856] [ERROR] /routers/poem.js - null
+[2017-11-06 18:16:48.859] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:16:49.206] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:16:49.275] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:16:55.957] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:16:55.962] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:18:00.691] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:18:00.883] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:18:01.311] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:18:03.259] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:18:03.270] [ERROR] /routers/poem.js - null
+[2017-11-06 18:18:03.271] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:18:03.592] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:18:03.654] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:18:03.711] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:18:13.189] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:18:13.201] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:20:37.673] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:20:37.674] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:20:37.675] [ERROR] /routers/poem.js - null
+[2017-11-06 18:20:37.708] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:22:37.978] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:22:38.212] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:22:38.646] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:22:49.534] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:22:49.535] [ERROR] /routers/poem.js - null
+[2017-11-06 18:22:49.543] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:22:49.916] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:22:58.946] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:22:58.964] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:25:23.547] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:25:23.555] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:25:51.273] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:25:51.281] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:25:56.697] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:25:56.704] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:26:42.415] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:26:42.425] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:27:39.293] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:27:39.707] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:27:40.354] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:27:44.578] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:27:44.582] [ERROR] /routers/poem.js - null
+[2017-11-06 18:27:44.604] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:27:44.947] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:27:45.009] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:27:51.147] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:27:51.152] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:28:23.447] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:28:23.981] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:28:24.368] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:28:29.172] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 18:28:29.182] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 18:28:29.192] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 18:28:30.078] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 18:28:30.110] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 18:28:31.885] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:28:31.896] [ERROR] /routers/poem.js - null
+[2017-11-06 18:28:31.912] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:28:32.277] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:28:32.331] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:28:32.379] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:28:39.256] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:28:39.267] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:30:38.988] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:30:39.402] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:30:39.745] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:30:41.643] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:30:41.644] [ERROR] /routers/poem.js - null
+[2017-11-06 18:30:41.645] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:30:41.914] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:30:41.987] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:30:42.046] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:30:45.805] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:30:45.810] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:32:00.890] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:32:00.891] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:32:00.893] [ERROR] /routers/poem.js - null
+[2017-11-06 18:32:00.894] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:32:30.492] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:32:30.875] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:32:31.407] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:32:32.411] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:32:32.422] [ERROR] /routers/poem.js - null
+[2017-11-06 18:32:32.423] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:32:32.768] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:32:32.835] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:32:32.919] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:32:37.683] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:32:37.687] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:41:59.626] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:42:00.033] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:42:00.378] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:42:01.549] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:42:01.554] [ERROR] /routers/poem.js - null
+[2017-11-06 18:42:01.556] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:42:01.876] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:42:01.936] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:45:14.905] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:45:15.292] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:45:15.724] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:45:23.335] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:45:23.337] [ERROR] /routers/poem.js - null
+[2017-11-06 18:45:23.338] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:45:23.665] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:45:23.718] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:45:23.747] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:45:28.109] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:45:28.117] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:45:30.475] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:45:30.478] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:45:51.267] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:45:51.693] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:45:52.033] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:46:44.170] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:46:44.468] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:46:44.737] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:46:46.325] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:46:46.328] [ERROR] /routers/poem.js - null
+[2017-11-06 18:46:46.332] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:46:46.622] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:46:46.666] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:46:57.344] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:46:57.351] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:47:00.062] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:47:00.068] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:47:02.197] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:47:02.201] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:47:05.937] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 18:47:05.941] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 18:56:01.777] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:56:02.184] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:56:02.470] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:56:04.089] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:56:04.100] [ERROR] /routers/poem.js - null
+[2017-11-06 18:56:04.102] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:56:04.544] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:57:26.739] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 18:57:26.967] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 18:57:27.726] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 18:57:28.751] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 18:57:28.763] [ERROR] /routers/poem.js - null
+[2017-11-06 18:57:28.788] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 18:57:29.118] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:57:29.171] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 18:57:29.220] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:19:48.867] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:19:49.574] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 19:19:49.577] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 19:22:20.534] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:24:22.276] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:26:09.518] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:26:09.831] [DEBUG] logInfo - GET /pimage/file/50fca5a28ff53e7b26338bc02d144c2d 200
+[2017-11-06 19:26:09.858] [DEBUG] logInfo - GET /pimage/file/e1dc2d16cd7a666714a2ea9e986d05f8 200
+[2017-11-06 19:26:19.702] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:28:33.550] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:28:33.551] [ERROR] /routers/poem.js - null
+[2017-11-06 19:28:33.564] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:28:33.911] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:28:33.938] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:28:33.977] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:30:36.860] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 19:30:44.444] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:30:44.459] [ERROR] /routers/poem.js - null
+[2017-11-06 19:30:44.489] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:30:44.711] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:32:05.261] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 19:32:33.915] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 19:32:36.359] [DEBUG] logInfo - POST /user/follow 200
+[2017-11-06 19:34:57.538] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:35:08.171] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:35:08.183] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:35:08.520] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:35:08.606] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:35:28.717] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 19:35:28.950] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 19:35:28.958] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:35:28.973] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-06 19:39:29.217] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:39:29.539] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 19:39:29.908] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 19:40:47.160] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:40:47.592] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 19:40:47.990] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 19:40:57.034] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:40:57.048] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:40:57.396] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:40:57.465] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:40:57.516] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:41:01.752] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 19:41:01.778] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 19:42:36.133] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:42:36.570] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 19:42:37.006] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 19:42:38.851] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:42:38.854] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:42:39.293] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:42:39.337] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:42:39.390] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:42:47.148] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 19:42:47.154] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 19:42:48.847] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 19:42:48.856] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 19:45:25.998] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 19:45:26.367] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 19:45:26.768] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 19:45:28.554] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 19:45:28.596] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 19:45:28.902] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:45:28.937] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 19:45:28.991] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:02:41.608] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:02:42.179] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:02:42.628] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:02:44.885] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:02:44.896] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:02:45.208] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:02:45.294] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:02:45.326] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:09:35.341] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:09:35.359] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:09:35.367] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:09:56.037] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:09:56.408] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:09:56.778] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:09:58.411] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:09:58.419] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:09:58.777] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:09:58.823] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:09:58.879] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:10:45.319] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:10:45.321] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:10:45.323] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:11:09.322] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:11:09.842] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:11:10.225] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:11:12.514] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:11:12.518] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:11:12.995] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:12:24.138] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:12:24.204] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:12:25.143] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:12:31.906] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:12:31.913] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:12:32.405] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:12:32.452] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:12:32.513] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:14:20.369] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:14:20.753] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:14:21.219] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:14:24.243] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:14:24.246] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:14:24.453] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:14:57.547] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 20:14:57.564] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 20:15:00.248] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 20:15:00.276] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 20:15:02.535] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 20:15:02.540] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 20:15:42.646] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:15:42.649] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:15:42.652] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:16:29.401] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:16:29.773] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 20:16:30.311] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 20:16:47.388] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 20:16:47.393] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:16:47.698] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:16:47.769] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 20:17:36.357] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 20:17:36.358] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 20:17:36.360] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:12:44.441] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:12:44.810] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:12:45.292] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:13:22.418] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:13:22.420] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:13:22.739] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:13:22.784] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:13:22.824] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:13:26.901] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:13:41.638] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:13:57.486] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 21:13:57.798] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:13:57.801] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:14:10.174] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:14:10.177] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:14:10.521] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:14:10.560] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:14:10.634] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:14:20.701] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:14:21.378] [DEBUG] logInfo - POST /chat/read 200
+[2017-11-06 21:14:44.102] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:14:46.637] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:14:52.335] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:20:42.473] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:20:42.767] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:20:43.461] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:21:02.899] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:21:03.069] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:21:03.889] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:21:13.536] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:21:13.544] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:21:13.921] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:19.377] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:21:19.387] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:21:19.677] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:19.701] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:19.747] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:33.088] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:21:33.091] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:21:33.394] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:33.443] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:33.481] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:21:50.709] [DEBUG] logInfo - POST /poem/info 200
+[2017-11-06 21:21:50.710] [DEBUG] logInfo - POST /poem/getloves 200
+[2017-11-06 21:21:50.725] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 21:21:51.530] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 21:21:51.566] [DEBUG] logInfo - POST /poem/newestcomment 200
+[2017-11-06 21:24:12.713] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:24:12.996] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:24:13.567] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:24:17.360] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:24:32.059] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 21:24:33.002] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:24:33.006] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:24:49.445] [DEBUG] logInfo - POST /poem/addpoem 200
+[2017-11-06 21:24:49.771] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:25:19.328] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 21:25:44.295] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:25:50.962] [DEBUG] logInfo - POST /user/login 200
+[2017-11-06 21:25:51.756] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:25:51.760] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:26:00.892] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:26:00.894] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:26:01.006] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:26:01.041] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:26:01.157] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:26:01.181] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:26:01.364] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:26:02.909] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:26:03.127] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-06 21:28:01.543] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:28:01.755] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-06 21:28:16.449] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:28:16.764] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:28:17.636] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:28:25.927] [DEBUG] logInfo - POST /user/otherinfo 200
+[2017-11-06 21:28:25.933] [DEBUG] logInfo - POST /poem/newestpoem 200
+[2017-11-06 21:28:26.252] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:28:26.348] [DEBUG] logInfo - POST /poem/historypoem 200
+[2017-11-06 21:28:49.843] [DEBUG] logInfo - POST /chat/chats 200
+[2017-11-06 21:28:50.122] [DEBUG] logInfo - GET /pimage/file/04ebfc8602015b0b4033e18c56548735 200
+[2017-11-06 21:29:53.886] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 21:29:53.904] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 21:29:58.200] [DEBUG] /dao/messageDao.js - {}
+[2017-11-06 21:29:58.210] [DEBUG] logInfo - POST /chat/send 200
+[2017-11-06 21:30:18.481] [DEBUG] logInfo - POST /poem/newestallpoem 200
+[2017-11-06 21:30:18.727] [DEBUG] logInfo - POST /user/info 200
+[2017-11-06 21:30:19.398] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 21:30:46.013] [DEBUG] logInfo - POST /message/messages 200
+[2017-11-06 23:20:32.602] [DEBUG] logInfo - POST /feedback/send 404
+[2017-11-06 23:21:22.799] [DEBUG] logInfo - POST /message/feedback 404
+[2017-11-06 23:22:40.919] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 23:23:48.005] [INFO] /dao/dao.js - ---连接数据库 类型:default 参数:{"host":"127.0.0.1","user":"root","password":"890503","database":"poem","port":3306,"multipleStatements":true}
+[2017-11-06 23:23:50.722] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:23:59.798] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:24:05.616] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:37:14.564] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:37:17.006] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:37:19.096] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:45:11.638] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:45:14.741] [DEBUG] logInfo - POST /message/feedback 200
+[2017-11-06 23:49:43.353] [DEBUG] logInfo - POST /message/feedback 200

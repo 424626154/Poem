@@ -10,14 +10,19 @@ import {
         FlatList,
       } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-import Utils from '../utils/Utils';
-import Global from '../Global';
-import Emitter from '../utils/Emitter';
-import HttpUtil from '../utils/HttpUtil';
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  pstyles,
+  Utils,
+  Global,
+  Emitter,
+  HttpUtil,
+  goPersonalUI,
+} from '../AppUtil';
+
 
 class ListItem extends React.PureComponent {
     _onPress = () => {
@@ -30,7 +35,7 @@ class ListItem extends React.PureComponent {
                 onPress={this._onPress}
                 >
                 <View style={styles.love}>
-                    <CachedImage
+                    <PImage
                       style={pstyles.small_head}
                       source={this.props.head}
                       />
@@ -110,7 +115,7 @@ export default class LovesUI extends React.Component {
             selected.set(id, !selected.get(id));
             return {selected}
         });
-        this.props.navigation.navigate('PersonalUI',{userid:love.userid})
+        goPersonalUI(this.props.navigation.navigate,love.userid);
     };
     _renderItem = ({item}) =>{
         return(

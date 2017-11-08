@@ -110,6 +110,7 @@ android {
                 APP_CHANNEL: "developer-default"    //应用渠道号
         ]
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -150,6 +151,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-update')
     implementation project(':realm')
     implementation project(':react-native-device-info')
     implementation project(':react-native-splash-screen')

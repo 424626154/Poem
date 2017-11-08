@@ -28,6 +28,7 @@ module.exports = {
 		if(extend instanceof Object){
             extend = JSON.stringify(extend);
         }
+        logger.debug(typeof(extend));
         logger.debug(extend);
         var time = utils.getTime();
         var sql = 'INSERT INTO '+MESSAGE_TABLE+' (userid,title,content,type,extend,time) VALUES ("'+userid+'","'+title+'","'+content+'",'+type+',\''+extend+'\','+time+')';
@@ -71,7 +72,7 @@ module.exports = {
         });
 	},
 	getMessages:function(userid,callback){
-		var sql = 'SELECT * FROM '+MESSAGE_TABLE+' WHERE userid = "'+userid+'" AND state = 0 ORDER BY id DESC ';
+		var sql = 'SELECT * FROM '+MESSAGE_TABLE+' WHERE userid = "'+userid+'" AND state = 0  ';
         pool.getConnection(function(err, connection) {
             connection.query(sql, function(err, result) {
                 callback(err, result)

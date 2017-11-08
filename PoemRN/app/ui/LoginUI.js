@@ -23,8 +23,9 @@ import{
   HttpUtil,
   Emitter,
   Global,
-  pstyles
-} from '../AppUtil'
+  pstyles,
+  Storage,
+} from '../AppUtil';
 
 class LoginUI extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -46,7 +47,11 @@ class LoginUI extends React.Component {
       }
     }
     componentDidMount(){
-
+      Storage.getLastPhone().then(phone=>{
+        this.setState({
+          phone:phone,
+        })
+      })
     }
     componentWillUnmount(){
 
@@ -141,11 +146,8 @@ class LoginUI extends React.Component {
           var userid = user.userid;
           Global.user = user;
           Emitter.emit(Emitter.LOGIN,user);
-          AsyncStorage.setItem(StorageConfig.USERID,userid,(error,result)=>{
-            if (error) {
-              console.error(error);
-            }
-          });
+          Storage.saveUserid(userid);
+          Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();
       }else{
         Alert.alert(res.errmsg);

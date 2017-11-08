@@ -9,15 +9,25 @@ import {StorageConfig} from '../Config'
 class Storage {
 
 }
+Storage.saveUserid =  async function(userid){
+  try {
+      await AsyncStorage.setItem(StorageConfig.USERID, userid);
+      console.log('saveUserid success: ',userid);
+  } catch (error) {
+      console.error(error);
+  }
+}
 Storage.getUserid = async function(){
   try {// try catch 捕获异步执行的异常
+      var userid = '';
       var value = await AsyncStorage.getItem(StorageConfig.USERID);
       if (value !== null){
           console.log('getUserid success: ' ,value);
+          userid = value;
       } else {
           console.log('getUserid no data');
       }
-      return value;
+      return userid;
   } catch (error) {
       console.error(error);
   }
@@ -55,4 +65,28 @@ Storage.saveUser = async function(userid,user){
       console.error(error);
   }
 }
+
+Storage.saveLastPhone =  async function(phone){
+  try {
+      await AsyncStorage.setItem(StorageConfig.LAST_PHONE, phone);
+      console.log('saveLastPhone success: ',phone);
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.getLastPhone = async function(){
+  try {// try catch 捕获异步执行的异常
+      var value = await AsyncStorage.getItem(StorageConfig.LAST_PHONE);
+      if (value !== null){
+          console.log('getLastPhone success: ' ,value);
+      } else {
+          console.log('getLastPhone no data');
+      }
+      return value;
+  } catch (error) {
+      console.error(error);
+  }
+}
+
 export default Storage;

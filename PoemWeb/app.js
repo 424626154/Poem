@@ -10,6 +10,7 @@ var log4js = require('./utils/log4jsutil');
 var home = require('./routes/home');
 var user = require('./routes/user');
 var message = require('./routes/message');
+var feedback = require('./routes/feedback');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', home);
 app.use('/user', user);
 app.use('/message', message);
+app.use('/feedback', feedback);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

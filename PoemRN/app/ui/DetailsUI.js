@@ -28,11 +28,13 @@ import {
   StyleConfig,
   HeaderConfig,
   StorageConfig,
+  UIName,
   Utils,
   HttpUtil,
   Emitter,
   Global,
-  pstyles
+  pstyles,
+  goPersonalUI
 } from '../AppUtil';
 
 class DetailsUI extends React.Component{
@@ -48,8 +50,11 @@ class DetailsUI extends React.Component{
     ),
   });
   dataContainer = [];
+  navigate = null;
   constructor(props){
     super(props);
+    const { navigate } = this.props.navigation;
+    this.navigate = navigate;
     let params = this.props.navigation.state.params;
     this.state = {
         id:params.id,
@@ -61,8 +66,6 @@ class DetailsUI extends React.Component{
         refreshing: false,
         loves:[],//点赞列表
     }
-    const { navigate } = this.props.navigation;
-    this.navigate = navigate;
     this._onLove = this._onLove.bind(this);
     this._onLoveItem = this._onLoveItem.bind(this);
     this._onLoves= this._onLoves.bind(this);
@@ -82,7 +85,6 @@ class DetailsUI extends React.Component{
     DeviceEventEmitter.removeAllListeners();
   }
   render(){
-    const { navigate } = this.props.navigation;
     return(
       <ScrollView
         ref="ScrollView"
@@ -138,7 +140,7 @@ class DetailsUI extends React.Component{
         >
             <TouchableOpacity
               onPress={()=>{
-                this.props.navigation.navigate('ModifyPoemUI',{id:this.state.id,poem:this.state.poem})
+                this.navigate(UIName.ModifyPoemUI,{id:this.state.id,poem:this.state.poem})
               }}>
               <View style={styles.menu_item}>
                 <Icon
@@ -173,7 +175,7 @@ class DetailsUI extends React.Component{
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.navigate)){
-                  this.props.navigation.navigate('CommentUI',{id:this.state.id,cid:0})
+                  this.navigate(UIName.CommentUI,{id:this.state.id,cid:0})
                 }
               }}>
               <View style={styles.menu_item}>
@@ -215,7 +217,7 @@ class DetailsUI extends React.Component{
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.navigate)){
-                  this.props.navigation.navigate('CommentUI',{id:this.state.id});
+                  this.navigate(UIName.CommentUI,{id:this.state.id});
                 }
               }}>
               <View style={styles.menu_item}>
@@ -311,7 +313,7 @@ class DetailsUI extends React.Component{
               selected={ !!this.state.selected.get(item.id) }
               comment= {item}
               time={Utils.dateStr(item.time)}
-              navigate = {this.props.navigation.navigate}
+              navigate = {this.navigate}
           />
       );
   };
@@ -441,8 +443,7 @@ class DetailsUI extends React.Component{
    * 点赞列表
    */
   _onLoves(){
-    console.log('_onLoves')
-    this.props.navigation.navigate('LovesUI',{id:this.state.id})
+    this.navigate(UIName.LovesUI,{id:this.state.id})
   }
   /**
    * 点赞元素
@@ -451,7 +452,7 @@ class DetailsUI extends React.Component{
     if(item.userid == this.state.userid){
       return;
     }
-    this.props.navigation.navigate('PersonalUI',{userid:item.userid});
+    goPersonalUI(this.navigate,item.userid);
   }
   /**
    * 作品信息

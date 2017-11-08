@@ -14,7 +14,6 @@ import {
         FlatList,
       } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
 
 import{
     StyleConfig,

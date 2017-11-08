@@ -12,7 +12,8 @@
 
  import {
        StyleConfig,
-       pstyles
+       pstyles,
+       PImage,
      } from '../AppUtil';
 
 export default class FollowListItem extends React.PureComponent {
@@ -26,7 +27,7 @@ export default class FollowListItem extends React.PureComponent {
                 onPress={this._onPress}
                 >
                 <View style={styles.follow}>
-                    <CachedImage
+                    <PImage
                       style={pstyles.small_head}
                       source={this.props.head}
                       />

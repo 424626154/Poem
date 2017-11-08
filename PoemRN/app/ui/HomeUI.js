@@ -22,20 +22,25 @@ import {
   HeaderConfig,
   StorageConfig,
   ImageConfig,
+  UIName,
   Utils,
   HttpUtil,
   Emitter,
   Global,
   pstyles,
   HomePoemDao,
+  goPersonalUI,
 } from '../AppUtil';
 
 
 class HomeUI extends React.Component {
      // 数据容器，用来存储数据
      dataContainer = [];
+     navigate = null;
      constructor(props) {
          super(props);
+         const { navigate } = this.props.navigation;
+         this.navigate = navigate;
          this.state = {
              // 存储数据的状态
              sourceData : [],
@@ -45,29 +50,17 @@ class HomeUI extends React.Component {
          }
          this._onLove = this._onLove.bind(this);
          this._onComment = this._onComment.bind(this);
+         this._onPersonal = this._onPersonal.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
       DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-         this._analysisObserver(obj);
+         this._parseObserver(obj);
       });
-
-      if(Global.user.userid){
-        this._requestUserInfo(userid);
-      }
-      let homepoems = HomePoemDao.getHomePoems();
-      if(homepoems.length > 0){
-        this.dataContainer = homepoems.concat(this.dataContainer);
-        this.setState({
-          sourceData: this.dataContainer,
-          userid:Global.user.userid,
-        });
-      }else{
-        this.setState({
-          userid:Global.user.userid,
-        });
-      }
-      this._requestInitAllPoem(homepoems);
+      // if(Global.user.userid){
+      //   this._requestUserInfo(userid);
+      // }
+      this._initPoems();
     }
     componentWillUnmount(){
       DeviceEventEmitter.removeAllListeners();
@@ -106,7 +99,10 @@ class HomeUI extends React.Component {
           {this._renderNavOS()}
           <View style={styles.header_bg}>
             <TouchableOpacity  style={styles.header_left}
-            onPress={()=>this.props.navigation.navigate('DrawerOpen')}>
+            onPress={()=>{
+              console.log('---home this.props.navigation.navigate(DrawerOpen)---')
+              this.navigate('DrawerOpen');
+            }}>
               <Icon
                 name='reorder'
                 size={26}
@@ -118,7 +114,8 @@ class HomeUI extends React.Component {
             <View style={styles.header_right}>
               <TouchableOpacity  style={styles.header_left}
               onPress={()=>{
-                this.props.navigation.navigate('AddPoemUI')
+                if(!Utils.isLogin(this.navigate))return;
+                this.navigate(UIName.AddPoemUI);
               }}>
                 <Icon
                   name='queue'
@@ -151,7 +148,7 @@ class HomeUI extends React.Component {
            selected.set(id, !selected.get(id));
            return {selected}
        });
-      this.props.navigation.navigate('DetailsUI',{id:id});
+      this.navigate(UIName.DetailsUI,{id:id});
    };
    // 加载item布局
    _renderItem = ({item}) =>{
@@ -169,9 +166,10 @@ class HomeUI extends React.Component {
                lovenum={item.lovenum}
                commentnum={item.commentnum}
                item={item}
-               navigate = {this.props.navigation.navigate}
+               navigate = {this.navigate}
                onLove={this._onLove}
                onComment={this._onComment}
+               onPersonal={this._onPersonal}
            />
        );
    };
@@ -216,7 +214,7 @@ class HomeUI extends React.Component {
        id:fromid,
        userid:this.state.userid,
      });
-      console.log(json);
+      // console.log(json);
      HttpUtil.post(HttpUtil.POEM_HISTORY_ALLPOEM,json).then((res) => {
          if(res.code == 0){
              var poems = res.data;
@@ -240,16 +238,17 @@ class HomeUI extends React.Component {
     * 点击评论
     */
    _onComment(item){
-     this.props.navigation.navigate('DetailsUI',{id:item.id,ftype:1});
+     this.navigate(UIName.DetailsUI,{id:item.id,ftype:1});
    }
    /**
     * 点赞
     */
   _onLove(item){
+    if(!Utils.isLogin1(this))return;
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
       id:item.id,
-      userid:this.state.userid,
+      userid:Global.user.userid,
       love:onlove,
     });
     HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
@@ -285,6 +284,12 @@ class HomeUI extends React.Component {
       console.error(err);
     })
   }
+  /**
+   * 点击人物
+   */
+  _onPersonal(userid){
+     goPersonalUI(this.props.navigation.navigate,userid);
+   }
   _eventDeletePoem(id){
     let sourceData = this.state.sourceData
     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
@@ -295,6 +300,24 @@ class HomeUI extends React.Component {
     this.setState({
         sourceData: sourceData
     });
+  }
+
+  _initPoems(){
+    let homepoems = HomePoemDao.getHomePoems();
+    // console.log('---homepoems---');
+    // console.log(homepoems);
+    if(homepoems.length > 0){
+      this.dataContainer = homepoems.concat(this.dataContainer);
+      this.setState({
+        sourceData: this.dataContainer,
+        userid:Global.user.userid,
+      });
+    }else{
+      this.setState({
+        userid:Global.user.userid,
+      });
+    }
+    this._requestInitAllPoem(homepoems);
   }
   /**
    * 请求个人信息
@@ -384,26 +407,29 @@ class HomeUI extends React.Component {
   /**
    * 解析广播数据
    */
-  _analysisObserver(obj){
+  _parseObserver(obj){
     var action = obj.action;
     var param = obj.param;
     switch (action) {
       case Emitter.LOGIN:
-        this.setState({
-          userid:Global.user.userid,
-        })
+        this._initPoems();
         this._requestUserInfo(Global.user.userid);
         break;
       case Emitter.LOGOUT:
-        this.setState({
-          userid:Global.user.userid,
-        })
+        this._initPoems();
         break;
       case Emitter.ADDPOEM:
         this._requestNewestAllPoem();
         break;
       case Emitter.DELPOEM:
         this._eventDeletePoem(id);
+        break;
+      case Emitter.CLEAR:
+        this.dataContainer = [];
+        this.setState({
+          sourceData: this.dataContainer,
+        });
+        this._requestNewestAllPoem();
         break;
       // case Emitter.DRAWER_CLOSE:
       //   this.props.navigation.navigate('DrawerClose');
@@ -431,10 +457,14 @@ const styles = StyleSheet.create({
     height:40,
   },
   header_left:{
+    justifyContent:'center',
     width:40,
+    height:40,
   },
   header_right:{
+    justifyContent:'center',
     width:40,
+    height:40,
   },
   header_title:{
     flex:1,

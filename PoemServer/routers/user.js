@@ -9,18 +9,14 @@ var utils = require('../utils/utils');
 var httputil = require('../utils/httputil'); 
 var ru = require('../utils/routersutil');
 var logger = require('../utils/log4jsutil').logger(__dirname+'/user.js');
+var {FollowExtend,Message,MessageType} = require('../utils/module');
+
 /* GET user listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
     res.send('user');
 });
 
-
-var ResJson = function(){
-	this.code;
-	this.data;
-	this.errmsg ;
-}
 
 function sendAliSms(phone,code,callback){
 	var data = {  
@@ -316,13 +312,33 @@ router.post('/follow',function(req,res,next){
 	var fansid = req.body.fansid;
 	var op = req.body.op;
 	if(!userid||!fansid){
-		resError(res,'参数错误');
+		ru.resError(res,'参数错误');
 	}else{
 		userDao.upFollow(userid,fansid,op,function(err,result){
 			if(err){
 				ru.resError(res,err);
 			}else{
 				ru.resSuccess(res,result);
+				if(result.fstate == 1){
+					userDao.queryUserFromId(userid,function(err,result){
+						if(err){
+
+						}else{
+							if(result&&result.length > 0 ){
+								var user = result[0];
+								var title = '有人关注了你';
+							    var content = user.pseudonym+'关注了你';
+								var followExtend = new FollowExtend(user.userid,user.head,user.pseudonym);
+							    var message = new Message(MessageType.FOLLOW_MSG,fansid,title,content,followExtend);
+						    	httputil.requstPSPost('/message/actionmsg',message,function(err,result){
+						    		logger.debug(err);
+						    		logger.debug(result);
+						    	}); 
+							}
+						}
+					})
+
+				}
 			}
 		});
 	}

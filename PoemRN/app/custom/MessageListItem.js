@@ -9,7 +9,6 @@ import {
    View,
    TouchableOpacity,
 } from 'react-native';
-import {CachedImage} from "react-native-img-cache";
 import Swipeable from 'react-native-swipeable';
 import HTMLView from 'react-native-htmlview';
 import {
@@ -17,7 +16,8 @@ import {
       ImageConfig,
       Utils,
       pstyles,
-      HttpUtil
+      HttpUtil,
+      PImage,
     } from '../AppUtil';
 export default class MessageListItem extends React.Component{
   swipeable = null;
@@ -56,7 +56,7 @@ export default class MessageListItem extends React.Component{
           <TouchableOpacity
             style={styles.msg_icon}
             onPress={this._onIcon}>
-            <CachedImage
+            <PImage
               style={pstyles.small_head}
               source={this._logicSource(message)}
               />
@@ -74,12 +74,12 @@ export default class MessageListItem extends React.Component{
   }
   _renderMsg(message){
     var extend = JSON.parse(message.extend);
-    if(message.type == 1||message.type == 2){//点赞 评论
+    if(message.type == 1||message.type == 2||message.type == 3){//点赞 评论 关注
       var msg_html =  '';
       if(message.type == 1){
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
                       '<span><msg_love>赞了</msg_love></span>'+
-                      '<span><msg_title>['+extend.title+']</msg_title></span></div>';
+                      '<span><msg_info>['+extend.title+']</msg_info></span></div>';
 
       }
       if(message.type == 2){
@@ -89,8 +89,12 @@ export default class MessageListItem extends React.Component{
         }
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
                       '<span><msg_love>'+op_str+'</msg_love></span>'+
-                      '<span><msg_title>'+extend.comment+'</msg_title></span></div>';
+                      '<span><msg_info>'+extend.comment+'</msg_info></span></div>';
 
+      }
+      if(message.type == 3){
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>关注了你</msg_love></span></div>'
       }
       // console.log(msg_html);
       return(
@@ -113,7 +117,7 @@ export default class MessageListItem extends React.Component{
     var source = ImageConfig.nothead;
       if(message.type == 0){
         source = ImageConfig.official;
-      }else if (message.type == 1||message.type == 2){
+      }else if (message.type == 1||message.type == 2||message.type == 3){
         // console.log('---extend---');
         var extend = JSON.parse(message.extend);
         // console.log(extend);
@@ -174,6 +178,13 @@ const styles = StyleSheet.create({
   },
   msg_love:{
     fontSize:18,
+    color:StyleConfig.C_7B8992,
+  },
+  msg_info:{
+    fontSize:18,
+    color:StyleConfig.C_000000,
+  },
+  msg_time:{
     color:StyleConfig.C_7B8992,
   },
   delete:{

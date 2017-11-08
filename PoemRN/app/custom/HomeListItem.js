@@ -9,10 +9,8 @@ import {
       View,
       TouchableOpacity,
      } from 'react-native';
-import {CachedImage} from "react-native-img-cache";
 import { Icon } from 'react-native-elements';
-import {pstyles} from '../AppUtil';
-
+import {UIName,pstyles,PImage} from '../AppUtil';
 class HomeListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
@@ -27,10 +25,10 @@ class HomeListItem extends React.PureComponent {
               {/* 个人信息 */}
               <TouchableOpacity
                 onPress={()=>{
-                  this.props.navigate('PersonalUI',{userid:this.props.item.userid});
+                  this.props.onPersonal(this.props.item.userid);
                 }}>
               <View style={styles.fitem_header}>
-                <CachedImage
+                <PImage
                   style={pstyles.small_head}
                   source={this.props.headurl}
                   />
