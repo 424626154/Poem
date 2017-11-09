@@ -1,0 +1,32 @@
+<% include header.html %>
+	<ol class="breadcrumb " style="background: transparent;">
+	  <li><a href="/">Home</a></li>
+	  <li><a href="/sms">短信系统</a></li>
+	  <li class="active">注册短信</li>
+	</ol>
+   <%if(err){%>  
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5><%= err %></h5>
+        </div>
+    <%}%>
+    <%if(temp_id == 0 ){%> 
+    <form id="add" name="add" method="post" action="/sms/register" enctype="multipart/form-data" >
+        <div class="form-group">
+          <label for="">模板内容</label>
+          <textarea type="text" class="form-control" rows="5" id="template" name="template" placeholder="模板内容，注意：根据运营商规定下发短信的内容不能超过350字符"></textarea>
+      	</div>
+      	<div class="form-group">
+          <label for="">验证码有效期</label>
+          <input class="form-control" type='number' placeholder="单位为秒（当模板类型为1时必传）" id="ttl" name="ttl" ></input>
+        </div>
+        <div class="form-group">
+          <label for="">备注</label>
+          <textarea class="form-control" rows="5" placeholder="长度限制为500字符" id="remark" name="remark" ></textarea>
+        </div>
+        <button class="btn btn-default pull-right" type="submit" >创建注册短信模板</button>
+      </form>
+    <%}else{%> 
+    <p>修改ID </p>
+    <%}%> 
+<% include footer.html %>
