@@ -59,9 +59,9 @@ class MyTab extends React.Component {
           <View style={styles.header}>
             <TouchableOpacity onPress={()=>{
               if(this.state.userid){
-                navigate('PerfectUI',{go_back_key:state.key});
+                navigate(UIName.PerfectUI);
               }else{
-                navigate('LoginUI',{go_back_key:state.key});
+                navigate(UIName.LoginUI);
               }
             }}>
             <View style={styles.personal}>

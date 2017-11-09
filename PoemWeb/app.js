@@ -11,6 +11,7 @@ var home = require('./routes/home');
 var user = require('./routes/user');
 var message = require('./routes/message');
 var feedback = require('./routes/feedback');
+var sms = require('./routes/sms');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/', home);
 app.use('/user', user);
 app.use('/message', message);
 app.use('/feedback', feedback);
+app.use('/sms', sms);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

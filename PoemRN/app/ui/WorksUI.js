@@ -15,77 +15,18 @@
  } from 'react-native';
  // import HTMLView from 'react-native-htmlview';
 
- import pstyles from '../style/PStyles';
- import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
- import Utils from '../utils/Utils';
- import HttpUtil from '../utils/HttpUtil';
- import Emitter from '../utils/Emitter';
- import Global from '../Global';
-
- /**
-  * 作品元素组件
-  */
- class FlatListItem extends React.PureComponent {
-     _onPress = () => {
-         this.props.onPressItem(this.props.id);
-         this.props.navigate('DetailsUI',{id:this.props.id});
-     };
-     renderNode(node, index, siblings, parent, defaultRenderer) {
-         // console.log('@@@@@@name:'+node.name);
-         // console.log('@@@@@@attribs:'+JSON.stringify(node.attribs));
-         if (node.name == 'div') {
-             const specialSyle = node.attribs.style
-             if(specialSyle == 'text-align: center;'){
-               specialSyle = {textAlign:'center',};
-               return (
-                 <Text key={index} style={specialSyle}>
-                   {defaultRenderer(node.children, parent)}
-                 </Text>
-               )
-             }
-           }
-         if(node.name == 'span'){
-           const specialSyle = node.attribs.style
-           if(specialSyle == 'font-size: 1em;'){
-             specialSyle = {fontSize:22,};
-             return (
-               <Text key={index} style={specialSyle}>
-                 {defaultRenderer(node.children, parent)}
-               </Text>
-             )
-           }
-         }
-       }
-     render() {
-         return(
-             <TouchableOpacity
-                 {...this.props}
-                 onPress={this._onPress}
-                 >
-                 <View style={styles.fitem}>
-                   {/* 诗歌 */}
-                   {/* <View style={pstyles.htmlview_bg}>
-                   <HTMLView
-                       style={pstyles.htmlview}
-                       value={this.props.poem}
-                       renderNode={this.renderNode}
-                       />
-                   </View> */}
-                   <View style={styles.poem}>
-                     <Text style={styles.poem_title}>{this.props.title}</Text>
-                     <Text style={styles.poem_content}
-                     >{this.props.content}</Text>
-                   </View>
-                   <View style={styles.fitem_more}>
-                     <Text style={styles.fitem_time}>
-                       {this.props.time}
-                     </Text>
-                   </View>
-                 </View>
-             </TouchableOpacity>
-         );
-     }
- }
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  pstyles,
+  Utils,
+  HttpUtil,
+  Emitter,
+  Global,
+  UIName,
+} from '../AppUtil'
+import WorksListItem from '../custom/WorksListItem';
  /**
   * 我的作品列表
   */
@@ -186,23 +127,22 @@
      * @param id
      * @private
      */
-    _onPressItem = (id: string) => {
+    _onPressItem = (id: string,item:Object) => {
         this.setState((state) => {
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id));
             return {selected}
         });
+        this.props.navigation.navigate(UIName.DetailsUI,{id:item.id});
     };
     // 加载item布局
     _renderItem = ({item}) =>{
         return(
-            <FlatListItem
+            <WorksListItem
                 id={item.id}
                 onPressItem={ this._onPressItem }
                 selected={ !!this.state.selected.get(item.id) }
-                name= { item.name }
-                title={item.title}
-                content={item.content}
+                item={item}
                 time={Utils.dateStr(item.time)}
                 navigate = {this.props.navigation.navigate}
             />
@@ -426,42 +366,6 @@
      right: 15,
      width: 44,
      height: 44,
-   },
-   fitem:{
-       flex:1,
-       padding:10,
-   },
-   fitem_more:{
-     alignItems:'flex-end'
-   },
-   fitem_time:{
-     fontSize:14,
-     color:'#d4d4d4',
-     marginTop:4,
-   },
-   poem:{
-
-   },
-   poem_title:{
-     fontSize:30,
-     textAlign:'center',
-   },
-   poem_content:{
-     fontSize:20,
-     textAlign:'center',
-   },
-   menu:{
-     paddingLeft:60,
-     flexDirection:'row',
-   },
-   menu_item:{
-     flexDirection:'row',
-     padding:10,
-   },
-   menu_font:{
-     fontSize:18,
-     color:'#7b8992',
-     marginLeft:4,
    },
  });
 

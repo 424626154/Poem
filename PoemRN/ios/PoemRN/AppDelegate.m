@@ -18,6 +18,7 @@
 #import <React/RCTLinkingManager.h>
 #import "SplashScreen.h"
 #import <AdSupport/ASIdentifierManager.h>
+#import "RCTHotUpdate.h"
 
 //@interface AppDelegate ()<JPUSHRegisterDelegate>
 //
@@ -41,9 +42,11 @@
                         channel:channel apsForProduction:isProduction advertisingIdentifier:advertisingId];
 //  极光推送end
   NSURL *jsCodeLocation;
-
+  #if DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-
+  #else
+  jsCodeLocation=[RCTHotUpdate bundleURL];
+  #endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"PoemRN"
                                                initialProperties:nil

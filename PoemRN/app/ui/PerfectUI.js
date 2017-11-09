@@ -14,12 +14,16 @@ import ImagePicker from 'react-native-image-crop-picker';
 import DialogSelected from '../utils/AlertSelected';
 const selectedArr = ["拍照", "图库"];
 
-import HttpUtil  from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
-import Global from '../Global';
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-
+import{
+    StyleConfig,
+    HeaderConfig,
+    StorageConfig,
+    pstyles,
+    HttpUtil,
+    Emitter,
+    Global,
+    Utils,
+    } from '../AppUtil';
 const nothead = require('../images/ic_account_circle_black.png');
 const mhead = require('../images/ic_border_color_black.png');
 
@@ -33,7 +37,9 @@ class PerfectUI extends React.Component{
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
+          <TouchableOpacity  onPress={()=>{
+            navigation.goBack()
+          }}>
             <Text style={styles.nav_left}>放弃</Text>
           </TouchableOpacity>
         ),
@@ -58,7 +64,7 @@ class PerfectUI extends React.Component{
   }
   componentDidMount(){
     let user = Global.user;
-    let headurl = {uri:HttpUtil.getHeadurl(user.head)};
+    let headurl = Utils.getHead(user.head);
     let pseudonym = user.pseudonym;
     var userid = user.userid;
     let sheadurl = '';
@@ -116,6 +122,12 @@ class PerfectUI extends React.Component{
       Alert.alert('请输入笔名')
       return;
     }
+    let strlen = Utils.strlen(this.state.pseudonym);
+    // console.log(strlen);
+    if(strlen > 20){
+      Alert.alert('笔名过长')
+      return;
+    }
     if(!this.state.sheadurl){
       Alert.alert('请选择头像')
       return;
@@ -129,7 +141,13 @@ class PerfectUI extends React.Component{
       if(res.code == 0 ){
         Global.user = res.data;
         Emitter.emit(Emitter.UPINFO,res.data);
-        this.props.navigation.goBack();
+        const fui = this.props.navigation.state.params.fui;
+        console.log('------fui:'+fui);
+        if(fui){
+          this.props.navigation.goBack(fui);
+        }else{
+          this.props.navigation.goBack();
+        }
       }else{
         Alert.alert(res.errmsg);
       }

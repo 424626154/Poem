@@ -233,11 +233,11 @@ class PersonalUI extends React.Component{
     )
   }
   _onFollow(){
-      if(!Utils.isLogin(this.props.navigation.navigate))return;
+      if(!Utils.isLogin(this.props.navigation))return;
       this._requestFollow();
   }
   _onChat(){
-    if(!Utils.isLogin(this.props.navigation.navigate))return;
+    if(!Utils.isLogin(this.props.navigation))return;
     this.props.navigation.navigate(UIName.ChatUI,{tuserid:this.state.userid,head:this.state.head,pseudonym:this.state.pseudonym});
   }
   _requestOtherInfo(userid){

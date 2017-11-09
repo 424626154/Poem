@@ -174,7 +174,7 @@ class DetailsUI extends React.Component{
             </TouchableOpacity>
             <TouchableOpacity
               onPress={()=>{
-                if(Utils.isLogin(this.navigate)){
+                if(Utils.isLogin(this.props.navigation)){
                   this.navigate(UIName.CommentUI,{id:this.state.id,cid:0})
                 }
               }}>
@@ -216,7 +216,7 @@ class DetailsUI extends React.Component{
         >
             <TouchableOpacity
               onPress={()=>{
-                if(Utils.isLogin(this.navigate)){
+                if(Utils.isLogin(this.props.navigation)){
                   this.navigate(UIName.CommentUI,{id:this.state.id});
                 }
               }}>
@@ -304,6 +304,9 @@ class DetailsUI extends React.Component{
           selected.set(id, !selected.get(id));
           return {selected}
       });
+      if(Utils.isLogin(this.state.navigation)){
+          this.props.navigate(UIName.CommentUI,{id:this.props.comment.pid,cid:this.props.comment.id,cpseudonym:this.props.comment.pseudonym});
+      }
   };
   _renderItem = ({item}) =>{
       return(
@@ -378,7 +381,7 @@ class DetailsUI extends React.Component{
    * 点赞
    */
   _onLove(){
-    if(!Utils.isLogin(this.navigate)){
+    if(!Utils.isLogin(this.props.navigation)){
         return;
     }
     console.log(this)

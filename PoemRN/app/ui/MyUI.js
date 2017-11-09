@@ -21,6 +21,7 @@ import{
   Emitter,
   HttpUtil,
   PImage,
+  UIName,
 } from '../AppUtil'
 
 import {CustomNav} from '../custom/CustomNav';
@@ -72,9 +73,9 @@ class MyUI extends React.Component {
           <View style={styles.header}>
             <TouchableOpacity onPress={()=>{
               if(this.state.userid){
-                navigate('PerfectUI');
+                navigate(UIName.PerfectUI);
               }else{
-                navigate('LoginUI');
+                navigate(UIName.LoginUI);
               }
             }}>
             <View style={styles.personal}>

@@ -25,6 +25,7 @@ import {
     Storage,
     ImageConfig,
     PImage,
+    UIName,
   } from '../AppUtil';
 const nothead = require('../images/ic_account_circle_black.png');
 
@@ -90,7 +91,7 @@ class Drawer extends React.Component {
             if(this.state.userid){
               navigate('MyUI');
             }else{
-              navigate('LoginUI');
+              navigate(UIName.LoginUI);
             }
           }}>
           <View style={styles.personal}>

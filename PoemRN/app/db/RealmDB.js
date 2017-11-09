@@ -81,14 +81,12 @@ const ChatList = {
   }
 }
 
-const schema1 = [Message,HomePoem,Chat];
-const schema18 = [Message,HomePoem,Chat];
-const schema19 = [Message,HomePoem,Chat,ChatList];
-const schema20 = [Message,HomePoem,Chat,ChatList];
-const schema21 = [Message,HomePoem,Chat,ChatList];
-const schema23 = [Message,HomePoem,Chat,ChatList];
+
+const schema1 = [Message,HomePoem,Chat,ChatList];
 
 const migrationFunction1 =  (oldRealm, newRealm) => {
+  console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
+
   // if (oldRealm.schemaVersion < [待处理版本]) {
   //   name 变动的表名
   //   const oldObjects = oldRealm.objects(name);
@@ -103,29 +101,9 @@ const migrationFunction1 =  (oldRealm, newRealm) => {
   }
 }
 
-const  migrationFunction18 = (oldRealm, newRealm) => {
-    console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
-}
-const  migrationFunction19 = (oldRealm, newRealm) => {
-    console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
-}
-const  migrationFunction20 = (oldRealm, newRealm) => {
-    console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
-}
-const  migrationFunction21 = (oldRealm, newRealm) => {
-    console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
-}
-const  migrationFunction23 = (oldRealm, newRealm) => {
-    console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
-}
 
 const schemas = [
   { schema: schema1, schemaVersion: 1, migration: migrationFunction1 },
-  { schema: schema18, schemaVersion: 18, migration: migrationFunction18 },
-  { schema: schema19, schemaVersion: 19, migration: migrationFunction19 },
-  { schema: schema20, schemaVersion: 20, migration: migrationFunction20 },
-  { schema: schema21, schemaVersion: 21, migration: migrationFunction21 },
-  { schema: schema23, schemaVersion: 23, migration: migrationFunction23 },
 ]
 
 // the first schema to update to is the current schema version

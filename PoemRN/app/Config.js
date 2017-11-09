@@ -48,6 +48,8 @@ ImageConfig.official = official;
 
 var UIName = {}
 UIName.LoginUI = 'LoginUI';
+UIName.ForgetUI = 'ForgetUI';
+UIName.RegisterUI = 'RegisterUI';
 UIName.PersonalUI = 'PersonalUI';
 UIName.DetailsUI = 'DetailsUI';
 UIName.AddPoemUI = 'AddPoemUI';
@@ -58,5 +60,7 @@ UIName.MsgContentUI = 'MsgContentUI';
 UIName.MyUI = 'MyUI';
 UIName.ChatUI = 'ChatUI';
 UIName.FeedbackUI = 'FeedbackUI';
+UIName.PerfectUI = 'PerfectUI';
+UIName.HomeUI = 'HomeUI';
 
 export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig,UIName} ;

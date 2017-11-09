@@ -3,7 +3,7 @@ var crypto = require('crypto');
 var moment = require('moment');
 var http = require('http');
 var alidayuUrl = 'http://dysmsapi.aliyuncs.com/';
-var config = require('../conf/ali')
+var config = require('../conf/aliconf')
 var obj = {
     //系统参数
     SignatureMethod: 'HMAC-SHA1',

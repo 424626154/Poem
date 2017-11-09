@@ -61,8 +61,11 @@ Utils.getHead = function(head){
   let headurl = head?{uri:HttpUtil.getHeadurl(head)}:ImageConfig.nothead;
   return headurl
 }
-
-Utils.isLogin = function(navigate){
+/**
+ * 判断登录
+ */
+Utils.isLogin = function(navigation){
+  let {navigate,state} = navigation;
   var isLogin = false;
   if(Global.user.userid){
     isLogin = true;
@@ -71,21 +74,33 @@ Utils.isLogin = function(navigate){
   }
   return isLogin;
 }
-Utils.isLogin1 = function(ui){
-  var isLogin = false;
-  if(Global.user.userid){
-    isLogin = true;
-  }else{
-      ui.props.navigation.navigate(UIName.LoginUI)
-  }
-  return isLogin;
-}
-
+/**
+ * 获取时间
+ */
 Utils.getTime = function(){
   return new Date().getTime()/1000;
 }
+/**
+ * 获取字符串长度
+ */
+Utils.strlen = function(str){
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        var a = str.charAt(i);
+        if (a.match(/[^\x00-\xff]/ig) != null) {
+            len += 2;
+        }
+        else {
+            len += 1;
+        }
+    }
+    return len;
+}
 
 
+/**
+ * 跳转个人页面
+ */
 export function goPersonalUI(navigate,userid){
     var routeName = UIName.PersonalUI;
     if(Global.user.userid == userid){

@@ -142,7 +142,8 @@ router.post('/actionmsg',function(req,res,next){
   if(!userid||!title||!content){
     ru.resError(res,'参数错误');
   }else{
-    addMessage(type,userid,title,content,extend,function(err,result){
+    var message = new Message(type,userid,title,content,extend);
+    addMessage(message,function(err,result){
         if(err){
           ru.resError(res,err);
         }else{

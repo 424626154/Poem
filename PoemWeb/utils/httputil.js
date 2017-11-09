@@ -1,4 +1,6 @@
 var http = require('http');
+var request = require('request');
+var utils = require('./utils');
 module.exports = {
   sendPost:function(path,data,callback){
       data = JSON.stringify(data); 
@@ -43,7 +45,7 @@ module.exports = {
         });  
         req.write(data + "\n");  
         req.end(); 
-    }
+    },
 }
 
 

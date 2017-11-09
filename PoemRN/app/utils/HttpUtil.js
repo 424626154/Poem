@@ -1,9 +1,10 @@
 var HttpUtil = {};
 
 HttpUtil.USER_LOGIN = 'user/login';
+HttpUtil.USER_REGISTER = 'user/register';
+HttpUtil.USER_FORGET = 'user/forget';
 HttpUtil.USER_UPINFO = 'user/upinfo';
 HttpUtil.USER_INFO = 'user/info';
-HttpUtil.USER_REGISTER = 'user/register';
 HttpUtil.USER_VALIDATE = 'user/validate';
 HttpUtil.USER_FOLLOWS = 'user/follows';
 HttpUtil.USER_OTHERINFO = 'user/otherinfo';
@@ -42,23 +43,29 @@ HttpUtil.post = function(rep_url,body){
   console.log('---request post url:'+rep_url+' body:'+body);
   var that = this;
   return new Promise(function (resolve, reject) {
-    fetch(url,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: body,
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log('---response post  url:'+rep_url+' data:');
-        console.log(responseJson);
-        resolve(responseJson);
-      })
-      .catch((error) => {
-          reject(error)
-      });
+    try {
+      fetch(url,{
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: body,
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log('---response post  url:'+rep_url+' data:');
+          console.log(responseJson);
+          resolve(responseJson);
+        })
+        .catch((error) => {
+            reject(error)
+        });
+    } catch (e) {
+        console.error(e);
+    } finally {
+
+    }
   })
 }
 
@@ -126,7 +133,7 @@ HttpUtil.uploadImageData = function(imagedata){
 
 HttpUtil.getHeadurl = function(url){
   if(!url){
-    return url;
+    return '';
   }
   var baseurl = HttpUtil.BASE_URL;
   var rep_url = 'pimage/file'

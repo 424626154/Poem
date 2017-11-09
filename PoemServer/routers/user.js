@@ -10,59 +10,47 @@ var httputil = require('../utils/httputil');
 var ru = require('../utils/routersutil');
 var logger = require('../utils/log4jsutil').logger(__dirname+'/user.js');
 var {FollowExtend,Message,MessageType} = require('../utils/module');
-
+var jpush = require('../push/jpush');
+var conf_validate = require('../conf/config').server.validate;
+var conf_sms = require('../conf/config').server.sms;
+console.log(conf_validate)
 /* GET user listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
     res.send('user');
 });
 
+function sendCodeSms(type,phone,code,callback){
+	logger.info('---发送短信验证码 type:'+type+' phone:'+phone+' code:'+code);
+	if(conf_sms == 'jpush'){
+		jpush.sendCodeSms(phone,code,function(err,result){
+				if(!err){
+					logger.info(err)
+					userDao.updateJPushSms(phone,type,result.msg_id,function(err,result){
 
-function sendAliSms(phone,code,callback){
-	var data = {  
-       phone:phone,
-       code:code,
-    };  
-    data = JSON.stringify(data);  
-    logger.debug(data);  
-    var opt = {  
-        method: "POST",  
-        host: 'localhost',  
-        port: 3000,  
-        path: "/ali/sendcode",  
-        headers: {  
-            "Content-Type": 'application/json;charset=utf-8',  
-            "Content-Length": data.length,
-        },
-    }; 
-    var req = http.request(opt, function (serverAli) {  
-        if (serverAli.statusCode == 200) {  
-            var body = "";  
-            serverAli
-            .on('data', function (data) { 
-            	body += data; 
-            })  
-                          
-            .on('end', function () { 
-             	// res.send(200, body); 
-             	// console.log('请求sms')
-             	var json_data = JSON.parse(body);
-             	if(json_data.code == 0){
-             		callback(null,json_data.data);   
-             	}else{
-             		callback(new Error(json_data.code),null)  
-             	}     
-            });  
-        }  
-        else {  
-            // res.send(500, "error");  
-            callback(new Error(serverAli.statusCode),null);   
-        }  
-    });  
-    req.write(data + "\n");  
-    req.end();  
+					})
+				}else{
+					logger.error(err)
+				}
+				callback(err,result)
+		});
+		// jpush.sendTemplates(callback);
+	}else if(conf_sms == 'ali'){
+		httputil.sendAliSms(phone,code,function(err,result){
+				if(!err){
+					logger.info(err)
+					userDao.updateAliSms(phone,type,result.RequestId,result.BizId,function(err,result){
+
+					})
+				}else{
+					logger.error(err)
+				}
+				callback(err,result)
+		})
+	}else{
+		callback(conf_sms,'')
+	}
 }
-
 
 /**
  * 登录
@@ -101,12 +89,15 @@ router.post('/login',function(req,res,next){
  */
 router.post('/validate',function(req,res,next){
 	ru.logReq(req);
-	var phone = req.body.phone; 
-	if(!phone){
+	var phone = req.body.phone;
+	var type =  req.body.type;
+	if(!phone||!type){
 		ru.resError(res,'参数错误');
+	}else if(!utils.checkPhone(phone)){
+		ru.resError(res,'请填写正确的手机号格式');
 	}else{
 		var max_time = 60;//秒级
-		userDao.queryValidate(phone,function(err,objs){
+		userDao.queryValidate(phone,type,function(err,objs){
 			if(err){
 				ru.resError(res,err.code);
 			}else{
@@ -118,22 +109,17 @@ router.post('/validate',function(req,res,next){
 					var diff_time =  current_time - validate.time
 					if( diff_time >= max_time){
 						//重新生成
-						loogger.debug('重新生成验证码')
+						logger.debug('重新生成验证码')
 						var code = utils.getCode();
-						userDao.updateValidate(phone,code,current_time,function(err,objs){
+						userDao.updateValidate(phone,type,code,current_time,function(err,objs){
 							if(err){
 								ru.resError(res,err.code);
 							}else{
-								var data = {phone:phone,code:code,time:max_time,max:max_time};
+								var data = {phone:phone,type:type,code:code,time:max_time,max:max_time};
 								ru.resSuccess(res,data)
 								logger.debug('------验证码为:'+code+'------')
-							}
-						})
-						sendAliSms(phone,code,function(err,sms){
-							if(!err){
-								logger.debug('重新生成验证码/ali/sendcode2')
-								userDao.updateValidateSms(phone,sms.RequestId,sms.BizId,function(err,result){
-
+								sendCodeSms(type,phone,code,function(err,sms){
+							
 								})
 							}
 						})
@@ -148,27 +134,24 @@ router.post('/validate',function(req,res,next){
 					//生成
 					var code = utils.getCode();
 					var current_time = utils.getTime();
-					userDao.addValidate(phone,code,current_time,function(err,objs){
+					userDao.addValidate(phone,type,code,current_time,function(err,objs){
 						logger.debug(err)
 						if(err){
 							ru.resError(res,err.code);
 						}else{
 							logger.debug('初始生成验证码/ali/sendcode3')
-							sendAliSms(phone,code,function(err,data){
-								if(!err){
-									userDao.updateValidateSms(phone,data.RequestId,data.BizId,function(err,result){
-
-									})
-								}
-							})
 							var validate ={
 								phone:phone,
 								code:code,
 								time:max_time,
 								max:max_time,
+								type:type,
 							}
 							console.log('------验证码为:'+code+'------')
 							ru.resSuccess(res,validate)
+							sendCodeSms(type,phone,code,function(err,data){
+				
+							})
 						}
 					})
 				}
@@ -189,14 +172,17 @@ router.post('/register',function(req,res,next){
 	var userid = utils.getUserid(phone);
 	if(!phone||!password||!code){
 		ru.resError(res,err);
+	}else if(!utils.checkPhone(phone)){
+		ru.resError(res,'请填写正确的手机号格式');
 	}else{
 		userDao.queryUser(phone,function(err,result){
 			if(err){
 				ru.resError(res,err)
 			}else{
 				if(result.length >0){
-					resError(res,'用户已经注册')
+					ru.resError(res,'用户已经注册')
 				}else{
+					if(conf_validate){
 						userDao.queryValidate(phone,function(err,objs){
 							if(err){
 								ru.resError(res,err);
@@ -235,11 +221,102 @@ router.post('/register',function(req,res,next){
 								}
 							}
 						});
+					}else{
+						userDao.addUser(userid,phone,password,os,function(err,result){
+							if(err){
+								ru.resError(res,err);
+							}else{
+								var title = '注册成功';
+							    var content = '欢迎来到Poem！';
+								var data = {
+									type:0,
+									userid:userid,
+									title:title,
+									content:content,
+									extend:{},
+									};
+								httputil.requstPSPost('/message/actionmsg',data,function(err,result){
+									if(err){
+										logger.error(err)
+									}
+								})
+								var user = result.length > 0 ?result[0]:{};
+								ru.resSuccess(res,user);
+							}
+						});
+					}
 				}
 			}
 		});
 	}
-})
+});
+
+/**
+ * 忘记密码
+ */
+router.post('/forget',function(req,res,next){
+	ru.logReq(req);
+	var phone = req.body.phone; 
+	var password = req.body.password;
+	var code = req.body.code;
+	// var os = req.body.os;
+	// var userid = utils.getUserid(phone);
+	if(!phone||!password||!code){
+		ru.resError(res,err);
+	}else{
+		userDao.queryUser(phone,function(err,result){
+			if(err){
+				ru.resError(res,err)
+			}else{
+				if(result.length >0){
+					if(conf_validate){
+						userDao.queryValidate(phone,2,function(err,objs){
+							if(err){
+								ru.resError(res,err);
+							}else{
+								var length = objs.length;
+								if(length > 0 ){
+									var validate = objs[0];
+									if(validate.phone == phone && validate.code == code){
+											userDao.updateUserPwd(phone,password,function(err,result){
+												if(err){
+													ru.resError(res,err);
+												}else{
+													var data = {
+														phone:phone,
+														passwrod:password,
+													}
+													ru.resSuccess(res,data);
+												}
+											});
+									}else{
+										ru.resError(res,'验证码错误');
+									}
+								}else{
+									ru.resError(res,'验证码错误');
+								}
+							}
+						});
+					}else{
+						userDao.updateUserPwd(phone,password,function(err,result){
+							if(err){
+								ru.resError(res,err);
+							}else{
+								var data = {
+									phone:phone,
+									passwrod:password,
+								}
+								ru.resSuccess(res,data);
+							}
+						});
+					}
+				}else{
+					resError(res,'用户未注册')	
+				}
+			}
+		});
+	}
+});
 /**
  * 修改用户信息
  */
@@ -279,6 +356,9 @@ router.post('/info',function(req,res,next){
 		if(err){
 			ru.resError(res,err);
 		}else{
+			logger.info('------用户信息------')
+			logger.info(result)
+			logger.info('------用户信息------')
 			ru.resSuccess(res,result);
 		}
 	})

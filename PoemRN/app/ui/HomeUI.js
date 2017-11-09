@@ -39,7 +39,7 @@ class HomeUI extends React.Component {
      navigate = null;
      constructor(props) {
          super(props);
-         const { navigate } = this.props.navigation;
+         const {navigate } = this.props.navigation;
          this.navigate = navigate;
          this.state = {
              // 存储数据的状态
@@ -100,7 +100,6 @@ class HomeUI extends React.Component {
           <View style={styles.header_bg}>
             <TouchableOpacity  style={styles.header_left}
             onPress={()=>{
-              console.log('---home this.props.navigation.navigate(DrawerOpen)---')
               this.navigate('DrawerOpen');
             }}>
               <Icon
@@ -114,7 +113,7 @@ class HomeUI extends React.Component {
             <View style={styles.header_right}>
               <TouchableOpacity  style={styles.header_left}
               onPress={()=>{
-                if(!Utils.isLogin(this.navigate))return;
+                if(!Utils.isLogin(this.props.navigation))return;
                 this.navigate(UIName.AddPoemUI);
               }}>
                 <Icon
@@ -244,7 +243,7 @@ class HomeUI extends React.Component {
     * 点赞
     */
   _onLove(item){
-    if(!Utils.isLogin1(this))return;
+    if(!Utils.isLogin(this.props.navigation))return;
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
       id:item.id,

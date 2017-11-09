@@ -14,6 +14,7 @@ import {
   AsyncStorage,
   DeviceEventEmitter,
   Platform,
+  Keyboard,
 } from 'react-native';
 
 import{
@@ -25,6 +26,7 @@ import{
   Global,
   pstyles,
   Storage,
+  UIName,
 } from '../AppUtil'
 /**
  * 注册
@@ -36,7 +38,8 @@ class RegisterUI extends React.Component {
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
+          <TouchableOpacity  onPress={()=>{
+            navigation.goBack()}}>
             <Text style={pstyles.nav_left}>返回</Text>
           </TouchableOpacity>
         ),
@@ -74,11 +77,16 @@ class RegisterUI extends React.Component {
             color={'#1e8ae8'}
           />
           <TextInput
+            ref='phone'
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'手机号'}
             onChangeText={(text) => this.setState({phone:text})}
             value={this.state.phone}
+            keyboardType={'phone-pad'}
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            onSubmitEditing={() => this._focusNextField('password')}
           />
         </View>
         <View style={styles.line}></View>
@@ -90,11 +98,15 @@ class RegisterUI extends React.Component {
             color={'#1e8ae8'}
           />
           <TextInput
+            ref='password'
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'密码'}
             onChangeText={(text) => this.setState({password:text})}
             value={this.state.password}
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            onSubmitEditing={() => this._focusNextField('code')}
           />
         </View>
         <View style={styles.line}></View>
@@ -106,9 +118,12 @@ class RegisterUI extends React.Component {
             color={'#1e8ae8'}
           />
           <TextInput
+            ref='code'
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'验证码'}
+            keyboardType={'numeric'}
+            returnKeyType={'done'}
             onChangeText={(text) => this.setState({code:text})}
             value={this.state.code}
           />
@@ -130,18 +145,19 @@ class RegisterUI extends React.Component {
               this.onRegister();
           }}
         />
-        <View style={styles.other}>
-          <TouchableOpacity onPress={()=>{
-            goBack()
-          }}>
-            <Text style={styles.register}>登录</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.interval}></View>
         </View>
       </View>
     );
   }
-
+  _focusNextField(nextField){
+    if(nextField == 'password'){
+      this.refs.password.focus()
+    }
+    if(nextField == 'code'){
+      this.refs.code.focus()
+    }
+  }
   onRegister(){
     if(!this.state.phone){
       Alert.alert('请输入手机号');
@@ -168,7 +184,9 @@ class RegisterUI extends React.Component {
             var userid = user.userid;
             Storage.saveUserid(userid);
             Emitter.emit(Emitter.LOGIN,user);
-            this.props.navigation.navigate('PerfectUI');
+            const fui = this.props.navigation.state.params.fui;
+            console.log('------fui:'+fui);
+            this.props.navigation.navigate(UIName.PerfectUI,{fui:fui});
         }else{
           Alert.alert(res.errmsg);
         }
@@ -187,6 +205,7 @@ class RegisterUI extends React.Component {
     }
     var json = JSON.stringify({
       phone:this.state.phone,
+      type:1,
     });
     HttpUtil.post(HttpUtil.USER_VALIDATE,json).then((res) => {
         if(res.code == 0){

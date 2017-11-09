@@ -25,6 +25,7 @@ import{
   Global,
   pstyles,
   Storage,
+  UIName,
 } from '../AppUtil';
 
 class LoginUI extends React.Component {
@@ -34,7 +35,9 @@ class LoginUI extends React.Component {
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
+          <TouchableOpacity  onPress={()=>{
+            navigation.goBack()
+          }}>
             <Text style={pstyles.nav_left}>返回</Text>
           </TouchableOpacity>
         ),
@@ -70,11 +73,16 @@ class LoginUI extends React.Component {
             color={'#1e8ae8'}
           />
           <TextInput
+            ref='phone'
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'手机号'}
             onChangeText={(text) => this.setState({phone:text})}
             value={this.state.phone}
+            keyboardType={'phone-pad'}
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            onSubmitEditing={() => this._focusNextField('password')}
           />
         </View>
         <View style={styles.line}></View>
@@ -86,12 +94,14 @@ class LoginUI extends React.Component {
             color={'#1e8ae8'}
           />
           <TextInput
+            ref='password'
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'密码'}
             secureTextEntry = {true}
             onChangeText={(text) => this.setState({password:text})}
             value={this.state.password}
+            returnKeyType={'done'}
           />
         </View>
         <View style={styles.interval}></View>
@@ -106,11 +116,14 @@ class LoginUI extends React.Component {
         />
         <View style={styles.other}>
           <TouchableOpacity onPress={()=>{
-            navigate('RegisterUI')
+            let {state} = this.props.navigation;
+            navigate(UIName.RegisterUI,{fui:state.key})
           }}>
             <Text style={styles.register}>注册</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onForget}>
+          <TouchableOpacity onPress={()=>{
+            navigate(UIName.ForgetUI)
+          }}>
             <Text style={styles.forget}>忘记密码</Text>
           </TouchableOpacity>
         </View>
@@ -118,12 +131,10 @@ class LoginUI extends React.Component {
       </View>
     );
   }
-  onRegister(){
-    Alert.alert('onRegister')
-  }
-
-  onForget(){
-    Alert.alert('onForget')
+  _focusNextField(nextField){
+    if(nextField == 'password'){
+      this.refs.password.focus()
+    }
   }
   _onLogin(){
     if(!this.state.phone){

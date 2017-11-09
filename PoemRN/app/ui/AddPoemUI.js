@@ -13,10 +13,13 @@ import {
   Keyboard,
   ScrollView,
   Dimensions,
+  KeyboardAvoidingView,
+  findNodeHandle,
 } from 'react-native';
 // import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import dismissKeyboard from 'dismissKeyboard';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
   StyleConfig,
@@ -61,30 +64,40 @@ class AddPoemUI extends React.Component {
             userid:Global.user.userid,
             title:'',
             content:'',
+            keyboardHeight:0,
         }
-        this.onGetContentHtml = this.onGetContentHtml.bind(this);
         this.onRelease = this.onRelease.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
        this.props.navigation.setParams({onRelease:this.onRelease});
+       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+       this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
     }
     componentWillUnmount(){
-
+      this.keyboardDidShowListener.remove();
+      this.keyboardDidHideListener.remove();
     }
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
+    <View style={pstyles.container}>
         <TextInput
           style={styles.title}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入标题'}
           onChangeText={(text) => this.setState({title:text})}
           value={this.state.title}
+          returnKeyType={'next'}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this._focusNextField('content')}
         />
         <View style={styles.line}></View>
+        <KeyboardAwareScrollView
+          innerRef={ref => {this.scroll = ref}}
+        >
+          <View>
         <TextInput
+          ref='content'
           style={styles.content}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入内容'}
@@ -93,53 +106,59 @@ class AddPoemUI extends React.Component {
           textAlign={'center'}
           textAlignVertical={'top'}
           value={this.state.content}
+          onChange={({x, y, width, height})=>{
+            // console.log(height)
+          }}
+          onLayout={(event)=>{
+            // console.log('---onLayout---')
+            // this._scrollToInput(ReactNative.findNodeHandle(event.target))
+          }}
+          onSubmitEditing={(event: Event) => {
+            // console.log('---onSubmitEditing--')
+            // console.log(event.nativeEvent)
+            // console.log(event)
+            // console.log(this.state.keyboardHeight)
+            // console.log(this.scroll)
+            // this.scroll.props.scrollToPosition(0, 0)
+          }}
+          onContentSizeChange={(event) => {
+            // console.log(event.nativeEvent.contentSize);
+            // console.log(event.nativeEvent.contentSize.height)
+           }}
+           onScroll={(event)=>{
+            //  console.log('---onScroll--')
+            //  console.log(event)
+           }}
+          onFocus={(event: Event) => {
+            // `bind` the function if you're using ES6 classes
+             this._scrollToInput(ReactNative.findNodeHandle(event.target))
+           }}
         />
-        <KeyboardSpacer/>
-      </ScrollView>
+      </View>
+    </KeyboardAwareScrollView>
+    </View>
     );
   }
-  onEditorInitialized(){
-    this.setFocusHandlers();
-    this.getHTML();
+  _scrollToInput (reactNode: any) {
+    // Add a 'scroll' ref to your ScrollView
+    this.scroll.props.scrollToFocusedInput(reactNode)
   }
-  async getHTML() {
-    const titleHtml = await this.richtext.getTitleHtml();
-    const contentHtml = await this.richtext.getContentHtml();
-    // alert(titleHtml + ' ' + contentHtml)
-  }
-  setFocusHandlers() {
-    this.richtext.setTitleFocusHandler(() => {
-      //alert('title focus');
-    });
-    this.richtext.setContentFocusHandler(() => {
-      //alert('content focus');
-    });
-  }
-  async onGetContentHtml() {
-    const contentHtml = await this.richtext.getContentHtml();
-    if(!contentHtml){
-      Alert.alert('请输入发布内容')
+  _focusNextField(nextField){
+    if(nextField == 'content'){
+      this.refs.content.focus()
     }
-    if(!this.state.userid){
-      Alert.alert('登录后再发布')
-    }
-    var json = JSON.stringify({
-      userid:this.state.userid,
-      poem:contentHtml,
-    });
-    HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
-      if(res.code == 0){
-          var poem = res.data;
-          Emitter.emit(Emitter.ADDPOEM,poem);
-          this.props.navigation.goBack();
-      }else{
-        alert(res.errmsg);
-      }
-    }).catch(err=>{
-      console.error(err);
+  }
+  _keyboardDidShow (e) {  //当键盘弹出的时候要做的事
+    //拿到的值就是键盘的高度
+    let keyboardHeight = e.endCoordinates.height;
+    this.setState({
+      keyboardHeight:keyboardHeight,
     })
-  }
+}
 
+  _keyboardDidHide (e) {   //当键盘收缩的时候要做的事
+    // alert('Keyboard Hidden');
+  }
   onRelease(){
     var title = this.state.title;
     var content = this.state.content;
@@ -212,8 +231,9 @@ const styles = StyleSheet.create({
   },
   title:{
     // height:30,
-    padding:0,
-    fontSize:30,
+    backgroundColor: '#ffffff',
+    padding:4,
+    fontSize:24,
   },
   content:{
     // height:height,

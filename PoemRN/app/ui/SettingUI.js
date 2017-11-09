@@ -154,6 +154,8 @@ import {
    }
    _checkUpdate(){
      checkUpdate(appKey).then(info => {
+       console.log('---checkUpdate---')
+       console.log(info)
       if (info.expired) {
         Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
           {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
@@ -220,12 +222,12 @@ import {
    },
    version:{
      marginTop:10,
-     fontSize:22,
+     fontSize:18,
      color:StyleConfig.C_7B8992,
    },
    logout:{
      marginTop:10,
-     fontSize:22,
+     fontSize:18,
      color:'#ff4040',
    },
  });

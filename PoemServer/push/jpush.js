@@ -1,7 +1,8 @@
 var JPush = require('jpush-sdk');
-var jiguang = require('../conf/jiguang');
+var jiguang = require('../conf/jpushconf');
 var client = JPush.buildClient(jiguang.appKey, jiguang.masterSecret);
 
+var request = require('request')
 var logger = require('../utils/log4jsutil').logger(__dirname+'/jpush.js');
 var {PushType} = require('../utils/module');
 var server = require('../conf/config').server;
@@ -109,5 +110,79 @@ module.exports = {
             }
         }
       }); 
+	},
+
+	// https://api.sms.jpush.cn/v1/codes
+	sendCodeSms:function(phone,code,callback){
+		// Content-Type: application/json
+		// POST https://api.sms.jpush.cn/v1/codes
+		// 	mobile temp_id		
+		let requestData = {
+			mobile:phone,
+			temp_id:1,
+			temp_para:{code:code}
+		}
+		var options = {
+			url:'https://api.sms.jpush.cn/v1/messages',
+			method:'POST',
+			json: true,
+			auth: {
+			    user: jiguang.appKey,
+			    pass: jiguang.masterSecret,
+		    },
+		    headers: {
+		        "content-type": "application/json",
+		    },
+		    body: requestData,
+		}
+		logger.info('---jpusn sms')
+		logger.info('---options')
+		logger.info(options)
+		request(options, function(error, response, body) {
+			logger.info('---request')
+			logger.info(error)
+			logger.info(response.statusCode)
+			logger.info(body)
+		    if (!error && response.statusCode == 200) {
+		    	callback(null,body)
+		    }else{
+		    	if(error){
+		    	  callback(error,'')
+		    	}else{
+		    	  callback(response.statusCode,'')
+		    	}
+		    }
+		}); 
+	},
+
+	sendTemplates(callback){
+		var options = {
+			url:'https://api.sms.jpush.cn/v1/templates/1',
+			method:'GET',
+			json: true,
+			auth: {
+			    user: jiguang.appKey,
+			    pass: jiguang.masterSecret,
+		    },
+		}
+		logger.info('---jpusn sms')
+		logger.info('---options')
+		logger.info(options)
+		request(options, function(error, response, body) {
+			logger.info('---request')
+			logger.info(error)
+			logger.info(response.statusCode)
+			logger.info(body)
+		    if (!error && response.statusCode == 200) {
+		    	callback(null,body)
+		    }else{
+		    	if(error){
+		    	  callback(error,'')
+		    	}else{
+		    	  callback(response.statusCode,'')
+		    	}
+		    }
+		}); 
 	}
+
 }

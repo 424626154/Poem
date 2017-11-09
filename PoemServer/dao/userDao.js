@@ -61,7 +61,7 @@ module.exports = {
         var followme = ' SELECT COUNT(*) AS count FROM '+FOLLOW_TABLE+' WHERE userid = "'+userid+'" AND tstate = 1';
         var follow = 'SELECT follow.fstate,follow.tstate FROM '+FOLLOW_TABLE+' WHERE userid = "'+myid+'" AND fansid = "'+userid+'"';
         var sql = userinfo+';'+myfollow+';'+followme+';'+follow;
-        console.log(sql);
+        // console.log(sql);
         pool.getConnection(function(err, connection) {
             connection.query(sql, function(err, result) {
                 if(err){
@@ -124,42 +124,51 @@ module.exports = {
             });
         });
 	},
-	// 查询验证
-	queryValidate:function(phone,callback){
-		var sql = 'SELECT * FROM validate WHERE phone = ?';
+	// 查询验证 1注册验证码 2修改密码验证码
+	queryValidate:function(phone,type,callback){
+		var sql = 'SELECT * FROM validate WHERE phone = ? AND type = ?';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, phone, function(err, result) {
+            connection.query(sql, [phone,type], function(err, result) {
             	callback(err, result)
                 connection.release();
             });
         });
 	},
 	// 添加验证码
-	addValidate:function(phone,code,time,callback){
+	addValidate:function(phone,type,code,time,callback){
 		console.log('addValidate:'+code)
-		var sql = 'INSERT INTO validate(phone,code,time) VALUES(?,?,?)';
+		var sql = 'INSERT INTO validate(phone,type,code,time) VALUES(?,?,?,?)';
 		pool.getConnection(function(err, connection) {
-            connection.query(sql, [phone,code,time],function(err, result) {
+            connection.query(sql, [phone,type,code,time],function(err, result) {
             	callback(err, result)
                 connection.release();
             });
         });
 	},
 	// 修改验证码
-	updateValidate:function(phone,code,time,callback){
+	updateValidate:function(phone,type,code,time,callback){
 		console.log('updateValidate:'+code+'phone:'+phone)
-		var sql = 'UPDATE validate SET code = ? , time = ? WHERE phone = ?';
+		var sql = 'UPDATE validate SET code = ? , time = ? WHERE phone = ? AND type = ?';
 		pool.getConnection(function(err, connection) {
-            connection.query(sql, [code,time,phone], function(err, result) {
+            connection.query(sql, [code,time,phone,type], function(err, result) {
             	callback(err, result)
                 connection.release();
             });
         });
 	},
-    updateValidateSms:function(phone,RequestId,BizId,callback){
-        var sql = 'UPDATE validate SET RequestId = ? , BizId = ? WHERE phone = ?';
+    updateAliSms:function(phone,type,RequestId,BizId,callback){
+        var sql = 'UPDATE validate SET RequestId = ? , BizId = ? WHERE phone = ? AND type = ?';
         pool.getConnection(function(err, connection) {
-            connection.query(sql, [RequestId,BizId,phone], function(err, result) {
+            connection.query(sql, [RequestId,BizId,phone,type], function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
+    updateJPushSms:function(phone,type,msg_id,callback){
+        var sql = 'UPDATE validate SET msg_id = ? WHERE phone = ? AND type = ?';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [msg_id,phone,type], function(err, result) {
                 callback(err, result)
                 connection.release();
             });
@@ -186,6 +195,15 @@ module.exports = {
         var sql = 'UPDATE user SET os = ?  WHERE userid = ? ';
         pool.getConnection(function(err, connection) {
             connection.query(sql, [os,userid], function(err, result) {
+                callback(err, result)
+                connection.release();
+            });
+        });
+    },
+    updateUserPwd:function(phone,password,callback){
+        var sql = 'UPDATE user SET password = ?  WHERE phone = ? ';
+        pool.getConnection(function(err, connection) {
+            connection.query(sql, [password,phone], function(err, result) {
                 callback(err, result)
                 connection.release();
             });

@@ -6,7 +6,7 @@ var http = require('http');
 var router = express.Router();
 var utils = require('../utils/utils');
 var sms = require('../utils/alisms'); 
-var config = require('../conf/ali')
+var config = require('../conf/aliconf')
 var qs = require('querystring');
 var conf = require('../conf/config')
 var server = conf.server;
@@ -17,8 +17,6 @@ var ResJson = function(){
 }
 // const SMSClient = require('@alicloud/sms-sdk')
 // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
-const accessKeyId = 'LTAIyHDj2l7wpRhA'
-const secretAccessKey = 'POjHoPe8RxpDAxmNFLVkIRDQQtRg5V'
 //初始化sms_client
 // let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 /**

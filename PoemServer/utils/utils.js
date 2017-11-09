@@ -77,5 +77,12 @@ module.exports = {
 	 		}
  		}
 	 	return jsname;
+	 },
+	 /**
+	  * 校验手机号
+	  */
+	 checkPhone:function(phone){
+		 let isphone = (/^1(3|4|5|7|8)\d{9}$/.test(phone));   
+		 return isphone
 	 }
 }

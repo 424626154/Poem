@@ -29,6 +29,7 @@ import MessageUI from './ui/MessageUI';
 import MsgContentUI from './ui/MsgContentUI';
 import ChatUI from './ui/ChatUI';
 import FeedbackUI from './ui/FeedbackUI';
+import ForgetUI from './ui/ForgetUI';
 
 import {Drawer} from './drawer/Drawer';
 
@@ -164,6 +165,9 @@ const AppNavigator = StackNavigator({
   },
   FeedbackUI:{
     screen:FeedbackUI,
+  },
+  ForgetUI:{
+    screen:ForgetUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面
