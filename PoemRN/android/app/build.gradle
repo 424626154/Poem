@@ -151,7 +151,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-update')
     implementation project(':realm')
     implementation project(':react-native-device-info')
     implementation project(':react-native-splash-screen')

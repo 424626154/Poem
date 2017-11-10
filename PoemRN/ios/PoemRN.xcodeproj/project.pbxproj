@@ -27,7 +27,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		1439DE8651E24062902D635C /* libRCTHotUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F6C9B1FC8B48A595A35C30 /* libRCTHotUpdate.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		181A79B00F1844A9BB008DAC /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0F7532BFC44B2C80B31EEE /* libc++.tbd */; };
 		1F17087644B14C3C8FDDADCA /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA352675031642A5B2C4A19C /* libimageCropPicker.a */; };
@@ -610,7 +609,6 @@
 				0A1E59B51E5F4099836327EB /* libRCTActionSheet.a in Frameworks */,
 				F33EFF55C38E42AC8B8201BF /* libRealmReact.a in Frameworks */,
 				181A79B00F1844A9BB008DAC /* libc++.tbd in Frameworks */,
-				1439DE8651E24062902D635C /* libRCTHotUpdate.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
