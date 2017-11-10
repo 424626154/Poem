@@ -1,0 +1,119 @@
+2017-11-10 15:34 +08:00: { host: '127.0.0.1',
+  user: 'root',
+  password: '890503',
+  database: 'poem',
+  port: 3306,
+  multipleStatements: true }
+2017-11-10 15:34 +08:00: Listening on port 3001
+2017-11-10 15:34 +08:00: { phone: '13212345678' }
+2017-11-10 15:34 +08:00: ---post server/admin/user body:{"op":"phone","phone":"13212345678"}
+2017-11-10 15:34 +08:00: {"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+@@@@@@
+2017-11-10 15:34 +08:00: {"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+---response post server/admin/user err: null data:{"op":"phone","userid":"userid_13212345678"}
+
+2017-11-10 15:34 +08:00: abc
+2017-11-10 15:34 +08:00: null
+2017-11-10 15:34 +08:00: { op: 'phone', userid: 'userid_13212345678' }
+2017-11-10 15:34 +08:00: [36m[2017-11-10 15:34:36.976] [DEBUG] logInfo - [39mPOST /user 200
+2017-11-10 15:34 +08:00: [0mPOST /user [32m200 [0m63.989 ms - 3246[0m
+2017-11-10 15:34 +08:00: [36m[2017-11-10 15:34:36.997] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 15:34 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m5.094 ms - -[0m
+2017-11-10 15:34 +08:00: [36m[2017-11-10 15:34:37.007] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+2017-11-10 15:34 +08:00: [0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m2.448 ms - -[0m
+2017-11-10 15:35 +08:00: { phone: '13212345678' }
+---post server/admin/user body:{"op":"phone","phone":"13212345678"}
+2017-11-10 15:35 +08:00: { host: '127.0.0.1',
+  user: 'root',
+  password: '890503',
+  database: 'poem',
+  port: 3306,
+  multipleStatements: true }
+2017-11-10 15:35 +08:00: Listening on port 3001
+2017-11-10 15:35 +08:00: [36m[2017-11-10 15:35:47.406] [DEBUG] logInfo - [39mGET /user 200
+2017-11-10 15:35 +08:00: [0mGET /user [32m200 [0m14.924 ms - 3228[0m
+2017-11-10 15:35 +08:00: [36m[2017-11-10 15:35:47.429] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 15:35 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m4.165 ms - -[0m
+2017-11-10 15:35 +08:00: [36m[2017-11-10 15:35:47.435] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m10.739 ms - -[0m
+2017-11-10 15:38 +08:00: { phone: '13212345678' }
+2017-11-10 15:38 +08:00: ---post server/admin/user body:{"op":"phone","phone":"13212345678"}
+2017-11-10 15:38 +08:00: { host: '127.0.0.1',
+  user: 'root',
+  password: '890503',
+  database: 'poem',
+  port: 3306,
+  multipleStatements: true }
+2017-11-10 15:38 +08:00: Listening on port 3001
+2017-11-10 15:38 +08:00: [36m[2017-11-10 15:38:19.890] [DEBUG] logInfo - [39mGET /user 304
+2017-11-10 15:38 +08:00: [0mGET /user [36m304 [0m28.464 ms - -[0m
+2017-11-10 15:38 +08:00: [36m[2017-11-10 15:38:19.911] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 15:38 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m5.958 ms - -[0m
+2017-11-10 15:38 +08:00: [36m[2017-11-10 15:38:19.914] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m9.129 ms - -[0m
+2017-11-10 15:38 +08:00: { phone: '1321234567' }
+2017-11-10 15:38 +08:00: ---post server/admin/user body:{"op":"phone","phone":"1321234567"}
+2017-11-10 15:38 +08:00: {"code":1,"errmsg":{}}
+2017-11-10 15:38 +08:00: @@@@@@
+{"code":1,"errmsg":{}}
+2017-11-10 15:38 +08:00: ---response post server/admin/user err:{"code":1,"errmsg":{}} data:null
+
+abc
+Error: {"code":1,"errmsg":{}}
+    at IncomingMessage.<anonymous> (/Users/bingbing/Poem/PoemWeb/utils/httputil.js:36:30)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+null
+2017-11-10 15:38 +08:00: [36m[2017-11-10 15:38:41.013] [DEBUG] logInfo - [39mPOST /user 200
+2017-11-10 15:38 +08:00: [0mPOST /user [32m200 [0m90.744 ms - 3489[0m
+2017-11-10 15:38 +08:00: [36m[2017-11-10 15:38:41.029] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 15:38 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m3.420 ms - -[0m
+[36m[2017-11-10 15:38:41.031] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m3.169 ms - -[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:07.005] [DEBUG] logInfo - [39mGET / 304
+2017-11-10 16:00 +08:00: [0mGET / [36m304 [0m22.510 ms - -[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:07.088] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 16:00 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m3.911 ms - -[0m
+[36m[2017-11-10 16:00:07.089] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m4.744 ms - -[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:08.758] [DEBUG] logInfo - [39mGET /user 200
+2017-11-10 16:00 +08:00: [0mGET /user [32m200 [0m4.166 ms - 3228[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:08.771] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+[0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m1.694 ms - -[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:08.777] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m3.856 ms - -[0m
+2017-11-10 16:00 +08:00: { phone: '13212345678' }
+2017-11-10 16:00 +08:00: ---post server/admin/user body:{"op":"phone","phone":"13212345678"}
+2017-11-10 16:00 +08:00: {"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+2017-11-10 16:00 +08:00: @@@@@@
+2017-11-10 16:00 +08:00: {"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+---response post server/admin/user err: null data:{"op":"phone","userid":"userid_13212345678"}
+
+abc
+null
+2017-11-10 16:00 +08:00: { op: 'phone', userid: 'userid_13212345678' }
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:12.983] [DEBUG] logInfo - [39mPOST /user 200
+[0mPOST /user [32m200 [0m55.553 ms - 3246[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:12.999] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+[0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m2.870 ms - -[0m
+2017-11-10 16:00 +08:00: [36m[2017-11-10 16:00:13.001] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+[0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m2.149 ms - -[0m
+2017-11-10 18:44 +08:00: { phone: '13212345678' }
+2017-11-10 18:44 +08:00: ---post server/admin/user body:{"op":"phone","phone":"13212345678"}
+2017-11-10 18:44 +08:00: {"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+2017-11-10 18:44 +08:00: @@@@@@
+{"code":0,"data":{"op":"phone","userid":"userid_13212345678"}}
+---response post server/admin/user err: null data:{"op":"phone","userid":"userid_13212345678"}
+
+abc
+null
+{ op: 'phone', userid: 'userid_13212345678' }
+2017-11-10 18:44 +08:00: [36m[2017-11-10 18:44:26.362] [DEBUG] logInfo - [39mPOST /user 200
+2017-11-10 18:44 +08:00: [0mPOST /user [32m200 [0m97.975 ms - 3246[0m
+2017-11-10 18:44 +08:00: [36m[2017-11-10 18:44:26.483] [DEBUG] logInfo - [39mGET /bootstrap/css/bootstrap.min.css 304
+2017-11-10 18:44 +08:00: [0mGET /bootstrap/css/bootstrap.min.css [36m304 [0m1.810 ms - -[0m
+2017-11-10 18:44 +08:00: [36m[2017-11-10 18:44:26.484] [DEBUG] logInfo - [39mGET /bootstrap/js/bootstrap.min.js 304
+2017-11-10 18:44 +08:00: [0mGET /bootstrap/js/bootstrap.min.js [36m304 [0m1.645 ms - -[0m
