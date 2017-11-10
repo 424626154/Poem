@@ -1,13 +1,16 @@
 var mysql = require('mysql');
-var config = require('../conf/config').config;
+var mysqldb = require('../conf/config').config.mysqldb;
 var $conf = require('../conf/db');
 var logger = require('../utils/log4jsutil').logger(__dirname+'/dao.js');
 
 var dbconf = $conf.mysql;
-if(config.mysqldb == 'docker'){
+if(mysqldb == 'docker'){
 	dbconf = $conf.docker_mysql;
+}else if(mysqldb == 'ali'){
+	dbconf = $conf.ali_mysql;
 }
-console.log(dbconf);
+logger.info('---mysqldb:'+mysqldb)
+logger.info(dbconf);
 // 使用连接池，提升性能
 var pool  = mysql.createPool(dbconf);
 pool.getConnection(function(err, connection) {

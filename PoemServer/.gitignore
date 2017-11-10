@@ -2,3 +2,4 @@ node_modules/
 conf/
 images/
 logs/
+pm2/

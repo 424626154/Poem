@@ -9,8 +9,11 @@ var logger = require('../utils/log4jsutil').logger(__dirname+'/dao.js');
 var dbconf = $conf.mysql;
 if(mysqldb == 'docker'){
 	dbconf = $conf.docker_mysql;
+}else if(mysqldb == 'ali'){
+	dbconf = $conf.ali_mysql;
 }
-logger.info('---连接数据库 类型:'+mysqldb+' 参数:'+JSON.stringify(dbconf));
+logger.info('---mysqldb:'+mysqldb);
+logger.info(dbconf)
 // 使用连接池，提升性能
 var pool  = mysql.createPool(dbconf);
 pool.getConnection(function(err, connection) {

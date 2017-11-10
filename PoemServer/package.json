@@ -5,13 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start":"node app.js",
+    "fstart": "forever start --minUptime 100 --spinSleepTime 1000 app.js",
+    "fstop":"forever stop app.js",
+    "pm2":"pm2 start processes.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@alicloud/sms-sdk": "^1.0.2",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
+    "forever": "^0.15.3",
     "jpush-sdk": "*",
     "log4js": "^2.3.11",
     "moment": "^2.19.1",
