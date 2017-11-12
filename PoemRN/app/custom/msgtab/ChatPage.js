@@ -30,25 +30,19 @@ export default class ChatPage extends React.Component{
   dataContainer = [];
   constructor(props){
     super(props);
+    console.log('---ChatPage()---')
     this.state = {
         // 存储数据的状态
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
-        userid:Global.user.userid,
+        userid:Global.user.userid||'',
     }
   }
   componentDidMount(){
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._parseObserver(obj);
     });
-    let db_chatlist = ChatDao.queryChatLists();
-    console.log('---db_chatlist---')
-    console.log(db_chatlist)
-    this.setState({
-      sourceData:db_chatlist,
-    })
-    this._requestChats();
   }
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners();
@@ -142,6 +136,15 @@ export default class ChatPage extends React.Component{
   _onEndReached = () => {
     console.log('---_onEndReached')
   }
+  _loadChat(){
+    let db_chatlist = ChatDao.queryChatLists();
+    console.log('---db_chatlist---')
+    console.log(db_chatlist);
+    this.setState({
+      sourceData:db_chatlist,
+    })
+    this._requestChats();
+  }
   /**
    * 解析观察者
    */
@@ -226,6 +229,7 @@ export default class ChatPage extends React.Component{
              sourceData: this.dataContainer
            });
         }
+        this.props.reduxMsgRead();
       }else{
         console.log(res.errmsg);
       }

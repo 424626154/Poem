@@ -5,10 +5,13 @@ import { combineReducers } from 'redux';
 
 const initialState = {
 	love: {},
+	num:0,
 };
 
 
-function love(state=initialState, action){
+function papp(state=initialState, action){
+	console.log('~~~~~~~~~~~~~~~papp');
+	console.log(action);
 	switch(action.type){
 		case TYPES.LIKE:
 
@@ -22,6 +25,10 @@ function love(state=initialState, action){
 				...state,
   			love: action.love
 			};
+		case TYPES.MSGREAD: // 初始状态
+			return Object.assign({}, state, {
+				num: action.num,
+			});
 		default:
 			return state;
 	}
@@ -37,7 +44,7 @@ function love(state=initialState, action){
 // export default rootReducer;
 export default function getReducers(navReducer) {
     return combineReducers({
-        // love:love,
+				papp:papp,
         nav: navReducer
     });
 }

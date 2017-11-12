@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
   Platform,
-  AsyncStorage,
   DeviceEventEmitter,
+  NetInfo,
+  BackHandler,
 } from 'react-native';
 import { connect,Provider } from 'react-redux';
-import {addNavigationHelpers} from 'react-navigation';
+import {addNavigationHelpers,NavigationActions} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import JPushModule from 'jpush-react-native';
 
@@ -44,16 +45,34 @@ const mapStateToProps = (state) => ({
 });
 
 class AppRoot extends Component {
+    componentDidMount() {
+      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    }
+    componentWillUnmount() {
+      BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    }
     render() {
+      const { dispatch, nav } = this.props;
+      const navigation = addNavigationHelpers({
+        dispatch:dispatch,
+        state:nav
+      });
         return (
             <AppNavigator
-                navigation={addNavigationHelpers({
-                    dispatch: this.props.dispatch,
-                    state: this.props.nav
-                })}
+                navigation={navigation}
             />
         );
     }
+    onBackPress = () => {
+      console.log('---onBackPress---')
+      const { dispatch, nav } = this.props;
+      console.log(nav);
+      if (nav.index === 0) {
+         return false;
+      }
+      dispatch(NavigationActions.back());
+      return true;
+   };
 }
 
 const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
@@ -70,13 +89,11 @@ export default class App extends Component {
     this._requestMsgRead = this._requestMsgRead.bind(this);
   }
   componentDidMount() {
-    SplashScreen.hide();
-    Storage.getUserid().then(userid=>{
-      if(userid){
-        Global.user.userid = userid;
-        this._requestUserInfo(userid);
-      }
-    });
+    let userid = Storage.getUserid();
+    if(userid){
+      Global.user.userid = userid;
+      this._requestUserInfo(userid);
+    }
     // this.timer = setTimeout(
     //         () => {
     //             this._goHide();
@@ -165,8 +182,19 @@ export default class App extends Component {
 		JPushModule.addGetRegistrationIdListener((registrationId) => {
 			console.log("---JPushModule Device register succeed, registrationId " + registrationId);
 		});
-
-    // SplashScreen.hide();
+    // //检测网络是否连接
+    // NetInfo.isConnected.fetch().done((isConnected)=>{
+    //   console.log('---检测网络是否连接---');
+    //     console.log(isConnected);
+    // });
+    // //    检测网络连接信息
+    // NetInfo.fetch().done((connectionInfo)=>{
+    //     console.log('---检测网络连接信息---');
+    //     console.log(connectionInfo);
+    // });
+    // //监听网络状态改变
+    // NetInfo.addEventListener('change', this.handleConnectivityChange);
+    SplashScreen.hide();
   }
   componentWillUnmount(){
     JPushModule.removeReceiveCustomMsgListener(receiveCustomMsgEvent);
@@ -174,13 +202,38 @@ export default class App extends Component {
 		JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
 		JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent);
     DeviceEventEmitter.removeAllListeners();
+    // NetInfo.removeEventListener('change', this.handleConnectivityChange);
+    console.log('---this.refs.message_rot---')
   }
   render() {
+      console.log('----1212121-----')
+      console.log(this);
       return(
         <Provider store={store}>
             <AppWithNavigationState/>
         </Provider>
         )
+  }
+  onBackPress = () => {
+    // console.log('---onBackPress---')
+    // const { dispatch, nav } = this.props;
+    // console.log("Back pressed", nav);
+    // const activeRoute = nav.routes[nav.index];
+    // if (activeRoute.index === 0) {
+    //   return false;
+    // }
+    // dispatch(NavigationActions.back());
+    // return true;
+   // if (nav.index === 0) {
+   //   return false;
+   // }
+   // dispatch(NavigationActions.back());
+   // return true;
+ };
+  handleConnectivityChange(status) {
+      console.log('status change:' + status);
+      //监听第一次改变后, 可以取消监听.或者在componentUnmount中取消监听
+     NetInfo.removeEventListener('change', this.handleConnectivityChange);
   }
   _setMsgState(){
     let news_num = MessageDao.getUnreadNum();
@@ -343,16 +396,20 @@ export default class App extends Component {
     */
   _savePushId(pushid){
     Storage.savePushId(pushid)
-    Storage.getUserid().then(userid=>{
-      if(userid){
-        this._requestPushId(userid,pushid);
-      }
-    });
+    let userid = Storage.getUserid();
+    if(userid){
+      this._requestPushId(userid,pushid);
+    }
   }
   /**
    * 设置pushid
    */
   _requestPushId(userid,pushid){
+    if(!userid||!pushid){
+      console.log('------_requestPushId error!');
+      return;
+    }
+    console.log('------_requestPushId')
     var os = '';
     if(Platform.OS == 'ios'){
       os = 'ios';
@@ -398,6 +455,12 @@ export default class App extends Component {
     var action = obj.action;
     var param = obj.param;
     switch (action) {
+      case Emitter.LOGIN:
+        let pushid = Storage.getPushId();
+        if(pushid){
+          this._requestPushId(Global.user.userid,pushid);
+        }
+        break;
       case Emitter.READMSG:
       case Emitter.READCHAT:
         this._setMsgState();

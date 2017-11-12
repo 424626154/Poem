@@ -3,14 +3,15 @@ import {
   Platform,
   StyleSheet,
   ScrollView,
+  View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { /*TabNavigator,*/StackNavigator,DrawerNavigator } from 'react-navigation';
+import { TabNavigator,StackNavigator,DrawerNavigator } from 'react-navigation';
 
-// import {LoadUI} from './ui/LoadUI';//加载页
-// import {WorksTab} from './tabs/WorksTab';//作品
-// import {ReadingTab} from './tabs/ReadingTab';//欣赏
-// import {MyTab} from './tabs/MyTab';//我的
+import HomeTab from './tabs/HomeTab';
+import MessageTab from './tabs/MessageTab';
+import MyTab from './tabs/MyTab';
+
 import {AddPoemUI} from './ui/AddPoemUI';//添加诗词
 import {LoginUI} from './ui/LoginUI';
 import {RegisterUI} from './ui/RegisterUI';
@@ -20,12 +21,9 @@ import {CommentUI} from './ui/CommentUI';
 import {PerfectUI} from './ui/PerfectUI';
 import {PersonalUI} from './ui/PersonalUI';
 import {FollowUI} from './ui/FollowUI';
-import {HomeUI} from './ui/HomeUI';
-import {MyUI} from './ui/MyUI';
 import {WorksUI} from './ui/WorksUI';
 import {SettingUI} from './ui/SettingUI';
 import LovesUI from './ui/LovesUI';
-import MessageUI from './ui/MessageUI';
 import MsgContentUI from './ui/MsgContentUI';
 import ChatUI from './ui/ChatUI';
 import FeedbackUI from './ui/FeedbackUI';
@@ -33,73 +31,74 @@ import ForgetUI from './ui/ForgetUI';
 
 import {Drawer} from './drawer/Drawer';
 
-// const Tabs = TabNavigator({
-//   WorksTab: {
-//     screen: WorksTab,
-//     navigationOptions: {
-//         tabBarLabel: '作品',
-//         tabBarIcon: ({ tintColor, focused }) => (
-//           <Icon
-//             name='home'
-//             size={26}
-//             type="MaterialIcons"
-//             color={tintColor}
-//           />
-//         ),
-//       }
-//   },
-//   ReadingTab: {
-//     screen: ReadingTab,
-//     navigationOptions: {
-//         tabBarLabel: '欣赏',
-//         tabBarIcon: ({ tintColor, focused }) => (
-//           <Icon
-//             name='import-contacts'
-//             size={26}
-//             type="MaterialIcons"
-//             color={tintColor}
-//           />
-//         ),
-//       }
-//   },
-//   MyTab: {
-//     screen: MyTab,
-//     navigationOptions: {
-//         tabBarLabel: '我的',
-//         tabBarIcon: ({ tintColor, focused }) => (
-//           <Icon
-//             name='perm-identity'
-//             size={26}
-//             type="MaterialIcons"
-//             color={tintColor}
-//           />
-//         ),
-//       }
-//   }
-// },{
-//     tabBarPosition: 'bottom',
-//     tabBarOptions:{
-//         showIcon: true,
-//         indicatorStyle: {height: 0},
-//         labelStyle:{
-//           margin:0,
-//         }
-//     },
-//     // tabBarVisible:false,
-//     lazy:true,
-// });
-
-
-const DrawerNav = DrawerNavigator({
-  HomeUI: {
-    screen: HomeUI,
+const Tabs = TabNavigator({
+  HomeTab: {
+    screen: HomeTab,
+    navigationOptions: {
+        tabBarLabel: '首页',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='home'
+            size={26}
+            type="MaterialIcons"
+            color={tintColor}
+          />
+        ),
+      }
   },
+  MessageTab: {
+    screen: MessageTab,
+    // navigationOptions: {
+    //     tabBarLabel: '消息',
+    //     tabBarIcon: ({ tintColor, focused }) => (
+    //         <Icon
+    //           name='message'
+    //           size={26}
+    //           type="MaterialIcons"
+    //           color={tintColor}
+    //         />
+    //     ),
+    //   }
+  },
+  MyTab: {
+    screen: MyTab,
+    navigationOptions: {
+        tabBarLabel: '我的',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='perm-identity'
+            size={26}
+            type="MaterialIcons"
+            color={tintColor}
+          />
+        ),
+      }
+  }
 },{
-  drawerWidth: 200,
-  drawerPosition: 'left',
-  contentComponent: props => <Drawer {...props}/>,
-  drawerBackgroundColor: 'transparent'
+    tabBarPosition: 'bottom',
+    tabBarOptions:{
+        showIcon: true,
+        indicatorStyle: {height: 0},
+        labelStyle:{
+          margin:0,
+        },
+    },
+    swipeEnabled:false,
+    // tabBarVisible:false,
+    lazy:true,
 });
+
+
+// const DrawerNav = DrawerNavigator({
+//   HomeUI: {
+//     screen: HomeUI,
+//   },
+// },{
+//   drawerWidth: 200,
+//   drawerPosition: 'left',
+//   contentComponent: props => <Drawer {...props}/>,
+//   drawerBackgroundColor: 'transparent'
+// });
 const AppNavigator = StackNavigator({
   // LoadUI:{
   //   screen: LoadUI,
@@ -108,9 +107,9 @@ const AppNavigator = StackNavigator({
   //   }
   // },
   Main: {
-    screen: DrawerNav,
+    screen: Tabs,
     navigationOptions:{
-      header:null,
+      // header:null,
     }
   },
   AddPoemUI:{
@@ -142,9 +141,6 @@ const AppNavigator = StackNavigator({
   FollowUI:{
     screen:FollowUI,
   },
-  MyUI:{
-    screen:MyUI,
-  },
   WorksUI:{
     screen:WorksUI,
   },
@@ -153,9 +149,6 @@ const AppNavigator = StackNavigator({
   },
   LovesUI:{
     screen:LovesUI,
-  },
-  MessageUI:{
-    screen:MessageUI,
   },
   MsgContentUI:{
     screen:MsgContentUI,
@@ -224,6 +217,13 @@ const styles = StyleSheet.create({
     fontSize:22,
     color:'#d4d4d4',
   },
+  dot:{
+    position: 'absolute',
+    top: -15,
+    right: -20,
+    height:12,
+    width:12,
+  }
 });
 
 export {AppNavigator} ;

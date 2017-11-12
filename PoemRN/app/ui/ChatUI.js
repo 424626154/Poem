@@ -213,9 +213,14 @@ export default class ChatUI extends React.Component{
           chatuid = chats[i].chatuid;
         }
     }
-    ChatDao.setChatRead(rids,1);
-    let num = ChatDao.updateChatListNum(chatuid)
-    Emitter.emit(Emitter.READCHAT,{chatuid:chatuid,num:num})
+    if(chatuid){
+      ChatDao.setChatRead(rids,1);
+      let num = ChatDao.updateChatListNum(chatuid);
+      console.log('---updateChatListNum---')
+      console.log(num);
+      console.log(chatuid)
+      Emitter.emit(Emitter.READCHAT,{chatuid:chatuid,num:num});
+    }
   }
   /**
    * 发送消息

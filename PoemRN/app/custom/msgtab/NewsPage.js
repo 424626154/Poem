@@ -11,6 +11,7 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
+      DeviceEventEmitter,
      } from 'react-native';
 
 import {
@@ -21,34 +22,30 @@ import {
        HttpUtil,
        pstyles,
        MessageDao,
+       ChatDao,
        Emitter,
        goPersonalUI,
      } from '../../AppUtil';
 
 import MessageListItem from '../MessageListItem';
 
-export default class NewsPage extends React.Component{
+class NewsPage extends React.Component{
   // 数据容器，用来存储数据
   dataContainer = [];
   constructor(props){
     super(props);
+    console.log('---NewsPage()---')
     this.state = {
         // 存储数据的状态
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
-        userid:Global.user.userid,
+        userid:Global.user.userid||'',
     }
   }
   componentDidMount(){
-    let msgs = MessageDao.getMessages();
-    if(msgs.length > 0){
-      this.dataContainer = msgs.concat(this.dataContainer);
-      this.setState({
-        sourceData: this.dataContainer
-      });
-    }
-    this._requestMessages();
+    //因为tab采用lazy加载方式，所以第一次需要在此处调用
+      this._loadNews();
   }
   componentWillUnmount(){
 
@@ -94,7 +91,7 @@ export default class NewsPage extends React.Component{
       if(message.state == 0){
         message.state = 1;
         MessageDao.updateMessageState(message);
-        Emitter.emit(Emitter.READMSG);
+        this.props.reduxMsgRead();
       }
       if(message.type == 1||message.type == 2){
         var extend = JSON.parse(message.extend);
@@ -102,7 +99,7 @@ export default class NewsPage extends React.Component{
         console.log(extend);
         var pid = extend.pid;
         if(pid){
-          this.navigate(UIName.DetailsUI,{id:pid});
+          this.props.navigation.navigate(UIName.DetailsUI,{id:pid});
         }
       }else if(message.type == 3){
         var extend = JSON.parse(message.extend);
@@ -111,7 +108,7 @@ export default class NewsPage extends React.Component{
           goPersonalUI(this.props.navigation.navigate,userid);
         }
       }else{
-        this.navigate(UIName.MsgContentUI,{message:message});
+        this.props.navigation.navigate(UIName.MsgContentUI,{message:message});
       }
   };
   _onIconItem = (id: string,message:Object) => {
@@ -119,7 +116,7 @@ export default class NewsPage extends React.Component{
       var extend = JSON.parse(message.extend);
       var userid = extend.userid;
       if(userid){
-        goPersonalUI(this.navigate,userid);
+        goPersonalUI(this.props.navigation.navigate,userid);
       }
     }
   }
@@ -153,21 +150,30 @@ export default class NewsPage extends React.Component{
   };
   //下拉刷新
   _renderRefresh = () => {
-    console.log('---_renderRefresh')
+    console.log('---_renderRefresh');
+    this._requestMessages();
   }
   //上拉刷新
   _onEndReached = () => {
-    console.log('---_onEndReached')
+    console.log('---_onEndReached');
+  }
+  _loadNews(){
+    let msgs = MessageDao.getMessages();
+    this.dataContainer = msgs||[];
+    this.setState({
+      sourceData: this.dataContainer
+    });
+    this._requestMessages();
   }
 
   _requestMessages(){
     console.log('---_requestMessages')
-    console.log(this.state.userid)
-    if(!this.state.userid){
+    console.log(Global.user.userid)
+    if(!Global.user.userid){
       return;
     }
     var json = JSON.stringify({
-      userid:this.state.userid,
+      userid:Global.user.userid,
     });
     HttpUtil.post(HttpUtil.MESSAGE_MESSAGES,json).then(res=>{
       if(res.code == 0){
@@ -187,6 +193,7 @@ export default class NewsPage extends React.Component{
             this._requestMsgRead(reads);
           }
         }
+        this.props.reduxMsgRead();
       }else{
         Alert.alert(res.errmsg);
       }
@@ -197,7 +204,7 @@ export default class NewsPage extends React.Component{
 
   _requestMsgRead(reads){
     var json = JSON.stringify({
-      userid:this.state.userid,
+      userid:Global.user.userid,
       reads:reads
     });
     HttpUtil.post(HttpUtil.MESSAGE_READ,json).then(res=>{
@@ -215,3 +222,5 @@ export default class NewsPage extends React.Component{
 const styles = StyleSheet.create({
 
 });
+
+export default NewsPage;

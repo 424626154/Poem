@@ -6,25 +6,31 @@ import {
         View,
         TouchableOpacity,
         DeviceEventEmitter,
-        AsyncStorage,
         Alert,
       } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {CachedImage} from "react-native-img-cache";
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
-import pstyles from '../style/PStyles';
-import Utils from '../utils/Utils';
-import Global from '../Global';
-import Emitter from '../utils/Emitter';
-import HttpUtil from '../utils/HttpUtil';
+import{
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  pstyles,
+  Utils,
+  Global,
+  Emitter,
+  HttpUtil,
+  PImage,
+  UIName,
+} from '../AppUtil'
 
-const modify = require('../images/ic_border_color_black.png');
-const nothead = require('../images/ic_account_circle_black.png');
+import {CustomNav} from '../custom/CustomNav';
+
+const modify = require('../images/modify.png');
+const nothead = require('../images/nothead.png');
 /**
  * 我的主页
  */
-class MyTab extends React.Component {
+export default class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
         title: '我的',
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -35,27 +41,33 @@ class MyTab extends React.Component {
     navigate = this.props.navigation.navigate;
    constructor(props){
      super(props);
+     console.log('---MyTab()---')
      this.state={
        headurl:nothead,
        pseudonym:'',
-       userid:'',
+       userid:Global.user.userid||'',
        myfollow:0,
        followme:0,
      }
+     this._onStting = this._onStting.bind(this);
+     this._onWorks = this._onWorks.bind(this);
    }
    componentDidMount(){
      this._eventUserInfo();
      DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-        this._analysisObserver(obj);
+        this._parseObserver(obj);
      });
+     console.log('---MyTab() componentDidMount')
    }
    componentWillUnmount(){
      DeviceEventEmitter.removeAllListeners();
+     console.log('---MyTab() componentWillUnmount')
    }
   render() {
     const { state,navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+      {/* <CustomNav {...this.props} title='我的'/> */}
           <View style={styles.header}>
             <TouchableOpacity onPress={()=>{
               if(this.state.userid){
@@ -65,7 +77,7 @@ class MyTab extends React.Component {
               }
             }}>
             <View style={styles.personal}>
-                <CachedImage
+                <PImage
                   style={pstyles.big_head}
                   source={this.state.headurl}
                   />
@@ -82,7 +94,8 @@ class MyTab extends React.Component {
             {this._renderFollow()}
           </View>
         <View style={styles.interval}></View>
-        {this._renderLogout()}
+        {this._renderWorks()}
+        {this._renderItem('设置',this._onStting,false)}
       </View>
     );
   }
@@ -116,6 +129,38 @@ class MyTab extends React.Component {
     }
   }
 
+  _renderItem(title,func,rot){
+    return(
+      <TouchableOpacity onPress={()=>{
+          func();
+      }}>
+      <View>
+      <View style={styles.interval}></View>
+      <View style={styles.item}>
+        <Text style={styles.item_title}>
+          {title}
+        </Text>
+        {this._renderRot(rot)}
+        </View>
+      </View>
+      </TouchableOpacity>
+    )
+  }
+  _renderRot(rot){
+    if(rot){
+      return(
+        <Icon
+          name="brightness-1"
+          style={styles.dot}
+          size={6}
+          type="MaterialIcons"
+          color={"#ff4040"}
+        />
+      )
+    }else{
+      return null
+    }
+  }
   _renderMore(){
     if(this.state.userid){
       return(
@@ -132,26 +177,17 @@ class MyTab extends React.Component {
       )
     }
   }
-  /**
-   * 退出登录
-   */
-  _renderLogout(){
+  _renderWorks(){
     if(this.state.userid){
-      return(
-          <TouchableOpacity onPress={()=>{
-            AsyncStorage.setItem(StorageConfig.USERID,'',(error,result)=>{
-              if (!error) {
-                Global.user.userid = result;
-                Emitter.emit(Emitter.LOGOUT,'');
-              }
-            });
-          }}>
-            <View style={styles.label}>
-                <Text style={styles.logout}>退出登录</Text>
-            </View>
-          </TouchableOpacity>
-      )
+      return(this._renderItem('我的作品',this._onWorks,false))
     }
+  }
+
+  _onWorks(){
+    this.navigate(UIName.WorksUI);
+  }
+  _onStting(){
+    this.navigate(UIName.SettingUI);
   }
   _eventUserInfo(){
     let user = Global.user;
@@ -177,9 +213,12 @@ class MyTab extends React.Component {
   /**
    * 解析观察者
    */
-  _analysisObserver(obj){
+  _parseObserver(obj){
       var action = obj.action;
       var param = obj.param;
+      console.log('------MyTab() _parseObserver')
+      console.log(action)
+      console.log(param)
       switch (action) {
         case Emitter.LOGIN:
         case Emitter.LOGOUT:
@@ -264,7 +303,23 @@ const styles = StyleSheet.create({
     marginTop:10,
     fontSize:StyleConfig.F_12,
     color:StyleConfig.C_D4D4D4,
+  },
+  item:{
+    alignItems:'center',
+    height:40,
+    borderTopWidth:1,
+    borderTopColor:'#d4d4d4',
+    borderBottomWidth:1,
+    borderBottomColor:'#d4d4d4',
+  },
+  item_title:{
+    marginTop:10,
+    fontSize:18,
+    color:StyleConfig.C_7B8992,
+  },
+  dot:{
+    position: 'absolute',
+    top: 10,
+    left: 90,
   }
 });
-
-export {MyTab};

@@ -24,8 +24,8 @@ import{
     Global,
     Utils,
     } from '../AppUtil';
-const nothead = require('../images/ic_account_circle_black.png');
-const mhead = require('../images/ic_border_color_black.png');
+const nothead = require('../images/nothead.png');
+const mhead = require('../images/modify.png');
 
 /**
  * 完善资料

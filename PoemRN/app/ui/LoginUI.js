@@ -11,9 +11,9 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  AsyncStorage,
   DeviceEventEmitter,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 
 import{
@@ -50,11 +50,12 @@ class LoginUI extends React.Component {
       }
     }
     componentDidMount(){
-      Storage.getLastPhone().then(phone=>{
-        this.setState({
-          phone:phone,
-        })
-      })
+      let phone = Storage.getLastPhone();
+      console.log('---- phone:'+phone)
+      this.setState({
+        phone:phone||'',
+        animating:false,
+      });
     }
     componentWillUnmount(){
 
@@ -128,8 +129,24 @@ class LoginUI extends React.Component {
           </TouchableOpacity>
         </View>
         </View>
+        {this._renderLoading()}
       </View>
     );
+  }
+  _renderLoading(){
+    if(this.state.animating){
+      return(
+        <View style={styles.loading}>
+          <ActivityIndicator
+           animating={this.state.animating}
+           style={styles.centering}
+           color="white"
+           size="large"/>
+        </View>
+      )
+    }else{
+      return null;
+    }
   }
   _focusNextField(nextField){
     if(nextField == 'password'){
@@ -145,6 +162,7 @@ class LoginUI extends React.Component {
       Alert.alert('请输入密码');
       return;
     }
+    this.setState({animating:true});
     var json = JSON.stringify({
       phone:this.state.phone,
       password:this.state.password,
@@ -158,13 +176,17 @@ class LoginUI extends React.Component {
           Global.user = user;
           Emitter.emit(Emitter.LOGIN,user);
           Storage.saveUserid(userid);
+          console.log(this);
+          console.log(this.state.phone)
           Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();
       }else{
         Alert.alert(res.errmsg);
       }
+      this.setState({animating:false});
     })
     .catch((error) => {
+      this.setState({animating:false});
       console.error(error);
     });
   }
@@ -219,7 +241,21 @@ const styles = StyleSheet.create({
     marginRight:14,
     marginTop:10,
     marginBottom:10,
-  }
+  },
+  loading:{
+    backgroundColor:'#00000055',
+    position: 'absolute',
+    flex:1,
+    width:Global.width,
+    height:Global.height,
+    alignItems:'center',
+    justifyContent: 'center',
+  },
+  centering: {
+   alignItems: 'center',
+   justifyContent: 'center',
+   padding: 8,
+ },
 });
 
 export {LoginUI};

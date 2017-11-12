@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   DeviceEventEmitter,
-  AsyncStorage,
 } from 'react-native';
 
 import{
@@ -17,6 +16,7 @@ import{
       UIName,
       HttpUtil,
       Emitter,
+      Global,
 } from '../AppUtil';
 
 /**
@@ -59,12 +59,8 @@ class CommentUI extends React.Component{
 
   componentDidMount(){
     this.props.navigation.setParams({_onRelease:this._onRelease})
-    AsyncStorage.getItem('userid',(error,userid)=>{
-      if(!error){
-        this.setState({
-          userid:userid,
-        })
-      }
+    this.setState({
+      userid:Global.user.userid,
     })
     DeviceEventEmitter.addListener('', (data)=>{
     });

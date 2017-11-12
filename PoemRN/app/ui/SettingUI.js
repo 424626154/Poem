@@ -1,7 +1,6 @@
 /**
  * 设置
  */
- // 登录
  import React from 'react';
  import { Button,Icon } from 'react-native-elements';
  import {
@@ -11,16 +10,16 @@
    Alert,
    TouchableOpacity,
    TextInput,
-   AsyncStorage,
    DeviceEventEmitter,
    Platform,
+   ActivityIndicator,
  } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 import {
   StyleConfig,
   HeaderConfig,
-  StorageConfig,
+  Storage,
   UIName,
   HttpUtil,
   Emitter,
@@ -28,6 +27,7 @@ import {
   pstyles,
   HomePoemDao,
   MessageDao,
+  ChatDao,
 } from '../AppUtil';
 
  class SettingUI extends React.Component {
@@ -46,12 +46,19 @@ import {
        super(props);
        this.state={
           userid:'',
-          version:'版本信息'
+          version:'版本信息',
+          animating:false,
        }
      }
      componentDidMount(){
         let user = Global.user;
-        var version = '版本信息:'+'Bate_'+DeviceInfo.getVersion()
+        let type = ''
+        if(AppConf.DNV = AppConf.DEBUG){
+            type = 'Debug_';
+        }else if(AppConf.DNV = AppConf.ALI){
+            type = 'Bate_';
+        }
+        var version = '版本信息:'+type+DeviceInfo.getVersion()
         this.setState({
           userid:user.userid,
           version:version,
@@ -72,6 +79,7 @@ import {
         {this._renderClear()}
         <View style={styles.interval}></View>
         {this._renderLogout()}
+        {this._renderLoading()}
        </View>
      );
    }
@@ -118,22 +126,29 @@ import {
      if(this.state.userid){
        return(
            <TouchableOpacity onPress={()=>{
-             AsyncStorage.setItem(StorageConfig.USERID,'',(error,result)=>{
-               if (!error) {
-                 Global.user.userid = result;
-                 Emitter.emit(Emitter.LOGOUT,'');
-                 this.setState({
-                   userid:'',
-                 })
-                 this.props.navigation.goBack();
-               }
-             });
+             this._requestLogout();
            }}>
              <View style={styles.label}>
                  <Text style={styles.logout}>退出登录</Text>
              </View>
            </TouchableOpacity>
        )
+     }
+   }
+
+   _renderLoading(){
+     if(this.state.animating){
+       return(
+         <View style={styles.loading}>
+           <ActivityIndicator
+            animating={this.state.animating}
+            style={styles.centering}
+            color="white"
+            size="large"/>
+         </View>
+       )
+     }else{
+       return null;
      }
    }
    _checkUpdate(){
@@ -146,9 +161,17 @@ import {
     * 清空缓存
     */
    _onClear(){
+     this.setState({
+       animating:true,
+     });
      HomePoemDao.deleteAll();
      MessageDao.deleteAll();
+     ChatDao.deleteAllChat();
+     ChatDao.deleteAllChatList();
      Emitter.emit(Emitter.CLEAR,'');
+     this.setState({
+       animating:false,
+     });
      Alert.alert(
            '清除缓存',
            '操作完成',
@@ -157,7 +180,35 @@ import {
            ]
          )
    }
-
+   _requestLogout(){
+     this.setState({animating:true});
+     if(!Global.user.userid){
+        this.props.navigation.goBack();
+        this.setState({animating:false});
+        return;
+     }
+     var json = JSON.stringify({
+       userid:Global.user.userid,
+     })
+     HttpUtil.post(HttpUtil.USER_LOGOUT,json).then(res=>{
+       if(res.code == 0){
+         Global.user.userid = '';
+         this.setState({
+           userid:'',
+         });
+         console.log(Storage)
+         Storage.saveUserid('');
+         this.props.navigation.goBack();
+         Emitter.emit(Emitter.LOGOUT,'');
+       }else{
+         Alert.alert(res.errmsg);
+       }
+       this.setState({animating:false});
+     }).catch(err=>{
+       this.setState({animating:false});
+       console.error(err);
+     })
+   }
  }
 
  const styles = StyleSheet.create({
@@ -186,6 +237,20 @@ import {
      fontSize:18,
      color:'#ff4040',
    },
+   loading:{
+     backgroundColor:'#00000055',
+     position: 'absolute',
+     flex:1,
+     width:Global.width,
+     height:Global.height,
+     alignItems:'center',
+     justifyContent: 'center',
+   },
+   centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
  });
 
  export {SettingUI};

@@ -1,6 +1,12 @@
+import {
+    NetInfo,
+} from 'react-native';
+import AppConf from '../AppConf';
+
 var HttpUtil = {};
 
 HttpUtil.USER_LOGIN = 'user/login';
+HttpUtil.USER_LOGOUT = 'user/logout';
 HttpUtil.USER_REGISTER = 'user/register';
 HttpUtil.USER_FORGET = 'user/forget';
 HttpUtil.USER_UPINFO = 'user/upinfo';
@@ -35,9 +41,15 @@ HttpUtil.MESSAGE_MESSAGES = 'message/messages';
 HttpUtil.MESSAGE_READ = 'message/read';
 HttpUtil.MESSAGE_FEEDBACK = 'message/feedback';
 
-HttpUtil.BASE_URL = 'http://192.168.1.8:3000';
+HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
+console.log('---http url :'+HttpUtil.BASE_URL);
 
 HttpUtil.post = function(rep_url,body){
+  //检测网络是否连接
+  // NetInfo.isConnected.fetch().done((isConnected)=>{
+  //   console.log('---检测网络是否连接---');
+  //     console.log(isConnected);
+  // });
   var baseurl = HttpUtil.BASE_URL;
   var url = baseurl+'/'+rep_url;
   console.log('---request post url:'+rep_url+' body:'+body);

@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
       position: 'absolute',
       width:14,
       height:14,
-      top: -2,
-      right: -2,
+      top: 0,
+      right: 0,
   },
   msg_num:{
     color:StyleConfig.C_FFFFFF,

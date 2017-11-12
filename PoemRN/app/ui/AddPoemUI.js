@@ -8,7 +8,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  AsyncStorage,
   DeviceEventEmitter,
   Keyboard,
   ScrollView,
@@ -31,11 +30,6 @@ import {
   Global,
 } from '../AppUtil';
 
-
-const bold = require('../images/ic_format_bold_black.png');
-const italic = require('../images/ic_format_italic_black.png');
-const align_left = require('../images/ic_format_align_left_black.png');
-const align_center = require('../images/ic_format_align_center_black.png');
 
 const {width, height} = Dimensions.get('window');
 

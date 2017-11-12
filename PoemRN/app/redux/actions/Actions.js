@@ -1,6 +1,10 @@
 'use strict';
 import * as TYPES from './ActionTypes';
-import HttpUtil from '../../utils/HttpUtil';
+import{
+      HttpUtil,
+      MessageDao,
+      ChatDao,
+    }from '../../AppUtil';
 export function onLike(body){
   return (dispatch) => {
     HttpUtil.post(HttpUtil.POEM_LOVEPOEM,body).then((result)=>{
@@ -13,5 +17,19 @@ export function onLike(body){
     }).catch((err)=>{
       console.error(err);
     })
+  }
+}
+export function onMsgRead(){
+  return (dispatch) => {
+      let news_num = MessageDao.getUnreadNum();
+      let chat_nume = ChatDao.getAllUnreadNum();
+      let num = news_num + chat_nume;
+      let action = {
+        type:TYPES.MSGREAD,
+        num:num,
+      }
+      console.log('--------onMsgRead')
+      console.log(action)
+      dispatch(action);
   }
 }

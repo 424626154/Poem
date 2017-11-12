@@ -13,6 +13,7 @@ class HomePoemDao{
     return Global.user.userid||'';
   }
   addHomePoems(homepoems){
+    let temp_chats = [];
     try {
       realm.write(() => {
         for(var i = 0 ; i < homepoems.length ; i++){
@@ -33,12 +34,13 @@ class HomePoemDao{
                 time:temp_homepoem.time,
             };
           realm.create(RealmName.HomePoem, msg);
+          temp_chats[i] = msg;
         }
       });
     } catch (e) {
       console.log(e);
     } finally {
-
+      return temp_chats;
     }
   }
   updateHomePoemLove(homepoem){

@@ -27,7 +27,7 @@ import {
     PImage,
     UIName,
   } from '../AppUtil';
-const nothead = require('../images/ic_account_circle_black.png');
+const nothead = require('../images/nothead.png');
 
 class Drawer extends React.Component {
   constructor(props) {
@@ -46,12 +46,11 @@ class Drawer extends React.Component {
     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
        this._analysisObserver(obj);
     });
-    Storage.getUserid().then(userid=>{
-      if(userid){
-        Global.user.userid = userid;
-      }
-      this._eventUserInfo();
-    });
+    let userid = Storage.getUserid();
+    if(userid){
+      Global.user.userid = userid;
+    }
+    this._eventUserInfo();
     this._onHome = this._onHome.bind(this);
     this._onPerson = this._onPerson.bind(this);
     this._onWorks = this._onWorks.bind(this);

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
   DeviceEventEmitter,
-  AsyncStorage,
 } from 'react-native';
 // import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -18,11 +17,6 @@ import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
 import HttpUtil  from '../utils/HttpUtil';
 import Emitter from '../utils/Emitter';
 import Global from '../Global';
-
-const bold = require('../images/ic_format_bold_black.png');
-const italic = require('../images/ic_format_italic_black.png');
-const align_left = require('../images/ic_format_align_left_black.png');
-const align_center = require('../images/ic_format_align_center_black.png');
 
 /**
  * 修改作品
@@ -69,28 +63,6 @@ class ModifyPoemUI extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      {/* <RichTextEditor
-          ref={(r)=>this.richtext = r}
-          style={styles.richText}
-          contentInset={{right: 0, left: 0}}
-          bounces={false}
-          hiddenTitle={true}
-          enableOnChange={true}
-          contentPlaceholder={this.state.placeholder}
-          initialContentHTML={this.state.value}
-          editorInitializedCallback={() => this.onEditorInitialized()}
-          />
-        <View style={styles.toolbar}>
-          <RichTextToolbar
-            style={{backgroundColor:'#ffffff', borderTopWidth: 1,borderTopColor:'#d4d4d4'}}
-            getEditor={() => this.richtext}
-            iconTint='#d4d4d4'
-            selectedButtonStyle={{backgroundColor:'#0f88eb'}}
-            selectedIconTint={'#ffffff'}
-            actions={['bold','italic','justifyLeft','justifyCenter']}
-            iconMap={{bold:bold,italic:italic,justifyLeft:align_left,justifyCenter:align_center}}
-            />
-        </View> */}
         <TextInput
           style={styles.title}
           underlineColorAndroid={'transparent'}

@@ -26,7 +26,7 @@ import {
   UIName,
 } from '../AppUtil';
 
-const nothead = require('../images/ic_account_circle_black.png');
+const nothead = require('../images/nothead.png');
 
 
 class PersonalUI extends React.Component{

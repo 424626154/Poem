@@ -104,7 +104,7 @@ Utils.strlen = function(str){
 export function goPersonalUI(navigate,userid){
     var routeName = UIName.PersonalUI;
     if(Global.user.userid == userid){
-      routeName = UIName.MyUI;
+      return;
     }
     if(navigate){
       navigate(routeName,{userid:userid});

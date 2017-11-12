@@ -205,6 +205,18 @@
 
      }
    }
+   deleteAllChat(){
+     try {
+       realm.write(() => {
+          let all = realm.objects(RealmName.Chat);
+          realm.delete(all);
+       });
+     } catch (e) {
+         console.error(e);
+     } finally {
+
+     }
+   }
    /**
     * 添加私信列表组
     */
@@ -359,21 +371,44 @@
      return objs;
    }
    updateChatListNum(chatuid){
+     console.log('---updateChatListNum---')
      let lastnum = 0;
      try {
         realm.write(()=>{
           let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'" AND read = 0';
-          let num = realm.objects(RealmName.Chat).filter(filtered).length;
-          realm.create(RealmName.ChatList, {
-            chatuid: chatuid,
-            num:num,
-          }, true);
+          console.log(filtered)
+          let num = realm.objects(RealmName.Chat).filtered(filtered).length;
+          let filtered1 = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
+          let chalists = realm.objects(RealmName.ChatList).filtered(filtered1).slice();
+          let rid = '';
+          if(chalists.length > 0){
+            rid = chalists[0].rid;
+          }
+          if(rid){
+            realm.create(RealmName.ChatList, {
+              rid: rid,
+              num:num,
+            }, true);
+          }
           lastnum = num;
-        })
+        });
      } catch (e) {
-       console.log()
+       console.error(e)
      } finally {
        return lastnum;
+     }
+   }
+
+   deleteAllChatList(){
+     try {
+       realm.write(() => {
+          let all = realm.objects(RealmName.ChatList);
+          realm.delete(all);
+       });
+     } catch (e) {
+         console.error(e);
+     } finally {
+
      }
    }
  }

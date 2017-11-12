@@ -53,7 +53,7 @@ export default class AlertSelected extends Component {
                         left: middleLeft,
                         ...Platform.select({
                             ios:{
-                                bottom:40,
+                                bottom:4,
                             },
                         }),
                         alignItems: "center",
@@ -66,6 +66,7 @@ export default class AlertSelected extends Component {
                             }),
                         }]
                     }]}>
+                      <View>
                         <View style={styles.content}>
                         <View style={styles.tipTitleView}>
                             <Text style={styles.tipTitleText}>{this.state.title}</Text>
@@ -74,6 +75,7 @@ export default class AlertSelected extends Component {
                             this.entityList.map((item, i) => this.renderItem(item, i))
                         }
                         </View>
+                        <View style={{height:10}}></View>
                         <TouchableHighlight
                             style={styles.button}
                             underlayColor={'#f0f0f0'}
@@ -81,6 +83,7 @@ export default class AlertSelected extends Component {
                         >
                             <Text style={styles.buttonText}>取消</Text>
                         </TouchableHighlight>
+                      </View>
                     </Animated.View>
                 </View>
             );
@@ -193,9 +196,9 @@ export default class AlertSelected extends Component {
           if (entityList && entityList.length > 0) {
               let len = entityList.length;
               if (len === 1) {
-                  this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180}, this.in);
+                  this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180+60}, this.in);
               } else if (len === 2) {
-                  this.setState({title: title, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236}, this.in);
+                  this.setState({title: title, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236+60}, this.in);
               }
           }
       }

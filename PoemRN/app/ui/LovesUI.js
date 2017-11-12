@@ -5,7 +5,6 @@ import {
         View,
         TouchableOpacity,
         DeviceEventEmitter,
-        AsyncStorage,
         Alert,
         FlatList,
       } from 'react-native';

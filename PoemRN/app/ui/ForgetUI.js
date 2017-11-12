@@ -11,7 +11,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  AsyncStorage,
   DeviceEventEmitter,
   Platform,
   Keyboard,

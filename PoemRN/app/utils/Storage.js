@@ -2,63 +2,67 @@
 /**
  * 本地缓存数据
  */
-import React, {
-     AsyncStorage
-}from 'react-native';
+import StorageDao from '../db/StorageDao';
 import {StorageConfig} from '../Config'
 class Storage {
 
 }
-Storage.saveUserid =  async function(userid){
+Storage.saveUserid =  function(userid){
   try {
-      await AsyncStorage.setItem(StorageConfig.USERID, userid);
-      console.log('saveUserid success: ',userid);
+      let value = StorageDao.setItem(StorageConfig.USERID,userid);
+      console.log(value);
   } catch (error) {
       console.error(error);
   }
 }
-Storage.getUserid = async function(){
-  try {// try catch 捕获异步执行的异常
-      var userid = '';
-      var value = await AsyncStorage.getItem(StorageConfig.USERID);
-      if (value !== null){
-          console.log('getUserid success: ' ,value);
-          userid = value;
-      } else {
-          console.log('getUserid no data');
-      }
+
+Storage.getUserid = function(){
+  try {
+      let userid = StorageDao.getItem(StorageConfig.USERID);
       return userid;
   } catch (error) {
       console.error(error);
   }
 }
 
-Storage.savePushId =  async function(pushid){
+Storage.savePushId = function(pushid){
   try {
-      await AsyncStorage.setItem(StorageConfig.PUSHIID, pushid);
-      console.log('savePushId success: ',pushid);
+      let value = StorageDao.setItem(StorageConfig.PUSHIID,pushid);
+      console.log(value)
   } catch (error) {
       console.error(error);
   }
 }
-Storage.saveUser = async function(userid,user){
+Storage.getPushId = function(){
   try {
-    var temp_user = await AsyncStorage.getItem(userid);
-    if (temp_user !== null){
+      let pushid = StorageDao.getItem(StorageConfig.PUSHIID);
+      console.log('---Storage.getPushId : ' ,pushid);
+      return pushid;
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.saveUser =  function(userid,user){
+  try {
+    console.log('---Storage.saveUser :'+userid+ 'user:')
+    console.log(user)
+    var temp_user = StorageDao.getItem(userid);
+    if (temp_user){
         temp_user = JSON.parse(temp_user)
         if(temp_user.userid == userid){
           for(var key in user){
                temp_user.key = userid[key];
                console.log(key)
           }
-          console.log(temp_user)
           console.log(userid)
-          await AsyncStorage.setItem(userid, JSON.stringify(user));
+          console.log(temp_user)
+          StorageDao.setItem(userid, JSON.stringify(user));
           console.log('saveUser success: ',user);
         }
     } else {
       user.userid = userid;
-      await AsyncStorage.setItem(userid, JSON.stringify(user));
+      StorageDao.setItem(userid, JSON.stringify(user));
       console.log('saveUser no user success: ',user);
     }
   } catch (error) {
@@ -66,23 +70,20 @@ Storage.saveUser = async function(userid,user){
   }
 }
 
-Storage.saveLastPhone =  async function(phone){
+Storage.saveLastPhone = function(phone){
+  console.log('---Storage.saveLastPhone: '+phone);
   try {
-      await AsyncStorage.setItem(StorageConfig.LAST_PHONE, phone);
-      console.log('saveLastPhone success: ',phone);
+      let value = StorageDao.setItem(StorageConfig.LAST_PHONE,phone);
+      console.log('saveLastPhone success: '+value);
   } catch (error) {
       console.error(error);
   }
 }
 
-Storage.getLastPhone = async function(){
-  try {// try catch 捕获异步执行的异常
-      var value = await AsyncStorage.getItem(StorageConfig.LAST_PHONE);
-      if (value !== null){
-          console.log('getLastPhone success: ' ,value);
-      } else {
-          console.log('getLastPhone no data');
-      }
+Storage.getLastPhone = function(){
+  try {
+      let value = StorageDao.getItem(StorageConfig.LAST_PHONE);
+      console.log('getLastPhone success: ' +value);
       return value;
   } catch (error) {
       console.error(error);

@@ -16,16 +16,18 @@ class HomeListItem extends React.PureComponent {
         this.props.onPressItem(this.props.id);
     };
     render() {
+      let item = this.props.item;
         return(
             <TouchableOpacity
-                {...this.props}
+                key={item.rid}
+                // {...this.props}
                 onPress={this._onPress}
             >
             <View style={styles.fitem}>
               {/* 个人信息 */}
               <TouchableOpacity
                 onPress={()=>{
-                  this.props.onPersonal(this.props.item.userid);
+                  this.props.onPersonal(item.userid);
                 }}>
               <View style={styles.fitem_header}>
                 <PImage
@@ -34,7 +36,7 @@ class HomeListItem extends React.PureComponent {
                   />
                 <View style={styles.fitem_header_info}>
                   <Text style={styles.fitem_name}>
-                    {this.props.pseudonym}
+                    {item.pseudonym}
                   </Text>
                   <Text style={styles.fitem_time}>
                     {this.props.time}
@@ -50,14 +52,14 @@ class HomeListItem extends React.PureComponent {
                   numberOfLines={8}
                   ellipsizeMode='tail'
                 >
-                  {this.props.content}
+                  {item.content}
                 </Text>
               </View>
               {/* menu */}
               <View style={styles.menu}>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.onComment(this.props.item)
+                      this.props.onComment(item)
                     }}>
                     <View style={styles.menu_item}>
                       <Icon
@@ -67,13 +69,13 @@ class HomeListItem extends React.PureComponent {
                         color={'#7b8992'}
                         />
                         <Text style={styles.menu_font}>
-                          {this.renderCommentnum(this.props.commentnum)}
+                          {this.renderCommentnum(item.commentnum)}
                         </Text>
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.onLove(this.props.item);
+                      this.props.onLove(item);
                     }}>
                     <View style={styles.menu_item}>
                       <Icon
@@ -83,7 +85,7 @@ class HomeListItem extends React.PureComponent {
                         color={this._renderLoveColor()}
                         />
                         <Text style={styles.menu_font}>
-                          {this.renderLivenum(this.props.lovenum)}
+                          {this.renderLivenum(item.lovenum)}
                         </Text>
                     </View>
                   </TouchableOpacity>

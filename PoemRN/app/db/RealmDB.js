@@ -81,9 +81,18 @@ const ChatList = {
   }
 }
 
+const Storage = {
+  name:RealmName.Storage,
+  primaryKey: 'rid',
+  properties:{
+    rid:{type: 'string', default: ''},
+    key:{type: 'string', default: ''},
+    value:{type: 'string', default: ''},
+  }
+}
 
 const schema1 = [Message,HomePoem,Chat,ChatList];
-
+const schema2 = [Message,HomePoem,Chat,ChatList,Storage];
 const migrationFunction1 =  (oldRealm, newRealm) => {
   console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
 
@@ -100,10 +109,13 @@ const migrationFunction1 =  (oldRealm, newRealm) => {
 
   }
 }
-
+const migrationFunction2 =  (oldRealm, newRealm) => {
+  console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
+}
 
 const schemas = [
   { schema: schema1, schemaVersion: 1, migration: migrationFunction1 },
+  { schema: schema2, schemaVersion: 2, migration: migrationFunction2 },
 ]
 
 // the first schema to update to is the current schema version

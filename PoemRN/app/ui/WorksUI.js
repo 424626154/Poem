@@ -11,7 +11,6 @@
    Alert,
    FlatList,
    DeviceEventEmitter,
-   AsyncStorage,
  } from 'react-native';
  // import HTMLView from 'react-native-htmlview';
 
@@ -60,17 +59,13 @@ import WorksListItem from '../custom/WorksListItem';
          DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
             this._analysisObserver(obj);
          });
-         AsyncStorage.getItem(StorageConfig.USERID,(error,userid)=>{
-           if(!error){
-             this.setState({
-               userid:userid,
-             });
-             if(userid){
-               // this._queryPoems();
-               this._requestNewestPoem();
-             }
-           }
-         })
+         this.setState({
+           userid:Global.user.userid,
+         });
+         if(Global.user.userid){
+           // this._queryPoems();
+           this._requestNewestPoem();
+         }
      }
      componentWillUnmount(){
        DeviceEventEmitter.removeAllListeners();

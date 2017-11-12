@@ -29,7 +29,6 @@ const logger = store => next => action => {
 }
 const middlewares = [logger,thunk.withExtraArgument()];
 const middleware = applyMiddleware(...middlewares);
-
 let store = createStore(rootReducer(navReducer), {}, middleware);
 
 export default store;

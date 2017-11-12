@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   TextInput,
   DeviceEventEmitter,
-  AsyncStorage,
   FlatList,
   ScrollView,
 } from 'react-native';
