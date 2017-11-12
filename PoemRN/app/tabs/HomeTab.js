@@ -12,7 +12,6 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
-      AsyncStorage,
       DeviceEventEmitter,
      } from 'react-native';
 import HomeListItem from '../custom/HomeListItem';
@@ -33,12 +32,21 @@ import {
 } from '../AppUtil';
 
 
-class HomeUI extends React.Component {
+export default class HomeTab extends React.Component {
+  static navigationOptions = ({navigation}) => ({
+        title: '首页',
+        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTitleStyle:HeaderConfig.headerTitleStyle,
+        headerStyle:HeaderConfig.headerStyle,
+        headerLeft:null,
+     });
      // 数据容器，用来存储数据
      dataContainer = [];
      navigate = null;
      constructor(props) {
          super(props);
+         console.log('---HomeTab()---')
+         console.log(Global.user)
          const {navigate } = this.props.navigation;
          this.navigate = navigate;
          this.state = {
@@ -68,7 +76,6 @@ class HomeUI extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      {this._renderNav()}
       <FlatList
                 data={ this.state.sourceData }
                 extraData={ this.state.selected }
@@ -151,21 +158,15 @@ class HomeUI extends React.Component {
    };
    // 加载item布局
    _renderItem = ({item}) =>{
-      let headurl = Utils.getHead(item.head);
+       let headurl = Utils.getHead(item.head);
        return(
            <HomeListItem
                id={item.id}
                onPressItem={ this._onPressItem }
                selected={ !!this.state.selected.get(item.id) }
-               pseudonym={ item.pseudonym }
                headurl={headurl}
-               title={item.title}
-               content={item.content}
                time={Utils.dateStr(item.time)}
-               lovenum={item.lovenum}
-               commentnum={item.commentnum}
                item={item}
-               navigate = {this.navigate}
                onLove={this._onLove}
                onComment={this._onComment}
                onPersonal={this._onPersonal}
@@ -201,7 +202,7 @@ class HomeUI extends React.Component {
 
    // 上拉加载更多
    _onEndReached = () => {
-     if(this.state.refreshing){
+     if(this.state.refreshing||1 == 1){
        return;
      }
      this.setState({refreshing: true});
@@ -218,11 +219,11 @@ class HomeUI extends React.Component {
          if(res.code == 0){
              var poems = res.data;
               if(poems.length > 0){
-                this.dataContainer = this.dataContainer.concat(poems);
+                let temp_pems = HomePoemDao.addHomePoems(poems);
+                this.dataContainer = this.dataContainer.concat(temp_pems);
                 this.setState({
                   sourceData: this.dataContainer
                 });
-                HomePoemDao.addHomePoems(poems);
               }
          }else{
            Alert.alert(res.errmsg);
@@ -303,19 +304,17 @@ class HomeUI extends React.Component {
 
   _initPoems(){
     let homepoems = HomePoemDao.getHomePoems();
-    // console.log('---homepoems---');
-    // console.log(homepoems);
+    console.log('---_initPoems homepoems---');
+    console.log(homepoems);
     if(homepoems.length > 0){
       this.dataContainer = homepoems.concat(this.dataContainer);
-      this.setState({
-        sourceData: this.dataContainer,
-        userid:Global.user.userid,
-      });
     }else{
-      this.setState({
-        userid:Global.user.userid,
-      });
+      this.dataContainer = [];
     }
+    this.setState({
+      sourceData: this.dataContainer,
+      userid:Global.user.userid,
+    });
     this._requestInitAllPoem(homepoems);
   }
   /**
@@ -355,11 +354,11 @@ class HomeUI extends React.Component {
          if(res.code == 0){
              var poems = res.data;
               if(poems.length > 0){
-                this.dataContainer = poems.concat(this.dataContainer);
+                let tepm_poems = HomePoemDao.addHomePoems(poems);
+                this.dataContainer = tepm_poems.concat(this.dataContainer);
                 this.setState({
                   sourceData: this.dataContainer
                 });
-                HomePoemDao.addHomePoems(poems);
               }
          }else{
            Alert.alert(res.errmsg);
@@ -387,12 +386,14 @@ class HomeUI extends React.Component {
     HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
         if(res.code == 0){
             var poems = res.data;
+            console.log('---_requestNewestAllPoem---')
+            console.log(poems)
              if(poems.length > 0){
-               this.dataContainer = poems.concat(this.dataContainer);
+               let temp_pems = HomePoemDao.addHomePoems(poems);
+               this.dataContainer = temp_pems.concat(this.dataContainer);
                this.setState({
                  sourceData: this.dataContainer
                });
-               HomePoemDao.addHomePoems(poems);
              }
         }else{
           Alert.alert(res.errmsg);
@@ -409,6 +410,9 @@ class HomeUI extends React.Component {
   _parseObserver(obj){
     var action = obj.action;
     var param = obj.param;
+    console.log('------HomeTab() _parseObserver')
+    console.log(action)
+    console.log(param)
     switch (action) {
       case Emitter.LOGIN:
         this._initPoems();
@@ -424,11 +428,7 @@ class HomeUI extends React.Component {
         this._eventDeletePoem(id);
         break;
       case Emitter.CLEAR:
-        this.dataContainer = [];
-        this.setState({
-          sourceData: this.dataContainer,
-        });
-        this._requestNewestAllPoem();
+        this._initPoems();
         break;
       // case Emitter.DRAWER_CLOSE:
       //   this.props.navigation.navigate('DrawerClose');
@@ -482,5 +482,3 @@ const styles = StyleSheet.create({
     color:'#d4d4d4',
   },
 });
-
-export {HomeUI};

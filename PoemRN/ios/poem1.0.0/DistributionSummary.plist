@@ -10,8 +10,6 @@
 				<string>armv7</string>
 				<string>arm64</string>
 			</array>
-			<key>bitcode</key>
-			<true/>
 			<key>certificate</key>
 			<dict>
 				<key>SHA1</key>
@@ -29,8 +27,6 @@
 						<string>armv7</string>
 						<string>arm64</string>
 					</array>
-					<key>bitcode</key>
-					<true/>
 					<key>certificate</key>
 					<dict>
 						<key>SHA1</key>
@@ -42,8 +38,6 @@
 					</dict>
 					<key>name</key>
 					<string>QBImagePicker.framework</string>
-					<key>symbols</key>
-					<true/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
@@ -58,8 +52,6 @@
 						<string>armv7</string>
 						<string>arm64</string>
 					</array>
-					<key>bitcode</key>
-					<true/>
 					<key>certificate</key>
 					<dict>
 						<key>SHA1</key>
@@ -71,8 +63,6 @@
 					</dict>
 					<key>name</key>
 					<string>RSKImageCropper.framework</string>
-					<key>symbols</key>
-					<true/>
 					<key>team</key>
 					<dict>
 						<key>id</key>
@@ -88,8 +78,6 @@
 				<string>ZERU4NU5ED.com.sbb.poem</string>
 				<key>aps-environment</key>
 				<string>production</string>
-				<key>beta-reports-active</key>
-				<true/>
 				<key>com.apple.developer.team-identifier</key>
 				<string>ZERU4NU5ED</string>
 				<key>get-task-allow</key>
@@ -100,12 +88,10 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>51594e18-1d2f-4daf-aa52-157b30218d99</string>
+				<string>02ec36cf-8a7b-411e-817b-64b3946a3776</string>
 				<key>name</key>
-				<string>iOS Team Store Provisioning Profile: com.sbb.poem</string>
+				<string>iOS Team Ad Hoc Provisioning Profile: com.sbb.poem</string>
 			</dict>
-			<key>symbols</key>
-			<true/>
 			<key>team</key>
 			<dict>
 				<key>id</key>
