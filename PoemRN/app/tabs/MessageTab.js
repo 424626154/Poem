@@ -31,7 +31,7 @@ import MessageTabBar from '../custom/msgtab/MessageTabBar';
 import TabBarIcon from '../custom/TabBarIcon';
 
 import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions'
+import * as Actions from '../redux/actions/Actions';
 
 class MessageTab extends Component {
   static navigationOptions = ({navigation}) => ({

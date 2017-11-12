@@ -17,7 +17,7 @@ class TabBarIcon extends React.Component{
       super(props);
     }
     componentDidMount(){
-  
+
     }
     componentWillUpdate(){
     }
@@ -35,8 +35,6 @@ class TabBarIcon extends React.Component{
       )
     }
     _renderRot(){
-      console.log('---_renderRot---')
-      console.log(this.props)
         if(this.props.papp.num > 0){
           return(
             <View style={styles.dot}>

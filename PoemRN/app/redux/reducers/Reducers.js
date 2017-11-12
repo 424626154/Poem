@@ -10,8 +10,6 @@ const initialState = {
 
 
 function papp(state=initialState, action){
-	console.log('~~~~~~~~~~~~~~~papp');
-	console.log(action);
 	switch(action.type){
 		case TYPES.LIKE:
 

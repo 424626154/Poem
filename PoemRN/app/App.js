@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { connect,Provider } from 'react-redux';
 import {addNavigationHelpers,NavigationActions} from 'react-navigation';
+import * as Actions from './redux/actions/Actions'
+
 import SplashScreen from 'react-native-splash-screen';
 import JPushModule from 'jpush-react-native';
 
@@ -94,12 +96,6 @@ export default class App extends Component {
       Global.user.userid = userid;
       this._requestUserInfo(userid);
     }
-    // this.timer = setTimeout(
-    //         () => {
-    //             this._goHide();
-    //         },
-    //         3000
-    //     );
 
 		if(Platform.OS == 'android'){
       JPushModule.getInfo((map) => {
@@ -206,8 +202,6 @@ export default class App extends Component {
     console.log('---this.refs.message_rot---')
   }
   render() {
-      console.log('----1212121-----')
-      console.log(this);
       return(
         <Provider store={store}>
             <AppWithNavigationState/>

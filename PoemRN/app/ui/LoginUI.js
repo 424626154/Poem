@@ -176,8 +176,6 @@ class LoginUI extends React.Component {
           Global.user = user;
           Emitter.emit(Emitter.LOGIN,user);
           Storage.saveUserid(userid);
-          console.log(this);
-          console.log(this.state.phone)
           Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();
       }else{
@@ -188,6 +186,7 @@ class LoginUI extends React.Component {
     .catch((error) => {
       this.setState({animating:false});
       console.error(error);
+        Alert.alert(error);
     });
   }
 

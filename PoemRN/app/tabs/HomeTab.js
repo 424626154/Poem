@@ -15,7 +15,7 @@ import {
       DeviceEventEmitter,
      } from 'react-native';
 import HomeListItem from '../custom/HomeListItem';
-
+import * as Actions from '../redux/actions/Actions';
 import {
   StyleConfig,
   HeaderConfig,
@@ -65,13 +65,16 @@ export default class HomeTab extends React.Component {
       DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
          this._parseObserver(obj);
       });
-      // if(Global.user.userid){
-      //   this._requestUserInfo(userid);
-      // }
+      this.timer = setTimeout(
+      () => {
+        let { dispatch } = this.props.navigation;
+        dispatch(Actions.onMsgRead());
+       },500);
       this._initPoems();
     }
     componentWillUnmount(){
       DeviceEventEmitter.removeAllListeners();
+      this.timer && clearTimeout(this.timer);
     }
   render() {
     return (

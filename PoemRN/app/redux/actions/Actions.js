@@ -28,7 +28,7 @@ export function onMsgRead(){
         type:TYPES.MSGREAD,
         num:num,
       }
-      console.log('--------onMsgRead')
+      console.log('---Redux Actions onMsgRead()')
       console.log(action)
       dispatch(action);
   }
