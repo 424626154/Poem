@@ -117,7 +117,7 @@ class PersonalUI extends React.Component{
           selected.set(id, !selected.get(id));
           return {selected}
       });
-      this.props.navigation.navigate(UIName.DetailsUI,{id:this.props.id});
+      this.props.navigation.navigate(UIName.DetailsUI,{id:id});
   };
   _renderItem = ({item}) =>{
       return(

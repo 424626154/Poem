@@ -9,6 +9,7 @@
     View,
     TouchableOpacity,
  } from 'react-native';
+import { SocialIcon } from 'react-native-elements';
 
  import {
        StyleConfig,
