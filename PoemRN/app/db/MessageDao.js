@@ -16,6 +16,7 @@ class MessageDao{
     return Global.user.userid||'';
   }
   addMessages(messages){
+    let msgs = [];
     try {
       realm.write(() => {
         for(var i = 0 ; i < messages.length ; i++){
@@ -33,12 +34,13 @@ class MessageDao{
                 time:temp_msg.time,
             };
           realm.create(RealmName.Message, msg);
+          msgs[i] = msg;
         }
       });
     } catch (e) {
       console.log(e);
     } finally {
-
+      return msgs;
     }
   }
   updateMessageState(message){

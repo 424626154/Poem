@@ -4,10 +4,10 @@ AppConf = {
 AppConf.DEBUG = 'debug';
 AppConf.ALI = 'ali';
 
-AppConf.ENV = AppConf.DEBUG;
-// AppConf.ENV = AppConf.ALI;
+// AppConf.ENV = AppConf.DEBUG;
+AppConf.ENV = AppConf.ALI;
 
-AppConf.DEBUG_IP = '192.168.1.8';
+AppConf.DEBUG_IP = '192.168.1.3';
 AppConf.ALI_IP = '182.92.167.29';
 AppConf.HOST = 9001;
 AppConf.IP = '';

@@ -179,8 +179,8 @@ class NewsPage extends React.Component{
       if(res.code == 0){
         var messages = res.data;
         if(messages.length > 0){
-          MessageDao.addMessages(messages);
-          this.dataContainer = messages.concat(this.state.sourceData);
+          let msgs = MessageDao.addMessages(messages);
+          this.dataContainer = msgs.concat(this.state.sourceData);
           this.setState({
             sourceData: this.dataContainer
           });

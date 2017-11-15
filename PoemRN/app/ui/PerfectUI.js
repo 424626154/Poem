@@ -108,6 +108,7 @@ class PerfectUI extends React.Component{
               placeholder={'请输入笔名'}
               onChangeText={(text) => this.setState({pseudonym:text})}
               value={this.state.pseudonym}
+              returnKeyType={'done'}
             />
         </View>
         <DialogSelected ref={(dialog)=>{

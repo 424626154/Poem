@@ -1111,12 +1111,18 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZERU4NU5ED;
+						DevelopmentTeam = 4A8M5JDLSQ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = ZERU4NU5ED;
+						DevelopmentTeam = 4A8M5JDLSQ;
 						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 0;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1770,7 +1776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				DEVELOPMENT_TEAM = 4A8M5JDLSQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1812,7 +1818,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				DEVELOPMENT_TEAM = 4A8M5JDLSQ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1853,7 +1859,7 @@
 				CODE_SIGN_ENTITLEMENTS = PoemRN/PoemRN.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				DEVELOPMENT_TEAM = 4A8M5JDLSQ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1876,7 +1882,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sbb.poem;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sbb.hpoem;
 				PRODUCT_NAME = PoemRN;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1889,7 +1895,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PoemRN/PoemRN.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				DEVELOPMENT_TEAM = 4A8M5JDLSQ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1912,7 +1918,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sbb.poem;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sbb.hpoem;
 				PRODUCT_NAME = PoemRN;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

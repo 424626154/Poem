@@ -13,6 +13,7 @@
    DeviceEventEmitter,
    Platform,
    ActivityIndicator,
+   Linking,
  } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
@@ -29,6 +30,8 @@ import {
   MessageDao,
   ChatDao,
 } from '../AppUtil';
+
+import FirIm from '../utils/FirIm';
 
  class SettingUI extends React.Component {
    static navigationOptions = ({navigation}) => ({
@@ -62,6 +65,19 @@ import {
         this.setState({
           userid:user.userid,
           version:version,
+          update:false,
+        });
+        FirIm.queryVersion().then((ver)=>{
+          if(ver.versionShort != DeviceInfo.getVersion()
+          || ver.build != DeviceInfo.getBuildNumber()){
+            this.setState({update:true});
+          }else{
+            this.setState({update:false});
+          }
+          // console.log(ver.versionShort)
+          // console.log(ver.build );
+          // console.log(DeviceInfo.getVersion());
+          // console.log(DeviceInfo.getBuildNumber());
         });
      }
      componentWillUnmount(){
@@ -93,9 +109,26 @@ import {
        }}>
          <View style={styles.label}>
              <Text style={styles.version}>{this.state.version}</Text>
+             {this._renderRot(this.state.update)}
          </View>
        </TouchableOpacity>
      )
+   }
+   _renderRot(rot){
+       if(rot){
+         return(
+           <View style={styles.dot}>
+             <Icon
+               name="brightness-1"
+               size={6}
+               type="MaterialIcons"
+               color={"#ff4040"}
+             />
+           </View>
+         )
+       }else{
+         return null;
+       }
    }
    _renderFeedback(){
      return(
@@ -152,7 +185,33 @@ import {
      }
    }
    _checkUpdate(){
-
+     FirIm.queryVersion().then(ver=>{
+       if(ver.versionShort != DeviceInfo.getVersion()
+       || ver.build != DeviceInfo.getBuildNumber()){
+         this.setState({update:true});
+         let fsize = ver.binary.fsize;
+         let size = Math.floor((fsize/(1024*1024))*100)/100;
+         console.log(size)
+         let alertMsg = '检测到有新版本,是否升级？\n'+
+         '更新日志:\n'+
+         ver.changelog+'\n'+
+         '版本号:'+ver.versionShort+'\n'+
+         '包大小:'+size+'M';
+         Alert.alert(
+         '版本检测',
+         alertMsg,
+         [
+           {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+           {text: '升级', onPress: () => {
+             Linking.openURL(ver.update_url).catch(err => console.error('An error occurred', err));
+           }},
+         ]
+        );
+       }else{
+         this.setState({update:false});
+         Alert.alert('当前已是最新版本');
+       }
+     })
   };
    _onFeedback(){
      this.props.navigation.navigate(UIName.FeedbackUI);
@@ -251,6 +310,13 @@ import {
     justifyContent: 'center',
     padding: 8,
   },
+  dot:{
+    position: 'absolute',
+    top: 20,
+    right:80,
+    height:12,
+    width:12,
+  }
  });
 
  export {SettingUI};
