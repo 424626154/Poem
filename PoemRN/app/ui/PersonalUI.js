@@ -80,10 +80,16 @@ class PersonalUI extends React.Component{
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.personal}>
+            <TouchableOpacity
+              onPress={()=>{
+                this._onPhoto();
+              }}
+              >
               <PImage
                 style={pstyles.big_head}
                 source={this.state.headurl}
                 />
+              </TouchableOpacity>
               <View style={styles.head_bg}>
                 <Text style={styles.name}>
                   {this.state.pseudonym}
@@ -231,6 +237,9 @@ class PersonalUI extends React.Component{
             />
       </View>
     )
+  }
+  _onPhoto(){
+    this.props.navigation.navigate(UIName.PhotoUI,{photo:this.state.headurl});
   }
   _onFollow(){
       if(!Utils.isLogin(this.props.navigation))return;

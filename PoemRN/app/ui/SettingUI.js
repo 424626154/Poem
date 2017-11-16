@@ -185,6 +185,14 @@ import FirIm from '../utils/FirIm';
      }
    }
    _checkUpdate(){
+     if(Platform.OS == 'ios'&&//appstore 关闭版本更新
+       AppConf.IOS_CHANNEL == AppConf.APPSTORE){
+         return;
+       }
+     if(Platform.OS == 'android'&&//应用宝 关闭版本更新
+       AppConf.ANDROID_CHANNEL == AppConf.YIYONGBAO){
+         return;
+       }
      FirIm.queryVersion().then(ver=>{
        if(ver.versionShort != DeviceInfo.getVersion()
        || ver.build != DeviceInfo.getBuildNumber()){

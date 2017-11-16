@@ -13,9 +13,9 @@
 			<key>certificate</key>
 			<dict>
 				<key>SHA1</key>
-				<string>1A0E1B0A8C5B21E7477DE2CFFFFE941A2501D249</string>
+				<string>C1B39C1B815AFC0F05B65207D87987C7E7CBCE78</string>
 				<key>dateExpires</key>
-				<string>2017/12/28</string>
+				<string>2018/11/16</string>
 				<key>type</key>
 				<string>iOS Distribution</string>
 			</dict>
@@ -30,9 +30,9 @@
 					<key>certificate</key>
 					<dict>
 						<key>SHA1</key>
-						<string>1A0E1B0A8C5B21E7477DE2CFFFFE941A2501D249</string>
+						<string>C1B39C1B815AFC0F05B65207D87987C7E7CBCE78</string>
 						<key>dateExpires</key>
-						<string>2017/12/28</string>
+						<string>2018/11/16</string>
 						<key>type</key>
 						<string>iOS Distribution</string>
 					</dict>
@@ -55,9 +55,9 @@
 					<key>certificate</key>
 					<dict>
 						<key>SHA1</key>
-						<string>1A0E1B0A8C5B21E7477DE2CFFFFE941A2501D249</string>
+						<string>C1B39C1B815AFC0F05B65207D87987C7E7CBCE78</string>
 						<key>dateExpires</key>
-						<string>2017/12/28</string>
+						<string>2018/11/16</string>
 						<key>type</key>
 						<string>iOS Distribution</string>
 					</dict>
@@ -88,7 +88,7 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>02ec36cf-8a7b-411e-817b-64b3946a3776</string>
+				<string>6c10394b-cd59-413f-a824-91359acc76c8</string>
 				<key>name</key>
 				<string>iOS Team Ad Hoc Provisioning Profile: com.sbb.poem</string>
 			</dict>

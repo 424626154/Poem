@@ -62,6 +62,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "launch_320x568.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },

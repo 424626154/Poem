@@ -62,5 +62,6 @@ UIName.FeedbackUI = 'FeedbackUI';
 UIName.PerfectUI = 'PerfectUI';
 UIName.SettingUI = 'SettingUI';
 UIName.WorksUI = 'WorksUI';
+UIName.PhotoUI = 'PhotoUI';
 
 export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig,UIName} ;

@@ -17,7 +17,8 @@ export default class PImage extends React.Component{
   render(){
     // console.log('----PImage render---')
     // console.log(this.props)
-       if(typeof(this.props.source) === "number"){
+       if(typeof(this.props.source) === "number"
+        ||this.props.source == undefined){
          return(
            <Image
                style={this.props.style}

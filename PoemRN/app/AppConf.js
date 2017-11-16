@@ -3,9 +3,13 @@ AppConf = {
 }
 AppConf.DEBUG = 'debug';
 AppConf.ALI = 'ali';
+AppConf.APPSTORE = 'appstore';
+AppConf.YIYONGBAO = 'yingyongbao';
+AppConf.ENV = AppConf.DEBUG;
+// AppConf.ENV = AppConf.ALI;
 
-// AppConf.ENV = AppConf.DEBUG;
-AppConf.ENV = AppConf.ALI;
+AppConf.IOS_CHANNEL = AppConf.APPSTORE
+AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO
 
 AppConf.DEBUG_IP = '192.168.1.3';
 AppConf.ALI_IP = '182.92.167.29';

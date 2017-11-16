@@ -93,6 +93,20 @@ class HomePoemDao{
       }
    }
 
+   deleteHomePoems(){
+     try {
+       realm.write(() => {
+          let filtered = 'account = "'+this.isAccount()+'"' ;
+          console.log('--- HomePoemDao() deleteHomePoems filtered:'+filtered)
+          let all = realm.objects(RealmName.HomePoem).filtered(filtered);
+          realm.delete(all);
+       });
+     } catch (e) {
+         console.error(e);
+     } finally {
+
+     }
+   }
    deleteAll(){
      try {
        realm.write(() => {
@@ -105,7 +119,6 @@ class HomePoemDao{
 
      }
    }
-
 }
 
 export default new HomePoemDao();

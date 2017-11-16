@@ -70,6 +70,7 @@ export default class HomeTab extends React.Component {
         let { dispatch } = this.props.navigation;
         dispatch(Actions.onMsgRead());
        },500);
+      HomePoemDao.deleteHomePoems();
       this._initPoems();
     }
     componentWillUnmount(){
