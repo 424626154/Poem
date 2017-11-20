@@ -20,7 +20,7 @@ export default class PhotoUI extends React.Component{
     let photo = params.photo;
     console.log('-----PhotoUI() photo:',photo);
     this.state = {
-      photo:photo,
+      photo:Utils.getHead(photo+'_big'),
     }
   }
   render(){

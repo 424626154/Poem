@@ -1,3 +1,6 @@
+/**
+ * 完善资料
+ */
 import React from 'react';
 import {
         StyleSheet,
@@ -9,6 +12,10 @@ import {
         TextInput,
         DeviceEventEmitter,
       } from 'react-native';
+import {connect} from 'react-redux';
+import * as Actions from '../redux/actions/Actions';
+import BaseUI from '../BaseUI';
+
 import ImagePicker from 'react-native-image-crop-picker';
 
 import DialogSelected from '../utils/AlertSelected';
@@ -21,16 +28,12 @@ import{
     pstyles,
     HttpUtil,
     Emitter,
-    Global,
     Utils,
     } from '../AppUtil';
 const nothead = require('../images/nothead.png');
 const mhead = require('../images/modify.png');
 
-/**
- * 完善资料
- */
-class PerfectUI extends React.Component{
+class PerfectUI extends BaseUI{
   static navigationOptions = ({navigation}) => ({
         title: '完善资料',
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -52,21 +55,22 @@ class PerfectUI extends React.Component{
   _imageObj = {};
   constructor(props){
     super(props)
+    console.log('------PerfectUI() constructor');
+    let papp = this.props.papp;
+    this.papp = papp||{};
     this.state = {
         headurl:nothead,
         sheadurl:'',
         pseudonym:'',
-        userid:'',
     }
     this.showAlertSelected = this.showAlertSelected.bind(this);
     this.callbackSelected = this.callbackSelected.bind(this);
     this._onSave = this._onSave.bind(this);
   }
   componentDidMount(){
-    let user = Global.user;
+    let user = this.papp.user;
     let headurl = Utils.getHead(user.head);
     let pseudonym = user.pseudonym;
-    var userid = user.userid;
     let sheadurl = '';
     if(user.head){
       sheadurl = user.head;
@@ -74,7 +78,6 @@ class PerfectUI extends React.Component{
     this.setState({
       headurl:headurl,
       pseudonym:pseudonym,
-      userid:userid,
       sheadurl:sheadurl,
     })
     this.props.navigation.setParams({_onSave:this._onSave})
@@ -136,12 +139,13 @@ class PerfectUI extends React.Component{
     var json = JSON.stringify({
       head:this.state.sheadurl,
       pseudonym:this.state.pseudonym,
-      userid:this.state.userid,
+      userid:this.papp.userid,
     })
     HttpUtil.post(HttpUtil.USER_UPINFO,json).then((res)=>{
       if(res.code == 0 ){
-        Global.user = res.data;
-        Emitter.emit(Emitter.UPINFO,res.data);
+        let user = res.data;
+        let { dispatch } = this.props.navigation;
+        dispatch(Actions.raUpInfo(user.userid,user.head,user.pseudonym));
         const fui = this.props.navigation.state.params.fui;
         console.log('------fui:'+fui);
         if(fui){
@@ -188,8 +192,8 @@ class PerfectUI extends React.Component{
     }
     takePhoto(){
       ImagePicker.openCamera({
-        width: 400,
-        height: 400,
+        width: 800,
+        height: 800,
         cropping: true
       }).then(image => {
         this.setState({
@@ -201,8 +205,8 @@ class PerfectUI extends React.Component{
     }
     pickMultiple(){
       ImagePicker.openPicker({
-        width: 400,
-        height: 400,
+        width: 800,
+        height: 800,
         cropping: true
       }).then(image => {
         this.setState({
@@ -256,5 +260,9 @@ const styles = StyleSheet.create({
       borderBottomWidth:1,
       borderBottomColor:'#d4d4d4',
   }
-})
-export {PerfectUI};
+});
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(PerfectUI);

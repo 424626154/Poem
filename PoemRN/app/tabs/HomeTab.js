@@ -3,7 +3,6 @@
  * 主页
  */
 import React from 'react';
-import { Icon } from 'react-native-elements';
 import {
       StyleSheet,
       Platform,
@@ -14,8 +13,11 @@ import {
       Alert,
       DeviceEventEmitter,
      } from 'react-native';
-import HomeListItem from '../custom/HomeListItem';
+import {connect} from 'react-redux';
 import * as Actions from '../redux/actions/Actions';
+
+import { Icon } from 'react-native-elements';
+import HomeListItem from '../custom/HomeListItem';
 import {
   StyleConfig,
   HeaderConfig,
@@ -32,7 +34,7 @@ import {
 } from '../AppUtil';
 
 
-export default class HomeTab extends React.Component {
+class HomeTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
         title: '首页',
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -46,7 +48,8 @@ export default class HomeTab extends React.Component {
      constructor(props) {
          super(props);
          console.log('---HomeTab()---')
-         console.log(Global.user)
+         let papp = this.props.papp;
+         this.papp = papp;
          const {navigate } = this.props.navigation;
          this.navigate = navigate;
          this.state = {
@@ -77,6 +80,15 @@ export default class HomeTab extends React.Component {
       DeviceEventEmitter.removeAllListeners();
       this.timer && clearTimeout(this.timer);
     }
+  shouldComponentUpdate(nextProps, nextState){
+    //切换用户id
+    if(!Object.is(nextProps.papp.userid,this.props.papp.userid)){
+      console.log('---up papp');
+      this.papp = this.props.papp;
+      this._initPoems();
+    }
+    return true;
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -252,7 +264,7 @@ export default class HomeTab extends React.Component {
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
       id:item.id,
-      userid:Global.user.userid,
+      userid:this.papp.userid,
       love:onlove,
     });
     HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
@@ -317,29 +329,9 @@ export default class HomeTab extends React.Component {
     }
     this.setState({
       sourceData: this.dataContainer,
-      userid:Global.user.userid,
+      userid:this.papp.userid,
     });
     this._requestInitAllPoem(homepoems);
-  }
-  /**
-   * 请求个人信息
-   */
-  _requestUserInfo(userid){
-    Global.user.userid = userid;
-    var json = JSON.stringify({
-      userid:userid,
-    })
-    HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
-      if(res.code == 0){
-        Global.user = res.data ;
-        Utils.log('_requestUserInfo',Global.user)
-        Emitter.emit(Emitter.UPINFO,res.data);
-      }else{
-        Alert.alert(res.errmsg);
-      }
-    }).catch(err=>{
-      console.error(err);
-    })
   }
   /**
    * 初始化时请求
@@ -418,13 +410,6 @@ export default class HomeTab extends React.Component {
     console.log(action)
     console.log(param)
     switch (action) {
-      case Emitter.LOGIN:
-        this._initPoems();
-        this._requestUserInfo(Global.user.userid);
-        break;
-      case Emitter.LOGOUT:
-        this._initPoems();
-        break;
       case Emitter.ADDPOEM:
         this._requestNewestAllPoem();
         break;
@@ -486,3 +471,8 @@ const styles = StyleSheet.create({
     color:'#d4d4d4',
   },
 });
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(HomeTab);

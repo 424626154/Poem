@@ -3,7 +3,6 @@
  * 注册
  */
 import React from 'react';
-import { Button,Icon } from 'react-native-elements';
 import {
   StyleSheet,
   Text,
@@ -15,14 +14,15 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
+import * as Actions from '../redux/actions/Actions';
 
+import { Button,Icon } from 'react-native-elements';
 import{
   StyleConfig,
   HeaderConfig,
   StorageConfig,
   HttpUtil,
   Emitter,
-  Global,
   pstyles,
   Storage,
   UIName,
@@ -178,11 +178,11 @@ class RegisterUI extends React.Component {
     });
     HttpUtil.post(HttpUtil.USER_REGISTER,json).then((res) => {
         if(res.code == 0){
-            var user = res.data;
-            Global.user = user;
-            var userid = user.userid;
+            let user = res.data;
+            let userid = user.userid;
             Storage.saveUserid(userid);
-            Emitter.emit(Emitter.LOGIN,user);
+            let { dispatch } = this.props.navigation;
+            dispatch(Actions.reLogin(userid,user));
             const fui = this.props.navigation.state.params.fui;
             console.log('------fui:'+fui);
             this.props.navigation.navigate(UIName.PerfectUI,{fui:fui});

@@ -63,5 +63,10 @@ UIName.PerfectUI = 'PerfectUI';
 UIName.SettingUI = 'SettingUI';
 UIName.WorksUI = 'WorksUI';
 UIName.PhotoUI = 'PhotoUI';
+UIName.AgreementUI = 'AgreementUI';
+var Permission = {
 
-export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig,UIName} ;
+}
+Permission.WRITE = 0;
+
+export {StyleConfig,HeaderConfig,StorageConfig,ImageConfig,UIName,Permission} ;

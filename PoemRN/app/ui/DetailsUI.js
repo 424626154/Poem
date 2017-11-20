@@ -15,9 +15,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-// import { bindActionCreators } from 'redux';
-// import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions'
+import {connect} from 'react-redux';
 
 import {
   CommentListItem,
@@ -82,6 +80,14 @@ class DetailsUI extends React.Component{
 
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners();
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    //切换用户id
+    if(!Object.is(nextProps.papp.userid,this.props.papp.userid)){
+      console.log('---up papp');
+      this.papp = this.props.papp;
+    }
+    return true;
   }
   render(){
     return(
@@ -578,11 +584,6 @@ class DetailsUI extends React.Component{
           });
           this._requestLoveComment();
           break;
-      case Emitter.LOGIN:
-          this.setState({
-            userid:Global.user.userid,
-          });
-          break;
     }
   }
 
@@ -625,11 +626,8 @@ function mapStateToProps(state) {
 
   };
 }
-
-export default DetailsUI;
-// export default connect(
-//     state => ({
-//         love: state.love
-//     }),
-//     dispatch => bindActionCreators(Actions, dispatch)
-// )(DetailsUI);
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(DetailsUI);

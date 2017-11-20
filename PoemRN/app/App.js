@@ -3,11 +3,8 @@ import {
   Platform,
   DeviceEventEmitter,
   NetInfo,
-  BackHandler,
 } from 'react-native';
-import { connect,Provider } from 'react-redux';
-import {addNavigationHelpers,NavigationActions} from 'react-navigation';
-import * as Actions from './redux/actions/Actions'
+import {Provider } from 'react-redux';
 
 import SplashScreen from 'react-native-splash-screen';
 import JPushModule from 'jpush-react-native';
@@ -30,7 +27,7 @@ import {
   Emitter,
 } from './AppUtil';
 
-import {AppNavigator} from './AppNavigator';
+import AppRoot from './AppRoot';
 
 const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
 import store from './redux/store/ConfigureStore';
@@ -41,43 +38,6 @@ import store from './redux/store/ConfigureStore';
 //     const newState = AppNavigator.router.getStateForAction(action, state);
 //     return newState || state;
 // };
-
-const mapStateToProps = (state) => ({
-    nav: state.nav
-});
-
-class AppRoot extends Component {
-    componentDidMount() {
-      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    }
-    componentWillUnmount() {
-      BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    }
-    render() {
-      const { dispatch, nav } = this.props;
-      const navigation = addNavigationHelpers({
-        dispatch:dispatch,
-        state:nav
-      });
-        return (
-            <AppNavigator
-                navigation={navigation}
-            />
-        );
-    }
-    onBackPress = () => {
-      console.log('---onBackPress---')
-      const { dispatch, nav } = this.props;
-      console.log(nav);
-      if (nav.index === 0) {
-         return false;
-      }
-      dispatch(NavigationActions.back());
-      return true;
-   };
-}
-
-const AppWithNavigationState = connect(mapStateToProps)(AppRoot);
 
 /**
  * 程序入口
@@ -204,7 +164,7 @@ export default class App extends Component {
   render() {
       return(
         <Provider store={store}>
-            <AppWithNavigationState/>
+            <AppRoot/>
         </Provider>
         )
   }
@@ -449,12 +409,6 @@ export default class App extends Component {
     var action = obj.action;
     var param = obj.param;
     switch (action) {
-      case Emitter.LOGIN:
-        let pushid = Storage.getPushId();
-        if(pushid){
-          this._requestPushId(Global.user.userid,pushid);
-        }
-        break;
       case Emitter.READMSG:
       case Emitter.READCHAT:
         this._setMsgState();

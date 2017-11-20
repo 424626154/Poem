@@ -12,24 +12,24 @@
    FlatList,
    DeviceEventEmitter,
  } from 'react-native';
- // import HTMLView from 'react-native-htmlview';
+ import {connect} from 'react-redux';
 
 import{
   StyleConfig,
   HeaderConfig,
   StorageConfig,
+  Permission,
   pstyles,
   Utils,
   HttpUtil,
   Emitter,
-  Global,
   UIName,
 } from '../AppUtil'
 import WorksListItem from '../custom/WorksListItem';
  /**
   * 我的作品列表
   */
- class WorksUI extends React.Component {
+class WorksUI extends React.Component {
    static navigationOptions = ({navigation}) => ({
          title: '作品',
          headerTintColor:StyleConfig.C_FFFFFF,
@@ -46,23 +46,21 @@ import WorksListItem from '../custom/WorksListItem';
       dataContainer = [];
       constructor(props) {
           super(props);
+          this.papp = this.props.papp;
           this.state = {
               // 存储数据的状态
               sourceData : [],
               selected: (new Map(): Map<String, boolean>),
               refreshing: false,
-              userid:'',
           }
       }
     // 当视图全部渲染完毕之后执行该生命周期方法
      componentDidMount() {
+         console.log('------WorksUI() this.papp:',this.papp);
          DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
             this._analysisObserver(obj);
          });
-         this.setState({
-           userid:Global.user.userid,
-         });
-         if(Global.user.userid){
+         if(this.papp.userid){
            // this._queryPoems();
            this._requestNewestPoem();
          }
@@ -70,7 +68,24 @@ import WorksListItem from '../custom/WorksListItem';
      componentWillUnmount(){
        DeviceEventEmitter.removeAllListeners();
      }
-
+     shouldComponentUpdate(nextProps, nextState){
+       //切换用户id
+       if(!Object.is(nextProps.papp.userid,this.props.papp.userid)){
+         this.papp = nextProps.papp;
+         if(nextProps.papp.userid){
+           this._queryPoems();
+           this._requestUserInfo(this.papp.userid);
+         }else{
+           this.dataContainer = [];
+           this.setState({
+             sourceData: this.dataContainer,
+           });
+         }
+       }else if(!Object.is(nextProps.papp.user.per,this.props.papp.user.per)){
+         this.papp = nextProps.papp;
+       }
+       return true;
+     }
    render() {
      const { navigate } = this.props.navigation;
      return (
@@ -95,7 +110,7 @@ import WorksListItem from '../custom/WorksListItem';
              />
 
          <TouchableOpacity style={styles.add} onPress={()=>{
-           this.onAdd(navigate)
+           this.onAdd()
          }}>
          {this._renderAdd()}
        </TouchableOpacity>
@@ -167,7 +182,7 @@ import WorksListItem from '../custom/WorksListItem';
     );
    // 下拉刷新
   _renderRefresh = () => {
-       if(!this.state.userid){
+       if(!this.papp.userid){
          return;
        }
        this._requestNewestPoem();
@@ -176,7 +191,7 @@ import WorksListItem from '../custom/WorksListItem';
   // 上拉加载更多
   _onEndReached = () => {
     console.log('-----------WorksTab_onEndReached--------------');
-      if(!this.state.userid){
+      if(!this.papp.userid){
         return;
       }
      this.setState({refreshing: true})
@@ -186,7 +201,7 @@ import WorksListItem from '../custom/WorksListItem';
      }
      var json = JSON.stringify({
        id:fromid,
-       userid:this.state.userid,
+       userid:this.papp.userid,
      });
      HttpUtil.post(HttpUtil.POEM_HISTORY_POEM,json).then(res=>{
        if(res.code == 0){
@@ -219,8 +234,15 @@ import WorksListItem from '../custom/WorksListItem';
      )
    }
 
-   onAdd(navigate){
-     navigate('AddPoemUI')
+   onAdd(){
+     if(this.papp.userid){
+       console.log('---per',this.papp.user.per)
+       if(!Utils.getPermission(Permission.WRITE,this.papp.user.per)){
+            this.props.navigation.navigate(UIName.AgreementUI,{toui:UIName.AddPoemUI});
+       } else{
+            this.props.navigation.navigate(UIName.AddPoemUI);
+       }
+     }
    }
    /**
     * 初始化作品数据
@@ -270,7 +292,6 @@ import WorksListItem from '../custom/WorksListItem';
     * 请求个人信息
     */
    _requestUserInfo(userid){
-     Global.user.userid = userid;
      var json = JSON.stringify({
        userid:userid,
      })
@@ -323,22 +344,6 @@ import WorksListItem from '../custom/WorksListItem';
      var action = obj.action;
      var param = obj.param;
      switch (action) {
-       case Emitter.LOGIN:
-         this.setState({
-           userid:Global.user.userid,
-         })
-         this._queryPoems();
-         this._requestUserInfo(Global.user.userid);
-         break;
-       case Emitter.LOGOUT:
-         this.setState({
-           userid:Global.user.userid,
-         })
-         this.dataContainer = [];
-         this.setState({
-           sourceData: this.dataContainer,
-         });
-         break;
        case Emitter.ADDPOEM:
          this._eventAddPoem(param);
          break;
@@ -363,5 +368,8 @@ import WorksListItem from '../custom/WorksListItem';
      height: 44,
    },
  });
-
- export {WorksUI};
+ export default connect(
+     state => ({
+         papp: state.papp,
+     }),
+ )(WorksUI);

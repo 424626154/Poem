@@ -225,7 +225,6 @@ class Drawer extends React.Component {
     var param = obj.param;
     console.log('@@@Drawer()action:'+action);
     switch (action) {
-      case Emitter.LOGIN:
       case Emitter.UPINFO:
       case Emitter.LOGOUT:
         this.setState({

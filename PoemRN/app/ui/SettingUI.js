@@ -15,6 +15,9 @@
    ActivityIndicator,
    Linking,
  } from 'react-native';
+import {connect} from 'react-redux';
+import * as Actions from '../redux/actions/Actions';
+
 import DeviceInfo from 'react-native-device-info';
 
 import {
@@ -24,16 +27,16 @@ import {
   UIName,
   HttpUtil,
   Emitter,
-  Global,
   pstyles,
   HomePoemDao,
   MessageDao,
   ChatDao,
+  Global,
 } from '../AppUtil';
 
 import FirIm from '../utils/FirIm';
 
- class SettingUI extends React.Component {
+class SettingUI extends React.Component {
    static navigationOptions = ({navigation}) => ({
          title:'设置',
          headerTintColor:StyleConfig.C_FFFFFF,
@@ -47,14 +50,14 @@ import FirIm from '../utils/FirIm';
       });
      constructor(props){
        super(props);
+       let papp = this.props.papp;
+       this.papp = papp;
        this.state={
-          userid:'',
           version:'版本信息',
           animating:false,
        }
      }
      componentDidMount(){
-        let user = Global.user;
         let type = ''
         if(AppConf.DNV = AppConf.DEBUG){
             type = 'Debug_';
@@ -63,7 +66,6 @@ import FirIm from '../utils/FirIm';
         }
         var version = '版本信息:'+type+DeviceInfo.getVersion()
         this.setState({
-          userid:user.userid,
           version:version,
           update:false,
         });
@@ -156,10 +158,19 @@ import FirIm from '../utils/FirIm';
     * 退出登录
     */
    _renderLogout(){
-     if(this.state.userid){
+     if(this.papp.userid){
        return(
            <TouchableOpacity onPress={()=>{
-             this._requestLogout();
+             Alert.alert(
+               '退出登录',
+               '是否退出登录?',
+               [
+                 {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                 {text: '确定', onPress: () =>{
+                    this._requestLogout();
+                 }},
+               ]
+             )
            }}>
              <View style={styles.label}>
                  <Text style={styles.logout}>退出登录</Text>
@@ -249,24 +260,20 @@ import FirIm from '../utils/FirIm';
    }
    _requestLogout(){
      this.setState({animating:true});
-     if(!Global.user.userid){
+     if(!this.papp.userid){
         this.props.navigation.goBack();
         this.setState({animating:false});
         return;
      }
      var json = JSON.stringify({
-       userid:Global.user.userid,
+       userid:this.papp.userid,
      })
      HttpUtil.post(HttpUtil.USER_LOGOUT,json).then(res=>{
        if(res.code == 0){
-         Global.user.userid = '';
-         this.setState({
-           userid:'',
-         });
-         console.log(Storage)
+         let { dispatch } = this.props.navigation;
+         dispatch(Actions.reLogout());
          Storage.saveUserid('');
          this.props.navigation.goBack();
-         Emitter.emit(Emitter.LOGOUT,'');
        }else{
          Alert.alert(res.errmsg);
        }
@@ -326,5 +333,8 @@ import FirIm from '../utils/FirIm';
     width:12,
   }
  });
-
- export {SettingUI};
+ export default connect(
+     state => ({
+         papp: state.papp,
+     }),
+ )(SettingUI);

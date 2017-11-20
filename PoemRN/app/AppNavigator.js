@@ -13,22 +13,23 @@ import MessageTab from './tabs/MessageTab';
 import MyTab from './tabs/MyTab';
 
 import {AddPoemUI} from './ui/AddPoemUI';//添加诗词
-import {LoginUI} from './ui/LoginUI';
+import LoginUI from './ui/LoginUI';
 import {RegisterUI} from './ui/RegisterUI';
 import DetailsUI from './ui/DetailsUI';
 import {ModifyPoemUI} from './ui/ModifyPoemUI';
 import {CommentUI} from './ui/CommentUI';
-import {PerfectUI} from './ui/PerfectUI';
+import PerfectUI from './ui/PerfectUI';
 import {PersonalUI} from './ui/PersonalUI';
 import {FollowUI} from './ui/FollowUI';
-import {WorksUI} from './ui/WorksUI';
-import {SettingUI} from './ui/SettingUI';
+import WorksUI from './ui/WorksUI';
+import SettingUI from './ui/SettingUI';
 import LovesUI from './ui/LovesUI';
 import MsgContentUI from './ui/MsgContentUI';
 import ChatUI from './ui/ChatUI';
 import FeedbackUI from './ui/FeedbackUI';
 import ForgetUI from './ui/ForgetUI';
 import PhotoUI from './ui/PhotoUI';
+import AgreementUI from './ui/AgreementUI';
 
 import {Drawer} from './drawer/Drawer';
 
@@ -165,6 +166,9 @@ const AppNavigator = StackNavigator({
   },
   PhotoUI:{
     screen:PhotoUI,
+  },
+  AgreementUI:{
+    screen:AgreementUI,
   },
 },{
   initialRouteName: 'Main', // 默认显示界面

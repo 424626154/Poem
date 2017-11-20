@@ -15,6 +15,7 @@ HttpUtil.USER_VALIDATE = 'user/validate';
 HttpUtil.USER_FOLLOWS = 'user/follows';
 HttpUtil.USER_OTHERINFO = 'user/otherinfo';
 HttpUtil.USER_FOLLOW = 'user/follow';
+HttpUtil.USER_PER = 'user/permission';
 
 HttpUtil.POEM_ADDPOEM = 'poem/addpoem';
 HttpUtil.POEM_INFO = 'poem/info';
@@ -150,7 +151,7 @@ HttpUtil.getHeadurl = function(url){
   var baseurl = HttpUtil.BASE_URL;
   var rep_url = 'pimage/file'
   var head_url = baseurl+'/'+rep_url+'/'+url;
-  console.log('head_url:'+head_url);
+  // console.log('head_url:'+head_url);
   return head_url;
 }
 

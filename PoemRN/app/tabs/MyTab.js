@@ -8,6 +8,7 @@ import {
         DeviceEventEmitter,
         Alert,
       } from 'react-native';
+import {connect} from 'react-redux';
 import { Icon } from 'react-native-elements';
 
 import{
@@ -30,7 +31,7 @@ const nothead = require('../images/nothead.png');
 /**
  * 我的主页
  */
-export default class MyTab extends React.Component {
+class MyTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
         title: '我的',
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -42,6 +43,8 @@ export default class MyTab extends React.Component {
    constructor(props){
      super(props);
      console.log('---MyTab()---')
+     let papp = this.props.papp;
+     this.papp = papp||{};
      this.state={
        headurl:nothead,
        pseudonym:'',
@@ -53,15 +56,31 @@ export default class MyTab extends React.Component {
      this._onWorks = this._onWorks.bind(this);
    }
    componentDidMount(){
-     this._eventUserInfo();
-     DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-        this._parseObserver(obj);
-     });
-     console.log('---MyTab() componentDidMount')
+     this._reloadUserInfo();
    }
    componentWillUnmount(){
-     DeviceEventEmitter.removeAllListeners();
-     console.log('---MyTab() componentWillUnmount')
+   }
+   // componentWillReceiveProps(){
+   //   console.log('---MyTab() componentWillReceiveProps');
+   // }
+   shouldComponentUpdate(nextProps, nextState){
+     console.log('---MyTab() shouldComponentUpdate');
+     console.log('---nextProps');
+     console.log(nextProps)
+     console.log('---nextState');
+     console.log(nextState);
+     console.log(this.props.papp);
+     console.log(this.papp);
+     console.log(Object.is(this.papp,this.props.papp))
+
+     //用户信息更新 或者id
+     if(!Object.is(nextProps.papp.user,this.props.papp.user)
+       ||!Object.is(nextProps.papp.userid,this.props.papp.userid)){
+       console.log('---up papp');
+       this.papp = this.props.papp = nextProps.papp;
+       this._reloadUserInfo();
+     }
+     return true;
    }
   render() {
     const { state,navigate } = this.props.navigation;
@@ -189,9 +208,10 @@ export default class MyTab extends React.Component {
   _onStting(){
     this.navigate(UIName.SettingUI);
   }
-  _eventUserInfo(){
-    let user = Global.user;
-    console.log('_eventUserInfo:'+JSON.stringify(user));
+  _reloadUserInfo(){
+    console.log(this)
+    let user = this.papp.user;
+    console.log('_reloadUserInfo:'+JSON.stringify(user));
     if(user.userid){
       let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
       let pseudonym = user.pseudonym;
@@ -209,25 +229,6 @@ export default class MyTab extends React.Component {
         userid:'',
       })
     }
-  }
-  /**
-   * 解析观察者
-   */
-  _parseObserver(obj){
-      var action = obj.action;
-      var param = obj.param;
-      console.log('------MyTab() _parseObserver')
-      console.log(action)
-      console.log(param)
-      switch (action) {
-        case Emitter.LOGIN:
-        case Emitter.LOGOUT:
-        case Emitter.UPINFO:
-          this._eventUserInfo();
-          break;
-        default:
-          break;
-      }
   }
   /**
    * 我的关注
@@ -323,3 +324,8 @@ const styles = StyleSheet.create({
     left: 90,
   }
 });
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(MyTab);

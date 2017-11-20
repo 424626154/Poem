@@ -7,6 +7,7 @@ import {
   HeaderConfig,
   StorageConfig,
   ImageConfig,
+  Permission,
   UIName,
 } from './Config';
 import HttpUtil from './utils/HttpUtil';
@@ -18,6 +19,7 @@ import MessageDao from './db/MessageDao';
 import HomePoemDao from './db/HomePoemDao';
 import ChatDao from './db/ChatDao';
 import PImage from './custom/PImage';
+import BitSet from './utils/BitSet';
 var Utils = {};
 
 Utils.dateStr = function(date){
@@ -97,7 +99,19 @@ Utils.strlen = function(str){
     return len;
 }
 
-
+Utils.getPermission = function(per_key,per){
+  let bitset = new BitSet(per);
+  bitset.init();
+  console.log(per_key)
+  console.log(bitset.getBit(per_key))
+  return bitset.getBit(per_key);
+}
+Utils.setPermission = function(per_key,per_bool,per){
+  let bitset = new BitSet(per);
+  bitset.init();
+  bitset.setBit(per_key,per_bool);
+  return bitset.getLon();
+}
 /**
  * 跳转个人页面
  */
@@ -115,6 +129,7 @@ export {
   HeaderConfig,
   StorageConfig,
   ImageConfig,
+  Permission,
   UIName,
   Utils,
   HttpUtil,

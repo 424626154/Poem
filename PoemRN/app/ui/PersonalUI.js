@@ -239,7 +239,7 @@ class PersonalUI extends React.Component{
     )
   }
   _onPhoto(){
-    this.props.navigation.navigate(UIName.PhotoUI,{photo:this.state.headurl});
+    this.props.navigation.navigate(UIName.PhotoUI,{photo:this.state.head});
   }
   _onFollow(){
       if(!Utils.isLogin(this.props.navigation))return;

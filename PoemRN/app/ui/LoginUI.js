@@ -15,6 +15,8 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
+import {connect} from 'react-redux';
+import * as Actions from '../redux/actions/Actions';
 
 import{
   StyleConfig,
@@ -44,6 +46,8 @@ class LoginUI extends React.Component {
      });
     constructor(props){
       super(props);
+      let papp = this.props.papp;
+      this.papp = papp;
       this.state={
         phone:'',
         password:'',
@@ -171,10 +175,10 @@ class LoginUI extends React.Component {
     HttpUtil.post(HttpUtil.USER_LOGIN,json)
     .then((res) => {
       if(res.code == 0){
-          var user = res.data;
-          var userid = user.userid;
-          Global.user = user;
-          Emitter.emit(Emitter.LOGIN,user);
+          let user = res.data;
+          let userid = user.userid;
+          let { dispatch } = this.props.navigation;
+          dispatch(Actions.reLogin(userid,user));
           Storage.saveUserid(userid);
           Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();
@@ -256,5 +260,8 @@ const styles = StyleSheet.create({
    padding: 8,
  },
 });
-
-export {LoginUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(LoginUI);
