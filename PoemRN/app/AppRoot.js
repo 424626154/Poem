@@ -203,13 +203,28 @@ class AppRoot extends Component {
       dispatch(NavigationActions.back());
       return true;
    };
-    isRootScreen(navigator) {
-      if (typeof navigator.index == 'undefined') return true;
-      let isCurrentRoot = navigator.index == 0;
-      if (navigator.routes && !_.isEmpty(navigator.routes)) {
-        return _.every(navigator.routes, (r) => this.isRootScreen(r)) && isCurrentRoot;
-      }
-      return isCurrentRoot;
+    isRootScreen(nav) {
+      console.log('---isRootScreen')
+      console.log(nav)
+      // if (typeof navigator.index == 'undefined') return true;
+      // let isCurrentRoot = navigator.index == 0;
+      // if (navigator.routes && !_.isEmpty(navigator.routes)) {
+      //   return _.every(navigator.routes, (r) => this.isRootScreen(r)) && isCurrentRoot;
+      // }
+      // console.log('---isCurrentRoot',isCurrentRoot)
+      // return isCurrentRoot;
+      // console.log(nav.routes&&nav.routes.length)
+      // console.log('nav.routes')
+      // console.log(nav.routes)
+      // console.log('nav.index')
+      // console.log(nav.index)
+      const activeRoute = nav.routes[nav.index];
+      // console.log('activeRoute')
+      // console.log(activeRoute)
+      if (activeRoute.index === 0) {
+         return true;
+       }
+      return false;
     }
    _handleAppStateChange = (nextAppState) => {
       if (this.state.currentAppState.match(/inactive|background/) && nextAppState === 'active') {

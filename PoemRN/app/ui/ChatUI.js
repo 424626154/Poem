@@ -10,6 +10,9 @@ import {
        Alert,
        Text,
        ActivityIndicator,
+       Clipboard,
+       Vibration,
+       Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
@@ -23,10 +26,17 @@ import {
        PImage,
        UIName,
        ChatDao,
-       Emitter,
+       goPersonalUI,
       } from '../AppUtil';
 import { GiftedChat,Send } from 'react-native-gifted-chat';
+import ActionSheet from 'react-native-actionsheet'
 require('moment/locale/zh-cn')
+
+const CANCEL_INDEX = 0
+const DESTRUCTIVE_INDEX = 2
+const options = [ '取消', '拷贝', '删除' ]
+const title = '选择您需要的操作'
+
 class ChatUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.pseudonym,
@@ -53,7 +63,10 @@ class ChatUI extends React.Component{
        pseudonym:pseudonym,
        messages: [],
        animating:false,
+       message:'',
     }
+    this.handlePress = this.handlePress.bind(this)
+    this.showActionSheet = this.showActionSheet.bind(this)
   }
   componentDidMount(){
     let messages = [];
@@ -90,6 +103,47 @@ class ChatUI extends React.Component{
       }
     }
     return true;
+  }
+  showActionSheet() {
+    this.ActionSheet.show()
+  }
+
+  handlePress(i) {
+    console.log(i)
+    if(this.state.message){
+      if(i == 1){
+        let text = this.state.message.text
+        if(text){
+          Clipboard.setString(text);
+        }
+      }else if(i == 2){
+        let id = this.state.message._id;
+        if(id){
+          ChatDao.deleteChat(id)
+          this.setState((previousState) => ({
+            messages: this.subtract(previousState.messages, id),
+          }));
+        }
+      }
+    }
+  }
+  subtract(currentMessages = [],id){
+    console.log('-----subtract')
+    console.log(currentMessages)
+    console.log(id)
+    if(currentMessages.length > 0){
+      for(var i = currentMessages.length-1 ; i >= 0 ; i -- ){
+        if(currentMessages[i]._id == id){
+          currentMessages.splice(i,1);
+          console.log('----delete')
+        }
+      }
+    }
+    console.log(currentMessages)
+    let newMessages = [];
+    Object.assign(newMessages,currentMessages);
+    console.log(newMessages)
+    return newMessages;
   }
   onSend(messages = []) {
    let message = messages[0];
@@ -142,8 +196,27 @@ class ChatUI extends React.Component{
           }}
           placeholder={'请输入私信内容'}
           renderSend={this.renderSend}
-          locale='zh-cn'
+          locale='zh-cn'//设置时间
+          onLongPress={(context, message) => {
+              console.log(context) // I got actionSheet
+              console.log(message) // I got undefined
+              if(Platform.OS === 'android')Vibration.vibrate([0,10],false);
+              this.showActionSheet();
+              this.setState({message:message,})
+          }}
+          onPressAvatar={user=>{
+            // console.log(user)
+            goPersonalUI(this.props.navigation.navigate,this.state.tuserid);
+          }}
         />
+        <ActionSheet
+            ref={o => this.ActionSheet = o}
+            title={title}
+            options={options}
+            cancelButtonIndex={CANCEL_INDEX}
+            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+            onPress={this.handlePress}
+          />
     </View>
     )
   }
@@ -216,7 +289,6 @@ class ChatUI extends React.Component{
       console.log('---updateChatListNum---')
       console.log(num);
       console.log(chatuid)
-      Emitter.emit(Emitter.READCHAT,{chatuid:chatuid,num:num});
     }
   }
   /**

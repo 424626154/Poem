@@ -48,7 +48,6 @@
 		440127AB1F778DCE009DC35F /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 440127A11F7786E8009DC35F /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		442EB4F51FB07C8900D5E85E /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 442EB4C01FB07C8900D5E85E /* libbz2.1.0.tbd */; };
 		447752E41FBD3758005229C4 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = 447752E31FBD3758005229C4 /* Default-568.png */; };
-		4493DDB11F6FA7960009C38A /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4493DDB01F6FA77A0009C38A /* libReact-Native-Webview-Bridge.a */; };
 		44AFBDAD1FAFAB310074AADB /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44AFBD761FAFAB140074AADB /* libART.a */; };
 		49338B943376448E94789E41 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42A1BE32A5434C70BE6E334E /* Entypo.ttf */; };
 		4E67A15F63F542EDA40E7BDB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5ED80B9F0A4F6EB41BA047 /* CoreTelephony.framework */; };
@@ -573,7 +572,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				44AFBDAD1FAFAB310074AADB /* libART.a in Frameworks */,
-				4493DDB11F6FA7960009C38A /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,

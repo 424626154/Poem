@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
 
   },
   msg_name:{
-    fontSize:18,
+    fontSize:16,
     color:StyleConfig.C_000000,
   },
   msg_love:{
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_D4D4D4,
   },
   msg_info:{
-    fontSize:18,
+    fontSize:16,
     color:StyleConfig.C_000000,
   },
   msg_time:{

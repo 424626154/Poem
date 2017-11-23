@@ -7,7 +7,8 @@ import {
    StyleSheet,
    Text,
    View,
-   TouchableOpacity,
+   TouchableNativeFeedback,
+   Vibration,
 } from 'react-native';
 import {
       StyleConfig,
@@ -32,6 +33,7 @@ export default class ChatListItem extends React.Component{
       this.props.onPressItem(this.props.id,this.props.item);
   };
   _onDel = () => {
+    Vibration.vibrate([0,10],false);
     this.props.onDelItem(this.props.id,this.props.item);
   };
   _onIcon = ()=>{
@@ -40,13 +42,14 @@ export default class ChatListItem extends React.Component{
   render(){
     const item = this.props.item;
     return (
-      <TouchableOpacity
+      <TouchableNativeFeedback
         {...this.props}
+        delayLongPress={1000}
         onLongPress={this._onDel}
         onPress={this._onPress}
         >
         <View style={[styles.msg]}>
-          <TouchableOpacity
+          <TouchableNativeFeedback
             style={styles.msg_icon}
             onPress={this._onIcon}>
             <View>
@@ -56,7 +59,7 @@ export default class ChatListItem extends React.Component{
               />
               {this._renderNum(item)}
             </View>
-          </TouchableOpacity>
+          </TouchableNativeFeedback>
           <View style={styles.msg_text}>
             <View>
               <Text style={styles.msg_title}>{item.pseudonym}</Text>
@@ -67,7 +70,7 @@ export default class ChatListItem extends React.Component{
             <Text style={styles.msg_time}>{Utils.dateStr(item.time)}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableNativeFeedback>
       );
   }
   _logicSource(item){

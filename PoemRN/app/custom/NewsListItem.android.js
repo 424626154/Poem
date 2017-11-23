@@ -7,7 +7,8 @@ import {
    StyleSheet,
    Text,
    View,
-   TouchableOpacity,
+   TouchableNativeFeedback,
+   Vibration,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {
@@ -34,6 +35,7 @@ export default class NewsListItem extends React.Component{
       this.props.onPressItem(this.props.id,this.props.message);
   };
   _onDel = () => {
+    Vibration.vibrate([0,10],false);
     this.props.onDelItem(this.props.id,this.props.message);
   };
   _onIcon = ()=>{
@@ -42,20 +44,21 @@ export default class NewsListItem extends React.Component{
   render(){
     const message = this.props.message
     return (
-      <TouchableOpacity
+      <TouchableNativeFeedback
         {...this.props}
+        delayLongPress={1000}
         onLongPress={this._onDel}
         onPress={this._onPress}
         >
         <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
-          <TouchableOpacity
+          <TouchableNativeFeedback
             style={styles.msg_icon}
             onPress={this._onIcon}>
             <PImage
               style={pstyles.small_head}
               source={this._logicSource(message)}
               />
-          </TouchableOpacity>
+          </TouchableNativeFeedback>
           <View style={styles.msg_text}>
             {this._renderMsg(message)}
           </View>
@@ -63,7 +66,7 @@ export default class NewsListItem extends React.Component{
             <Text style={styles.msg_time}>{Utils.dateStr(message.time)}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableNativeFeedback>
       );
   }
   _renderMsg(message){
@@ -155,15 +158,15 @@ const styles = StyleSheet.create({
 
   },
   msg_name:{
-    fontSize:18,
+    fontSize:16,
     color:StyleConfig.C_1E8AE8,
   },
   msg_love:{
-    fontSize:18,
+    fontSize:16,
     color:StyleConfig.C_7B8992,
   },
   msg_info:{
-    fontSize:18,
+    fontSize:16,
     color:StyleConfig.C_000000,
   },
   msg_time:{

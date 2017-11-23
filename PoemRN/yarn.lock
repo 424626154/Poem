@@ -4037,6 +4037,10 @@ react-devtools@^2.5.2:
     react-devtools-core "^2.5.2"
     update-notifier "^2.1.0"
 
+react-native-actionsheet@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-native-actionsheet/download/react-native-actionsheet-2.3.0.tgz#a9552a356dc5939829062353804d5e5609e8f969"
+
 react-native-communications@2.2.1:
   version "2.2.1"
   resolved "http://registry.npm.taobao.org/react-native-communications/download/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"

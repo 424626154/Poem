@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   follow:{
     flex:1,
     flexDirection:'row',
-    padding:5,
+    paddingBottom:14,
     alignItems:'flex-end',
     justifyContent:'flex-end',
   },

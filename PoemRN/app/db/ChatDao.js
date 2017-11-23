@@ -89,6 +89,8 @@
        let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
       //  console.log('---filtered:'+filtered);
        let realmChat = realm.objects(RealmName.Chat).filtered(filtered).slice();
+       console.log('-----ChatDao() queryChats')
+       console.log(realmChat)
        realmChat.sort((a, b) => {
          return a.time < b.time;
        });
@@ -102,6 +104,7 @@
      }catch(e){
        console.error(e);
      }
+     console.log(chats)
      return chats;
    }
    /**
@@ -199,6 +202,60 @@
            let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
            let chats = realm.objects(RealmName.Chat).filtered(filtered);
             realm.delete(chats);
+       });
+     } catch (e) {
+         console.error(e);
+     } finally {
+
+     }
+   }
+   deleteChat(rid){
+     try {
+       realm.write(() => {
+           console.log('------ ChatDao() deleteChat')
+           let filtered = 'account = "'+this.isAccount()+'" AND rid = "'+rid+'"';
+           let chats = realm.objects(RealmName.Chat).filtered(filtered);
+           let chatuid = '';
+           if(chats.length > 0 ){
+             chatuid = chats.slice(0,1)[0].chatuid;
+             console.log(chats.slice(0,1)[0].chatuid)
+           }
+           realm.delete(chats);
+           if(chatuid){
+             let filtered1 = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
+             let chats1 = realm.objects(RealmName.Chat).filtered(filtered1).slice();
+             if(chats1.length > 0){
+               console.log('------- up chatlist')
+               // console.log(chats1);
+               // console.log(chats1.length)
+               chats1.sort((a, b) => {
+                 return a.time < b.time;
+               });
+               // console.log(chats1.slice(-1));
+               let lastchat = chats1.slice(0,1)[0];
+               console.log(lastchat);
+               let msg = lastchat.msg;
+               let chatlist_rid = '';
+               let filtered2 = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
+               let chatlist = realm.objects(RealmName.ChatList).filtered(filtered2);
+               if(chatlist.length > 0){
+                 chatlist_rid = chatlist.slice(0,1)[0].rid
+               }
+               console.log(chatlist_rid)
+               if(chatlist_rid&&msg){
+                 realm.create(RealmName.ChatList, {rid:chatlist_rid,msg:msg},true);
+               }
+             }else{
+               console.log('------- delete chatlist')
+               let filtered3 = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
+               let chats = realm.objects(RealmName.ChatList).filtered(filtered3);
+                realm.delete(chats);
+             }
+           }
+
+            // let filtered1 = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'" AND read = 0';
+            // let num = realm.objects(RealmName.Chat).filtered(filtered1).length;
+            //
        });
      } catch (e) {
          console.error(e);

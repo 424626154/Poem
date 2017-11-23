@@ -88,7 +88,7 @@ const Tabs = TabNavigator({
     },
     swipeEnabled:false,
     // tabBarVisible:false,
-    backBehavior:'none',
+    // backBehavior:'none',
     lazy:true,
 });
 
