@@ -9,7 +9,6 @@ import {
    View,
    TouchableOpacity,
 } from 'react-native';
-import Swipeable from 'react-native-swipeable';
 import HTMLView from 'react-native-htmlview';
 import {
       StyleConfig,
@@ -19,7 +18,7 @@ import {
       HttpUtil,
       PImage,
     } from '../AppUtil';
-export default class MessageListItem extends React.Component{
+export default class NewsListItem extends React.Component{
   swipeable = null;
   constructor(props){
     super(props);
@@ -35,8 +34,6 @@ export default class MessageListItem extends React.Component{
       this.props.onPressItem(this.props.id,this.props.message);
   };
   _onDel = () => {
-    this.swipeable.recenter();
-    console.log(this.props.onPressItem)
     this.props.onDelItem(this.props.id,this.props.message);
   };
   _onIcon = ()=>{
@@ -45,14 +42,12 @@ export default class MessageListItem extends React.Component{
   render(){
     const message = this.props.message
     return (
-      <Swipeable
-        onRef={ref => this.swipeable = ref}
-        rightButtons={this._renserRightButtons()}>
       <TouchableOpacity
         {...this.props}
+        onLongPress={this._onDel}
         onPress={this._onPress}
         >
-        <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:StyleConfig.C_D4D4D4}]}>
+        <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
           <TouchableOpacity
             style={styles.msg_icon}
             onPress={this._onIcon}>
@@ -69,7 +64,6 @@ export default class MessageListItem extends React.Component{
           </View>
         </View>
       </TouchableOpacity>
-    </Swipeable>
       );
   }
   _renderMsg(message){
@@ -115,7 +109,7 @@ export default class MessageListItem extends React.Component{
   }
   _logicSource(message){
     var source = ImageConfig.nothead;
-      if(message.type == 0){
+      if(message.type == 0||message.type == 4){
         source = ImageConfig.official;
       }else if (message.type == 1||message.type == 2||message.type == 3){
         // console.log('---extend---');
@@ -129,18 +123,6 @@ export default class MessageListItem extends React.Component{
       }
       // console.log(source);
     return source;
-  }
-  _renserRightButtons(){
-    return(
-      [
-        <TouchableOpacity
-          onPress={this._onDel}>
-          <View style={styles.delete}>
-            <Text style={styles.delete_font}>删除</Text>
-          </View>
-        </TouchableOpacity>
-      ]
-    )
   }
 }
 

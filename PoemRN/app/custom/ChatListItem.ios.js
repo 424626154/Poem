@@ -10,7 +10,6 @@ import {
    TouchableOpacity,
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
-import HTMLView from 'react-native-htmlview';
 import {
       StyleConfig,
       ImageConfig,
@@ -86,21 +85,21 @@ export default class ChatListItem extends React.Component{
   }
 
   _renderNum(item){
-    console.log(item)
+    // console.log(item)
     let num  = item.num;
     if(num > 0){
       if(num > 99){
         return(
-          <View style={styles.msg_num_bg}>
-          <Text style={[styles.msg_num,{fontSize:10}]}>
+          <View style={styles.msg_num_bg1}>
+          <Text style={[styles.msg_num,{fontSize:9}]}>
             ...
           </Text>
           </View>
         )
       }else if(num > 9){
         return(
-          <View style={styles.msg_num_bg}>
-          <Text style={[styles.msg_num,{fontSize:10}]}>
+          <View style={styles.msg_num_bg1}>
+          <Text style={[styles.msg_num,{fontSize:9}]}>
             {num}
           </Text>
           </View>
@@ -178,6 +177,8 @@ const styles = StyleSheet.create({
   },
   msg_num_bg:{
       backgroundColor:'#ff4040',
+      alignItems:'center',
+      justifyContent:'center',
       borderRadius:7,
       position: 'absolute',
       width:14,
@@ -185,12 +186,24 @@ const styles = StyleSheet.create({
       top: 0,
       right: 0,
   },
+  msg_num_bg1:{
+      backgroundColor:'#ff4040',
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius:7,
+      position: 'absolute',
+      width:18,
+      height:14,
+      top: 0,
+      right: -0,
+  },
   msg_num:{
     color:StyleConfig.C_FFFFFF,
-    backgroundColor:'transparent',
+    backgroundColor:'transparent',//'transparent',
     textAlign:'center',
-    width:14,
-    height:14,
+    marginTop:-1,
+    // width:14,
+    // height:14,
   },
   delete:{
     justifyContent:'center',
