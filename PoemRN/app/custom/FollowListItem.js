@@ -9,17 +9,15 @@
     View,
     TouchableOpacity,
  } from 'react-native';
-import { SocialIcon } from 'react-native-elements';
-
- import {
-       StyleConfig,
-       pstyles,
-       PImage,
-     } from '../AppUtil';
+import {
+     StyleConfig,
+     pstyles,
+     PImage,
+   } from '../AppUtil';
 
 export default class FollowListItem extends React.PureComponent {
     _onPress = () => {
-        this.props.onPressItem(this.props.id);
+        this.props.onPressItem(this.props.id,this.props.follow);
     };
     render() {
         return(
@@ -35,16 +33,15 @@ export default class FollowListItem extends React.PureComponent {
                     <Text style={styles.follow_pseudonym}>
                       {this.props.follow.pseudonym}
                     </Text>
-                    <SocialIcon
-                      title={this.props.followbut}
-                      button={true}
-                      onPress={()=>{
-                        this.props.onFollow(this.props);
-                      }}
-                      fontStyle={styles.follow_font}
-                      light
+                    <TouchableOpacity
                       style={styles.follow_button}
-                      />
+                      onPress={()=>{
+                        this.props.onFollow(this.props.follow);
+                      }}>
+                      <Text style={styles.follow_font}>
+                        {this.props.followbut}
+                      </Text>
+                    </TouchableOpacity>
                 </View>
             </TouchableOpacity>
         );
@@ -66,6 +63,12 @@ const styles = StyleSheet.create({
   follow_button:{
     width:80,
     height:30,
+    backgroundColor:StyleConfig.C_FFFFFF,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:8,
+    borderWidth:1,
+    borderColor:StyleConfig.C_1E8AE8,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,

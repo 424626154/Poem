@@ -17,7 +17,6 @@ import{
   StorageConfig,
   pstyles,
   Utils,
-  Global,
   Emitter,
   HttpUtil,
   PImage,
@@ -28,6 +27,7 @@ import {CustomNav} from '../custom/CustomNav';
 
 const modify = require('../images/modify.png');
 const nothead = require('../images/nothead.png');
+
 /**
  * 我的主页
  */
@@ -43,12 +43,10 @@ class MyTab extends React.Component {
    constructor(props){
      super(props);
      console.log('---MyTab()---')
-     let papp = this.props.papp;
-     this.papp = papp||{};
      this.state={
        headurl:nothead,
        pseudonym:'',
-       userid:Global.user.userid||'',
+       userid:this.props.papp.userid,
        myfollow:0,
        followme:0,
      }
@@ -65,19 +63,21 @@ class MyTab extends React.Component {
    // }
    shouldComponentUpdate(nextProps, nextState){
      console.log('---MyTab() shouldComponentUpdate');
-     console.log('---nextProps');
-     console.log(nextProps)
-     console.log('---nextState');
-     console.log(nextState);
+     // console.log('---nextProps');
+     // console.log(nextProps)
+     // console.log('---nextState');
+     // console.log(nextState);
+     // console.log(nextProps.papp)
      console.log(this.props.papp);
-     console.log(this.papp);
-     console.log(Object.is(this.papp,this.props.papp))
-
      //用户信息更新 或者id
-     if(!Object.is(nextProps.papp.user,this.props.papp.user)
-       ||!Object.is(nextProps.papp.userid,this.props.papp.userid)){
-       console.log('---up papp');
-       this.papp = this.props.papp = nextProps.papp;
+     if(nextProps.papp.user !== this.props.papp.user
+       ||nextProps.papp.userid !== this.props.papp.userid){
+        console.log('---up papp');
+       Object.assign(this.props.papp,nextProps.papp);
+       this._reloadUserInfo();
+     }
+     if(this.props.papp.userid != this.state.userid){
+       console.log('---up papp1');
        this._reloadUserInfo();
      }
      return true;
@@ -96,10 +96,30 @@ class MyTab extends React.Component {
               }
             }}>
             <View style={styles.personal}>
+              <TouchableOpacity
+                onPress={()=>{
+                  if(this.state.userid){
+                    Alert.alert(
+                        '设置头像',
+                        null,
+                        [
+                          {text: '查看大图', onPress: () =>{
+                            navigate(UIName.PhotoUI,{photo:this.props.papp.user.head})
+                          }},
+                          {text: '设置头像', onPress: () =>{
+                            navigate(UIName.PerfectUI)
+                          }},
+                        ]
+                      )
+                  }else{
+                    navigate(UIName.LoginUI);
+                  }
+                }}>
                 <PImage
                   style={pstyles.big_head}
                   source={this.state.headurl}
                   />
+                </TouchableOpacity>
                 <View style={styles.head_bg}>
                   <Text style={styles.name}>
                     {this.state.pseudonym}
@@ -114,7 +134,7 @@ class MyTab extends React.Component {
           </View>
         <View style={styles.interval}></View>
         {this._renderWorks()}
-        {this._renderItem('设置',this._onStting,false)}
+        {this._renderItem('settings-applications','设置',this._onStting,false)}
       </View>
     );
   }
@@ -148,14 +168,19 @@ class MyTab extends React.Component {
     }
   }
 
-  _renderItem(title,func,rot){
+  _renderItem(icon,title,func,rot){
     return(
       <TouchableOpacity onPress={()=>{
           func();
       }}>
       <View>
-      <View style={styles.interval}></View>
       <View style={styles.item}>
+        <Icon
+          name={icon}
+          size={28}
+          type="MaterialIcons"
+          color={StyleConfig.C_7B8992}
+        />
         <Text style={styles.item_title}>
           {title}
         </Text>
@@ -168,13 +193,14 @@ class MyTab extends React.Component {
   _renderRot(rot){
     if(rot){
       return(
-        <Icon
-          name="brightness-1"
-          style={styles.dot}
-          size={6}
-          type="MaterialIcons"
-          color={"#ff4040"}
-        />
+        <View style={styles.dot}>
+          <Icon
+            name="brightness-1"
+            size={6}
+            type="MaterialIcons"
+            color={"#ff4040"}
+          />
+        </View>
       )
     }else{
       return null
@@ -198,7 +224,7 @@ class MyTab extends React.Component {
   }
   _renderWorks(){
     if(this.state.userid){
-      return(this._renderItem('我的作品',this._onWorks,false))
+      return(this._renderItem('inbox','我的作品',this._onWorks,false))
     }
   }
 
@@ -209,10 +235,11 @@ class MyTab extends React.Component {
     this.navigate(UIName.SettingUI);
   }
   _reloadUserInfo(){
-    console.log(this)
-    let user = this.papp.user;
-    console.log('_reloadUserInfo:'+JSON.stringify(user));
-    if(user.userid){
+    // console.log(this)
+    // let user = this.props.papp.user;
+    // console.log('_reloadUserInfo:'+JSON.stringify(user));
+    if(this.props.papp.userid){
+      let user = this.props.papp.user;
       let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
       let pseudonym = user.pseudonym;
       this.setState({
@@ -221,6 +248,7 @@ class MyTab extends React.Component {
         userid:user.userid,
         myfollow:user.myfollow,
         followme:user.followme,
+        userid:this.props.papp.userid,
       })
     }else{
       this.setState({
@@ -234,20 +262,20 @@ class MyTab extends React.Component {
    * 我的关注
    */
   _onMeFollow(){
-    this.navigate('FollowUI',{title:'我的关注',type:0});
+    this.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'我的关注',type:0});
   }
   /**
    * 关注我的
    */
   _onFollowMe(){
-    this.navigate('FollowUI',{title:'关注我的',type:1});
+    this.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'关注我的',type:1});
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ebebeb',
   },
   header:{
     backgroundColor: '#1e8ae8',
@@ -298,30 +326,36 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_D4D4D4,
   },
   follow_item_font:{
-    marginTop:10,
+    marginTop:6,
     fontSize:StyleConfig.F_12,
     color:StyleConfig.C_D4D4D4,
   },
   item:{
+    // flex:1,
+    flexDirection:'row',
     alignItems:'center',
     height:40,
-    borderTopWidth:1,
-    borderTopColor:'#d4d4d4',
-    borderBottomWidth:1,
-    borderBottomColor:'#d4d4d4',
+    backgroundColor:StyleConfig.C_FFFFFF,
+    // borderTopWidth:1,
+    // borderTopColor:'#d4d4d4',
+    // borderBottomWidth:1,
+    // borderBottomColor:'#d4d4d4',
+    marginTop:10,
+    paddingLeft:10,
   },
   item_title:{
-    marginTop:10,
-    fontSize:18,
-    color:StyleConfig.C_7B8992,
+    // marginTop:10,
+    paddingLeft:10,
+    fontSize:16,
+    color:StyleConfig.C_000000,
   },
   dot:{
     position: 'absolute',
-    top: 10,
-    left: 90,
+    left:30,
+    top:8,
   }
 });
 export default connect(

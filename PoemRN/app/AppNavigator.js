@@ -6,21 +6,21 @@ import {
   View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TabNavigator,StackNavigator,DrawerNavigator } from 'react-navigation';
+import { TabNavigator,StackNavigator } from 'react-navigation';
 
 import HomeTab from './tabs/HomeTab';
 import MessageTab from './tabs/MessageTab';
 import MyTab from './tabs/MyTab';
 
-import {AddPoemUI} from './ui/AddPoemUI';//添加诗词
+import AddPoemUI from './ui/AddPoemUI';//添加诗词
 import LoginUI from './ui/LoginUI';
-import {RegisterUI} from './ui/RegisterUI';
+import RegisterUI from './ui/RegisterUI';
 import DetailsUI from './ui/DetailsUI';
-import {ModifyPoemUI} from './ui/ModifyPoemUI';
-import {CommentUI} from './ui/CommentUI';
+import ModifyPoemUI from './ui/ModifyPoemUI';
+import CommentUI from './ui/CommentUI';
 import PerfectUI from './ui/PerfectUI';
-import {PersonalUI} from './ui/PersonalUI';
-import {FollowUI} from './ui/FollowUI';
+import PersonalUI from './ui/PersonalUI';
+import FollowUI from './ui/FollowUI';
 import WorksUI from './ui/WorksUI';
 import SettingUI from './ui/SettingUI';
 import LovesUI from './ui/LovesUI';
@@ -30,8 +30,9 @@ import FeedbackUI from './ui/FeedbackUI';
 import ForgetUI from './ui/ForgetUI';
 import PhotoUI from './ui/PhotoUI';
 import AgreementUI from './ui/AgreementUI';
+import ReportUI from './ui/ReportUI';
+import ProtocolUI from './ui/ProtocolUI';
 
-import {Drawer} from './drawer/Drawer';
 
 const Tabs = TabNavigator({
   HomeTab: {
@@ -87,27 +88,13 @@ const Tabs = TabNavigator({
     },
     swipeEnabled:false,
     // tabBarVisible:false,
+    backBehavior:'none',
     lazy:true,
 });
 
 
-// const DrawerNav = DrawerNavigator({
-//   HomeUI: {
-//     screen: HomeUI,
-//   },
-// },{
-//   drawerWidth: 200,
-//   drawerPosition: 'left',
-//   contentComponent: props => <Drawer {...props}/>,
-//   drawerBackgroundColor: 'transparent'
-// });
+
 const AppNavigator = StackNavigator({
-  // LoadUI:{
-  //   screen: LoadUI,
-  //   navigationOptions:{
-  //     header:null,
-  //   }
-  // },
   Main: {
     screen: Tabs,
     navigationOptions:{
@@ -170,6 +157,12 @@ const AppNavigator = StackNavigator({
   AgreementUI:{
     screen:AgreementUI,
   },
+  ReportUI:{
+    screen:ReportUI,
+  },
+  ProtocolUI:{
+    screen:ProtocolUI,
+  }
 },{
   initialRouteName: 'Main', // 默认显示界面
 })

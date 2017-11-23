@@ -16,36 +16,11 @@ import{
   StorageConfig,
   pstyles,
   Utils,
-  Global,
   Emitter,
   HttpUtil,
   goPersonalUI,
 } from '../AppUtil';
-
-
-class ListItem extends React.PureComponent {
-    _onPress = () => {
-        this.props.onPressItem(this.props.id,this.props.love);
-    };
-    render() {
-        return(
-            <TouchableOpacity
-                {...this.props}
-                onPress={this._onPress}
-                >
-                <View style={styles.love}>
-                    <PImage
-                      style={pstyles.small_head}
-                      source={this.props.head}
-                      />
-                    <Text style={styles.follow_pseudonym}>
-                      {this.props.love.pseudonym}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
+import LovesListItem from '../custom/LovesListItem';
 
 export default class LovesUI extends React.Component {
  static navigationOptions = ({navigation}) => ({
@@ -118,7 +93,7 @@ export default class LovesUI extends React.Component {
     };
     _renderItem = ({item}) =>{
         return(
-            <ListItem
+            <LovesListItem
                 id={item.id}
                 onPressItem={ this._onPressItem }
                 selected={ !!this.state.selected.get(item.id) }
@@ -155,28 +130,5 @@ export default class LovesUI extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    love:{
-      flex:1,
-      flexDirection:'row',
-      padding:10,
-    },
-    follow_head:{
-      height:60,
-      width:60,
-    },
-    follow_pseudonym:{
-      flex:1,
-      fontSize:StyleConfig.F_18,
-      color:StyleConfig.C_000000,
-      padding:4,
-    },
-    follow_button:{
-      width:80,
-      height:30,
-    },
-    follow_font:{
-      fontSize:StyleConfig.F_18,
-      color:StyleConfig.C_1E8AE8,
-      marginLeft:-2,
-    },
+
 });

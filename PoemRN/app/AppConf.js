@@ -12,8 +12,8 @@ AppConf.ENV = AppConf.DEBUG;
 AppConf.IOS_CHANNEL = AppConf.APPSTORE
 AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO
 
-// AppConf.DEBUG_IP = '192.168.1.3';
-AppConf.DEBUG_IP = 'localhost';
+AppConf.DEBUG_IP = '192.168.1.7';
+// AppConf.DEBUG_IP = 'localhost';
 AppConf.ALI_IP = '182.92.167.29';
 AppConf.HOST = 9001;
 AppConf.IP = '';

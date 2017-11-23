@@ -13,7 +13,7 @@ console.log('---realm path---');
 console.log(JSON.stringify(realm.path));
 class MessageDao{
   isAccount(){
-    return Global.user.userid||'';
+    return Global.userid||'';
   }
   addMessages(messages){
     let msgs = [];
@@ -57,7 +57,12 @@ class MessageDao{
   getMessages(){
     let msgs = [];
     try{
-      let realmMsg = realm.objects(RealmName.Message).filtered('account = "'+this.isAccount()+'"');
+      let realmMsg = realm.objects(RealmName.Message).filtered('account = "'+this.isAccount()+'"').slice();
+      realmMsg.sort((a, b) => {
+        return a.time < b.time;
+      });
+      // console.log('------MessageDao() getMessages:')
+      // console.log(realmMsg)
       realmMsg.map(function(realmMsg) {
           if (typeof realmMsg.snapshot == 'function') {
               realmMsg = realmMsg.snapshot();
@@ -78,7 +83,12 @@ class MessageDao{
             // if(msgToBeDeleted){
             //     realm.delete(msgToBeDeleted);
             // }
-            let del = realm.create(RealmName.Message, {rid: rid});
+            // console.log('---MessageDao() delete')
+            let filtered = 'account = "'+this.isAccount()+'" AND rid = "'+rid+'"';
+            // console.log('---filtered',filtered)
+            let del = realm.objects(RealmName.Message).filtered(filtered);
+            // console.log('---del')
+            // console.log(del)
             realm.delete(del);
         });
       } catch (e) {

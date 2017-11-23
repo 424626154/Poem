@@ -1,5 +1,10 @@
+'use strict';
+/**
+ * 更新作品
+ */
 import React from 'react';
-import { Button,Icon } from 'react-native-elements';
+import {connect} from 'react-redux';
+import * as PoemsActions from '../redux/actions/PoemsActions';
 import {
   StyleSheet,
   Text,
@@ -7,16 +12,18 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  DeviceEventEmitter,
 } from 'react-native';
-// import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
+import { Button,Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-import {StyleConfig,HeaderConfig,StorageConfig} from '../Config';
+import {
+  StyleConfig,
+  HeaderConfig,
+  StorageConfig,
+  HttpUtil,
+} from '../AppUtil';
 
-import HttpUtil  from '../utils/HttpUtil';
-import Emitter from '../utils/Emitter';
-import Global from '../Global';
+
 
 /**
  * 修改作品
@@ -47,14 +54,11 @@ class ModifyPoemUI extends React.Component {
             title:params.poem.title,
             content:params.poem.content,
             id:params.id,
-            userid:Global.user.userid,
             poem:params.poem,
         }
-        this.onGetContentHtml = this.onGetContentHtml.bind(this);
         this.onModify = this.onModify.bind(this);
     }
     componentDidMount(){
-       this.props.navigation.setParams({onGetContentHtml:this.onGetContentHtml});
        this.props.navigation.setParams({onModify:this.onModify});
     }
     componentWillUnmount(){
@@ -85,46 +89,10 @@ class ModifyPoemUI extends React.Component {
       </View>
     );
   }
-  onEditorInitialized(){
-    this.setFocusHandlers();
-    this.getHTML();
-  }
-  async getHTML() {
-    const titleHtml = await this.richtext.getTitleHtml();
-    const contentHtml = await this.richtext.getContentHtml();
-    // alert(titleHtml + ' ' + contentHtml)
-  }
-  setFocusHandlers() {
-    this.richtext.setTitleFocusHandler(() => {
-      //alert('title focus');
-    });
-    this.richtext.setContentFocusHandler(() => {
-      //alert('content focus');
-    });
-  }
-  async onGetContentHtml() {
-    const contentHtml = await this.richtext.getContentHtml();
-    var json = JSON.stringify({
-      id:this.state.id,
-      userid:this.state.userid,
-      poem:contentHtml,
-    });
-    HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
-      if(data.code == 0){
-        var poem = data.data;
-        Emitter.emit(Emitter.UPPOEM,poem);
-     	  this.props.navigation.goBack();
-      }else{
-        Alert.alert(data.errmsg);
-      }
-    }).catch((err)=>{
-        Alert.alert('保存诗歌失败:',err);
-    });
-  }
   onModify(){
     var title = this.state.title;
     var content = this.state.content;
-    if(!this.state.userid){
+    if(!this.props.papp.userid){
       Alert.alert('登录后再发布');
       return;
     }
@@ -138,14 +106,15 @@ class ModifyPoemUI extends React.Component {
     }
     var json = JSON.stringify({
       id:this.state.id,
-      userid:this.state.userid,
+      userid:this.props.papp.userid,
       title:title,
       content:content,
     });
     HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
       if(data.code == 0){
         var poem = data.data;
-        Emitter.emit(Emitter.UPPOEM,poem);
+        let { dispatch } = this.props.navigation;
+        dispatch(PoemsActions.raUpPoemInfo(poem));
      	  this.props.navigation.goBack();
       }else{
         Alert.alert(data.errmsg);
@@ -191,5 +160,8 @@ const styles = StyleSheet.create({
     backgroundColor:StyleConfig.C_D4D4D4,
   },
 });
-
-export {ModifyPoemUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(ModifyPoemUI);

@@ -12,16 +12,16 @@ import {
         Alert,
         FlatList,
       } from 'react-native';
-
+import {connect} from 'react-redux';
 import{
     StyleConfig,
     HeaderConfig,
     StorageConfig,
     pstyles,
     Utils,
-    Global,
     Emitter,
     HttpUtil,
+    goPersonalUI,
 } from '../AppUtil';
 
 import FollowListItem from '../custom/FollowListItem';
@@ -50,6 +50,7 @@ class FollowUI extends React.Component {
           type:params.type,
           userid:params.userid,
         });
+        this._onFollow = this._onFollow.bind(this);
     }
     componentDidMount(){
         this._requestFollows();
@@ -88,12 +89,13 @@ class FollowUI extends React.Component {
          </Text>
         </View>
     );
-    _onPressItem = (id: string) => {
+    _onPressItem = (id: string,item) => {
         this.setState((state) => {
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id));
             return {selected}
         });
+        goPersonalUI(this.props.navigation.navigate,item.fansid)
     };
     _renderItem = ({item}) =>{
         return(
@@ -114,10 +116,11 @@ class FollowUI extends React.Component {
     }
     //上拉刷新
     _onEndReached = () => {
+
     }
     _getFolloBut(user){
       var follow = '关注';
-      if(user.fansid == Global.user.userid){
+      if(user.fansid == this.props.papp.userid){
         return '自己';
       }
       if(user.fstate == 1&&user.state == 1){
@@ -131,8 +134,11 @@ class FollowUI extends React.Component {
     }
 
     _requestFollows(){
+      if(!this.props.papp.userid){
+        return;
+      }
       var json = JSON.stringify({
-        myid:Global.user.userid,
+        myid:this.props.papp.userid,
         userid:this.state.userid,
         type:this.state.type,
       });
@@ -151,31 +157,35 @@ class FollowUI extends React.Component {
         console.error(err);
       })
     }
-    _onFollow(props){
-      let user = props.follow;
-      if(user.fransid == Global.user.userid){
+    _onFollow(user){
+      if(user.fransid == this.props.papp.userid){
         return;
       }
       this._requestFollow(user);
     }
     _requestFollow(user){
+      if(!this.props.papp.userid){
+        return;
+      }
       var json = JSON.stringify({
-        userid:Global.user.userid,
+        userid:this.props.papp.userid,
         fansid:user.fansid,
         op:user.fstate == 0?1:0,
       })
       HttpUtil.post(HttpUtil.USER_FOLLOW,json).then(res=>{
         if(res.code == 0 ){
           let user = res.data;
-          for(var id = 0 ; i < this.dataContainer.length;i++){
-            if(this.dataContainer[i].fansid == user.fansid){
+          for(var i = 0 ; i < this.dataContainer.length;i++){
+            if(this.dataContainer[i].fansid === user.fansid){
               this.dataContainer[i].fstate = user.fstate;
               this.dataContainer[i].tstate = user.tstate;
               break;
             }
           }
+          var list = [];
+          Object.assign(list,this.dataContainer);
           this.setState({
-            sourceData: this.dataContainer
+            sourceData: list,
           });
         }else{
           Alert.alert(res.errmsg);
@@ -197,5 +207,8 @@ const styles = StyleSheet.create({
       width:60,
     },
 });
-
-export {FollowUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(FollowUI);

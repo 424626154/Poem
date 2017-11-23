@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  DeviceEventEmitter,
+  Platform,
 }from 'react-native';
 import { Icon } from 'react-native-elements';
 import {
@@ -20,6 +20,7 @@ class TabBarIcon extends React.Component{
 
     }
     componentWillUpdate(){
+
     }
     render(){
       return(
@@ -35,7 +36,10 @@ class TabBarIcon extends React.Component{
       )
     }
     _renderRot(){
-        if(this.props.papp.num > 0){
+      // console.log('------TabBarIcon() _renderRot')
+      // console.log(this.props)
+        if(this.props.papp.num){
+          console.log('------TabBarIcon() num:',this.props.papp.num)
           return(
             <View style={styles.dot}>
               <Icon
@@ -50,32 +54,22 @@ class TabBarIcon extends React.Component{
           return null;
         }
     }
-    /**
-     * 解析观察者
-     */
-    _parseObserver(obj){
-      var action = obj.action;
-      var param = obj.param;
-      console.log('---_parseObserver')
-      console.log(action)
-      console.log(param)
-      switch (action) {
-        case Emitter.MSGROT:
-          let num = param.num;
-          this.setState({num:num});
-          break;
-        default:
-          break;
-      }
-    }
 }
 const styles = StyleSheet.create({
   dot:{
     position: 'absolute',
-    top: -15,
-    right: -20,
-    height:12,
-    width:12,
+    ...Platform.select({
+        ios:{
+          top: -14,
+          right: -16,
+        },
+        android:{
+          top: 0,
+          right: -1,
+        }
+    }),
+    height:8,
+    width:8,
   },
 });
 

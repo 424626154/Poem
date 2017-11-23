@@ -6,17 +6,15 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  DeviceEventEmitter,
 } from 'react-native';
-
+import {connect} from 'react-redux';
+import * as UserActions from '../redux/actions/UserActions';
 import{
       StyleConfig,
       HeaderConfig,
       StorageConfig,
       UIName,
       HttpUtil,
-      Emitter,
-      Global,
 } from '../AppUtil';
 
 /**
@@ -51,7 +49,6 @@ class CommentUI extends React.Component{
     this.state = {
       id:params.id,
       cid:params.cid,
-      userid:'',
       placeholder:placeholder,
     }
     this._onRelease = this._onRelease.bind(this);
@@ -59,15 +56,11 @@ class CommentUI extends React.Component{
 
   componentDidMount(){
     this.props.navigation.setParams({_onRelease:this._onRelease})
-    this.setState({
-      userid:Global.user.userid,
-    })
-    DeviceEventEmitter.addListener('', (data)=>{
-    });
+
   }
 
   componentWillUnmount(){
-    DeviceEventEmitter.removeAllListeners();
+
   }
   render(){
     const { navigate } = this.props.navigation;
@@ -85,17 +78,21 @@ class CommentUI extends React.Component{
   }
   //发布
   _onRelease(){
+    if(!this.props.papp.userid){
+      return;
+    }
     var json = JSON.stringify({
       id:this.state.id,
-      userid:this.state.userid,
+      userid:this.props.papp.userid,
       cid:this.state.cid,
       comment:this.state.comment,
     })
-    console.log(json);
+    // console.log(json);
     HttpUtil.post(HttpUtil.POEM_COMMENTPOEM,json).then((data)=>{
       if(data.code == 0){
         var comment = data.data;
-        Emitter.emit(Emitter.COMMENT,comment);
+        let { dispatch } = this.props.navigation;
+        dispatch(UserActions.raRefComment(true));
         this.props.navigation.goBack();
       }else{
         Alert.alert(data.errmsg);
@@ -130,5 +127,8 @@ const styles = StyleSheet.create({
     fontSize:18,
   }
 })
-
-export {CommentUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(CommentUI);

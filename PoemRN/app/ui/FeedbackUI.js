@@ -11,15 +11,14 @@ import{
     TextInput,
     Alert,
     } from 'react-native';
-
+import {connect} from 'react-redux';
 import{
   StyleConfig,
   HeaderConfig,
   pstyles,
-  Global,
   HttpUtil,
 } from '../AppUtil';
-export default class FeedbackUI extends React.Component{
+class FeedbackUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title:'意见反馈',
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -52,7 +51,7 @@ export default class FeedbackUI extends React.Component{
   }
   render(){
     return(
-      <View style={[pstyles.container,{padding:10}]}>
+      <View style={[pstyles.container,{backgroundColor: '#ebebeb',padding:10}]}>
         <TextInput
           style={styles.feedback}
           underlineColorAndroid={'transparent'}
@@ -83,7 +82,7 @@ export default class FeedbackUI extends React.Component{
       return;
     }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       feedback:this.state.feedback,
       contact:this.state.contact,
     });
@@ -105,17 +104,24 @@ export default class FeedbackUI extends React.Component{
 const styles = StyleSheet.create({
       feedback:{
         height:100,
-        borderColor: StyleConfig.C_7B8992,
+        backgroundColor:StyleConfig.C_FFFFFF,
+        borderColor: StyleConfig.C_D4D4D4,
         borderWidth: 1,
         borderRadius:5,
         fontSize:18,
         padding:5,
       },
       contact:{
-        borderColor: StyleConfig.C_7B8992,
+        backgroundColor:StyleConfig.C_FFFFFF,
+        borderColor: StyleConfig.C_D4D4D4,
         borderWidth: 1,
         borderRadius:5,
         fontSize:20,
         padding:5,
       }
 });
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(FeedbackUI);

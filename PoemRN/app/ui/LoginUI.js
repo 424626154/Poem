@@ -14,9 +14,10 @@ import {
   DeviceEventEmitter,
   Platform,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions';
+import * as UserActions from '../redux/actions/UserActions';
 
 import{
   StyleConfig,
@@ -24,11 +25,11 @@ import{
   StorageConfig,
   HttpUtil,
   Emitter,
-  Global,
   pstyles,
   Storage,
   UIName,
 } from '../AppUtil';
+const {width, height} = Dimensions.get('window');
 
 class LoginUI extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -51,6 +52,9 @@ class LoginUI extends React.Component {
       this.state={
         phone:'',
         password:'',
+        phone_clear:false,
+        password_clear:false,
+        pwd_visibility:true,
       }
     }
     componentDidMount(){
@@ -82,13 +86,28 @@ class LoginUI extends React.Component {
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'手机号'}
-            onChangeText={(text) => this.setState({phone:text})}
+            onChangeText={(text) =>{
+               this.setState({phone:text});
+               if(text){
+                   if(!this.state.phone_clear){
+                     this.setState({phone_clear:true});
+                   }
+               }else{
+                   if(this.state.phone_clear){
+                     this.setState({phone_clear:false});
+                   }
+               }
+            }}
             value={this.state.phone}
             keyboardType={'phone-pad'}
             returnKeyType={'next'}
             blurOnSubmit={false}
             onSubmitEditing={() => this._focusNextField('password')}
+            onFocus={()=>{
+              this._reloadFocus()
+            }}
           />
+          {this._renderPhoneClear()}
         </View>
         <View style={styles.line}></View>
         <View style={styles.input_bg}>
@@ -103,11 +122,38 @@ class LoginUI extends React.Component {
             style={styles.input}
             underlineColorAndroid={'transparent'}
             placeholder={'密码'}
-            secureTextEntry = {true}
-            onChangeText={(text) => this.setState({password:text})}
+            secureTextEntry = {this.state.pwd_visibility}
+            onChangeText={(text) =>{
+              this.setState({password:text})
+              if(text){
+                  if(!this.state.password_clear){
+                    this.setState({password_clear:true});
+                  }
+              }else{
+                  if(this.state.password_clear){
+                    this.setState({password_clear:false});
+                  }
+              }
+            }}
             value={this.state.password}
             returnKeyType={'done'}
+            onFocus={()=>{
+              this._reloadFocus()
+            }}
           />
+          {this._renderPasswordClear()}
+          <TouchableOpacity
+              onPress={()=>{
+                this._onVsibility()
+              }}
+              >
+            <Icon
+              name={this._renderVName()}
+              size={30}
+              type="MaterialIcons"
+              color={this._renderVColor()}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.interval}></View>
         <Button
@@ -152,6 +198,89 @@ class LoginUI extends React.Component {
       return null;
     }
   }
+  _reloadFocus(){
+    if(this.refs.phone.isFocused()){
+        var phone_clear = true;
+        if(!this.state.phone){
+          phone_clear = false;
+        }
+        this.setState({
+          phone_clear:phone_clear,
+          password_clear:false,
+        })
+    }else if(this.refs.password.isFocused()){
+      var password_clear = true;
+      if(!this.state.password){
+        password_clear = false;
+      }
+      this.setState({
+        phone_clear:false,
+        password_clear:password_clear,
+      })
+    }else{
+      this.setState({
+        phone_clear:false,
+        password_clear:false,
+      })
+    }
+  }
+  _renderPhoneClear(){
+      if(this.state.phone_clear){
+        return(
+          <TouchableOpacity
+              onPress={()=>{
+                  this.setState({phone:'',phone_clear:false,});
+              }}
+              >
+            <Icon
+              name='clear'
+              size={30}
+              type="MaterialIcons"
+              color={StyleConfig.C_D4D4D4}
+            />
+          </TouchableOpacity>
+        )
+    }else{
+        return null;
+    }
+  }
+
+  _renderPasswordClear(){
+    if(this.state.password_clear){
+      return(
+        <TouchableOpacity
+            onPress={()=>{
+                this.setState({password:'',password_clear:false,});
+            }}
+            >
+          <Icon
+            name='clear'
+            size={30}
+            type="MaterialIcons"
+            color={StyleConfig.C_D4D4D4}
+          />
+        </TouchableOpacity>
+      )
+    }else{
+      return null;
+    }
+  }
+
+  _renderVName(){
+    return this.state.pwd_visibility?'visibility-off':'visibility';
+  }
+  _renderVColor(){
+    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_1E8AE8;
+  }
+  _onVsibility(){
+    var isVis = true;
+    if(this.state.pwd_visibility){
+      isVis = false;
+    }
+    this.setState({
+      pwd_visibility:isVis,
+    })
+  }
   _focusNextField(nextField){
     if(nextField == 'password'){
       this.refs.password.focus()
@@ -178,7 +307,7 @@ class LoginUI extends React.Component {
           let user = res.data;
           let userid = user.userid;
           let { dispatch } = this.props.navigation;
-          dispatch(Actions.reLogin(userid,user));
+          dispatch(UserActions.raAutoLogin(userid));
           Storage.saveUserid(userid);
           Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();
@@ -249,8 +378,8 @@ const styles = StyleSheet.create({
     backgroundColor:'#00000055',
     position: 'absolute',
     flex:1,
-    width:Global.width,
-    height:Global.height,
+    width:width,
+    height:height,
     alignItems:'center',
     justifyContent: 'center',
   },

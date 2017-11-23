@@ -16,6 +16,7 @@ HttpUtil.USER_FOLLOWS = 'user/follows';
 HttpUtil.USER_OTHERINFO = 'user/otherinfo';
 HttpUtil.USER_FOLLOW = 'user/follow';
 HttpUtil.USER_PER = 'user/permission';
+HttpUtil.USER_REPORT = 'user/report'
 
 HttpUtil.POEM_ADDPOEM = 'poem/addpoem';
 HttpUtil.POEM_INFO = 'poem/info';

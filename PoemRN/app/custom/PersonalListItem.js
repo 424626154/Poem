@@ -9,7 +9,7 @@
        View,
        TouchableOpacity,
       } from 'react-native';
- import {UIName,pstyles,PImage} from '../AppUtil';
+ import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
 
 class PersonalListItem extends React.PureComponent {
     _onPress = () => {
@@ -28,9 +28,11 @@ class PersonalListItem extends React.PureComponent {
                       value={this.props.poem}
                       /> */}
                   <View style={styles.poem}>
-                    <Text style={styles.poem_title}>{this.props.poem.title}</Text>
+                    <Text style={pstyles.poem_title}>
+                      {this.props.poem.title}
+                    </Text>
                     <Text
-                      style={styles.poem_content}
+                      style={pstyles.poem_content}
                       numberOfLines={8}
                     >
                       {this.props.poem.content}
@@ -52,13 +54,14 @@ const styles = StyleSheet.create({
   fitem:{
       flex:1,
       padding:10,
+      backgroundColor:StyleConfig.C_FFFFFF,
   },
   fitem_more:{
     alignItems:'flex-end'
   },
   fitem_time:{
     fontSize:14,
-    color:'#d4d4d4',
+    color:StyleConfig.C_D4D4D4,
     marginTop:4,
   },
   poem_bg:{

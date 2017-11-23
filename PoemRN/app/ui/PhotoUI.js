@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View ,
+  Image,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
@@ -10,6 +11,7 @@ import{
   Utils,
 }from '../AppUtil';
 const {width, height} = Dimensions.get('window');
+const big_head = require('../images/big_head.png');
 export default class PhotoUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
     header:null,
@@ -31,10 +33,17 @@ export default class PhotoUI extends React.Component{
           goBack();
         }}
         >
+          <View style={styles.bg}>
+          <Image
+            style={styles.bg_head}
+            source={big_head}
+            resizeMode={Image.resizeMode.cover}
+          />
           <PImage
             style={styles.photo}
             source={this.state.photo}
           />
+        </View>
       </TouchableOpacity>
     )
   }
@@ -46,8 +55,17 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent:'center',
     },
-    photo:{
+    bg:{
       backgroundColor: '#ffffff',
+      width:width,
+      height:width,
+    },
+    bg_head:{
+      position: 'absolute',
+      width:width,
+      height:width,
+    },
+    photo:{
       width:width,
       height:width,
     },

@@ -38,6 +38,14 @@ const ptyles = StyleSheet.create({
      // 设置圆角
      borderRadius:20,
    },
+   small1_head:{
+     height:30,
+     width:30,
+     // 设置图片填充模式
+    resizeMode:'cover',
+    // 设置圆角
+    borderRadius:15,
+  },
    big_head:{
      height:80,
      width:80,
@@ -59,12 +67,14 @@ const ptyles = StyleSheet.create({
 
   },
   poem_title:{
-    fontSize:30,
+    fontSize:24,
     textAlign:'center',
+    fontWeight:'bold',
   },
   poem_content:{
-    fontSize:20,
+    fontSize:18,
     textAlign:'center',
+    padding:10,
   },
 });
 

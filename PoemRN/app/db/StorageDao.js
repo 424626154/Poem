@@ -55,9 +55,9 @@ class StorageDao {
         let items = realm.objects(RealmName.Storage).filtered(filtered).slice();
         if(items.length > 0){
           value = items[0].value;
-          console.log('-------getItem')
-          console.log(items)
-          console.log(value)
+          // console.log('-------getItem')
+          // console.log(items)
+          // console.log(value)
         }
       });
     } catch (e) {

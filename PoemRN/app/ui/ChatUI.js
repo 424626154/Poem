@@ -2,62 +2,32 @@
 /**
  * 私信页面
  */
- import React from 'react';
- import {
-         StyleSheet,
-         View,
-         TouchableOpacity,
-         Alert,
-         Text,
-         DeviceEventEmitter,
- } from 'react-native';
- import {
-   StyleConfig,
-   HeaderConfig,
-   StorageConfig,
-   HttpUtil,
-   Global,
-   Utils,
-   pstyles,
-   PImage,
-   UIName,
-   ChatDao,
-   Emitter,
- } from '../AppUtil';
-import { GiftedChat } from 'react-native-gifted-chat';
-// const messages  = [
-//   {
-//     _id: Math.round(Math.random() * 1000000),
-//     text: 'Yes, and I use Gifted Chat!',
-//     createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-//     user: {
-//       _id: 1,
-//       name: 'Developer',
-//     },
-//     sent: true,
-//     received: true,
-//     // location: {
-//     //   latitude: 48.864601,
-//     //   longitude: 2.398704
-//     // },
-//   },
-//   {
-//     _id: Math.round(Math.random() * 1000000),
-//     text: 'Are you building a chat app?',
-//     createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-//     user: {
-//       _id: 2,
-//       name: 'React Native',
-//     },
-//   },
-//   {
-//     _id: Math.round(Math.random() * 1000000),
-//     text: "You are officially rocking GiftedChat.",
-//     createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-//     system: true,
-//   },
-// ];
-export default class ChatUI extends React.Component{
+import React from 'react';
+import {
+       StyleSheet,
+       View,
+       TouchableOpacity,
+       Alert,
+       Text,
+       ActivityIndicator,
+} from 'react-native';
+import {connect} from 'react-redux';
+import * as UserActions from '../redux/actions/UserActions';
+import {
+       StyleConfig,
+       HeaderConfig,
+       StorageConfig,
+       HttpUtil,
+       Utils,
+       pstyles,
+       PImage,
+       UIName,
+       ChatDao,
+       Emitter,
+      } from '../AppUtil';
+import { GiftedChat,Send } from 'react-native-gifted-chat';
+require('moment/locale/zh-cn')
+class ChatUI extends React.Component{
   static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.pseudonym,
         headerTintColor:StyleConfig.C_FFFFFF,
@@ -82,20 +52,44 @@ export default class ChatUI extends React.Component{
        head:head,
        pseudonym:pseudonym,
        messages: [],
+       animating:false,
     }
   }
   componentDidMount(){
     let messages = [];
-    let chats = ChatDao.queryChats(this.state.tuserid);
-    this._setRead(chats);
-    this._addMessages(chats);
-    this._requestChats();
-    DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-       this._parseObserver(obj);
-    });
+    let { dispatch } = this.props.navigation;
+    dispatch(UserActions.raSetChatUser(this.state.tuserid));
+    this.setState({animating:true})
+    this.timer = setTimeout(
+      () => {
+        let chats = ChatDao.queryChats(this.state.tuserid);
+        this._setRead(chats);
+        this._addMessages(chats);
+        this._requestChats();
+        this.setState({animating:false})
+      },
+      0
+    );
   }
   componentWillUnmount(){
-    DeviceEventEmitter.removeAllListeners();
+    let { dispatch } = this.props.navigation;
+    dispatch(UserActions.raSetChatUser(''));
+    dispatch(UserActions.raSetPushChat(true));
+    this.timer && clearTimeout(this.timer)
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('----- ChatUI() shouldComponentUpdate')
+    if(nextProps.papp.push_chat_user !== this.props.papp.push_chat_user){
+      Object.assign(this.props.papp,nextProps.papp);
+      if(this.props.papp.push_chat_user){
+        let db_chats = ChatDao.queryUnreadChats(this.state.tuserid);
+        this._setRead(db_chats);
+        this._addMessages(db_chats);
+        let { dispatch } = this.props.navigation;
+        dispatch(UserActions.raSetPushChatUser(false));
+      }
+    }
+    return true;
   }
   onSend(messages = []) {
    let message = messages[0];
@@ -104,7 +98,7 @@ export default class ChatUI extends React.Component{
    let time = Utils.getTime();
    let chat = {
       type:0,
-      fuserid:Global.user.userid,
+      fuserid:this.props.papp.userid,
       tuserid:this.state.tuserid,
       msg:msg,
       time:time,
@@ -112,7 +106,7 @@ export default class ChatUI extends React.Component{
    var save_chat = ChatDao.addChat(chat,1,0)
    this._requestSendChat(msg,save_chat.rid);
    let chatlist = {
-     fuserid:Global.user.userid,
+     fuserid:this.props.papp.userid,
      tuserid:this.state.tuserid,
      msg:msg,
      head:this.state.head,
@@ -123,7 +117,7 @@ export default class ChatUI extends React.Component{
    var addmessage  = {
        _id: save_chat.rid,
        text: save_chat.msg,
-       createdAt: save_chat.time,
+       createdAt: save_chat.time*1000,
        user: {
          _id: 1,
        },
@@ -134,31 +128,34 @@ export default class ChatUI extends React.Component{
  }
  render(){
     return(
-      <GiftedChat
-      messages={this.state.messages}
-      onSend={(messages) => this.onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-    />
+      <View style={pstyles.container}>
+        <ActivityIndicator
+         animating={this.state.animating}
+         style={styles.centering}
+         color={StyleConfig.C_1E8AE8}
+         size="large"/>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={(messages) => this.onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+          placeholder={'请输入私信内容'}
+          renderSend={this.renderSend}
+          locale='zh-cn'
+        />
+    </View>
     )
   }
-  /**
-   * 解析观察者
-   */
-  _parseObserver(obj){
-    var action = obj.action;
-    var param = obj.param;
-    switch (action) {
-      case Emitter.NEWCHAT:
-        let db_chats = ChatDao.queryUnreadChats(this.state.tuserid);
-        this._setRead(db_chats);
-        this._addMessages(db_chats);
-        break;
-      default:
-        break;
+  renderSend(props) {
+        return (
+            <Send
+                {...props}
+            >
+                <Text style={styles.send}>发送</Text>
+            </Send>
+        );
     }
-  }
   /**
    * 填充消息内容
    */
@@ -171,7 +168,7 @@ export default class ChatUI extends React.Component{
           let message = {
               _id: chat.rid,
               text: chat.msg,
-              createdAt: chat.time,
+              createdAt: chat.time*1000,
               user: {
                 _id: 1,
               },
@@ -181,7 +178,7 @@ export default class ChatUI extends React.Component{
           let message = {
               _id: chat.rid,
               text: chat.msg,
-              createdAt: chat.time,
+              createdAt: chat.time*1000,
               user: {
                 _id: 2,
                 name: this.state.pseudonym,
@@ -229,7 +226,7 @@ export default class ChatUI extends React.Component{
     if(msg){
       var json = JSON.stringify({
         type:0,
-        fuserid:Global.user.userid,
+        fuserid:this.props.papp.userid,
         tuserid:this.state.tuserid,
         msg:msg,
         checkid:checkid,
@@ -255,8 +252,11 @@ export default class ChatUI extends React.Component{
    * 消息列表
    */
   _requestChats(){
+    if(!this.props.papp.userid){
+      return;
+    }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       fuserid:this.state.fuserid,
     });
     HttpUtil.post(HttpUtil.CHAT_CHATS,json).then(res=>{
@@ -284,8 +284,11 @@ export default class ChatUI extends React.Component{
    * 设置已读
    */
   _requestReads(reads){
+    if(!this.props.papp.userid){
+      return
+    }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       reads:reads,
     });
     HttpUtil.post(HttpUtil.CHAT_READ,json).then(res=>{
@@ -301,5 +304,21 @@ export default class ChatUI extends React.Component{
 }
 
 const styles = StyleSheet.create({
-
+      send:{
+        fontSize:18,
+        color:StyleConfig.C_1E8AE8,
+        marginRight: 6,
+        marginBottom: 10,
+      },
+      centering: {
+       alignItems: 'center',
+       justifyContent: 'center',
+       padding: 8,
+     },
 });
+
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(ChatUI);

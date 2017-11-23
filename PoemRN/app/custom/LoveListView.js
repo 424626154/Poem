@@ -21,6 +21,9 @@ class LoveListView extends React.Component{
   loves = [];
   constructor(props){
     super(props);
+    this.state = {
+      loves:[],
+    }
   }
   componentDidMount(){
     this.loadPages();
@@ -29,19 +32,22 @@ class LoveListView extends React.Component{
 
   }
   render(){
+    console.log('------LoveListView() render');
     return (
       <TouchableOpacity key={'loves'} style={styles.love_bg}
         onPress={()=>{
           this._onLoves();
         }}>
-          {this.loves.map((elem, index) => {
+          {this.state.loves.map((elem, index) => {
            return elem;
          }) }
       </TouchableOpacity>
       );
   }
   loadPages(){
+    console.log('------LoveListView() loadPages')
     var temp_loves = this.props.loves||[];
+    console.log(temp_loves)
     this.loves = [];
     if(temp_loves.length > 0){
       this.loves.push(this._renderHead());
@@ -63,6 +69,9 @@ class LoveListView extends React.Component{
     if(temp_loves.length > max_num){
       this.loves.push(this._renderFooter());
     }
+    this.setState({
+      loves:this.loves,
+    })
   }
   _onLoveItem(item){
     this.props.onLoveItem(item);
@@ -77,6 +86,7 @@ class LoveListView extends React.Component{
     return(
       <TouchableOpacity
         key={'loves_head'}
+        style={{paddingRight:6,}}
         onPress={()=>{
           this._onLove()
         }}>
@@ -114,7 +124,7 @@ class LoveListView extends React.Component{
                 { item.pseudonym }
               </Text>
             </TouchableOpacity>
-          <Text style={styles.love_p}>,</Text>
+          <Text style={styles.love_p}>，</Text>
         </View>
       )
     }
@@ -153,6 +163,7 @@ const styles = StyleSheet.create({
   love_p:{
     color:'#000000',
     fontWeight:'bold',
+    paddingTop:4,
   },
 });
 export default LoveListView;

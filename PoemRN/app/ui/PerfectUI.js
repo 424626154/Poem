@@ -13,7 +13,7 @@ import {
         DeviceEventEmitter,
       } from 'react-native';
 import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions';
+import * as UserActions from '../redux/actions/UserActions';
 import BaseUI from '../BaseUI';
 
 import ImagePicker from 'react-native-image-crop-picker';
@@ -145,7 +145,7 @@ class PerfectUI extends BaseUI{
       if(res.code == 0 ){
         let user = res.data;
         let { dispatch } = this.props.navigation;
-        dispatch(Actions.raUpInfo(user.userid,user.head,user.pseudonym));
+        dispatch(UserActions.raUpInfo(user.userid,user.head,user.pseudonym));
         const fui = this.props.navigation.state.params.fui;
         console.log('------fui:'+fui);
         if(fui){

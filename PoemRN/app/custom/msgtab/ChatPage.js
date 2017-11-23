@@ -11,12 +11,12 @@ import {
       FlatList,
       TouchableOpacity,
       DeviceEventEmitter,
+      Alert,
      } from 'react-native';
 import {
       StyleConfig,
       HeaderConfig,
       UIName,
-      Global,
       HttpUtil,
       pstyles,
       MessageDao,
@@ -36,7 +36,6 @@ export default class ChatPage extends React.Component{
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
-        userid:Global.user.userid||'',
     }
   }
   componentDidMount(){
@@ -96,10 +95,23 @@ export default class ChatPage extends React.Component{
     }
   }
   _onDelItem = (id: int,item:Object) => {
+    if(Platform.OS === 'android'){
+      Alert.alert('删除私信',null,
+            [
+              {text: '删除', onPress: () =>{
+                this._onDeleteItem(item);
+              }},
+            ]
+          )
+    }else{
+      this._onDeleteItem(item);
+    }
+  }
+  _onDeleteItem(item){
     var del = false;
     this.dataContainer = this.state.sourceData;
     for(var i = this.dataContainer.length-1 ; i >= 0 ; i -- ){
-      if(this.dataContainer[i].id == id){
+      if(this.dataContainer[i].rid == item.rid){
         this.dataContainer.splice(i,1);
         //数据库删除 列表和子元素
         let chatuid = item.chatuid
@@ -145,6 +157,13 @@ export default class ChatPage extends React.Component{
     })
     this._requestChats();
   }
+  _pushChat(){
+    console.log('------ChatPage() _pushChat')
+    let db_chatlist = ChatDao.queryChatLists();
+    this.setState({
+      sourceData:db_chatlist,
+    })
+  }
   /**
    * 解析观察者
    */
@@ -181,11 +200,11 @@ export default class ChatPage extends React.Component{
    * 请求私信列表
    */
   _requestChats(){
-    if(!Global.user.userid){
+    if(!this.props.papp.userid){
       return;
     }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
     });
     HttpUtil.post(HttpUtil.CHAT_CHATS,json).then(res=>{
       if(res.code == 0){
@@ -241,11 +260,11 @@ export default class ChatPage extends React.Component{
    * 设置私信已读
    */
   _requestChatRead(reads){
-    if(!Global.user.userid){
+    if(!this.props.papp.userid){
       return;
     }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       reads:reads
     });
     HttpUtil.post(HttpUtil.CHAT_READ,json).then(res=>{

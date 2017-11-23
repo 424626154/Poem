@@ -10,7 +10,7 @@ import {
       TouchableOpacity,
      } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {UIName,pstyles,PImage} from '../AppUtil';
+import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
 class HomeListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
@@ -25,28 +25,38 @@ class HomeListItem extends React.PureComponent {
             >
             <View style={styles.fitem}>
               {/* 个人信息 */}
-              <TouchableOpacity
-                onPress={()=>{
-                  this.props.onPersonal(item.userid);
-                }}>
               <View style={styles.fitem_header}>
+                <TouchableOpacity
+                  style={{flexDirection:'row',alignItems:'center'}}
+                  onPress={()=>{
+                    this.props.onPersonal(item.userid);
+                  }}>
                 <PImage
-                  style={pstyles.small_head}
+                  style={styles.small_head}
                   source={this.props.headurl}
                   />
                 <View style={styles.fitem_header_info}>
                   <Text style={styles.fitem_name}>
                     {item.pseudonym}
                   </Text>
-                  <Text style={styles.fitem_time}>
-                    {this.props.time}
-                  </Text>
                 </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.more}
+                  onPress={this._onPress}>
+                  <Icon
+                    name='more-horiz'
+                    size={26}
+                    type="MaterialIcons"
+                    color={StyleConfig.C_D4D4D4}
+                    />
+                </TouchableOpacity>
               </View>
-              </TouchableOpacity>
               {/* 诗歌 */}
               <View style={pstyles.poem}>
-                <Text style={pstyles.poem_title}>{this.props.title}</Text>
+                <Text style={pstyles.poem_title}>
+                  {item.title}
+                </Text>
                 <Text
                   style={pstyles.poem_content}
                   numberOfLines={8}
@@ -64,9 +74,9 @@ class HomeListItem extends React.PureComponent {
                     <View style={styles.menu_item}>
                       <Icon
                         name='sms'
-                        size={30}
+                        size={26}
                         type="MaterialIcons"
-                        color={'#7b8992'}
+                        color={StyleConfig.C_D4D4D4}
                         />
                         <Text style={styles.menu_font}>
                           {this.renderCommentnum(item.commentnum)}
@@ -80,7 +90,7 @@ class HomeListItem extends React.PureComponent {
                     <View style={styles.menu_item}>
                       <Icon
                         name='thumb-up'
-                        size={30}
+                        size={26}
                         type="MaterialIcons"
                         color={this._renderLoveColor()}
                         />
@@ -89,6 +99,9 @@ class HomeListItem extends React.PureComponent {
                         </Text>
                     </View>
                   </TouchableOpacity>
+                  <Text style={styles.fitem_time}>
+                    {this.props.time}
+                  </Text>
               </View>
             </View>
             </TouchableOpacity>
@@ -102,33 +115,50 @@ class HomeListItem extends React.PureComponent {
       return lovenum > 0 ? lovenum:'';
     }
     _renderLoveColor(){
-      return this.props.item.mylove > 0 ? '#1e8ae8':'#7b8992';
+      return this.props.item.mylove > 0 ? StyleConfig.C_1E8AE8:StyleConfig.C_D4D4D4;
     }
 }
 const styles = StyleSheet.create({
   fitem:{
       flex:1,
       padding:10,
+      backgroundColor:StyleConfig.C_FFFFFF,
   },
   fitem_header:{
     flex:1,
     flexDirection:'row',
   },
+  small_head:{
+    height:30,
+    width:30,
+    // 设置图片填充模式
+   resizeMode:'cover',
+   // 设置圆角
+   borderRadius:15,
+ },
   fitem_header_info:{
     paddingLeft:4,
   },
   fitem_name:{
-    fontSize:20,
-    color:'#000000'
+    marginLeft:6,
+    fontSize:16,
+    color:StyleConfig.C_D4D4D4,
   },
   fitem_time:{
     fontSize:14,
     color:'#d4d4d4',
-    marginTop:4,
+    position: 'absolute',
+    right:0,
+    bottom:10,
+  },
+  more:{
+    position: 'absolute',
+    right:0,
   },
   menu:{
-    paddingLeft:60,
+    // paddingLeft:60,
     flexDirection:'row',
+    justifyContent:'flex-start',
   },
   menu_item:{
     flexDirection:'row',
@@ -136,7 +166,7 @@ const styles = StyleSheet.create({
   },
   menu_font:{
     fontSize:18,
-    color:'#7b8992',
+    color:StyleConfig.C_D4D4D4,
     marginLeft:4,
   },
 });

@@ -14,9 +14,10 @@
    Platform,
    ActivityIndicator,
    Linking,
+   Dimensions,
  } from 'react-native';
 import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions';
+import * as UserActions from '../redux/actions/UserActions';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -31,9 +32,10 @@ import {
   HomePoemDao,
   MessageDao,
   ChatDao,
-  Global,
+  showToast,
 } from '../AppUtil';
 
+const {width, height} = Dimensions.get('window');
 import FirIm from '../utils/FirIm';
 
 class SettingUI extends React.Component {
@@ -56,6 +58,9 @@ class SettingUI extends React.Component {
           version:'版本信息',
           animating:false,
        }
+       this._checkUpdate = this._checkUpdate.bind(this);
+       this._onFeedback = this._onFeedback.bind(this);
+       this._onClear = this._onClear.bind(this);
      }
      componentDidMount(){
         let type = ''
@@ -89,30 +94,29 @@ class SettingUI extends React.Component {
      const { state,navigate,goBack } = this.props.navigation;
      return (
        <View style={styles.container}>
-        <View style={styles.interval}></View>
-        {this._renderVersion()}
-        <View style={styles.interval}></View>
-        {this._renderFeedback()}
-        <View style={styles.interval}></View>
-        {this._renderClear()}
+        {this._renderItem(this.state.version,this._checkUpdate,this.state.update,false)}
+        {this._renderItem('意见反馈',this._onFeedback,false,true)}
+        {this._renderItem('清空缓存',this._onClear,false,false)}
         <View style={styles.interval}></View>
         {this._renderLogout()}
         {this._renderLoading()}
        </View>
      );
    }
-   /**
-    * 版本
-    */
-   _renderVersion(){
+   _renderItem(title,func,rot,arrow){
      return(
        <TouchableOpacity onPress={()=>{
-            this._checkUpdate();
+           func();
        }}>
-         <View style={styles.label}>
-             <Text style={styles.version}>{this.state.version}</Text>
-             {this._renderRot(this.state.update)}
+       <View>
+       <View style={styles.item}>
+         <Text style={styles.item_title}>
+           {title}
+         </Text>
+         {this._renderArrow(arrow)}
+         {this._renderRot(rot)}
          </View>
+       </View>
        </TouchableOpacity>
      )
    }
@@ -132,28 +136,23 @@ class SettingUI extends React.Component {
          return null;
        }
    }
-   _renderFeedback(){
-     return(
-       <TouchableOpacity onPress={()=>{
-         this._onFeedback();
-       }}>
-         <View style={styles.label}>
-             <Text style={styles.version}>意见反馈</Text>
+   _renderArrow(arrow){
+     if(arrow){
+       return(
+         <View style={styles.arrow}>
+           <Icon
+             name='navigate-next'
+             size={28}
+             type="MaterialIcons"
+             color={StyleConfig.C_D4D4D4}
+           />
          </View>
-       </TouchableOpacity>
-     )
+       )
+     }else{
+       return null;
+     }
    }
-   _renderClear(){
-     return(
-       <TouchableOpacity onPress={()=>{
-         this._onClear();
-       }}>
-         <View style={styles.label}>
-             <Text style={styles.version}>清空缓存</Text>
-         </View>
-       </TouchableOpacity>
-     )
-   }
+
    /**
     * 退出登录
     */
@@ -196,6 +195,7 @@ class SettingUI extends React.Component {
      }
    }
    _checkUpdate(){
+     console.log('------_checkUpdate')
      if(Platform.OS == 'ios'&&//appstore 关闭版本更新
        AppConf.IOS_CHANNEL == AppConf.APPSTORE){
          return;
@@ -239,22 +239,24 @@ class SettingUI extends React.Component {
     * 清空缓存
     */
    _onClear(){
-     this.setState({
-       animating:true,
-     });
-     HomePoemDao.deleteAll();
-     MessageDao.deleteAll();
-     ChatDao.deleteAllChat();
-     ChatDao.deleteAllChatList();
-     Emitter.emit(Emitter.CLEAR,'');
-     this.setState({
-       animating:false,
-     });
      Alert.alert(
            '清除缓存',
-           '操作完成',
+           '是否清除缓存数据？',
            [
-             {text: '确定', onPress: () =>{}},
+             {text: '取消', onPress: () =>{}},
+             {text: '确定', onPress: () =>{
+               this.setState({
+                 animating:true,
+               });
+               HomePoemDao.deleteAll();
+               MessageDao.deleteAll();
+               ChatDao.deleteAllChat();
+               ChatDao.deleteAllChatList();
+               this.setState({
+                 animating:false,
+               });
+               showToast('清除缓存完成');
+             }},
            ]
          )
    }
@@ -271,7 +273,7 @@ class SettingUI extends React.Component {
      HttpUtil.post(HttpUtil.USER_LOGOUT,json).then(res=>{
        if(res.code == 0){
          let { dispatch } = this.props.navigation;
-         dispatch(Actions.reLogout());
+         dispatch(UserActions.raLogout());
          Storage.saveUserid('');
          this.props.navigation.goBack();
        }else{
@@ -288,7 +290,7 @@ class SettingUI extends React.Component {
  const styles = StyleSheet.create({
    container: {
      flex: 1,
-     backgroundColor: '#ffffff',
+     backgroundColor: '#ebebeb',
    },
    interval:{
      height:10,
@@ -296,10 +298,11 @@ class SettingUI extends React.Component {
    label:{
      alignItems:'center',
      height:40,
-     borderTopWidth:1,
-     borderTopColor:'#d4d4d4',
-     borderBottomWidth:1,
-     borderBottomColor:'#d4d4d4',
+     backgroundColor:StyleConfig.C_FFFFFF,
+     // borderTopWidth:1,
+     // borderTopColor:'#d4d4d4',
+     // borderBottomWidth:1,
+     // borderBottomColor:'#d4d4d4',
    },
    version:{
      marginTop:10,
@@ -315,8 +318,8 @@ class SettingUI extends React.Component {
      backgroundColor:'#00000055',
      position: 'absolute',
      flex:1,
-     width:Global.width,
-     height:Global.height,
+     width:width,
+     height:height,
      alignItems:'center',
      justifyContent: 'center',
    },
@@ -327,10 +330,26 @@ class SettingUI extends React.Component {
   },
   dot:{
     position: 'absolute',
-    top: 20,
-    right:80,
+    right:20,
     height:12,
     width:12,
+  },
+  item:{
+    // flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    height:40,
+    backgroundColor:StyleConfig.C_FFFFFF,
+    // borderTopWidth:1,
+    // borderTopColor:'#d4d4d4',
+    // borderBottomWidth:1,
+    // borderBottomColor:'#d4d4d4',
+    marginTop:10,
+    paddingLeft:10,
+  },
+  arrow:{
+    position: 'absolute',
+    right:10,
   }
  });
  export default connect(

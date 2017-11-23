@@ -10,7 +10,7 @@ import {
 } from '../AppUtil';
 class HomePoemDao{
   isAccount(){
-    return Global.user.userid||'';
+    return Global.userid||'';
   }
   addHomePoems(homepoems){
     let temp_chats = [];
@@ -43,15 +43,24 @@ class HomePoemDao{
       return temp_chats;
     }
   }
-  updateHomePoemLove(homepoem){
-    console.log(homepoem);
+  updateHomePoemLove(poem){
+    console.log(poem);
     try {
       realm.write(()=> {
-          realm.create(RealmName.HomePoem, {
-            rid: homepoem.rid,
-            lovenum: homepoem.lovenum,
-            mylove:homepoem.mylove
-          }, true);
+          let rid = '';
+          let filtered = 'account = "'+this.isAccount()+'" AND id = "'+poem.id+'"';
+          let homepoems = realm.objects(RealmName.HomePoem).filtered(filtered);
+          if(homepoems.length > 0){
+            rid = this.realmsToObjs(homepoems)[0].rid
+          }
+          console.log('---rid:',rid);
+          if(rid){
+            realm.create(RealmName.HomePoem, {
+              rid: rid,
+              lovenum: poem.lovenum,
+              mylove:poem.mylove
+            }, true);
+          }
       });
     } catch (e) {
       console.error(e);
@@ -97,7 +106,7 @@ class HomePoemDao{
      try {
        realm.write(() => {
           let filtered = 'account = "'+this.isAccount()+'"' ;
-          console.log('--- HomePoemDao() deleteHomePoems filtered:'+filtered)
+          // console.log('--- HomePoemDao() deleteHomePoems filtered:'+filtered)
           let all = realm.objects(RealmName.HomePoem).filtered(filtered);
           realm.delete(all);
        });
@@ -118,6 +127,18 @@ class HomePoemDao{
      } finally {
 
      }
+   }
+
+   realmsToObjs(realms){
+     let objs = [];
+     realms.map(function(realms) {
+         if (typeof realms.snapshot == 'function') {
+             realms = realms.snapshot();
+         }
+         let obj = Object.assign({}, realms);
+         objs.push(obj);
+     });
+     return objs;
    }
 }
 

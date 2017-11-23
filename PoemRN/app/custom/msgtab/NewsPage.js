@@ -11,14 +11,12 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
-      DeviceEventEmitter,
      } from 'react-native';
 
 import {
        StyleConfig,
        HeaderConfig,
        UIName,
-       Global,
        HttpUtil,
        pstyles,
        MessageDao,
@@ -27,20 +25,19 @@ import {
        goPersonalUI,
      } from '../../AppUtil';
 
-import MessageListItem from '../MessageListItem';
+import NewsListItem from '../NewsListItem';
 
 class NewsPage extends React.Component{
   // 数据容器，用来存储数据
   dataContainer = [];
   constructor(props){
     super(props);
-    console.log('---NewsPage()---')
+    // console.log('---NewsPage()---')
     this.state = {
         // 存储数据的状态
         sourceData : [],
         selected: (new Map(): Map<String, boolean>),
         refreshing: false,
-        userid:Global.user.userid||'',
     }
   }
   componentDidMount(){
@@ -112,7 +109,7 @@ class NewsPage extends React.Component{
       }
   };
   _onIconItem = (id: string,message:Object) => {
-    if(message.type == 1){
+    if(message.type == 1||message.type == 2||message.type == 3){
       var extend = JSON.parse(message.extend);
       var userid = extend.userid;
       if(userid){
@@ -120,13 +117,27 @@ class NewsPage extends React.Component{
       }
     }
   }
-  _onDelItem = (id: int,message:Object) => {
+  _onDelItem = (id: int,item:Object) => {
+    if(Platform.OS === 'android'){
+      Alert.alert('删除通知',null,
+            [
+              {text: '删除', onPress: () =>{
+                this._onDeleteItem(item);
+              }},
+            ]
+          )
+    }else{
+      this._onDeleteItem(item);
+    }
+  }
+  _onDeleteItem(item){
     var del = false;
+    console.log('---rid',item.rid)
     this.dataContainer = this.state.sourceData;
     for(var i = this.dataContainer.length-1 ; i >= 0 ; i -- ){
-      if(this.dataContainer[i].id == id){
+      if(this.dataContainer[i].rid == item.rid){
         this.dataContainer.splice(i,1);
-        MessageDao.deleteMessage(message.rid);
+        MessageDao.deleteMessage(item.rid);
         del = true;
       }
     }
@@ -138,7 +149,7 @@ class NewsPage extends React.Component{
   }
   _renderItem = ({item}) =>{
       return(
-          <MessageListItem
+          <NewsListItem
               id={item.id}
               onPressItem={ this._onPressItem }
               onDelItem={this._onDelItem}
@@ -165,15 +176,22 @@ class NewsPage extends React.Component{
     });
     this._requestMessages();
   }
-
+  _pushNews(){
+    console.log('------NewsPage() _pushNews')
+    let msgs = MessageDao.getMessages();
+    this.dataContainer = msgs||[];
+    this.setState({
+      sourceData: this.dataContainer
+    });
+  }
   _requestMessages(){
-    console.log('---_requestMessages')
-    console.log(Global.user.userid)
-    if(!Global.user.userid){
+    // console.log('---_requestMessages')
+    // console.log(this.props.papp.userid)
+    if(!this.props.papp.userid){
       return;
     }
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
     });
     HttpUtil.post(HttpUtil.MESSAGE_MESSAGES,json).then(res=>{
       if(res.code == 0){
@@ -204,7 +222,7 @@ class NewsPage extends React.Component{
 
   _requestMsgRead(reads){
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       reads:reads
     });
     HttpUtil.post(HttpUtil.MESSAGE_READ,json).then(res=>{

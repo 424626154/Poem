@@ -20,6 +20,7 @@ import HomePoemDao from './db/HomePoemDao';
 import ChatDao from './db/ChatDao';
 import PImage from './custom/PImage';
 import BitSet from './utils/BitSet';
+import Toast from 'react-native-root-toast';
 var Utils = {};
 
 Utils.dateStr = function(date){
@@ -69,7 +70,8 @@ Utils.getHead = function(head){
 Utils.isLogin = function(navigation){
   let {navigate,state} = navigation;
   var isLogin = false;
-  if(Global.user.userid){
+  let userid = Storage.getUserid();
+  if(userid){
     isLogin = true;
   }else{
     navigate(UIName.LoginUI)
@@ -117,13 +119,26 @@ Utils.setPermission = function(per_key,per_bool,per){
  */
 export function goPersonalUI(navigate,userid){
     var routeName = UIName.PersonalUI;
-    if(Global.user.userid == userid){
+    let myuserid = Storage.getUserid();
+    if(myuserid == userid){
       return;
     }
     if(navigate){
       navigate(routeName,{userid:userid});
     }
   }
+
+
+export function showToast(tips){
+  let toast = Toast.show(tips, {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+  });
+}
 export {
   StyleConfig,
   HeaderConfig,

@@ -64,6 +64,10 @@ UIName.SettingUI = 'SettingUI';
 UIName.WorksUI = 'WorksUI';
 UIName.PhotoUI = 'PhotoUI';
 UIName.AgreementUI = 'AgreementUI';
+UIName.ReportUI = 'ReportUI';
+UIName.ProtocolUI = 'ProtocolUI';
+UIName.FollowUI = 'FollowUI';
+
 var Permission = {
 
 }

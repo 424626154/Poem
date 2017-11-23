@@ -10,11 +10,9 @@ import {
     FlatList,
     Text,
 } from 'react-native';
-import MessageListItem from '../custom/MessageListItem';
 import {
   StyleConfig,
   HeaderConfig,
-  Global,
   HttpUtil,
   pstyles
 } from '../AppUtil';
@@ -63,6 +61,6 @@ const styles = StyleSheet.create({
   },
   content:{
     padding:10,
-    fontSize:14,
+    fontSize:18,
   }
 });

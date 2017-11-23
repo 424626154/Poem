@@ -11,15 +11,15 @@ import {
         Text,
         TextInput,
         FlatList,
-} from 'react-native';
-import { Icon,SocialIcon } from 'react-native-elements';
+      } from 'react-native';
+import {connect} from 'react-redux';
+import { Icon } from 'react-native-elements';
 import PersonalListItem from '../custom/PersonalListItem';
 import {
   StyleConfig,
   HeaderConfig,
   StorageConfig,
   HttpUtil,
-  Global,
   Utils,
   pstyles,
   PImage,
@@ -64,7 +64,7 @@ class PersonalUI extends React.Component{
   componentDidMount(){
     const { navigate } = this.props.navigation;
     this._requestOtherInfo(this.state.userid);
-    if(this.state.userid != Global.user.userid){
+    if(this.state.userid != this.props.papp.userid){
       this.setState({
         myfollow_title:'ta关注的',
         followme_title:'关注ta的',
@@ -102,6 +102,7 @@ class PersonalUI extends React.Component{
           {this._renderFollowOP()}
         </View>
         <FlatList
+                  style={{backgroundColor:'#e7e7e7'}}
                   data={ this.state.sourceData }
                   extraData={ this.state.selected }
                   keyExtractor={ this._keyExtractor }
@@ -139,7 +140,7 @@ class PersonalUI extends React.Component{
   };
   // 自定义分割线
   _renderItemSeparatorComponent = ({highlighted}) => (
-      <View style={{ height:1, backgroundColor:'#d4d4d4' }}></View>
+      <View style={{ height:6, backgroundColor:'transparent' }}></View>
   );
 
   // 空布局
@@ -215,26 +216,25 @@ class PersonalUI extends React.Component{
   _renderFollowOP(){
     return(
     <View style={styles.follow}>
-        <SocialIcon
-          title={this.state.follow}
-          button={true}
-          onPress={()=>{
-            this._onFollow();
-          }}
-          fontStyle={styles.follow_font}
-          light
-          style={styles.follow_button}
-          />
-          <SocialIcon
-            title={'私信'}
-            button={true}
+          <TouchableOpacity
+            style={styles.follow_button}
+            onPress={()=>{
+              this._onFollow();
+            }}>
+              <Text style={styles.follow_font}>
+                {this.state.follow}
+              </Text>
+          </TouchableOpacity>
+          <View style={{width:10,}}></View>
+          <TouchableOpacity
+            style={styles.follow_button}
             onPress={()=>{
               this._onChat();
-            }}
-            fontStyle={styles.follow_font}
-            light
-            style={styles.follow_button}
-            />
+            }}>
+              <Text style={styles.follow_font}>
+                {'私信'}
+              </Text>
+          </TouchableOpacity>
       </View>
     )
   }
@@ -251,7 +251,7 @@ class PersonalUI extends React.Component{
   }
   _requestOtherInfo(userid){
     var json = JSON.stringify({
-      myid:Global.user.userid,
+      myid:this.props.papp.user.userid,
       userid:userid,
     })
     HttpUtil.post(HttpUtil.USER_OTHERINFO,json).then(res=>{
@@ -286,7 +286,7 @@ class PersonalUI extends React.Component{
   }
   _requestFollow(){
     var json = JSON.stringify({
-      userid:Global.user.userid,
+      userid:this.props.papp.userid,
       fansid:this.state.user.userid,
       op:this.state.user.fstate == 0?1:0,
     })
@@ -406,11 +406,15 @@ const styles = StyleSheet.create({
   follow_button:{
     width:80,
     height:30,
+    backgroundColor:StyleConfig.C_FFFFFF,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:8,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,
     color:StyleConfig.C_1E8AE8,
-    marginLeft:-2,
+    fontWeight:'bold',
   },
   //关注
   follow_bg:{
@@ -422,12 +426,16 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_D4D4D4,
   },
   follow_item_font:{
-    marginTop:10,
+    marginTop:6,
     fontSize:StyleConfig.F_12,
     color:StyleConfig.C_D4D4D4,
   },
 })
-export {PersonalUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(PersonalUI);

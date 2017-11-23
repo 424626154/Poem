@@ -11,7 +11,8 @@
 
  class ChatDao {
    isAccount(){
-     return Global.user.userid||'';
+     // console.log('------ChatDao() Global.userid:',Global.userid)
+     return Global.userid||'';
    }
    /**
     * 添加私信

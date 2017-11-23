@@ -1,6 +1,5 @@
 // 添加作品
 import React from 'react';
-import { Button,Icon } from 'react-native-elements';
 import {
   StyleSheet,
   Text,
@@ -15,7 +14,9 @@ import {
   KeyboardAvoidingView,
   findNodeHandle,
 } from 'react-native';
-// import {RichTextEditor,RichTextToolbar} from 'react-native-zss-rich-text-editor';
+import {connect} from 'react-redux';
+import * as PoemsActions from '../redux/actions/PoemsActions';
+import { Button,Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import dismissKeyboard from 'dismissKeyboard';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -27,7 +28,6 @@ import {
   pstyles,
   HttpUtil,
   Emitter,
-  Global,
 } from '../AppUtil';
 
 
@@ -55,7 +55,6 @@ class AddPoemUI extends React.Component {
         this.state = {
             placeholder:'请输入内容',
             value:'',
-            userid:Global.user.userid,
             title:'',
             content:'',
             keyboardHeight:0,
@@ -156,7 +155,7 @@ class AddPoemUI extends React.Component {
   onRelease(){
     var title = this.state.title;
     var content = this.state.content;
-    if(!this.state.userid){
+    if(!this.props.papp.userid){
       Alert.alert('登录后再发布');
       return;
     }
@@ -169,14 +168,15 @@ class AddPoemUI extends React.Component {
       return;
     }
     var json = JSON.stringify({
-      userid:this.state.userid,
+      userid:this.props.papp.userid,
       title:title,
       content:content
     });
     HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
       if(res.code == 0){
           var poem = res.data;
-          Emitter.emit(Emitter.ADDPOEM,poem);
+          let { dispatch } = this.props.navigation;
+          dispatch(PoemsActions.raAddPoem(poem));
           this.props.navigation.goBack();
       }else{
         alert(res.errmsg);
@@ -187,33 +187,7 @@ class AddPoemUI extends React.Component {
   }
 
 }
-// const markdownStyles = {
-//   heading1: {
-//     fontSize: 24,
-//     color: 'purple',
-//   },
-//   link: {
-//     color: 'pink',
-//   },
-//   mailTo: {
-//     color: 'orange',
-//   },
-//   text: {
-//     color: '#555555',
-//   },
-//   richText: {
-//      alignItems:'center',
-//      justifyContent: 'center',
-//      backgroundColor: 'transparent',
-//      marginTop: 60
-//    },
-//    toolbar:{
-//      position: 'absolute',
-//      top: 0,
-//      left: 0,
-//      right: 0
-//    }
-// }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -239,5 +213,8 @@ const styles = StyleSheet.create({
     backgroundColor:StyleConfig.C_D4D4D4,
   },
 });
-
-export {AddPoemUI};
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(AddPoemUI);

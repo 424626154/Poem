@@ -1,3 +1,4 @@
+'use strict';
 /**
  * 我的作品
  */
@@ -10,9 +11,9 @@
    TouchableOpacity,
    Alert,
    FlatList,
-   DeviceEventEmitter,
  } from 'react-native';
- import {connect} from 'react-redux';
+import {connect} from 'react-redux';
+import * as PoemsActions from '../redux/actions/PoemsActions';
 
 import{
   StyleConfig,
@@ -43,10 +44,8 @@ class WorksUI extends React.Component {
       });
 
       // 数据容器，用来存储数据
-      dataContainer = [];
       constructor(props) {
           super(props);
-          this.papp = this.props.papp;
           this.state = {
               // 存储数据的状态
               sourceData : [],
@@ -56,33 +55,40 @@ class WorksUI extends React.Component {
       }
     // 当视图全部渲染完毕之后执行该生命周期方法
      componentDidMount() {
-         console.log('------WorksUI() this.papp:',this.papp);
-         DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-            this._analysisObserver(obj);
-         });
-         if(this.papp.userid){
+         if(this.props.papp.userid){
            // this._queryPoems();
            this._requestNewestPoem();
          }
      }
      componentWillUnmount(){
-       DeviceEventEmitter.removeAllListeners();
      }
      shouldComponentUpdate(nextProps, nextState){
+       console.log('------WorksUI() shouldComponentUpdate ')
        //切换用户id
-       if(!Object.is(nextProps.papp.userid,this.props.papp.userid)){
-         this.papp = nextProps.papp;
-         if(nextProps.papp.userid){
+       if(nextProps.papp.userid !== this.props.papp.userid){
+         Object.assign(this.props.papp,nextProps.papp);
+         if(this.props.papp.userid){
            this._queryPoems();
-           this._requestUserInfo(this.papp.userid);
          }else{
-           this.dataContainer = [];
+           let { dispatch } = this.props.navigation;
+           dispatch(PoemsActions.raUpMyPoems([]));
            this.setState({
-             sourceData: this.dataContainer,
+             sourceData: [],
            });
          }
-       }else if(!Object.is(nextProps.papp.user.per,this.props.papp.user.per)){
-         this.papp = nextProps.papp;
+       }
+       if(nextProps.papp.user.per,this.props.papp.user.per){
+         Object.assign(this.props.papp,nextProps.papp);
+       }
+       if(nextProps.mypoems !== this.props.mypoems){
+         console.log('--- up mypoems');
+         console.log(this.state.sourceData)
+         Object.assign(this.props.mypoems,nextProps.mypoems);
+         let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
+         this.setState({
+           sourceData:mypoems,
+         })
+         console.log(mypoems)
        }
        return true;
      }
@@ -182,7 +188,7 @@ class WorksUI extends React.Component {
     );
    // 下拉刷新
   _renderRefresh = () => {
-       if(!this.papp.userid){
+       if(!this.props.papp.userid){
          return;
        }
        this._requestNewestPoem();
@@ -191,7 +197,7 @@ class WorksUI extends React.Component {
   // 上拉加载更多
   _onEndReached = () => {
     console.log('-----------WorksTab_onEndReached--------------');
-      if(!this.papp.userid){
+      if(!this.props.papp.userid){
         return;
       }
      this.setState({refreshing: true})
@@ -201,15 +207,18 @@ class WorksUI extends React.Component {
      }
      var json = JSON.stringify({
        id:fromid,
-       userid:this.papp.userid,
+       userid:this.props.papp.userid,
      });
      HttpUtil.post(HttpUtil.POEM_HISTORY_POEM,json).then(res=>{
        if(res.code == 0){
            var poems = res.data;
             if(poems.length > 0){
-              this.dataContainer = this.dataContainer.concat(poems);
+              let mypoems = Object.assign([], this.props.mypoems);
+              mypoems = mypoems.concat(poems);
+              let { dispatch } = this.props.navigation;
+              dispatch(PoemsActions.raUpMyPoems(mypoems));
               this.setState({
-                sourceData: this.dataContainer
+                sourceData: mypoems
               });
             }
        }else{
@@ -235,9 +244,9 @@ class WorksUI extends React.Component {
    }
 
    onAdd(){
-     if(this.papp.userid){
-       console.log('---per',this.papp.user.per)
-       if(!Utils.getPermission(Permission.WRITE,this.papp.user.per)){
+     if(this.props.papp.userid){
+       console.log('---per',this.props.papp.user.per)
+       if(!Utils.getPermission(Permission.WRITE,this.props.papp.user.per)){
             this.props.navigation.navigate(UIName.AgreementUI,{toui:UIName.AddPoemUI});
        } else{
             this.props.navigation.navigate(UIName.AddPoemUI);
@@ -251,67 +260,10 @@ class WorksUI extends React.Component {
       this._requestNewestPoem();
    }
    /**
-    * 添加作品监听
-    */
-   _eventAddPoem(poem){
-     this.dataContainer = [poem].concat(this.dataContainer);
-     this.setState({
-         sourceData: this.dataContainer,
-     });
-   }
-   /**
-    * 删除作品监听
-    */
-   _eventDeletePoem(id){
-     let sourceData = this.state.sourceData
-     for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
-       if(sourceData[i].id == id){
-         sourceData.splice(i,1);
-       }
-     }
-     this.setState({
-         sourceData: sourceData
-     });
-   }
-   /**
-    * 修改作品监听
-    */
-   _eventUpPoem(poem){
-     let sourceData = this.state.sourceData
-     for(var i = 0 ; i < sourceData.length ; i ++ ){
-       if(sourceData[i].id == poem.id){
-         sourceData[i].title = poem.title;
-         sourceData[i].content = poem.content;
-       }
-     }
-     this.setState({
-         sourceData: sourceData
-     });
-   }
-   /**
-    * 请求个人信息
-    */
-   _requestUserInfo(userid){
-     var json = JSON.stringify({
-       userid:userid,
-     })
-     HttpUtil.post(HttpUtil.USER_INFO,json).then(res=>{
-       if(res.code == 0){
-         Global.user = res.data ;
-         Utils.log('_requestUserInfo',Global.user)
-         Emitter.emit(Emitter.UPINFO,res.data);
-       }else{
-         Alert.alert(res.errmsg);
-       }
-     }).catch(err=>{
-       console.error(err);
-     })
-   }
-   /**
     * 请求最新作品
     */
    _requestNewestPoem(){
-       if(!this.state.userid){
+       if(!this.props.papp.userid){
          return;
        }
       this.setState({refreshing: true});
@@ -321,15 +273,18 @@ class WorksUI extends React.Component {
       }
       var json = JSON.stringify({
         id:fromid,
-        userid:this.state.userid,
+        userid:this.props.papp.userid,
       });
       HttpUtil.post(HttpUtil.POEM_NEWEST_POEM,json).then(res=>{
         if(res.code == 0 ){
           var poems = res.data;
            if(poems.length > 0){
-             this.dataContainer = poems.concat(this.dataContainer);
+             let mypoems = Object.assign([], this.props.mypoems);
+             mypoems = poems.concat(mypoems);
+             let { dispatch } = this.props.navigation;
+             dispatch(PoemsActions.raUpMyPoems(mypoems));
              this.setState({
-               sourceData: this.dataContainer
+               sourceData:mypoems,
              });
            }
         }else{
@@ -339,23 +294,6 @@ class WorksUI extends React.Component {
       }).catch(err=>{
         console.error(err);
       });
-   }
-   _analysisObserver(obj){
-     var action = obj.action;
-     var param = obj.param;
-     switch (action) {
-       case Emitter.ADDPOEM:
-         this._eventAddPoem(param);
-         break;
-       case Emitter.DELPOEM:
-         this._eventDeletePoem(param.id)
-         break;
-       case Emitter.UPPOEM:
-         this._eventUpPoem(param)
-         break;
-       default:
-         break;
-     }
    }
  }
 
@@ -371,5 +309,6 @@ class WorksUI extends React.Component {
  export default connect(
      state => ({
          papp: state.papp,
+         mypoems:state.poems.mypoems,
      }),
  )(WorksUI);

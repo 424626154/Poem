@@ -14,7 +14,8 @@ import {
       DeviceEventEmitter,
      } from 'react-native';
 import {connect} from 'react-redux';
-import * as Actions from '../redux/actions/Actions';
+import * as UserActions from '../redux/actions/UserActions';
+import * as PoemsActions from '../redux/actions/PoemsActions';
 
 import { Icon } from 'react-native-elements';
 import HomeListItem from '../custom/HomeListItem';
@@ -27,12 +28,11 @@ import {
   Utils,
   HttpUtil,
   Emitter,
-  Global,
   pstyles,
   HomePoemDao,
   goPersonalUI,
 } from '../AppUtil';
-
+const timeout  = 5000;
 
 class HomeTab extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -43,21 +43,14 @@ class HomeTab extends React.Component {
         headerLeft:null,
      });
      // 数据容器，用来存储数据
-     dataContainer = [];
-     navigate = null;
      constructor(props) {
          super(props);
-         console.log('---HomeTab()---')
-         let papp = this.props.papp;
-         this.papp = papp;
-         const {navigate } = this.props.navigation;
-         this.navigate = navigate;
+         // console.log('---HomeTab()---')
          this.state = {
              // 存储数据的状态
              sourceData : [],
              selected: (new Map(): Map<String, boolean>),
              refreshing: false,
-             userid:'',
          }
          this._onLove = this._onLove.bind(this);
          this._onComment = this._onComment.bind(this);
@@ -71,7 +64,7 @@ class HomeTab extends React.Component {
       this.timer = setTimeout(
       () => {
         let { dispatch } = this.props.navigation;
-        dispatch(Actions.onMsgRead());
+        dispatch(UserActions.raMsgRead());
        },500);
       HomePoemDao.deleteHomePoems();
       this._initPoems();
@@ -79,20 +72,38 @@ class HomeTab extends React.Component {
     componentWillUnmount(){
       DeviceEventEmitter.removeAllListeners();
       this.timer && clearTimeout(this.timer);
+      this.net_time && clearTimeout(this.net_time);
     }
   shouldComponentUpdate(nextProps, nextState){
+    // console.log('---HomeTab() shouldComponentUpdate');
+    // console.log(nextProps)
+    // console.log(this.props)
     //切换用户id
-    if(!Object.is(nextProps.papp.userid,this.props.papp.userid)){
-      console.log('---up papp');
-      this.papp = this.props.papp;
+    if(nextProps.papp.userid !== this.props.papp.userid){
+      console.log('---HomeTab() shouldComponentUpdate');
+      console.log('--- up papp');
+      Object.assign(this.props.papp,nextProps.papp);
+      // console.log(nextProps.papp)
+      // console.log(this.props.papp)
       this._initPoems();
+    }
+    if(nextProps.homepoems !== this.props.homepoems){
+      console.log('---HomeTab() shouldComponentUpdate');
+      console.log('--- up homepoems');
+      Object.assign(this.props.homepoems,nextProps.homepoems);
+      const homepoems = this.props.homepoems;
+      console.log(homepoems)
+      this.setState({
+        sourceData:homepoems,
+      })
     }
     return true;
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={pstyles.container}>
       <FlatList
+                style={{backgroundColor:'#e7e7e7'}}
                 data={ this.state.sourceData }
                 extraData={ this.state.selected }
                 keyExtractor={ this._keyExtractor }
@@ -113,55 +124,6 @@ class HomeTab extends React.Component {
       </View>
     );
   }
-  /**
-   * 渲染自定义nav
-   */
-  _renderNav(){
-    return(
-      <View style={styles.header}>
-          {this._renderNavOS()}
-          <View style={styles.header_bg}>
-            <TouchableOpacity  style={styles.header_left}
-            onPress={()=>{
-              this.navigate('DrawerOpen');
-            }}>
-              <Icon
-                name='reorder'
-                size={26}
-                type="MaterialIcons"
-                color={StyleConfig.C_FFFFFF}
-              />
-            </TouchableOpacity>
-            <Text style={styles.header_title}>Poem</Text>
-            <View style={styles.header_right}>
-              <TouchableOpacity  style={styles.header_left}
-              onPress={()=>{
-                if(!Utils.isLogin(this.props.navigation))return;
-                this.navigate(UIName.AddPoemUI);
-              }}>
-                <Icon
-                  name='queue'
-                  size={26}
-                  type="MaterialIcons"
-                  color={StyleConfig.C_FFFFFF}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-      </View>
-    )
-  }
-  /**
-   * 渲染自定义nav系统区分
-   */
-  _renderNavOS(){
-    if(Platform.OS === 'ios'){
-        return(<View style={HeaderConfig.iosNavStyle}></View>)
-      }else{
-        return(<View></View>)
-      }
-  }
-
    _keyExtractor = (item, index) => index;
 
    _onPressItem = (id: string) => {
@@ -170,7 +132,7 @@ class HomeTab extends React.Component {
            selected.set(id, !selected.get(id));
            return {selected}
        });
-      this.navigate(UIName.DetailsUI,{id:id});
+      this.props.navigation.navigate(UIName.DetailsUI,{id:id});
    };
    // 加载item布局
    _renderItem = ({item}) =>{
@@ -199,7 +161,7 @@ class HomeTab extends React.Component {
    );
    // 自定义分割线
    _renderItemSeparatorComponent = ({highlighted}) => (
-       <View style={{ height:1, backgroundColor:'#d4d4d4' }}></View>
+       <View style={{ height:6, backgroundColor:'transparent' }}></View>
    );
    // 空布局
    _renderEmptyView = () => (
@@ -218,10 +180,13 @@ class HomeTab extends React.Component {
 
    // 上拉加载更多
    _onEndReached = () => {
-     if(this.state.refreshing||1 == 1){
+     if(this.state.refreshing){
        return;
      }
      this.setState({refreshing: true});
+     this.net_time = setTimeout(()=>{
+       this.setState({refreshing: false})
+     },timeout);
      var fromid = 0;
      if(this.state.sourceData.length > 0 ){
        fromid = this.state.sourceData[this.state.sourceData.length-1].id;
@@ -236,15 +201,19 @@ class HomeTab extends React.Component {
              var poems = res.data;
               if(poems.length > 0){
                 let temp_pems = HomePoemDao.addHomePoems(poems);
-                this.dataContainer = this.dataContainer.concat(temp_pems);
+                let  homepoems = this.props.homepoems
+                homepoems = homepoems.concat(temp_pems);
+                let { dispatch } = this.props.navigation;
+                dispatch(PoemsActions.raUpHomePoems(homepoems));
                 this.setState({
-                  sourceData: this.dataContainer
+                  sourceData: homepoems,
                 });
               }
          }else{
            Alert.alert(res.errmsg);
          }
-         this.setState({refreshing: false});
+        this.setState({refreshing: false});
+        this.net_time && clearTimeout(this.net_time);
        })
        .catch((error) => {
          console.error(error);
@@ -254,17 +223,20 @@ class HomeTab extends React.Component {
     * 点击评论
     */
    _onComment(item){
-     this.navigate(UIName.DetailsUI,{id:item.id,ftype:1});
+     this.props.navigation.navigate(UIName.DetailsUI,{id:item.id,ftype:1});
    }
    /**
     * 点赞
     */
   _onLove(item){
+    if(!this.props.papp.userid){
+      return
+    }
     if(!Utils.isLogin(this.props.navigation))return;
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
       id:item.id,
-      userid:this.papp.userid,
+      userid:this.props.papp.userid,
       love:onlove,
     });
     HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
@@ -289,6 +261,8 @@ class HomeTab extends React.Component {
           }
         }
         if(isRefresh){
+          let { dispatch } = this.props.navigation;
+          dispatch(PoemsActions.raUpHomePoems(sourceData));
           this.setState({
               sourceData: sourceData
           });
@@ -306,30 +280,14 @@ class HomeTab extends React.Component {
   _onPersonal(userid){
      goPersonalUI(this.props.navigation.navigate,userid);
    }
-  _eventDeletePoem(id){
-    let sourceData = this.state.sourceData
-    for(var i = sourceData.length-1 ; i >= 0 ; i -- ){
-      if(sourceData[i].id == id){
-        sourceData.splice(i,1);
-      }
-    }
-    this.setState({
-        sourceData: sourceData
-    });
-  }
-
   _initPoems(){
-    let homepoems = HomePoemDao.getHomePoems();
     console.log('---_initPoems homepoems---');
-    console.log(homepoems);
-    if(homepoems.length > 0){
-      this.dataContainer = homepoems.concat(this.dataContainer);
-    }else{
-      this.dataContainer = [];
-    }
+    HomePoemDao.deleteHomePoems();
+    const homepoems = [];
+    let { dispatch } = this.props.navigation;
+    dispatch(PoemsActions.raUpHomePoems(homepoems));
     this.setState({
-      sourceData: this.dataContainer,
-      userid:this.papp.userid,
+      sourceData: homepoems,
     });
     this._requestInitAllPoem(homepoems);
   }
@@ -337,29 +295,38 @@ class HomeTab extends React.Component {
    * 初始化时请求
    */
    _requestInitAllPoem(poems){
+     console.log('------_requestInitAllPoem')
+     console.log(this.props.papp)
      this.setState({refreshing: true}) // 开始刷新
+     this.net_time = setTimeout(()=>{
+       this.setState({refreshing: false})
+     },timeout);
      var fromid = 0;
      if(poems.length > 0 ){
        fromid = poems[0].id;
      }
      var json = JSON.stringify({
        id:fromid,
-       userid:this.state.userid,
+       userid:this.props.papp.userid,
      });
      HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
          if(res.code == 0){
              var poems = res.data;
               if(poems.length > 0){
-                let tepm_poems = HomePoemDao.addHomePoems(poems);
-                this.dataContainer = tepm_poems.concat(this.dataContainer);
+                const tepm_poems = HomePoemDao.addHomePoems(poems);
+                let homepoems = this.props.homepoems;
+                homepoems = tepm_poems.concat(homepoems);
+                let { dispatch } = this.props.navigation;
+                dispatch(PoemsActions.raUpHomePoems(homepoems));
                 this.setState({
-                  sourceData: this.dataContainer
+                  sourceData: homepoems,
                 });
               }
          }else{
            Alert.alert(res.errmsg);
          }
          this.setState({refreshing: false});
+         this.net_time && clearTimeout(this.net_time);
        })
        .catch((error) => {
          console.error(error);
@@ -371,13 +338,16 @@ class HomeTab extends React.Component {
    */
   _requestNewestAllPoem(){
     this.setState({refreshing: true}) // 开始刷新
+    this.net_time = setTimeout(()=>{
+      this.setState({refreshing: false})
+    },timeout);
     var fromid = 0;
     if(this.state.sourceData.length > 0 ){
       fromid = this.state.sourceData[0].id;
     }
     var json = JSON.stringify({
       id:fromid,
-      userid:this.state.userid,
+      userid:this.props.papp.userid,
     });
     HttpUtil.post(HttpUtil.POEM_NEWEST_ALLPOEM,json).then((res) => {
         if(res.code == 0){
@@ -386,15 +356,19 @@ class HomeTab extends React.Component {
             console.log(poems)
              if(poems.length > 0){
                let temp_pems = HomePoemDao.addHomePoems(poems);
-               this.dataContainer = temp_pems.concat(this.dataContainer);
+               const  homepoems = this.props.homepoems;
+               homepoems = temp_pems.concat(homepoems);
+               let { dispatch } = this.props.navigation;
+               dispatch(PoemsActions.raUpHomePoems(homepoems));
                this.setState({
-                 sourceData: this.dataContainer
+                 sourceData: homepoems,
                });
              }
         }else{
           Alert.alert(res.errmsg);
         }
         this.setState({refreshing: false});
+        this.net_time && clearTimeout(this.net_time);
       })
       .catch((error) => {
         console.error(error);
@@ -410,18 +384,9 @@ class HomeTab extends React.Component {
     console.log(action)
     console.log(param)
     switch (action) {
-      case Emitter.ADDPOEM:
-        this._requestNewestAllPoem();
-        break;
-      case Emitter.DELPOEM:
-        this._eventDeletePoem(id);
-        break;
       case Emitter.CLEAR:
         this._initPoems();
         break;
-      // case Emitter.DRAWER_CLOSE:
-      //   this.props.navigation.navigate('DrawerClose');
-      //   break;
       default:
         break;
     }
@@ -430,10 +395,6 @@ class HomeTab extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
   header:{
     paddingTop:4,
     paddingBottom:4,
@@ -474,5 +435,6 @@ const styles = StyleSheet.create({
 export default connect(
     state => ({
         papp: state.papp,
+        homepoems:state.poems.homepoems,
     }),
 )(HomeTab);
