@@ -1,4 +1,8 @@
-// 添加作品
+'use strict'
+/**
+ * 添加作品
+ * @flow
+ */
 import React from 'react';
 import {
   StyleSheet,
@@ -7,7 +11,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  DeviceEventEmitter,
   Keyboard,
   ScrollView,
   Dimensions,
@@ -16,10 +19,11 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as PoemsActions from '../redux/actions/PoemsActions';
-import { Button,Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import dismissKeyboard from 'dismissKeyboard';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import WritingToolbar from '../custom/WritingToolbar';
 
 import {
   StyleConfig,
@@ -28,28 +32,42 @@ import {
   pstyles,
   HttpUtil,
   Emitter,
+  showToast,
 } from '../AppUtil';
 
+import{
+      NavBack,
+      }from '../custom/Custom';
 
-const {width, height} = Dimensions.get('window');
+type Props = {
+      navigation:any,
+      papp:Object,
+};
 
-class AddPoemUI extends React.Component {
+type State = {
+      title:string,
+      content:string,
+      align:string,
+      keyboardHeight:number,
+};
+
+class AddPoemUI extends React.Component<Props,State> {
  static navigationOptions = ({navigation}) => ({
        title: '添加',
-       headerTintColor:StyleConfig.C_FFFFFF,
+       headerTintColor:HeaderConfig.headerTintColor,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
        headerStyle:HeaderConfig.headerStyle,
-       headerLeft:(
-         <TouchableOpacity  onPress={()=>navigation.goBack()}>
-           <Text style={pstyles.nav_left}>取消</Text>
-         </TouchableOpacity>
-       ),
+       headerLeft:(<NavBack navigation={navigation}/>),
        headerRight:(
          <TouchableOpacity  onPress={()=>navigation.state.params.onRelease()}>
            <Text style={pstyles.nav_right}>发布</Text>
          </TouchableOpacity>
        ),
     });
+    onRelease:Function;
+    keyboardDidShowListener:any;
+    keyboardDidHideListener:any;
+    scroll:any;
     constructor(props) {
         super(props);
         this.state = {
@@ -58,6 +76,7 @@ class AddPoemUI extends React.Component {
             title:'',
             content:'',
             keyboardHeight:0,
+            align:'center',
         }
         this.onRelease = this.onRelease.bind(this);
     }
@@ -82,13 +101,11 @@ class AddPoemUI extends React.Component {
           value={this.state.title}
           returnKeyType={'next'}
           blurOnSubmit={false}
+          autoFocus={true}
           onSubmitEditing={() => this._focusNextField('content')}
         />
         <View style={styles.line}></View>
-        <KeyboardAwareScrollView
-          innerRef={ref => {this.scroll = ref}}
-        >
-          <View>
+       <View style={{flex:1}}>
         <TextInput
           ref='content'
           style={styles.content}
@@ -96,39 +113,21 @@ class AddPoemUI extends React.Component {
           placeholder={'请输入内容'}
           onChangeText={(text) => this.setState({content:text})}
           multiline={true}
-          textAlign={'center'}
+          textAlign={this.state.align}
           textAlignVertical={'top'}
           value={this.state.content}
-          onChange={({x, y, width, height})=>{
-            // console.log(height)
-          }}
-          onLayout={(event)=>{
-            // console.log('---onLayout---')
-            // this._scrollToInput(ReactNative.findNodeHandle(event.target))
-          }}
-          onSubmitEditing={(event: Event) => {
-            // console.log('---onSubmitEditing--')
-            // console.log(event.nativeEvent)
-            // console.log(event)
-            // console.log(this.state.keyboardHeight)
-            // console.log(this.scroll)
-            // this.scroll.props.scrollToPosition(0, 0)
-          }}
-          onContentSizeChange={(event) => {
-            // console.log(event.nativeEvent.contentSize);
-            // console.log(event.nativeEvent.contentSize.height)
-           }}
-           onScroll={(event)=>{
-            //  console.log('---onScroll--')
-            //  console.log(event)
-           }}
           onFocus={(event: Event) => {
-            // `bind` the function if you're using ES6 classes
-             this._scrollToInput(ReactNative.findNodeHandle(event.target))
-           }}
+
+          }}
         />
       </View>
-    </KeyboardAwareScrollView>
+    <WritingToolbar
+      align={this.state.align}
+      onItem={(align)=>{
+        this.setState({align:align})
+      }}
+      />
+    <KeyboardSpacer/>
     </View>
     );
   }
@@ -170,16 +169,19 @@ class AddPoemUI extends React.Component {
     var json = JSON.stringify({
       userid:this.props.papp.userid,
       title:title,
-      content:content
+      content:content,
+      extend:{align:this.state.align},
     });
     HttpUtil.post(HttpUtil.POEM_ADDPOEM,json).then(res=>{
       if(res.code == 0){
           var poem = res.data;
           let { dispatch } = this.props.navigation;
           dispatch(PoemsActions.raAddPoem(poem));
+          showToast('发布成功')
           this.props.navigation.goBack();
       }else{
-        alert(res.errmsg);
+        // alert(res.errmsg);
+        showToast(res.errmsg)
       }
     }).catch(err=>{
       console.error(err);
@@ -189,24 +191,20 @@ class AddPoemUI extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding:10,
-  },
   input:{
     flex:1,
   },
   title:{
     // height:30,
-    backgroundColor: '#ffffff',
-    padding:4,
+    padding:10,
     fontSize:24,
+    fontFamily: StyleConfig.FONT_FAMILY,
   },
   content:{
     // height:height,
-    padding:0,
-    fontSize:20,
+    padding:10,
+    fontSize:18,
+    fontFamily: StyleConfig.FONT_FAMILY,
   },
   line:{
     height:1,

@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 注册
+ * @flow
  */
 import React from 'react';
 import {
@@ -10,7 +11,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  DeviceEventEmitter,
   Platform,
   Keyboard,
 } from 'react-native';
@@ -18,44 +18,55 @@ import * as UserActions from '../redux/actions/UserActions';
 
 import { Button,Icon } from 'react-native-elements';
 import{
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  HttpUtil,
-  Emitter,
-  pstyles,
-  Storage,
-  UIName,
-} from '../AppUtil'
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      HttpUtil,
+      Emitter,
+      pstyles,
+      Storage,
+      UIName,
+    } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
 
-export default class RegisterUI extends React.Component {
+type Props = {
+    navigation:any,
+};
+
+type State = {
+  phone:string,
+  password:string,
+  code:string,
+  time:number,
+  code_tips:string,
+  code_color:string,
+  phone_clear:boolean,
+  password_clear:boolean,
+  pwd_visibility:boolean,
+};
+
+export default class RegisterUI extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title:'注册',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>{
-            navigation.goBack()}}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
-    constructor(props){
-      super(props);
-      this.state={
-        phone:'',
-        password:'',
-        code:'',
-        time:0,
-        code_tips:'发送验证码',
-        code_color:StyleConfig.C_1E8AE8,
-        phone_clear:false,
-        password_clear:false,
-        pwd_visibility:false,
-      }
-      this._timer = null;
-    }
+     _timer:number;
+     state={
+       phone:'',
+       password:'',
+       code:'',
+       time:0,
+       code_tips:'发送验证码',
+       code_color:StyleConfig.C_FFFFFF,
+       phone_clear:false,
+       password_clear:false,
+       pwd_visibility:false,
+     }
     componentDidMount(){
 
     }
@@ -72,9 +83,9 @@ export default class RegisterUI extends React.Component {
         <View style={styles.input_bg}>
           <Icon
             name='phone'
-            size={30}
+            size={28}
             type="MaterialIcons"
-            color={'#1e8ae8'}
+            color={StyleConfig.C_000000}
           />
           <TextInput
             ref='phone'
@@ -108,9 +119,9 @@ export default class RegisterUI extends React.Component {
         <View style={styles.input_bg}>
           <Icon
             name='keyboard'
-            size={30}
+            size={28}
             type="MaterialIcons"
-            color={'#1e8ae8'}
+            color={StyleConfig.C_000000}
           />
           <TextInput
             ref='password'
@@ -146,7 +157,7 @@ export default class RegisterUI extends React.Component {
               >
             <Icon
               name={this._renderVName()}
-              size={30}
+              size={28}
               type="MaterialIcons"
               color={this._renderVColor()}
             />
@@ -156,9 +167,9 @@ export default class RegisterUI extends React.Component {
         <View style={styles.input_bg}>
           <Icon
             name='verified-user'
-            size={30}
+            size={28}
             type="MaterialIcons"
-            color={'#1e8ae8'}
+            color={StyleConfig.C_000000}
           />
           <TextInput
             ref='code'
@@ -174,18 +185,19 @@ export default class RegisterUI extends React.Component {
             }}
           />
           <Button
-            buttonStyle={{backgroundColor: this.state.code_color, borderRadius: 5,margin:0}}
-            textStyle={{textAlign: 'center',fontSize:18,}}
+            buttonStyle={[styles.register_but,{marginRight:-14,backgroundColor: this.state.code_color}]}
+            textStyle={styles.register_text}
             title={this.state.code_tips}
             onPress={()=>{
               this.onVerify()
             }}
           />
         </View>
+        <View style={styles.line}></View>
         <View style={styles.interval}></View>
         <Button
-          buttonStyle={{backgroundColor: '#1e8ae8', borderRadius: 5,margin:0}}
-          textStyle={{textAlign: 'center',fontSize:18,}}
+          buttonStyle={styles.register_but}
+          textStyle={styles.register_text}
           title={'注册'}
           onPress={()=>{
               this.onRegister();
@@ -250,7 +262,7 @@ export default class RegisterUI extends React.Component {
               >
             <Icon
               name='clear'
-              size={30}
+              size={28}
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
             />
@@ -271,7 +283,7 @@ export default class RegisterUI extends React.Component {
             >
           <Icon
             name='clear'
-            size={30}
+            size={28}
             type="MaterialIcons"
             color={StyleConfig.C_D4D4D4}
           />
@@ -286,7 +298,7 @@ export default class RegisterUI extends React.Component {
     return this.state.pwd_visibility?'visibility-off':'visibility';
   }
   _renderVColor(){
-    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_1E8AE8;
+    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_000000;
   }
   _onVsibility(){
     var isVis = true;
@@ -365,13 +377,13 @@ export default class RegisterUI extends React.Component {
         console.error(error);
       });
   }
-  countTime(tiem){
+  countTime(tiem:number){
     if(tiem <= 0){
       return;
     }
     this.setState({time:tiem,
       code_tips:tiem+'秒后可发送',
-      code_color:StyleConfig.C_7B8992,
+      code_color:StyleConfig.C_D4D4D4,
     });
     this._timer=setInterval(()=>{
       var cur_time = this.state.time - 1;
@@ -379,7 +391,7 @@ export default class RegisterUI extends React.Component {
       if(this.state.time<=0){
         var tips = '发送验证码';
         this.setState({code_tips:tips,
-        code_color:StyleConfig.C_1E8AE8
+        code_color:StyleConfig.C_FFFFFF,
         });
         this._timer && clearInterval(this._timer);
       }else{
@@ -412,14 +424,18 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     padding:14,
   },
-  register:{
-    color:'#1e8ae8',
-    fontSize:18,
-  },
-  forget:{
-    color:'#7b8992',
-    fontSize:18,
-  },
+  register_but:{
+     backgroundColor:StyleConfig.C_FFFFFF,
+     borderColor:StyleConfig.C_000000,
+     borderRadius: 5,
+     borderWidth:1,
+     margin:0
+   },
+   register_text:{
+     textAlign: 'center',
+     fontSize:18,
+     color:StyleConfig.C_000000,
+   },
   input_bg:{
     flexDirection:'row',
     paddingLeft:14,
@@ -448,6 +464,6 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_D4D4D4,
   },
   protocol_font2:{
-    color:StyleConfig.C_1E8AE8,
+    color:StyleConfig.C_000000,
   }
 });

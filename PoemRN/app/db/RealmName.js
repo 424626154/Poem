@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * realm name
+ * @flow
+ */
 var RealmName = {
 
 };

@@ -1,4 +1,9 @@
-AppConf = {
+'use strict'
+/**
+ * AppConf
+ * @flow
+ */
+var AppConf = {
 
 }
 AppConf.DEBUG = 'debug';

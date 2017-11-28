@@ -1,9 +1,14 @@
+'use strict'
+/**
+ * realm db
+ * @flow
+ */
 import React from 'react';
 // const Realm = require('realm');
 import Realm from 'realm';
 import RealmName from './RealmName';
 
-let SchemaVersion = 1;//数据库版本
+let SchemaVersion = 2;//数据库版本
 // const MessageName = 'message';
 // let realm;
 
@@ -36,6 +41,7 @@ const HomePoem = {
       pseudonym:{type: 'string', default: ''},
       title:{type: 'string', default: ''},
       content:{type: 'string', default: ''},
+      extend:{type: 'string', default: ''},
       lovenum:{type: 'int', default: 0},
       commentnum:{type: 'int', default: 0},
       mylove:{type: 'int', default: 0},
@@ -108,9 +114,16 @@ const migrationFunction1 =  (oldRealm, newRealm) => {
 
   }
 }
+const schema2 = [Message,HomePoem,Chat,ChatList,Storage];
+const migrationFunction2 =  (oldRealm, newRealm) => {
+  console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
+  if (oldRealm.schemaVersion < 1) {
 
+  }
+}
 const schemas = [
   { schema: schema1, schemaVersion: 1, migration: migrationFunction1 },
+  { schema: schema2, schemaVersion: 2, migration: migrationFunction2 },
 ]
 
 // the first schema to update to is the current schema version

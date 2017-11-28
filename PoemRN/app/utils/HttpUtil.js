@@ -1,6 +1,12 @@
+'use strict';
+/**
+ * HttpUtil
+ * @flow
+ */
 import {
     NetInfo,
 } from 'react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
 import AppConf from '../AppConf';
 
 var HttpUtil = {};
@@ -46,7 +52,7 @@ HttpUtil.MESSAGE_FEEDBACK = 'message/feedback';
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
 console.log('---http url :'+HttpUtil.BASE_URL);
 
-HttpUtil.post = function(rep_url,body){
+HttpUtil.post = function(rep_url:string,body:any):Promise<Object> {
   //检测网络是否连接
   // NetInfo.isConnected.fetch().done((isConnected)=>{
   //   console.log('---检测网络是否连接---');
@@ -56,7 +62,7 @@ HttpUtil.post = function(rep_url,body){
   var url = baseurl+'/'+rep_url;
   console.log('---request post url:'+rep_url+' body:'+body);
   var that = this;
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject){
     try {
       fetch(url,{
           method: 'POST',
@@ -84,68 +90,100 @@ HttpUtil.post = function(rep_url,body){
 }
 
 
-HttpUtil.uploadImage =(params)=> {
-    return new Promise(function (resolve, reject) {
-        var ary = params.path.split('/');
-        console.log('ary:' + ary);
-        let formData = new FormData();
-        let file = {uri: params.path, type: 'multipart/form-data', name: ary[ary.length-1]};
-        formData.append("file", file);
-        var upimage = 'pimage/upload';
-        var baseurl = HttpUtil.BASE_URL;
-        var url = baseurl+'/'+upimage;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Encoding': 'identity'
-            },
-            body: JSON.stringify(formData),
-        }).then((response) => response.json())
-        .then((responseData)=> {
-            console.log('uploadImage', responseData);
-            resolve(responseData);
-        })
-        .catch((err)=> {
-            console.log('err', err);
-            reject(err);
-        });
-    });
-};
+// HttpUtil.uploadImage =(params:any):Promise<void> => {
+//     return new Promise(function (resolve:any, reject:any) {
+//         var ary = params.path.split('/');
+//         console.log('ary:' + ary);
+//         let formData = new FormData();
+//         let file = {uri: params.path, type: 'multipart/form-data', name: ary[ary.length-1]};
+//         formData.append("file",file);
+//         var upimage = 'pimage/upload';
+//         var baseurl = HttpUtil.BASE_URL;
+//         var url = baseurl+'/'+upimage;
+//         fetch(url, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Content-Encoding': 'identity'
+//             },
+//             body: JSON.stringify(formData),
+//         }).then((response) => response.json())
+//         .then((responseData)=> {
+//             console.log('uploadImage', responseData);
+//             resolve(responseData);
+//         })
+//         .catch((err)=> {
+//             console.log('err', err);
+//             reject(err);
+//         });
+//     });
+// };
 
-HttpUtil.uploadImageData = function(imagedata){
+HttpUtil.uploadImageData = function(imagedata:any):Promise<Object>{
   return new Promise(function (resolve, reject) {
+      console.log(imagedata);
       let uri = imagedata['path'];
       let mime = imagedata['mime'];
       let mimes = mime.split('/');
       let itype =  mimes.length > 0?mimes[mimes.length-1]:'jpg';
       let uris = uri.split('/');
       let name = uris.length > 0 ? uris[uris.length-1]:Date.now()+itype;
-      let formData = new FormData();
-      let file = {uri: uri, type: 'multipart/form-data', name: name};   //这里的key(uri和type和name)不能改变,
-      formData.append("file",file);
+      // const formData = new FormData();
+      // let file = {uri: uri, type: 'multipart/form-data', name: name};   //这里的key(uri和type和name)不能改变,
+      // formData.append("file",file);
       var uploadimg = 'pimage/uploadimg';
       var baseurl = HttpUtil.BASE_URL;
       var url = baseurl+'/'+uploadimg;
-      fetch(url, {
-          method: 'POST',
-          headers: {
-              'Content-Type':'multipart/form-data',
-          },
-          body: formData,
-      }).then((response) => response.json())
-      .then((responseData)=> {
-          console.log('uploadImage', responseData);
-          resolve(responseData);
-      })
-      .catch((err)=> {
-          console.log('err', err);
-          reject(err);
-      });
-   });
+      // fetch(url, {
+      //     method: 'POST',
+      //     headers: {
+      //         'Content-Type':'multipart/form-data',
+      //     },
+      //     body: formData,
+      // }).then((response) => response.json())
+      // .then((responseData)=> {
+      //     console.log('uploadImage', responseData);
+      //     resolve(responseData);
+      // })
+      // .catch((err)=> {
+      //     console.log('err', err);
+      //     reject(err);
+      // });
+      let PATH = uri;
+     // 创建上传的请求头，使用fetch-blob必须要遵循name，data的格式，要不然就不成功。
+     let body = [{
+         name: 'file',
+         filename: name,
+         data: RNFetchBlob.wrap(PATH)
+     }];
+     RNFetchBlob
+         .fetch('POST',url,{
+             // 上传图片要设置Header
+             'Content-Type' : 'multipart/form-data',
+         },body)
+         .uploadProgress((written, total) => {
+             // 本地查找进度
+         })
+         .progress((received, total) => {
+             let perent = received / total;
+              // 上传进度打印
+             console.log(perent);
+         })
+         .then((response)=> response.json())
+         .then((responseData)=> {
+             // 上传信息返回
+             console.log('uploadImage', responseData);
+             resolve(responseData);
+         })
+         .catch((error)=>{
+             // 错误信息
+             console.log('err', error);
+             reject(error);
+         });
+     });
 };
 
-HttpUtil.getHeadurl = function(url){
+HttpUtil.getHeadurl = function(url:string){
   if(!url){
     return '';
   }

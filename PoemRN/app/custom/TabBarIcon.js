@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * TabBarIcon
+ * @flow
+ */
 import React from 'react';
 import {
   StyleSheet,
@@ -11,17 +16,11 @@ import {
   ChatDao,
 } from '../AppUtil'
 import {connect} from 'react-redux';
-
-class TabBarIcon extends React.Component{
-    constructor(props){
-      super(props);
-    }
-    componentDidMount(){
-
-    }
-    componentWillUpdate(){
-
-    }
+type Props = {
+    papp:Object,
+    tintColor:string,
+};
+class TabBarIcon extends React.Component<Props>{
     render(){
       return(
         <View>

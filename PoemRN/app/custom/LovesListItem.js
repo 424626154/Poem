@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 点赞列表
+ * @flow
  */
  import React from 'react';
  import {
@@ -15,7 +16,15 @@
        pstyles,
        PImage
      } from '../AppUtil';
-export default class LovesListItem extends React.PureComponent {
+
+type Props = {
+    onPressItem:Function,
+    id:string,
+    love:Object,
+    head:any,
+};
+
+export default class LovesListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id,this.props.love);
     };
@@ -52,11 +61,6 @@ const styles = StyleSheet.create({
   follow_button:{
     width:80,
     height:30,
-  },
-  follow_font:{
-    fontSize:StyleConfig.F_18,
-    color:StyleConfig.C_1E8AE8,
-    marginLeft:-2,
   },
   follow_pseudonym:{
     flex:1,

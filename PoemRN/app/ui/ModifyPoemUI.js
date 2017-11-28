@@ -1,6 +1,7 @@
 'use strict';
 /**
- * 更新作品
+ * 修改作品
+ * @flow
  */
 import React from 'react';
 import {connect} from 'react-redux';
@@ -15,46 +16,61 @@ import {
 } from 'react-native';
 import { Button,Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import WritingToolbar from '../custom/WritingToolbar';
 import {
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  HttpUtil,
-} from '../AppUtil';
+        StyleConfig,
+        HeaderConfig,
+        StorageConfig,
+        HttpUtil,
+        pstyles,
+        showToast,
+      } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
+type Props = {
+    navigation:any,
+    papp:Object,
+};
 
+type State = {
+    id:number,
+    title:string,
+    content:string,
+    align:string,
+};
 
-
-/**
- * 修改作品
- */
-class ModifyPoemUI extends React.Component {
+class ModifyPoemUI extends React.Component<Props,State> {
  static navigationOptions = ({navigation}) => ({
        title: '修改',
-       headerTintColor:StyleConfig.C_FFFFFF,
+       headerTintColor:HeaderConfig.headerTintColor,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
        headerStyle:HeaderConfig.headerStyle,
-       headerLeft:(
-         <TouchableOpacity  onPress={()=>navigation.goBack()}>
-           <Text style={styles.nav_left}>取消</Text>
-         </TouchableOpacity>
-       ),
+       headerLeft:(<NavBack navigation={navigation}/>),
        headerRight:(
          <TouchableOpacity  onPress={()=>navigation.state.params.onModify()}>
-           <Text style={styles.nav_right}>修改</Text>
+           <Text style={pstyles.nav_right}>修改</Text>
          </TouchableOpacity>
        ),
     });
+    onModify:Function;
     constructor(props) {
         super(props);
         let params = this.props.navigation.state.params;
         console.log(params);
+        let peom = params.poem;
+        let align = 'center';
+        if(peom.extend){
+          let extend = JSON.parse(peom.extend)
+          if(extend.align) align = extend.align
+        }
         this.state = {
             placeholder:'请输入内容',
-            title:params.poem.title,
-            content:params.poem.content,
-            id:params.id,
-            poem:params.poem,
+            title:peom.title,
+            content:peom.content,
+            id:peom.id,
+            poem:peom,
+            align:align,
         }
         this.onModify = this.onModify.bind(this);
     }
@@ -66,25 +82,38 @@ class ModifyPoemUI extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <View style={pstyles.container}>
         <TextInput
           style={styles.title}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入标题'}
           onChangeText={(text) => this.setState({title:text})}
           value={this.state.title}
+          returnKeyType={'next'}
+          blurOnSubmit={false}
+          autoFocus={true}
+          onSubmitEditing={() => this._focusNextField('content')}
         />
         <View style={styles.line}></View>
-        <TextInput
-          style={styles.content}
-          underlineColorAndroid={'transparent'}
-          placeholder={'请输入内容'}
-          onChangeText={(text) => this.setState({content:text})}
-          multiline={true}
-          textAlign={'center'}
-          textAlignVertical={'top'}
-          value={this.state.content}
-        />
+        <View style={{flex:1}}>
+          <TextInput
+            ref='content'
+            style={styles.content}
+            underlineColorAndroid={'transparent'}
+            placeholder={'请输入内容'}
+            onChangeText={(text) => this.setState({content:text})}
+            multiline={true}
+            textAlign={this.state.align}
+            textAlignVertical={'top'}
+            value={this.state.content}
+          />
+        </View>
+        <WritingToolbar
+          align={this.state.align}
+          onItem={(align)=>{
+            this.setState({align:align})
+          }}
+          />
         <KeyboardSpacer/>
       </View>
     );
@@ -109,51 +138,44 @@ class ModifyPoemUI extends React.Component {
       userid:this.props.papp.userid,
       title:title,
       content:content,
+      extend:{align:this.state.align},
     });
     HttpUtil.post(HttpUtil.POEM_UPPOEM,json).then((data)=>{
       if(data.code == 0){
         var poem = data.data;
         let { dispatch } = this.props.navigation;
         dispatch(PoemsActions.raUpPoemInfo(poem));
+        showToast('修改成功')
      	  this.props.navigation.goBack();
       }else{
-        Alert.alert(data.errmsg);
+        showToast(data.errmsg);
       }
     }).catch((err)=>{
-        Alert.alert('保存诗歌失败:',err);
+        console.error('保存诗歌失败:',err);
     });
   }
-
+  _focusNextField(nextField){
+    if(nextField == 'content'){
+      this.refs.content.focus()
+    }
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding:10,
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
-  nav_right:{
-    fontSize:18,
-    color:'#ffffff',
-    marginRight:10,
-  },
   input:{
     flex:1,
   },
   title:{
     // height:30,
-    padding:0,
-    fontSize:30,
+    padding:10,
+    fontSize:24,
+    fontFamily: StyleConfig.FONT_FAMILY,
   },
   content:{
     // height:height,
-    padding:0,
+    padding:10,
     fontSize:20,
+    fontFamily: StyleConfig.FONT_FAMILY,
   },
   line:{
     height:1,

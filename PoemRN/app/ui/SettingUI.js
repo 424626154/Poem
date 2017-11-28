@@ -1,6 +1,8 @@
-/**
- * 设置
- */
+'use strict'
+ /**
+  * 设置
+  * @flow
+  */
  import React from 'react';
  import { Button,Icon } from 'react-native-elements';
  import {
@@ -10,7 +12,6 @@
    Alert,
    TouchableOpacity,
    TextInput,
-   DeviceEventEmitter,
    Platform,
    ActivityIndicator,
    Linking,
@@ -22,51 +23,60 @@ import * as UserActions from '../redux/actions/UserActions';
 import DeviceInfo from 'react-native-device-info';
 
 import {
-  StyleConfig,
-  HeaderConfig,
-  Storage,
-  UIName,
-  HttpUtil,
-  Emitter,
-  pstyles,
-  HomePoemDao,
-  MessageDao,
-  ChatDao,
-  showToast,
-} from '../AppUtil';
-
-const {width, height} = Dimensions.get('window');
+        StyleConfig,
+        HeaderConfig,
+        Storage,
+        UIName,
+        HttpUtil,
+        Emitter,
+        pstyles,
+        HomePoemDao,
+        MessageDao,
+        ChatDao,
+        showToast,
+      } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
+import AppConf from '../AppConf';
 import FirIm from '../utils/FirIm';
+type Props = {
+    navigation:any,
+    papp:Object,
+};
 
-class SettingUI extends React.Component {
+type State = {
+      version:string,
+      update:boolean,
+      animating:boolean,
+};
+class SettingUI extends React.Component<Props,State> {
    static navigationOptions = ({navigation}) => ({
          title:'设置',
-         headerTintColor:StyleConfig.C_FFFFFF,
+         headerTintColor:HeaderConfig.headerTintColor,
          headerTitleStyle:HeaderConfig.headerTitleStyle,
          headerStyle:HeaderConfig.headerStyle,
-         headerLeft:(
-           <TouchableOpacity  onPress={()=>navigation.goBack()}>
-             <Text style={pstyles.nav_left}>返回</Text>
-           </TouchableOpacity>
-         ),
+         headerLeft:(<NavBack navigation={navigation}/>),
       });
+      _checkUpdate:Function;
+      _onFeedback:Function;
+      _onClear:Function;
      constructor(props){
        super(props);
-       let papp = this.props.papp;
-       this.papp = papp;
        this.state={
-          version:'版本信息',
-          animating:false,
-       }
+              version:'版本信息',
+              animating:false,
+              update:false,
+        }
        this._checkUpdate = this._checkUpdate.bind(this);
        this._onFeedback = this._onFeedback.bind(this);
        this._onClear = this._onClear.bind(this);
      }
      componentDidMount(){
         let type = ''
-        if(AppConf.DNV = AppConf.DEBUG){
+        if(AppConf.ENV = AppConf.DEBUG){
             type = 'Debug_';
-        }else if(AppConf.DNV = AppConf.ALI){
+        }else if(AppConf.ENV = AppConf.ALI){
             type = 'Bate_';
         }
         var version = '版本信息:'+type+DeviceInfo.getVersion()
@@ -74,6 +84,14 @@ class SettingUI extends React.Component {
           version:version,
           update:false,
         });
+        if(Platform.OS == 'ios'&&//appstore 关闭版本更新
+          AppConf.IOS_CHANNEL == AppConf.APPSTORE){
+            return;
+          }
+        if(Platform.OS == 'android'&&//应用宝 关闭版本更新
+          AppConf.ANDROID_CHANNEL == AppConf.YIYONGBAO){
+            return;
+          }
         FirIm.queryVersion().then((ver)=>{
           if(ver.versionShort != DeviceInfo.getVersion()
           || ver.build != DeviceInfo.getBuildNumber()){
@@ -93,7 +111,7 @@ class SettingUI extends React.Component {
    render() {
      const { state,navigate,goBack } = this.props.navigation;
      return (
-       <View style={styles.container}>
+       <View style={[pstyles.container,{backgroundColor:StyleConfig.C_E7E7E7}]}>
         {this._renderItem(this.state.version,this._checkUpdate,this.state.update,false)}
         {this._renderItem('意见反馈',this._onFeedback,false,true)}
         {this._renderItem('清空缓存',this._onClear,false,false)}
@@ -157,7 +175,7 @@ class SettingUI extends React.Component {
     * 退出登录
     */
    _renderLogout(){
-     if(this.papp.userid){
+     if(this.props.papp.userid){
        return(
            <TouchableOpacity onPress={()=>{
              Alert.alert(
@@ -182,7 +200,7 @@ class SettingUI extends React.Component {
    _renderLoading(){
      if(this.state.animating){
        return(
-         <View style={styles.loading}>
+         <View style={pstyles.loading}>
            <ActivityIndicator
             animating={this.state.animating}
             style={styles.centering}
@@ -262,13 +280,13 @@ class SettingUI extends React.Component {
    }
    _requestLogout(){
      this.setState({animating:true});
-     if(!this.papp.userid){
+     if(!this.props.papp.userid){
         this.props.navigation.goBack();
         this.setState({animating:false});
         return;
      }
      var json = JSON.stringify({
-       userid:this.papp.userid,
+       userid:this.props.papp.userid,
      })
      HttpUtil.post(HttpUtil.USER_LOGOUT,json).then(res=>{
        if(res.code == 0){
@@ -288,10 +306,6 @@ class SettingUI extends React.Component {
  }
 
  const styles = StyleSheet.create({
-   container: {
-     flex: 1,
-     backgroundColor: '#ebebeb',
-   },
    interval:{
      height:10,
    },
@@ -299,10 +313,6 @@ class SettingUI extends React.Component {
      alignItems:'center',
      height:40,
      backgroundColor:StyleConfig.C_FFFFFF,
-     // borderTopWidth:1,
-     // borderTopColor:'#d4d4d4',
-     // borderBottomWidth:1,
-     // borderBottomColor:'#d4d4d4',
    },
    version:{
      marginTop:10,
@@ -312,16 +322,7 @@ class SettingUI extends React.Component {
    logout:{
      marginTop:10,
      fontSize:18,
-     color:'#ff4040',
-   },
-   loading:{
-     backgroundColor:'#00000055',
-     position: 'absolute',
-     flex:1,
-     width:width,
-     height:height,
-     alignItems:'center',
-     justifyContent: 'center',
+     color:StyleConfig.C_FF4040,
    },
    centering: {
     alignItems: 'center',
@@ -340,16 +341,17 @@ class SettingUI extends React.Component {
     alignItems:'center',
     height:40,
     backgroundColor:StyleConfig.C_FFFFFF,
-    // borderTopWidth:1,
-    // borderTopColor:'#d4d4d4',
-    // borderBottomWidth:1,
-    // borderBottomColor:'#d4d4d4',
     marginTop:10,
     paddingLeft:10,
   },
   arrow:{
     position: 'absolute',
     right:10,
+  },
+  item_title:{
+    paddingLeft:10,
+    fontSize:16,
+    color:StyleConfig.C_000000,
   }
  });
  export default connect(

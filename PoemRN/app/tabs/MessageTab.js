@@ -2,6 +2,7 @@
 'use strict'
 /**
  * 消息
+ * @flow
  */
 import React,{Component} from 'react';
 import {
@@ -31,11 +32,18 @@ import TabBarIcon from '../custom/TabBarIcon';
 
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
+type Props = {
+      navigation:any,
+      papp:Object,
+};
 
-class MessageTab extends Component {
+type State = {
+    son_index:number,
+};
+class MessageTab extends Component <Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:'消息',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:null,
@@ -65,6 +73,9 @@ class MessageTab extends Component {
             jumpToIndex(index);
         }),
      });
+     _renderRot: Function;
+     _onTabBarPress: Function;
+     _reduxMsgRead: Function;
      constructor(props){
        super(props)
        this.state = {

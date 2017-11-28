@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * 查看大图
+ * @flow
+ */
 import React from 'react';
 import {
   StyleSheet,
@@ -7,24 +12,28 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import{
-  PImage,
-  Utils,
-}from '../AppUtil';
+      StyleConfig,
+      PImage,
+      Utils,
+    }from '../AppUtil';
 const {width, height} = Dimensions.get('window');
 const big_head = require('../images/big_head.png');
-export default class PhotoUI extends React.Component{
+type Props = {
+    navigation:any,
+};
+
+type State = {
+    photo:any,
+};
+export default class PhotoUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
     header:null,
   });
-  constructor(props){
-    super(props);
-    let params = this.props.navigation.state.params;
-    let photo = params.photo;
-    console.log('-----PhotoUI() photo:',photo);
-    this.state = {
-      photo:Utils.getHead(photo+'_big'),
-    }
+
+  state = {
+    photo:Utils.getHead(this.props.navigation.state.params.photo+'_big'),
   }
+
   render(){
     return(
       <TouchableOpacity style={styles.container}
@@ -42,6 +51,9 @@ export default class PhotoUI extends React.Component{
           <PImage
             style={styles.photo}
             source={this.state.photo}
+            padding={0}
+            borderRadius={0}
+            noborder={true}
           />
         </View>
       </TouchableOpacity>
@@ -56,7 +68,7 @@ const styles = StyleSheet.create({
       justifyContent:'center',
     },
     bg:{
-      backgroundColor: '#ffffff',
+      backgroundColor: StyleConfig.C_FFFFFF,
       width:width,
       height:width,
     },

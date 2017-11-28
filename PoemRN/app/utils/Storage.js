@@ -1,13 +1,14 @@
 'use strict'
 /**
  * 本地缓存数据
+ * @flow
  */
 import StorageDao from '../db/StorageDao';
 import {StorageConfig} from '../Config'
-class Storage {
+var Storage = {
 
 }
-Storage.saveUserid =  function(userid){
+Storage.saveUserid =  function(userid:string){
   try {
       let value = StorageDao.setItem(StorageConfig.USERID,userid);
       console.log(value);
@@ -25,7 +26,7 @@ Storage.getUserid = function(){
   }
 }
 
-Storage.savePushId = function(pushid){
+Storage.savePushId = function(pushid:string){
   try {
       let value = StorageDao.setItem(StorageConfig.PUSHIID,pushid);
       console.log(value)
@@ -43,7 +44,7 @@ Storage.getPushId = function(){
   }
 }
 
-Storage.saveUser =  function(userid,user){
+Storage.saveUser =  function(userid:string,user:Object){
   try {
     console.log('---Storage.saveUser :'+userid+ 'user:')
     console.log(user)
@@ -52,7 +53,7 @@ Storage.saveUser =  function(userid,user){
         temp_user = JSON.parse(temp_user)
         if(temp_user.userid == userid){
           for(var key in user){
-               temp_user.key = userid[key];
+               temp_user.key = user[key];
                console.log(key)
           }
           console.log(userid)
@@ -70,7 +71,7 @@ Storage.saveUser =  function(userid,user){
   }
 }
 
-Storage.saveLastPhone = function(phone){
+Storage.saveLastPhone = function(phone:string){
   console.log('---Storage.saveLastPhone: '+phone);
   try {
       let value = StorageDao.setItem(StorageConfig.LAST_PHONE,phone);

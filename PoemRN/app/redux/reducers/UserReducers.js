@@ -1,9 +1,14 @@
 'use strict';
+/**
+ * user Reducers
+ * @flow
+ */
 import * as TYPES from '../actions/ActionTypes';
+import Storage from '../../utils/Storage';
 
 const initialState = {
 	num:0,
-	userid:'',
+	userid:Storage.getUserid(),
 	user:{},
 	homepoems:[],
 	refcomment:false,
@@ -13,7 +18,7 @@ const initialState = {
 	push_chat_user:false,
 };
 
-export default function papp(state=initialState, action){
+export default function papp(state:any=initialState, action:any){
 	switch(action.type){
 		case TYPES.MSGREAD: // 初始状态
 			// console.log('------papp')

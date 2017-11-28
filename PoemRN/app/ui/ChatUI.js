@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 私信页面
+ * @flow
  */
 import React from 'react';
 import {
@@ -28,7 +29,12 @@ import {
        ChatDao,
        goPersonalUI,
       } from '../AppUtil';
-import { GiftedChat,Send } from 'react-native-gifted-chat';
+
+import{
+      NavBack,
+      }from '../custom/Custom';
+
+import { GiftedChat,Send ,Bubble,Avatar} from 'react-native-gifted-chat';
 import ActionSheet from 'react-native-actionsheet'
 require('moment/locale/zh-cn')
 
@@ -36,19 +42,34 @@ const CANCEL_INDEX = 0
 const DESTRUCTIVE_INDEX = 2
 const options = [ '取消', '拷贝', '删除' ]
 const title = '选择您需要的操作'
+type Props = {
+    navigation:any,
+    papp:Object,
+};
 
-class ChatUI extends React.Component{
+type State = {
+    tuserid:string,
+    headurl:any,
+    head:string,
+    pseudonym:string,
+    mypseudonym:string,
+    myheadurl:string,
+    messages: Array<Object>,
+    animating:boolean,
+    message:Object,
+};
+class ChatUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.pseudonym,
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
+   handlePress:Function;
+   showActionSheet:Function;
+   timer:number;
+   ActionSheet:any;
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
@@ -56,14 +77,19 @@ class ChatUI extends React.Component{
     let head = params.head;
     let pseudonym = params.pseudonym;
     let headurl = HttpUtil.getHeadurl(head);
+    let user = this.props.papp.user;
+    let mypseudonym = user.pseudonym;
+    let myheadurl = HttpUtil.getHeadurl(user.head);
     this.state = {
        tuserid:tuserid,
        headurl:headurl,
        head:head,
        pseudonym:pseudonym,
+       mypseudonym:mypseudonym,
+       myheadurl:myheadurl,
        messages: [],
        animating:false,
-       message:'',
+       message:{},
     }
     this.handlePress = this.handlePress.bind(this)
     this.showActionSheet = this.showActionSheet.bind(this)
@@ -140,8 +166,9 @@ class ChatUI extends React.Component{
       }
     }
     console.log(currentMessages)
-    let newMessages = [];
-    Object.assign(newMessages,currentMessages);
+
+    // Object.assign(newMessages,currentMessages);
+    let newMessages = [...currentMessages];
     console.log(newMessages)
     return newMessages;
   }
@@ -174,6 +201,8 @@ class ChatUI extends React.Component{
        createdAt: save_chat.time*1000,
        user: {
          _id: 1,
+         name: this.state.mypseudonym,
+         avatar: this.state.myheadurl,
        },
      }
    this.setState((previousState) => ({
@@ -186,14 +215,17 @@ class ChatUI extends React.Component{
         <ActivityIndicator
          animating={this.state.animating}
          style={styles.centering}
-         color={StyleConfig.C_1E8AE8}
+         color={StyleConfig.C_000000}
          size="large"/>
         <GiftedChat
           messages={this.state.messages}
           onSend={(messages) => this.onSend(messages)}
           user={{
             _id: 1,
+            name: this.state.mypseudonym,
+            avatar: this.state.myheadurl,
           }}
+          showUserAvatar={true}
           placeholder={'请输入私信内容'}
           renderSend={this.renderSend}
           locale='zh-cn'//设置时间
@@ -208,6 +240,8 @@ class ChatUI extends React.Component{
             // console.log(user)
             goPersonalUI(this.props.navigation.navigate,this.state.tuserid);
           }}
+          renderBubble={this.renderBubble}
+          renderAvatar={this.renderAvatar}
         />
         <ActionSheet
             ref={o => this.ActionSheet = o}
@@ -229,6 +263,49 @@ class ChatUI extends React.Component{
             </Send>
         );
     }
+    renderBubble (props) {
+      return (
+        <Bubble
+          {...props}
+          wrapperStyle={{
+            left:{
+              backgroundColor: '#232323',
+            },
+            right: {
+              backgroundColor: '#f0f0f0',
+            }
+          }}
+          textStyle = {{
+              left: {
+                color: '#ffffff',
+              },
+              right: {
+                color: '#000000',
+              }
+            }}
+        />
+      )
+    }
+
+    renderAvatar(props){
+      return (
+        <Avatar
+          {...props}
+          imageStyle={{
+            left: {
+              height: 36,
+              width: 36,
+              borderRadius: 4,
+            },
+            right:{
+              height: 36,
+              width: 36,
+              borderRadius: 4,
+            }
+          }}
+        />
+      );
+    }
   /**
    * 填充消息内容
    */
@@ -244,6 +321,8 @@ class ChatUI extends React.Component{
               createdAt: chat.time*1000,
               user: {
                 _id: 1,
+                name: this.state.mypseudonym,
+                avatar: this.state.myheadurl,
               },
             }
             messages[i] = message;
@@ -329,7 +408,7 @@ class ChatUI extends React.Component{
     }
     var json = JSON.stringify({
       userid:this.props.papp.userid,
-      fuserid:this.state.fuserid,
+      fuserid:this.state.tuserid,
     });
     HttpUtil.post(HttpUtil.CHAT_CHATS,json).then(res=>{
       if(res.code == 0){
@@ -378,7 +457,7 @@ class ChatUI extends React.Component{
 const styles = StyleSheet.create({
       send:{
         fontSize:18,
-        color:StyleConfig.C_1E8AE8,
+        color:StyleConfig.C_000000,
         marginRight: 6,
         marginBottom: 10,
       },

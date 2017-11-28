@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 主页
+ * @flow
  */
 import React from 'react';
 import {
@@ -11,13 +12,11 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
-      DeviceEventEmitter,
      } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
 import * as PoemsActions from '../redux/actions/PoemsActions';
 
-import { Icon } from 'react-native-elements';
 import HomeListItem from '../custom/HomeListItem';
 import {
   StyleConfig,
@@ -31,36 +30,50 @@ import {
   pstyles,
   HomePoemDao,
   goPersonalUI,
+  shallowEqual,
 } from '../AppUtil';
 const timeout  = 5000;
+type Props = {
+    navigation:any,
+    papp:Object,
+    homepoems:Array<Object>,
+};
 
-class HomeTab extends React.Component {
+type State = {
+    // sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    refreshing:boolean,
+};
+
+class HomeTab extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title: '首页',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:null,
      });
+     _onLove:Function;
+     _onComment:Function;
+     _onPersonal:Function;
+     timer:any;
+     net_time:number;
+     state = {
+         // 存储数据的状态
+         // sourceData : [],
+         selected: (new Map(): Map<string, boolean>),
+         refreshing: false,
+     }
      // 数据容器，用来存储数据
      constructor(props) {
          super(props);
          // console.log('---HomeTab()---')
-         this.state = {
-             // 存储数据的状态
-             sourceData : [],
-             selected: (new Map(): Map<String, boolean>),
-             refreshing: false,
-         }
          this._onLove = this._onLove.bind(this);
          this._onComment = this._onComment.bind(this);
          this._onPersonal = this._onPersonal.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
-      DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-         this._parseObserver(obj);
-      });
       this.timer = setTimeout(
       () => {
         let { dispatch } = this.props.navigation;
@@ -70,14 +83,17 @@ class HomeTab extends React.Component {
       this._initPoems();
     }
     componentWillUnmount(){
-      DeviceEventEmitter.removeAllListeners();
       this.timer && clearTimeout(this.timer);
       this.net_time && clearTimeout(this.net_time);
     }
   shouldComponentUpdate(nextProps, nextState){
-    // console.log('---HomeTab() shouldComponentUpdate');
-    // console.log(nextProps)
-    // console.log(this.props)
+    console.log('---HomeTab() shouldComponentUpdate');
+    console.log('---nextProps:');
+    console.log(nextProps)
+    console.log('---nextState:');
+    console.log(nextState)
+    console.log('---this.props:');
+    console.log(this.props)
     //切换用户id
     if(nextProps.papp.userid !== this.props.papp.userid){
       console.log('---HomeTab() shouldComponentUpdate');
@@ -87,15 +103,18 @@ class HomeTab extends React.Component {
       // console.log(this.props.papp)
       this._initPoems();
     }
-    if(nextProps.homepoems !== this.props.homepoems){
+    if(shallowEqual(this.props.homepoems,nextProps.homepoems)){
       console.log('---HomeTab() shouldComponentUpdate');
       console.log('--- up homepoems');
-      Object.assign(this.props.homepoems,nextProps.homepoems);
-      const homepoems = this.props.homepoems;
-      console.log(homepoems)
-      this.setState({
-        sourceData:homepoems,
-      })
+      console.log(nextProps.homepoems)
+      console.log(this.props.homepoems)
+      // Object.assign(this.props.homepoems,nextProps.homepoems);
+      // let homepoems = copyArray(nextProps.homepoems);
+      // this.setState({
+      //   sourceData:homepoems,
+      // });
+      // console.log('---this.state.sourceData:');
+      // console.log(this.state.sourceData);
     }
     return true;
   }
@@ -104,7 +123,7 @@ class HomeTab extends React.Component {
       <View style={pstyles.container}>
       <FlatList
                 style={{backgroundColor:'#e7e7e7'}}
-                data={ this.state.sourceData }
+                data={this.props.homepoems }
                 extraData={ this.state.selected }
                 keyExtractor={ this._keyExtractor }
                 renderItem={ this._renderItem }
@@ -124,7 +143,7 @@ class HomeTab extends React.Component {
       </View>
     );
   }
-   _keyExtractor = (item, index) => index;
+   _keyExtractor = (item, index) => index+'';
 
    _onPressItem = (id: string) => {
        this.setState((state) => {
@@ -161,7 +180,7 @@ class HomeTab extends React.Component {
    );
    // 自定义分割线
    _renderItemSeparatorComponent = ({highlighted}) => (
-       <View style={{ height:6, backgroundColor:'transparent' }}></View>
+       <View style={pstyles.separator_transparent}></View>
    );
    // 空布局
    _renderEmptyView = () => (
@@ -188,26 +207,34 @@ class HomeTab extends React.Component {
        this.setState({refreshing: false})
      },timeout);
      var fromid = 0;
-     if(this.state.sourceData.length > 0 ){
-       fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     // if(this.state.sourceData.length > 0 ){
+     //   fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     // }
+     let homepoems = this.props.homepoems;
+     if(homepoems.length > 0){
+       fromid = homepoems[homepoems.length-1].id;
      }
      var json = JSON.stringify({
        id:fromid,
-       userid:this.state.userid,
+       userid:this.props.papp.userid,
      });
       // console.log(json);
      HttpUtil.post(HttpUtil.POEM_HISTORY_ALLPOEM,json).then((res) => {
          if(res.code == 0){
              var poems = res.data;
               if(poems.length > 0){
+                console.log('---------poems')
+                console.log(poems)
                 let temp_pems = HomePoemDao.addHomePoems(poems);
-                let  homepoems = this.props.homepoems
-                homepoems = homepoems.concat(temp_pems);
+                console.log(temp_pems)
+                // let homepoems = copyArray(this.props.homepoems);
+                // homepoems = homepoems.concat(temp_pems);
                 let { dispatch } = this.props.navigation;
-                dispatch(PoemsActions.raUpHomePoems(homepoems));
-                this.setState({
-                  sourceData: homepoems,
-                });
+                // dispatch(PoemsActions.raUpHomePoems(homepoems));
+                dispatch(PoemsActions.raFooterHomePoems(temp_pems));
+                // this.setState({
+                //   sourceData: homepoems,
+                // });
               }
          }else{
            Alert.alert(res.errmsg);
@@ -229,9 +256,6 @@ class HomeTab extends React.Component {
     * 点赞
     */
   _onLove(item){
-    if(!this.props.papp.userid){
-      return
-    }
     if(!Utils.isLogin(this.props.navigation))return;
     var onlove = item.mylove == 0 ?1:0;
     var json = JSON.stringify({
@@ -242,7 +266,8 @@ class HomeTab extends React.Component {
     HttpUtil.post(HttpUtil.POEM_LOVEPOEM,json).then((result)=>{
       if(result.code == 0){
         var love = result.data;
-        let sourceData = this.state.sourceData;
+        // let sourceData = this.state.sourceData;
+        let sourceData = this.props.homepoems;
         var isRefresh = false;
         for(var i = 0 ; i < sourceData.length ; i ++ ){
           if(sourceData[i].id == love.pid){
@@ -263,9 +288,9 @@ class HomeTab extends React.Component {
         if(isRefresh){
           let { dispatch } = this.props.navigation;
           dispatch(PoemsActions.raUpHomePoems(sourceData));
-          this.setState({
-              sourceData: sourceData
-          });
+          // this.setState({
+          //     sourceData: sourceData
+          // });
         }
       }else{
         Alert.alert(result.errmsg);
@@ -283,12 +308,12 @@ class HomeTab extends React.Component {
   _initPoems(){
     console.log('---_initPoems homepoems---');
     HomePoemDao.deleteHomePoems();
-    const homepoems = [];
+    let homepoems = [];
     let { dispatch } = this.props.navigation;
     dispatch(PoemsActions.raUpHomePoems(homepoems));
-    this.setState({
-      sourceData: homepoems,
-    });
+    // this.setState({
+    //   sourceData: homepoems,
+    // });
     this._requestInitAllPoem(homepoems);
   }
   /**
@@ -313,14 +338,16 @@ class HomeTab extends React.Component {
          if(res.code == 0){
              var poems = res.data;
               if(poems.length > 0){
-                const tepm_poems = HomePoemDao.addHomePoems(poems);
-                let homepoems = this.props.homepoems;
-                homepoems = tepm_poems.concat(homepoems);
+                let tepm_poems = HomePoemDao.addHomePoems(poems);
+                // console.log('@@@@@@5')
+                // let homepoems = copyArray(this.props.homepoems);
+                // homepoems = tepm_poems.concat(homepoems);
+                // this.setState({
+                //   sourceData: homepoems,
+                // });
                 let { dispatch } = this.props.navigation;
-                dispatch(PoemsActions.raUpHomePoems(homepoems));
-                this.setState({
-                  sourceData: homepoems,
-                });
+                // dispatch(PoemsActions.raUpHomePoems(homepoems));
+                dispatch(PoemsActions.raHeadHomePoems(tepm_poems));
               }
          }else{
            Alert.alert(res.errmsg);
@@ -342,8 +369,12 @@ class HomeTab extends React.Component {
       this.setState({refreshing: false})
     },timeout);
     var fromid = 0;
-    if(this.state.sourceData.length > 0 ){
-      fromid = this.state.sourceData[0].id;
+    // if(this.state.sourceData.length > 0 ){
+    //   fromid = this.state.sourceData[0].id;
+    // }
+    let homepoems = this.props.homepoems;
+    if(homepoems.length > 0 ){
+      fromid = homepoems[0].id;
     }
     var json = JSON.stringify({
       id:fromid,
@@ -356,13 +387,16 @@ class HomeTab extends React.Component {
             console.log(poems)
              if(poems.length > 0){
                let temp_pems = HomePoemDao.addHomePoems(poems);
-               const  homepoems = this.props.homepoems;
-               homepoems = temp_pems.concat(homepoems);
+               // console.log('@@@@@@6')
+               // let homepoems = copyArray(this.props.homepoems);
+               // homepoems = temp_pems.concat(homepoems);
+               // let { dispatch } = this.props.navigation;
+               // dispatch(PoemsActions.raUpHomePoems(homepoems));
+               // this.setState({
+               //   sourceData: homepoems,
+               // });
                let { dispatch } = this.props.navigation;
-               dispatch(PoemsActions.raUpHomePoems(homepoems));
-               this.setState({
-                 sourceData: homepoems,
-               });
+               dispatch(PoemsActions.raHeadHomePoems(homepoems));
              }
         }else{
           Alert.alert(res.errmsg);
@@ -395,11 +429,6 @@ class HomeTab extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  header:{
-    paddingTop:4,
-    paddingBottom:4,
-    backgroundColor:StyleConfig.C_1E8AE8,
-  },
   header_bg:{
     flexDirection:'row',
     alignItems:'center',

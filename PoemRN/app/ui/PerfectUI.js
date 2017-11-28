@@ -1,5 +1,7 @@
+'use strict'
 /**
  * 完善资料
+ * @flow
  */
 import React from 'react';
 import {
@@ -10,7 +12,6 @@ import {
         Text,
         Image,
         TextInput,
-        DeviceEventEmitter,
       } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
@@ -22,42 +23,54 @@ import DialogSelected from '../utils/AlertSelected';
 const selectedArr = ["拍照", "图库"];
 
 import{
-    StyleConfig,
-    HeaderConfig,
-    StorageConfig,
-    pstyles,
-    HttpUtil,
-    Emitter,
-    Utils,
-    } from '../AppUtil';
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      pstyles,
+      HttpUtil,
+      Emitter,
+      Utils,
+      } from '../AppUtil';
+
+import{
+      NavBack,
+      }from '../custom/Custom';
+
 const nothead = require('../images/nothead.png');
 const mhead = require('../images/modify.png');
 
-class PerfectUI extends BaseUI{
+type Props = {
+    papp:Object,
+    navigation:any,
+};
+
+type State = {
+    headurl:any,
+    pseudonym:string,
+    sheadurl:string,
+};
+
+class PerfectUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title: '完善资料',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>{
-            navigation.goBack()
-          }}>
-            <Text style={styles.nav_left}>放弃</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
         headerRight:(
           <TouchableOpacity  onPress={()=>navigation.state.params._onSave()}>
-            <Text style={styles.nav_right}>保存</Text>
+            <Text style={pstyles.nav_right}>保存</Text>
           </TouchableOpacity>
         ),
      });
   _imageObj = {};
+  showAlertSelected:Function;
+  callbackSelected:Function;
+  _onSave:Function;
+  dialog:any;
   constructor(props){
     super(props)
     console.log('------PerfectUI() constructor');
-    let papp = this.props.papp;
-    this.papp = papp||{};
     this.state = {
         headurl:nothead,
         sheadurl:'',
@@ -68,7 +81,7 @@ class PerfectUI extends BaseUI{
     this._onSave = this._onSave.bind(this);
   }
   componentDidMount(){
-    let user = this.papp.user;
+    let user = this.props.papp.user;
     let headurl = Utils.getHead(user.head);
     let pseudonym = user.pseudonym;
     let sheadurl = '';
@@ -87,14 +100,14 @@ class PerfectUI extends BaseUI{
   }
   render(){
     return(
-      <View style={styles.container}>
+      <View style={[pstyles.container,styles.container]}>
         {/* ---修改头像--- */}
         <TouchableOpacity
           onPress={() => {this.showAlertSelected()}}
         >
           <View style={styles.head_bg}>
             <Image
-              style={pstyles.big_head}
+              style={styles.head}
               source={this.state.headurl}
               />
               <Image
@@ -139,7 +152,7 @@ class PerfectUI extends BaseUI{
     var json = JSON.stringify({
       head:this.state.sheadurl,
       pseudonym:this.state.pseudonym,
-      userid:this.papp.userid,
+      userid:this.props.papp.userid,
     })
     HttpUtil.post(HttpUtil.USER_UPINFO,json).then((res)=>{
       if(res.code == 0 ){
@@ -194,7 +207,8 @@ class PerfectUI extends BaseUI{
       ImagePicker.openCamera({
         width: 800,
         height: 800,
-        cropping: true
+        cropping: true,
+        includeBase64:true,
       }).then(image => {
         this.setState({
             headurl: {uri: image['path']}
@@ -207,7 +221,8 @@ class PerfectUI extends BaseUI{
       ImagePicker.openPicker({
         width: 800,
         height: 800,
-        cropping: true
+        cropping: true,
+        includeBase64:true,
       }).then(image => {
         this.setState({
             headurl: {uri: image['path']}
@@ -219,29 +234,26 @@ class PerfectUI extends BaseUI{
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container:{
     alignItems:'center',
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
-  nav_right:{
-    fontSize:18,
-    color:'#ffffff',
-    marginRight:10,
   },
   head_bg:{
     marginTop:40,
     alignItems:'center',
-    height:120,
-    width:120,
+    justifyContent:'center',
+    height:122,
+    width:122,
+    backgroundColor:StyleConfig.C_FFFFFF,
+    borderWidth:1,
+    borderColor:StyleConfig.C_000000,
+    borderRadius:15,
   },
   head:{
     height:120,
     width:120,
+    resizeMode:'cover',
+    // 设置圆角
+    borderRadius:15,
   },
   mhead:{
     width:20,
@@ -258,7 +270,7 @@ const styles = StyleSheet.create({
       width:200,
       fontSize:22,
       borderBottomWidth:1,
-      borderBottomColor:'#d4d4d4',
+      borderBottomColor:StyleConfig.C_D4D4D4,
   }
 });
 export default connect(

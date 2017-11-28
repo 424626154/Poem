@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * Global
+ * @flow
+ */
 import {
   Dimensions
 } from 'react-native';
@@ -10,8 +15,8 @@ const Global = {
     //   followme:0,
     // },
     // uppoem:{},
-    // width:0,
-    // height:0,
+    width:0,
+    height:0,
     userid:'',
 };
 const {width, height} = Dimensions.get('window');

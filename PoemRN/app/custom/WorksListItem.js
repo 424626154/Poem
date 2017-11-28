@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 作品元素组件
+ * @flow
  */
 import React from 'react';
 import {
@@ -10,8 +11,13 @@ import {
       TouchableOpacity,
      } from 'react-native';
 import {UIName,pstyles,PImage} from '../AppUtil';
-
-export default class WorksListItem extends React.PureComponent {
+type Props = {
+    onPressItem:Function,
+    id:string,
+    item:Object,
+    time:string,
+};
+export default class WorksListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id,this.props.item);
     };
@@ -24,12 +30,14 @@ export default class WorksListItem extends React.PureComponent {
                 >
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
-                  <View style={styles.poem}>
-                    <Text style={styles.poem_title}>{item.title}</Text>
+                  <View style={pstyles.poem}>
+                    <Text style={pstyles.poem_title}>
+                      {item.title}
+                    </Text>
                     <Text
                       numberOfLines={8}
                       ellipsizeMode='tail'
-                      style={styles.poem_content}
+                      style={[pstyles.poem_content,{textAlign:this._renderAlign(item)}]}
                     >
                       {item.content}
                     </Text>
@@ -42,6 +50,14 @@ export default class WorksListItem extends React.PureComponent {
                 </View>
             </TouchableOpacity>
         );
+    }
+    _renderAlign(item){
+      let align = 'center';
+      if(item.extend){
+        let extend = JSON.parse(item.extend)
+        if(extend.align)align = extend.align
+      }
+      return align;
     }
 }
 
@@ -57,16 +73,5 @@ const styles = StyleSheet.create({
     fontSize:14,
     color:'#d4d4d4',
     marginTop:4,
-  },
-  poem:{
-
-  },
-  poem_title:{
-    fontSize:30,
-    textAlign:'center',
-  },
-  poem_content:{
-    fontSize:20,
-    textAlign:'center',
   },
 });

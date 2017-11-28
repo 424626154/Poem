@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 消息DAO
+ * @flow
  */
 import realm from './RealmDB';
 import RealmName from './RealmName';
@@ -15,7 +16,7 @@ class MessageDao{
   isAccount(){
     return Global.userid||'';
   }
-  addMessages(messages){
+  addMessages(messages:Array<Object>){
     let msgs = [];
     try {
       realm.write(() => {
@@ -43,7 +44,7 @@ class MessageDao{
       return msgs;
     }
   }
-  updateMessageState(message){
+  updateMessageState(message:Object){
     try {
       realm.write(()=> {
           realm.create(RealmName.Message, {rid: message.rid,state: message.state}, true)
@@ -76,7 +77,7 @@ class MessageDao{
     return msgs;
   }
 
-  deleteMessage(rid){
+  deleteMessage(rid:string){
       try {
         realm.write(() => {
             // let msgToBeDeleted = realm.objectForPrimaryKey(RealmName.Message, id);

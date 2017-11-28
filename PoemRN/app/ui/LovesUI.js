@@ -1,51 +1,59 @@
+'use strict'
+/**
+ * 关注列表
+ * @flow
+ */
 import React from 'react';
 import {
         StyleSheet,
         Text,
         View,
         TouchableOpacity,
-        DeviceEventEmitter,
         Alert,
         FlatList,
       } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 
 import{
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  pstyles,
-  Utils,
-  Emitter,
-  HttpUtil,
-  goPersonalUI,
-} from '../AppUtil';
+        StyleConfig,
+        HeaderConfig,
+        StorageConfig,
+        pstyles,
+        Utils,
+        Emitter,
+        HttpUtil,
+        goPersonalUI,
+      } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
 import LovesListItem from '../custom/LovesListItem';
+type Props = {
+    navigation:any
+};
 
-export default class LovesUI extends React.Component {
+type State = {
+    id:number,
+    sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    refreshing:boolean,
+};
+export default class LovesUI extends React.Component<Props,State> {
  static navigationOptions = ({navigation}) => ({
        title:'点赞',
-       headerTintColor:StyleConfig.C_FFFFFF,
+       headerTintColor:HeaderConfig.headerTintColor,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
        headerStyle:HeaderConfig.headerStyle,
-       headerLeft:(
-         <TouchableOpacity  onPress={()=>navigation.goBack()}>
-           <Text style={pstyles.nav_left}>返回</Text>
-         </TouchableOpacity>
-       ),
+       headerLeft:(<NavBack navigation={navigation}/>),
     });
-    navigate = this.props.navigation.navigate;
+
     dataContainer = [];
-    constructor(props) {
-        super(props);
-        let params = this.props.navigation.state.params;
-        this.state = ({
-          sourceData : [],
-          selected: (new Map(): Map<String, boolean>),
-          refreshing: false,
-          id:params.id,
-        });
-    }
+    state = ({
+      sourceData : [],
+      selected: (new Map(): Map<string, boolean>),
+      refreshing: false,
+      id:this.props.navigation.state.params.id||0,
+    });
     componentDidMount(){
         this._requestLoves();
     }
@@ -59,7 +67,7 @@ export default class LovesUI extends React.Component {
           <FlatList
                     data={ this.state.sourceData }
                     extraData={ this.state.selected }
-                    keyExtractor={ (item, index) => index}
+                    keyExtractor={ (item, index) => index+''}
                     renderItem={ this._renderItem }
                     // 决定当距离内容最底部还有多远时触发onEndReached回调；数值范围0~1，例如：0.5表示可见布局的最底端距离content最底端等于可见布局一半高度的时候调用该回调
                     onEndReachedThreshold={0.1}
@@ -74,7 +82,7 @@ export default class LovesUI extends React.Component {
     }
     // 自定义分割线
     _renderItemSeparatorComponent = ({highlighted}) => (
-        <View style={{ height:1, backgroundColor:StyleConfig.C_D4D4D4 }}></View>
+        <View style={pstyles.separator}></View>
     );
     // 空布局
     _renderEmptyView = () => (
@@ -83,7 +91,7 @@ export default class LovesUI extends React.Component {
          </Text>
         </View>
     );
-    _onPressItem = (id: string,love:Object) => {
+    _onPressItem = (id:string,love:Object) => {
         this.setState((state) => {
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id));

@@ -1,4 +1,8 @@
 'use strict';
+/**
+ * Poem Reducers
+ * @flow
+ */
 import * as TYPES from '../actions/ActionTypes';
 
 const initialState = {
@@ -7,15 +11,43 @@ const initialState = {
 	mypoem:{},
 };
 
-export default function poems(state=initialState, action){
+export default function poems(state:any=initialState, action:any){
 	switch(action.type){
     case TYPES.UP_HOME_POEMS:
-      // console.log('------PoemsReducers')
-      // console.log('----action')
-      // console.log(action)
+      console.log('------PoemsReducers')
+      console.log('----action')
+      console.log(action)
+			// console.log(Object.getOwnPropertyDescriptors(state.homepoems))
+			// console.log(Object.getOwnPropertyDescriptors(action.homepoems))
       return Object.assign({}, state, {
        homepoems:action.homepoems,
      });
+		 // console.log('------PoemsReducers end')
+		 // return Object.assign({}, state, {
+     //      homepoems: copyArray(action.homepoems),
+     //  });
+			case TYPES.HEAD_HOME_POEMS:
+		 		 console.log('------PoemsReducers')
+		 		 console.log('----action')
+		 		 console.log(action)
+		 			 if(action.temps.length >0){
+		 				 let homepoems = action.temps.concat(state.homepoems);
+		 				 return Object.assign({}, state, {
+		 		          homepoems:homepoems,
+		 		      });
+		 			 }
+		 		 	return state;
+			case TYPES.FOOTER_HOME_POEMS:
+					console.log('------PoemsReducers')
+					console.log('----action')
+					console.log(action)
+						if(action.temps.length >0){
+							let homepoems = state.homepoems.concat(action.temps);
+							return Object.assign({}, state, {
+									 homepoems:homepoems,
+							 });
+						}
+					 return state;
 		 case TYPES.UP_MY_POEMS:
        // console.log('------PoemsReducers')
        // console.log('----action')
@@ -38,6 +70,7 @@ export default function poems(state=initialState, action){
 			var temp_poem = {
 				title:action.poem.title,
 				content:action.poem.content,
+				extend:action.poem.extend,
 			}
 			var homepoems = state.homepoems;
 			var clone1 = false;
@@ -45,6 +78,7 @@ export default function poems(state=initialState, action){
 				if(homepoems[i].id == action.poem.id){
 					homepoems[i].title = temp_poem.title;
 					homepoems[i].content = temp_poem.content;
+					homepoems[i].extend = temp_poem.extend;
 					clone1 = true;
 				}
 			}
@@ -57,6 +91,7 @@ export default function poems(state=initialState, action){
 				if(mypoems[i].id == action.poem.id){
 					mypoems[i].title = temp_poem.title;
 					mypoems[i].content = temp_poem.content;
+					mypoems[i].extend = temp_poem.extend;
 					clone2 = true;
 				}
 			}

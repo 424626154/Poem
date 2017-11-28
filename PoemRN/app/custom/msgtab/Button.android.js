@@ -1,3 +1,7 @@
+'use strict'
+/**
+ * 消息tab android按钮
+ */
 const React = require('react');
 const ReactNative = require('react-native');
 const {

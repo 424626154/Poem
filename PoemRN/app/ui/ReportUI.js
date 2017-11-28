@@ -1,5 +1,7 @@
+'use strict'
 /**
  * 举报页面
+ * @flow
  */
 import React from 'react';
 import {
@@ -13,29 +15,46 @@ import {
 import {connect} from 'react-redux';
 import { CheckBox } from 'react-native-elements';
 import {
-  StyleConfig,
-  HeaderConfig,
-  pstyles,
-  HttpUtil,
-  showToast,
-}from '../AppUtil';
-class ReportUI extends React.Component{
+        StyleConfig,
+        HeaderConfig,
+        pstyles,
+        HttpUtil,
+        showToast,
+      }from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
+type Props = {
+    navigation:any,
+    papp:Object,
+};
+
+type State = {
+    type:number,
+    checked1:boolean,
+    checked2:boolean,
+    checked3:boolean,
+    check_title1:string,
+    check_title2:string,
+    check_title3:string,
+    custom:string,
+    rid:string,
+    ruserid:string,
+};
+class ReportUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:navigation.state.params.title,
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
         headerRight:(
           <TouchableOpacity  onPress={()=>navigation.state.params.onSubmit()}>
             <Text style={pstyles.nav_right}>提交</Text>
           </TouchableOpacity>
         ),
      });
+     onSubmit:Function;
      constructor(props){
        super(props);
        let params = this.props.navigation.state.params;
@@ -52,6 +71,9 @@ class ReportUI extends React.Component{
          check_title3:'涉及辱骂，歧视，挑衅等',
          ruserid:ruserid,
          rid:rid,
+         checked1:false,
+         checked2:false,
+         checked3:false,
        }
        this.onSubmit = this.onSubmit.bind(this);
      }
@@ -69,7 +91,7 @@ class ReportUI extends React.Component{
                   <CheckBox
                   style={styles.check}
                   title={this.state.check_title1}
-                  checkedColor={StyleConfig.C_1E8AE8}
+                  checkedColor={StyleConfig.C_000000}
                   checked={this.state.checked1}
                   onPress={() => this.setState({
                       checked1: !this.state.checked1
@@ -80,7 +102,7 @@ class ReportUI extends React.Component{
                   <CheckBox
                   style={styles.check}
                   title={this.state.check_title2}
-                  checkedColor={StyleConfig.C_1E8AE8}
+                  checkedColor={StyleConfig.C_000000}
                   checked={this.state.checked2}
                   onPress={() => this.setState({
                       checked2: !this.state.checked2
@@ -91,7 +113,7 @@ class ReportUI extends React.Component{
                   <CheckBox
                   style={styles.check}
                   title={this.state.check_title3}
-                  checkedColor={StyleConfig.C_1E8AE8}
+                  checkedColor={StyleConfig.C_000000}
                   checked={this.state.checked3}
                   onPress={() => this.setState({
                       checked3: !this.state.checked3

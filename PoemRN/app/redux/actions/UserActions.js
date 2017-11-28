@@ -1,4 +1,8 @@
 'use strict';
+/**
+ * User Actions
+ * @flow
+ */
 import {
   Platform,
 } from 'react-native';
@@ -11,7 +15,7 @@ import{
       Storage,
     }from '../../AppUtil';
 export function raMsgRead(){
-  return (dispatch) => {
+  return (dispatch:any) => {
       let news_num = MessageDao.getUnreadNum();
       let chat_nume = ChatDao.getAllUnreadNum();
       let num = news_num + chat_nume;
@@ -25,8 +29,8 @@ export function raMsgRead(){
   }
 }
 
-export function raAutoLogin(userid){
-  return (dispatch) => {
+export function raAutoLogin(userid:string){
+  return (dispatch:any) => {
       let json = JSON.stringify({
         userid:userid ,
       });
@@ -52,8 +56,8 @@ export function raAutoLogin(userid){
 /**
  * 更新用户头像昵称
  */
-export function raUpInfo(userid,head,pseudonym){
-  return (dispatch) => {
+export function raUpInfo(userid:string,head:string,pseudonym:string){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.UP_USER_INFO,
         userid:userid,
@@ -66,8 +70,8 @@ export function raUpInfo(userid,head,pseudonym){
 /**
  * 登录
  */
-export function raLogin(userid,user){
-  return (dispatch) => {
+export function raLogin(userid:string,user:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.LOGIN,
         userid:userid,
@@ -79,8 +83,8 @@ export function raLogin(userid,user){
 /**
  * 退出登录
  */
-export function raLogout(userid,head,pseudonym){
-  return (dispatch) => {
+export function raLogout(){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.LOGOUT,
         userid:'',
@@ -93,8 +97,8 @@ export function raLogout(userid,head,pseudonym){
 /**
  * 上传pushid
  */
-export function raPushId(userid,pushid){
-  return (dispatch) => {
+export function raPushId(userid:string,pushid:string){
+  return (dispatch:any) => {
     if(!userid||!pushid){
       console.log('------_requestPushId error!');
       return;
@@ -132,8 +136,8 @@ export function raPushId(userid,pushid){
 /**
  * 修改权限
  */
-export function rePermission(userid,per){
-  return (dispatch) => {
+export function rePermission(userid:string,per:number){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.PERMISSION,
         userid:userid,
@@ -145,8 +149,8 @@ export function rePermission(userid,per){
 /**
  * 刷新是否评论状态
  */
-export function raRefComment(state){
-  return (dispatch) => {
+export function raRefComment(state:boolean){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.REFCOMMENT,
         state:state,
@@ -155,8 +159,8 @@ export function raRefComment(state){
   }
 }
 
-export function raSetPushNews(push_news){
-  return (dispatch) => {
+export function raSetPushNews(push_news:boolean){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.SET_PUSH_NEWS,
         push_news:push_news,
@@ -165,8 +169,8 @@ export function raSetPushNews(push_news){
   }
 }
 
-export function raSetPushChat(push_chat){
-  return (dispatch) => {
+export function raSetPushChat(push_chat:boolean){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.SET_PUSH_CHAT,
         push_chat:push_chat,
@@ -175,8 +179,8 @@ export function raSetPushChat(push_chat){
   }
 }
 
-export function raSetChatUser(chatuser){
-  return (dispatch) => {
+export function raSetChatUser(chatuser:string){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.SET_CHAT_USER,
         chatuser:chatuser,
@@ -185,8 +189,8 @@ export function raSetChatUser(chatuser){
   }
 }
 
-export function raSetPushChatUser(push_chat_user){
-  return (dispatch) => {
+export function raSetPushChatUser(push_chat_user:boolean){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.SET_PUSH_CHAT_USER,
         push_chat_user:push_chat_user,

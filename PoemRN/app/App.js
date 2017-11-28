@@ -1,3 +1,8 @@
+'use strict';
+/**
+ * 程序主入口
+ * @flow
+ */
 import React, { Component } from 'react';
 // import {
   // NetInfo,
@@ -12,10 +17,10 @@ import store from './redux/store/ConfigureStore';
 /**
  * 程序入口
  */
-export default class App extends Component {
-  constructor(props){
-    super(props);
-  }
+export default class App extends Component<{}>{
+  // constructor(props){
+  //   super(props);
+  // }
   componentDidMount() {
     // //检测网络是否连接
     // NetInfo.isConnected.fetch().done((isConnected)=>{

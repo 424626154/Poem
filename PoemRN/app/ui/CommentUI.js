@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * 评论
+ * @flow
+ */
 import React from 'react';
 import {
   StyleSheet,
@@ -15,29 +20,39 @@ import{
       StorageConfig,
       UIName,
       HttpUtil,
-} from '../AppUtil';
+      pstyles,
+      showToast,
+    } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
 
-/**
- * 评论
- */
-class CommentUI extends React.Component{
+type Props = {
+    navigation:any,
+    papp:Object,
+};
+
+type State = {
+      id:string,
+      cid:string,
+      comment:string,
+      placeholder:string,
+};
+
+class CommentUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title: '评论',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={styles.nav_left}>取消</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
         headerRight:(
           <TouchableOpacity  onPress={()=>navigation.state.params._onRelease()}>
-            <Text style={styles.nav_right}>发布</Text>
+            <Text style={pstyles.nav_right}>发布</Text>
           </TouchableOpacity>
         ),
      });
-
+  _onRelease:Function;
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
@@ -50,6 +65,7 @@ class CommentUI extends React.Component{
       id:params.id,
       cid:params.cid,
       placeholder:placeholder,
+      comment:'',
     }
     this._onRelease = this._onRelease.bind(this);
   }
@@ -65,7 +81,7 @@ class CommentUI extends React.Component{
   render(){
     const { navigate } = this.props.navigation;
     return(
-      <View style={styles.container}>
+      <View style={pstyles.container}>
           <TextInput
             style={styles.input}
             placeholder={this.state.placeholder}
@@ -93,9 +109,10 @@ class CommentUI extends React.Component{
         var comment = data.data;
         let { dispatch } = this.props.navigation;
         dispatch(UserActions.raRefComment(true));
+        showToast('评论成功')
         this.props.navigation.goBack();
       }else{
-        Alert.alert(data.errmsg);
+        showToast(data.errmsg);
       }
     }).catch((err)=>{
       console.error(err);
@@ -105,26 +122,12 @@ class CommentUI extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding:10,
-  },
-  nav_right:{
-    fontSize:18,
-    color:'#ffffff',
-    marginRight:10,
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
   input:{
     flex:1,
     textAlign:'left',
     textAlignVertical:'top',
     fontSize:18,
+    padding:10,
   }
 })
 export default connect(

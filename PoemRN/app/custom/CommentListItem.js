@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 评论组件
+ * @flow
  */
 import React from 'react';
 import {
@@ -18,8 +19,19 @@ import {
       PImage,
     } from '../AppUtil';
 import { Icon } from 'react-native-elements';
+type Props = {
+    onPressItem:Function,
+    onPersonal:Function,
+    id:number,
+    comment:Object,
+    time:string,
+    headurl:any,
+};
 
-class CommentListItem extends React.PureComponent {
+type State = {
+
+};
+class CommentListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id,this.props.comment);
     };
@@ -38,7 +50,7 @@ class CommentListItem extends React.PureComponent {
                       this.props.onPersonal(comment.userid)
                     }}>
                     <PImage
-                      style={pstyles.small1_head}
+                      style={pstyles.small_head}
                       source={this.props.headurl}
                       />
                   </TouchableOpacity>
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
   },
   comment_name1:{
     fontSize:14,
-    color:StyleConfig.C_1E8AE8,
+    color:StyleConfig.C_000000,
   },
   name:{
     fontSize:14,

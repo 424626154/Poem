@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 作品元素组件
+ * @flow
  */
  import React from 'react';
  import {
@@ -10,8 +11,13 @@
        TouchableOpacity,
       } from 'react-native';
  import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
-
-class PersonalListItem extends React.PureComponent {
+ type Props = {
+    onPressItem:Function,
+    id:string,
+    poem:Object,
+    time:string,
+ };
+class PersonalListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
     };
@@ -24,9 +30,6 @@ class PersonalListItem extends React.PureComponent {
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
                   <View style={styles.poem_bg}>
-                  {/* <HTMLView
-                      value={this.props.poem}
-                      /> */}
                   <View style={styles.poem}>
                     <Text style={pstyles.poem_title}>
                       {this.props.poem.title}

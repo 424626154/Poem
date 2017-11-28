@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 详情页点赞列表组件
+ * @flow
  */
 import React from 'react';
 import {
@@ -16,14 +17,21 @@ import {
       Utils,
       pstyles
     } from '../AppUtil';
-
-class LoveListView extends React.Component{
+type Props = {
+    // papp:Object,
+    poem:Object,
+    onLoves:Function,
+    onLove:Function,
+    onLoveItem:Function,
+    loves:Array<Object>,
+};
+type State = {
+    loves:Array<Object>,
+};
+class LoveListView extends React.Component<Props,State>{
   loves = [];
-  constructor(props){
-    super(props);
-    this.state = {
-      loves:[],
-    }
+  state = {
+    loves:[],
   }
   componentDidMount(){
     this.loadPages();
@@ -144,7 +152,7 @@ class LoveListView extends React.Component{
     )
   }
   _renderLoveColor(){
-    return this.props.poem.love > 0 ? '#1e8ae8':'#7b8992';
+    return this.props.poem.love > 0 ? StyleConfig.C_000000:StyleConfig.C_7B8992;
   }
 }
 
@@ -158,7 +166,7 @@ const styles = StyleSheet.create({
   },
   love_name:{
       fontSize:18,
-      color:StyleConfig.C_1E8AE8,
+      color:StyleConfig.C_000000,
   },
   love_p:{
     color:'#000000',

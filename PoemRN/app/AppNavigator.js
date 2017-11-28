@@ -1,3 +1,8 @@
+'use strict'
+/**
+ * Navigator
+ * @flow
+ */
 import React, { Component } from 'react';
 import {
   Platform,
@@ -7,6 +12,10 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabNavigator,StackNavigator } from 'react-navigation';
+
+import{
+    StyleConfig,
+  } from './AppUtil';
 
 import HomeTab from './tabs/HomeTab';
 import MessageTab from './tabs/MessageTab';
@@ -85,6 +94,10 @@ const Tabs = TabNavigator({
         labelStyle:{
           margin:0,
         },
+        style: {
+          backgroundColor:StyleConfig.C_FFFFFF,
+        },
+        activeTintColor:StyleConfig.C_000000,
     },
     swipeEnabled:false,
     // tabBarVisible:false,

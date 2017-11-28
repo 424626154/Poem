@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 登录
+ * @flow
  */
 import React from 'react';
 import { Button,Icon } from 'react-native-elements';
@@ -11,7 +12,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  DeviceEventEmitter,
   Platform,
   ActivityIndicator,
   Dimensions,
@@ -20,46 +20,49 @@ import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
 
 import{
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  HttpUtil,
-  Emitter,
-  pstyles,
-  Storage,
-  UIName,
-} from '../AppUtil';
-const {width, height} = Dimensions.get('window');
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      HttpUtil,
+      Emitter,
+      pstyles,
+      Storage,
+      UIName,
+    } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
+type Props = {
+    navigation:any,
+};
 
-class LoginUI extends React.Component {
+type State = {
+    phone:string,
+    password:string,
+    phone_clear:boolean,
+    password_clear:boolean,
+    pwd_visibility:boolean,
+    animating:boolean,
+};
+class LoginUI extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title:'登录',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>{
-            navigation.goBack()
-          }}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
-    constructor(props){
-      super(props);
-      let papp = this.props.papp;
-      this.papp = papp;
-      this.state={
-        phone:'',
-        password:'',
-        phone_clear:false,
-        password_clear:false,
-        pwd_visibility:true,
-      }
-    }
+     state={
+       phone:'',
+       password:'',
+       phone_clear:false,
+       password_clear:false,
+       pwd_visibility:true,
+       animating:false,
+     }
     componentDidMount(){
       let phone = Storage.getLastPhone();
-      console.log('---- phone:'+phone)
+      // console.log(phone)
       this.setState({
         phone:phone||'',
         animating:false,
@@ -77,9 +80,9 @@ class LoginUI extends React.Component {
         <View style={styles.input_bg}>
           <Icon
             name='phone'
-            size={30}
+            size={28}
             type="MaterialIcons"
-            color={'#1e8ae8'}
+            color={StyleConfig.C_000000}
           />
           <TextInput
             ref='phone'
@@ -113,9 +116,9 @@ class LoginUI extends React.Component {
         <View style={styles.input_bg}>
           <Icon
             name='keyboard'
-            size={30}
+            size={28}
             type="MaterialIcons"
-            color={'#1e8ae8'}
+            color={StyleConfig.C_000000}
           />
           <TextInput
             ref='password'
@@ -149,16 +152,17 @@ class LoginUI extends React.Component {
               >
             <Icon
               name={this._renderVName()}
-              size={30}
+              size={28}
               type="MaterialIcons"
               color={this._renderVColor()}
             />
           </TouchableOpacity>
         </View>
+        <View style={styles.line}></View>
         <View style={styles.interval}></View>
         <Button
-          buttonStyle={{backgroundColor: '#1e8ae8', borderRadius: 5,margin:0}}
-          textStyle={{textAlign: 'center',fontSize:18,}}
+          buttonStyle={styles.login_but}
+          textStyle={styles.login_text}
           title={'登录'}
           onPress={()=>{
             // alert(this.state.phone+'_'+this.state.password)
@@ -186,7 +190,7 @@ class LoginUI extends React.Component {
   _renderLoading(){
     if(this.state.animating){
       return(
-        <View style={styles.loading}>
+        <View style={pstyles.loading}>
           <ActivityIndicator
            animating={this.state.animating}
            style={styles.centering}
@@ -234,7 +238,7 @@ class LoginUI extends React.Component {
               >
             <Icon
               name='clear'
-              size={30}
+              size={28}
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
             />
@@ -255,7 +259,7 @@ class LoginUI extends React.Component {
             >
           <Icon
             name='clear'
-            size={30}
+            size={28}
             type="MaterialIcons"
             color={StyleConfig.C_D4D4D4}
           />
@@ -270,7 +274,7 @@ class LoginUI extends React.Component {
     return this.state.pwd_visibility?'visibility-off':'visibility';
   }
   _renderVColor(){
-    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_1E8AE8;
+    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_000000;
   }
   _onVsibility(){
     var isVis = true;
@@ -328,7 +332,7 @@ class LoginUI extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor:StyleConfig.C_FFFFFF,
     // alignItems:'center',
     justifyContent:'center',
     padding:10,
@@ -339,6 +343,18 @@ const styles = StyleSheet.create({
     borderColor:StyleConfig.C_D4D4D4,
     borderWidth:1,
   },
+  login_but:{
+     backgroundColor:StyleConfig.C_FFFFFF,
+     borderColor:StyleConfig.C_000000,
+     borderRadius: 5,
+     borderWidth:1,
+     margin:0
+   },
+   login_text:{
+     textAlign: 'center',
+     fontSize:18,
+     color:StyleConfig.C_000000
+   },
   interval:{
     height:10,
   },
@@ -348,11 +364,11 @@ const styles = StyleSheet.create({
     padding:14,
   },
   register:{
-    color:'#1e8ae8',
+    color:StyleConfig.C_000000,
     fontSize:18,
   },
   forget:{
-    color:'#7b8992',
+    color:StyleConfig.C_7B8992,
     fontSize:18,
   },
   input_bg:{
@@ -373,15 +389,6 @@ const styles = StyleSheet.create({
     marginRight:14,
     marginTop:10,
     marginBottom:10,
-  },
-  loading:{
-    backgroundColor:'#00000055',
-    position: 'absolute',
-    flex:1,
-    width:width,
-    height:height,
-    alignItems:'center',
-    justifyContent: 'center',
   },
   centering: {
    alignItems: 'center',

@@ -1,11 +1,14 @@
-// 我的
+'use strict'
+/**
+ * 我的
+ * @flow
+ */
 import React from 'react';
 import {
         StyleSheet,
         Text,
         View,
         TouchableOpacity,
-        DeviceEventEmitter,
         Alert,
       } from 'react-native';
 import {connect} from 'react-redux';
@@ -23,23 +26,33 @@ import{
   UIName,
 } from '../AppUtil'
 
-import {CustomNav} from '../custom/CustomNav';
-
 const modify = require('../images/modify.png');
 const nothead = require('../images/nothead.png');
 
-/**
- * 我的主页
- */
-class MyTab extends React.Component {
+type Props = {
+    papp:Object,
+    navigation:any,
+};
+
+type State = {
+    userid:string,
+    pseudonym:string,
+    headurl:any,
+    myfollow:number,
+    followme:number,
+};
+
+class MyTab extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title: '我的',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:null,
      });
-    navigate = this.props.navigation.navigate;
+
+     _onStting:Function;
+     _onWorks:Function;
    constructor(props){
      super(props);
      console.log('---MyTab()---')
@@ -86,7 +99,6 @@ class MyTab extends React.Component {
     const { state,navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      {/* <CustomNav {...this.props} title='我的'/> */}
           <View style={styles.header}>
             <TouchableOpacity onPress={()=>{
               if(this.state.userid){
@@ -179,7 +191,7 @@ class MyTab extends React.Component {
           name={icon}
           size={28}
           type="MaterialIcons"
-          color={StyleConfig.C_7B8992}
+          color={StyleConfig.C_000000}
         />
         <Text style={styles.item_title}>
           {title}
@@ -213,7 +225,7 @@ class MyTab extends React.Component {
           name='create'
           size={30}
           type="MaterialIcons"
-          color={'#ffffff'}
+          color={StyleConfig.C_D4D4D4}
         />
       )
     }else{
@@ -229,10 +241,10 @@ class MyTab extends React.Component {
   }
 
   _onWorks(){
-    this.navigate(UIName.WorksUI);
+    this.props.navigation.navigate(UIName.WorksUI);
   }
   _onStting(){
-    this.navigate(UIName.SettingUI);
+    this.props.navigation.navigate(UIName.SettingUI);
   }
   _reloadUserInfo(){
     // console.log(this)
@@ -262,13 +274,13 @@ class MyTab extends React.Component {
    * 我的关注
    */
   _onMeFollow(){
-    this.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'我的关注',type:0});
+    this.props.navigation.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'我的关注',type:0});
   }
   /**
    * 关注我的
    */
   _onFollowMe(){
-    this.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'关注我的',type:1});
+    this.props.navigation.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'关注我的',type:1});
   }
 }
 
@@ -278,7 +290,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebebeb',
   },
   header:{
-    backgroundColor: '#1e8ae8',
+    backgroundColor:StyleConfig.C_FFFFFF,
   },
   header_title:{
     fontSize:20,
@@ -295,7 +307,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color:StyleConfig.C_FFFFFF,
+    color:StyleConfig.C_000000,
   },
   personal_more:{
     justifyContent:'center',
@@ -326,12 +338,12 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_D4D4D4,
+    color:StyleConfig.C_000000,
   },
   follow_item_font:{
     marginTop:6,
     fontSize:StyleConfig.F_12,
-    color:StyleConfig.C_D4D4D4,
+    color:StyleConfig.C_000000,
   },
   item:{
     // flex:1,

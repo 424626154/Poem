@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 关注
+ * @flow
  */
 import React from 'react';
 import {
@@ -8,44 +9,53 @@ import {
         Text,
         View,
         TouchableOpacity,
-        DeviceEventEmitter,
         Alert,
         FlatList,
       } from 'react-native';
 import {connect} from 'react-redux';
 import{
-    StyleConfig,
-    HeaderConfig,
-    StorageConfig,
-    pstyles,
-    Utils,
-    Emitter,
-    HttpUtil,
-    goPersonalUI,
-} from '../AppUtil';
-
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      pstyles,
+      Utils,
+      Emitter,
+      HttpUtil,
+      goPersonalUI,
+      } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
 import FollowListItem from '../custom/FollowListItem';
+type Props = {
+    navigation:any,
+    papp:Object,
+};
 
-class FollowUI extends React.Component {
+type State = {
+      sourceData:Array<Object>,
+      selected:Map<string, boolean>,
+      refreshing:boolean,
+      userid:string,
+      type:number,
+};
+class FollowUI extends React.Component<Props,State> {
  static navigationOptions = ({navigation}) => ({
        title:navigation.state.params.title,
-       headerTintColor:StyleConfig.C_FFFFFF,
+       headerTintColor:HeaderConfig.headerTintColor,
        headerTitleStyle:HeaderConfig.headerTitleStyle,
        headerStyle:HeaderConfig.headerStyle,
-       headerLeft:(
-         <TouchableOpacity  onPress={()=>navigation.goBack()}>
-           <Text style={pstyles.nav_left}>返回</Text>
-         </TouchableOpacity>
-       ),
+       headerLeft:(<NavBack navigation={navigation}/>),
     });
     navigate = this.props.navigation.navigate;
     dataContainer = [];
+    _onFollow:Function;
     constructor(props) {
         super(props);
         let params = this.props.navigation.state.params;
         this.state = ({
           sourceData : [],
-          selected: (new Map(): Map<String, boolean>),
+          selected: (new Map(): Map<string, boolean>),
           refreshing: false,
           type:params.type,
           userid:params.userid,
@@ -65,7 +75,7 @@ class FollowUI extends React.Component {
           <FlatList
                     data={ this.state.sourceData }
                     extraData={ this.state.selected }
-                    keyExtractor={ (item, index) => index}
+                    keyExtractor={ (item, index) => index+''}
                     renderItem={ this._renderItem }
                     // 决定当距离内容最底部还有多远时触发onEndReached回调；数值范围0~1，例如：0.5表示可见布局的最底端距离content最底端等于可见布局一半高度的时候调用该回调
                     onEndReachedThreshold={0.1}
@@ -80,7 +90,7 @@ class FollowUI extends React.Component {
     }
     // 自定义分割线
     _renderItemSeparatorComponent = ({highlighted}) => (
-        <View style={{ height:1, backgroundColor:StyleConfig.C_D4D4D4 }}></View>
+        <View style={pstyles.separator}></View>
     );
     // 空布局
     _renderEmptyView = () => (
@@ -182,8 +192,7 @@ class FollowUI extends React.Component {
               break;
             }
           }
-          var list = [];
-          Object.assign(list,this.dataContainer);
+          var list = this.dataContainer;
           this.setState({
             sourceData: list,
           });

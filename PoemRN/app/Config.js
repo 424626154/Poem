@@ -1,15 +1,23 @@
+'use strict'
+/**
+ * Config
+ * @flow
+ */
 var StyleConfig = {
 
 };
 
-StyleConfig.C_176EB9 = '#176eb9';
-StyleConfig.C_1E8AE8 = '#1e8ae8';
+StyleConfig.C_176EB9 = '#176eb9';//深蓝
+StyleConfig.C_1E8AE8 = '#1e8ae8';//蓝色
+/*白色*/
 StyleConfig.C_FFFFFF = '#ffffff';
-StyleConfig.C_000000 = '#000000';
-StyleConfig.C_232323 = '#232323';
-StyleConfig.C_7B8992 = '#7B8992';
-StyleConfig.C_D4D4D4 = '#d4d4d4';
-StyleConfig.C_FFCA28 = '#ffca28';
+StyleConfig.C_000000 = '#000000';//黑色
+StyleConfig.C_232323 = '#232323';//近黑色
+StyleConfig.C_7B8992 = '#7B8992';//深灰
+StyleConfig.C_D4D4D4 = '#d4d4d4';//浅灰
+StyleConfig.C_FFCA28 = '#ffca28';//黄色
+StyleConfig.C_E7E7E7 = '#e7e7e7';//浅灰色 列表背景
+StyleConfig.C_FF4040 = '#ff4040';//红色
 
 StyleConfig.F_22 = 22;
 StyleConfig.F_18 = 18;
@@ -17,6 +25,8 @@ StyleConfig.F_14 = 14;
 StyleConfig.F_12 = 12;
 StyleConfig.F_10 = 10;
 StyleConfig.IOS_NAV = 20;
+
+StyleConfig.FONT_FAMILY ='HYZhongSongJ';
 
 var HeaderConfig = {
 
@@ -26,11 +36,13 @@ HeaderConfig.headerTitleStyle = {
   alignSelf:'center',
   };
 HeaderConfig.headerStyle = {
-  backgroundColor:'#1e8ae8',
+  backgroundColor:StyleConfig.C_FFFFFF,
   };
 HeaderConfig.iosNavStyle = {
   height:20,
 }
+HeaderConfig.headerTintColor = StyleConfig.C_000000;
+
 var StorageConfig = {
 
 };

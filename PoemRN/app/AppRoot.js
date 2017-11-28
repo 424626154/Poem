@@ -1,3 +1,8 @@
+'use strict';
+/**
+ * 根视图
+ * @flow
+ */
 import React, { Component } from 'react';
 import {
   BackHandler,
@@ -25,15 +30,20 @@ const receiveCustomMsgEvent = "receivePushMsg";
 const receiveNotificationEvent = "receiveNotification";
 const openNotificationEvent = "openNotification";
 const getRegistrationIdEvent = "getRegistrationId";
-
-class AppRoot extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        currentAppState: AppState.currentState||'',
-        j_msgid:'',
-      };
-    }
+type Props = {
+    dispatch:any,
+    nav:any,
+    papp:Object,
+};
+type State = {
+    currentAppState:string,
+    j_msgid:string,
+};
+class AppRoot extends Component <Props,State>{
+    state = {
+      currentAppState: AppState.currentState||'',
+      j_msgid:'',
+    };
     componentDidMount() {
       AppState.addEventListener('change', this._handleAppStateChange);
       if (Platform.OS === 'android') {
@@ -362,11 +372,11 @@ class AppRoot extends Component {
       })
     }
 
-    handleConnectivityChange(status) {
-        console.log('status change:' + status);
-        //监听第一次改变后, 可以取消监听.或者在componentUnmount中取消监听
-       NetInfo.removeEventListener('change', this.handleConnectivityChange);
-    }
+    // handleConnectivityChange(status) {
+    //     console.log('status change:' + status);
+    //     //监听第一次改变后, 可以取消监听.或者在componentUnmount中取消监听
+    //    NetInfo.removeEventListener('change', this.handleConnectivityChange);
+    // }
     _setMsgState(){
       let num = this.props.papp.num;
       console.log('---_setMsgState num:'+num);

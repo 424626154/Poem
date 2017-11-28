@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 意见反馈
+ * @flow
  */
 import React from 'react';
 import{
@@ -13,28 +14,38 @@ import{
     } from 'react-native';
 import {connect} from 'react-redux';
 import{
-  StyleConfig,
-  HeaderConfig,
-  pstyles,
-  HttpUtil,
-} from '../AppUtil';
-class FeedbackUI extends React.Component{
+      StyleConfig,
+      HeaderConfig,
+      pstyles,
+      HttpUtil,
+    } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
+type Props = {
+    navigation:any,
+    papp:Object,
+};
+
+type State = {
+    feedback:string,
+    contact:string,
+};
+
+class FeedbackUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:'意见反馈',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
         headerRight:(
           <TouchableOpacity  onPress={()=>navigation.state.params.onSubmit()}>
             <Text style={pstyles.nav_right}>提交</Text>
           </TouchableOpacity>
         ),
      });
+   _onSubmit:Function;
   constructor(props){
     super(props);
     this.state = {
@@ -51,7 +62,7 @@ class FeedbackUI extends React.Component{
   }
   render(){
     return(
-      <View style={[pstyles.container,{backgroundColor: '#ebebeb',padding:10}]}>
+      <View style={[pstyles.container,{backgroundColor: StyleConfig.C_E7E7E7,padding:10}]}>
         <TextInput
           style={styles.feedback}
           underlineColorAndroid={'transparent'}
@@ -62,7 +73,7 @@ class FeedbackUI extends React.Component{
           onChangeText={(text) => this.setState({feedback:text})}
         />
         <TextInput
-          style={[styles.contact,{marginTop:20}]}
+          style={styles.contact}
           underlineColorAndroid={'transparent'}
           numberOfLines={1}
           placeholder={'可输入您的手机/邮箱等(选填)'}
@@ -116,8 +127,9 @@ const styles = StyleSheet.create({
         borderColor: StyleConfig.C_D4D4D4,
         borderWidth: 1,
         borderRadius:5,
-        fontSize:20,
-        padding:5,
+        fontSize:18,
+        padding:10,
+        marginTop:20
       }
 });
 export default connect(

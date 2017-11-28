@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 消息页
+ * @flow
  */
 import React from 'react';
 import {
@@ -26,19 +27,27 @@ import {
      } from '../../AppUtil';
 
 import NewsListItem from '../NewsListItem';
+type Props = {
+      navigation:any,
+      papp:Object,
+      reduxMsgRead:Function,
+};
 
-class NewsPage extends React.Component{
+type State = {
+    sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    refreshing:boolean,
+    isSwiping:boolean,
+};
+class NewsPage extends React.Component<Props,State>{
   // 数据容器，用来存储数据
   dataContainer = [];
-  constructor(props){
-    super(props);
-    // console.log('---NewsPage()---')
-    this.state = {
-        // 存储数据的状态
-        sourceData : [],
-        selected: (new Map(): Map<String, boolean>),
-        refreshing: false,
-    }
+  state = {
+      // 存储数据的状态
+      sourceData : [],
+      selected: (new Map(): Map<string, boolean>),
+      refreshing: false,
+      isSwiping:false,
   }
   componentDidMount(){
     //因为tab采用lazy加载方式，所以第一次需要在此处调用
@@ -52,7 +61,7 @@ class NewsPage extends React.Component{
       <FlatList
             data={ this.state.sourceData }
             extraData={ this.state.selected }
-            keyExtractor={ (item, index) => index}
+            keyExtractor={ (item, index) => index+''}
             renderItem={ this._renderItem }
             onEndReachedThreshold={0.1}
             onEndReached={ this._onEndReached }
@@ -77,7 +86,7 @@ class NewsPage extends React.Component{
        </Text>
       </View>
   );
-  _onPressItem = (id: string,message:Object) => {
+  _onPressItem = (id:string,message:Object) => {
       this.setState((state) => {
           const selected = new Map(state.selected);
           selected.set(id, !selected.get(id));
@@ -117,7 +126,7 @@ class NewsPage extends React.Component{
       }
     }
   }
-  _onDelItem = (id: int,item:Object) => {
+  _onDelItem = (id: number,item:Object) => {
     if(Platform.OS === 'android'){
       Alert.alert('删除通知',null,
             [

@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 用户协议
+ * @flow
  */
 import React from 'react';
 import {
@@ -11,10 +12,14 @@ import {
 } from 'react-native';
 
 import{
-  StyleConfig,
-  HeaderConfig,
-  pstyles,
-} from '../AppUtil';
+      StyleConfig,
+      HeaderConfig,
+      pstyles,
+    } from '../AppUtil';
+
+import{
+      NavBack,
+      }from '../custom/Custom';
 
 const protocol = `在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。本协议约定与用户之间关于此软件服务（以下简称“服务”）的权利义务。“用户”是指注册、登录、使用本服务的个人。本协议可由本app随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用本app提供的服务，用户继续使用本app提供的服务将被视为接受修改后的协议。
 
@@ -114,22 +119,23 @@ const protocol = `在此特别提醒您（用户）在注册成为用户之前�
 3、本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。
 `
 // console.log(protocol)
-export default class ProtocolUI extends React.Component{
+
+type Props = {
+
+};
+
+type State = {
+
+};
+
+export default class ProtocolUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:'用户协议',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>{
-            navigation.goBack()}}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
-    constructor(props){
-      super(props);
-    }
     render(){
       return(
         <ScrollView style={pstyles.container}>

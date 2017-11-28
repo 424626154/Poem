@@ -1,4 +1,9 @@
-function BitSet(lon){
+'use strict';
+/**
+ * BitSet
+ * @flow
+ */
+function BitSet(lon:number){
     this.lon = lon||0;
     this.bit_len = 16;
     this.binarys = new Array(this.bit_len);

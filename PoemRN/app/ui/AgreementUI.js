@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 用户协议
+ * @flow
  */
 import React from 'react';
 import {
@@ -22,6 +23,10 @@ import{
   Utils,
   HttpUtil,
 } from '../AppUtil';
+
+import{
+      NavBack,
+      }from '../custom/Custom';
 
 const agreement =
 `1、本条所述内容是指用户使用本app的过程中所制作、上载、复制、发布、传播的任何内容，包括但不限于账号、名称、用户说明等注册信息及认证资料，或文字、语音、图片、视频、图文等发送、回复或自动回复消息和相关链接页面，以及其他使用账号或本服务所产生的内容。
@@ -59,24 +64,26 @@ const agreement =
 (5) 侵害他人名誉权、肖像权、知识产权、商业秘密等合法权利的；
 
 (6) 含有其他干扰本服务正常运营和侵犯其他用户或第三方合法权益内容的信息。`
-class AgreementUI extends React.Component{
+
+type Props = {
+    navigation:any,
+    papp:Object,
+};
+
+type State = {
+    toui:string,
+};
+
+class AgreementUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:'用户协议',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>{
-            navigation.goBack()
-          }}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
      constructor(props){
        super(props);
-       let papp = this.props.papp;
-       this.papp = papp;
        let params = this.props.navigation.state.params;
        let toui = params.toui;
        this.state = {
@@ -103,11 +110,10 @@ class AgreementUI extends React.Component{
     }
 
     _requestPer(){
-      console.log(this.papp.user.per)
-      let per = Utils.setPermission(Permission.WRITE,true,this.papp.user.per);
+      let per = Utils.setPermission(Permission.WRITE,true,this.props.papp.user.per);
       console.log(per)
       let json = JSON.stringify({
-        userid:this.papp.userid,
+        userid:this.props.papp.userid,
         per:per,
       });
       HttpUtil.post(HttpUtil.USER_PER,json).then(res=>{
@@ -136,19 +142,22 @@ const styles = StyleSheet.create({
       },
       but_text:{
           fontSize:20,
-          color:StyleConfig.C_FFFFFF,
+          color:StyleConfig.C_000000,
       },
       but_bg:{
           height:40,
           borderRadius:10,
+          borderWidth:1,
+          borderColor:StyleConfig.C_000000,
           alignItems:'center',
           justifyContent:'center',
-          backgroundColor:StyleConfig.C_1E8AE8,
+          backgroundColor:StyleConfig.C_FFFFFF,
       },
       button:{
           height:80,
           paddingLeft:40,
           paddingRight:40,
+          paddingTop:20,
       }
 });
 export default connect(

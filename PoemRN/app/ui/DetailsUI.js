@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 作品详情页
+ * @flow
  */
 import React from 'react';
 import { Icon } from 'react-native-elements';
@@ -23,32 +24,50 @@ import {
   LoveListView,
 } from '../custom/Custom';
 import {
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  UIName,
-  Utils,
-  HttpUtil,
-  Emitter,
-  pstyles,
-  goPersonalUI,
-  HomePoemDao,
-} from '../AppUtil';
+      StyleConfig,
+      HeaderConfig,
+      StorageConfig,
+      UIName,
+      Utils,
+      HttpUtil,
+      Emitter,
+      pstyles,
+      goPersonalUI,
+      HomePoemDao,
+      } from '../AppUtil';
+import{
+      NavBack,
+      }from '../custom/Custom';
 
-class DetailsUI extends React.Component{
+type Props = {
+    navigation:any,
+    mypoem:Object,
+    papp:Object,
+};
+
+type State = {
+    id:string,
+    refreshing:boolean,
+    sourceData:Array<Object>,
+    loves:Array<Object>,
+    selected:Map<string, boolean>,
+};
+
+class DetailsUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
     title: '详情',
-    headerTintColor:StyleConfig.C_FFFFFF,
+    headerTintColor:HeaderConfig.headerTintColor,
     headerTitleStyle:HeaderConfig.headerTitleStyle,
     headerStyle:HeaderConfig.headerStyle,
-    headerLeft:(
-      <TouchableOpacity  onPress={()=>navigation.goBack()}>
-        <Text style={styles.nav_left}>返回</Text>
-      </TouchableOpacity>
-    ),
+    headerLeft:(<NavBack navigation={navigation}/>),
   });
   dataContainer = [];
   navigate = null;
+  _onLove:Function;
+  _onLoveItem:Function;
+  _onLoves:Function;
+  _onPoemLayout:Function;
+  _onPersonal:Function;
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
@@ -58,7 +77,7 @@ class DetailsUI extends React.Component{
         id:params.id,
         ftype:params.ftype,
         sourceData : [],
-        selected: (new Map(): Map<String, boolean>),
+        selected: (new Map(): Map<string, boolean>),
         refreshing: false,
         loves:[],//点赞列表
     }
@@ -106,15 +125,15 @@ class DetailsUI extends React.Component{
     return(
       <ScrollView
         ref="ScrollView"
-        style={styles.container}>
+        style={pstyles.container}>
         <View
           ref="poem"
-          style={styles.poem}
+          style={pstyles.poem}
           onLayout={this._onPoemLayout}>
           <Text style={pstyles.poem_title}>
             {this.props.mypoem.title}
           </Text>
-          <Text style={pstyles.poem_content}>
+          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)}]}>
             {this.props.mypoem.content}
           </Text>
         </View>
@@ -291,6 +310,20 @@ class DetailsUI extends React.Component{
   _renderCommentnum(commentnum){
     return commentnum > 0 ? commentnum:'';
   }
+  _renderAlign(item){
+    let align = 'center';
+    if(item.extend){
+      let extend = JSON.parse(item.extend)
+      if(extend.align)align = extend.align
+    }
+    return align;
+  }
+  _renderEmptyView = () => (
+    <View style={styles.empty}>
+     <Text style={styles.empty_font}>暂无内容
+     </Text>
+    </View>
+  );
   /**
    * 点赞数
    */
@@ -301,7 +334,7 @@ class DetailsUI extends React.Component{
    * 点赞颜色
    */
   _renderLoveColor(){
-    return this.props.mypoem.love > 0 ? StyleConfig.C_1E8AE8:StyleConfig.C_D4D4D4;
+    return this.props.mypoem.love > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
   }
   /**
    * 点赞列表
@@ -330,8 +363,8 @@ class DetailsUI extends React.Component{
       //  }
     }
   }
-  _keyExtractor = (item, index) => index;
-  _onPressItem = (id: string,item) => {
+  _keyExtractor = (item, index) => index+'';
+  _onPressItem = (id:string,item) => {
       this.setState((state) => {
           const selected = new Map(state.selected);
           selected.set(id, !selected.get(id));
@@ -360,7 +393,7 @@ class DetailsUI extends React.Component{
       );
   };
   _renderItemSeparatorComponent = ({highlighted}) => (
-      <View style={{ height:1}}></View>
+      <View style={pstyles.separator_not}></View>
   );
   // 下拉刷新
   _renderRefresh = () => {
@@ -427,9 +460,6 @@ class DetailsUI extends React.Component{
    * 点赞
    */
   _onLove(){
-    if(!this.props.papp.userid){
-      return;
-    }
     if(!Utils.isLogin(this.props.navigation)){
         return;
     }
@@ -616,16 +646,6 @@ class DetailsUI extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding:10,
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
   menu:{
     paddingLeft:60,
     flexDirection:'row',
@@ -640,8 +660,15 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_D4D4D4,
     marginLeft:4,
   },
-  poem:{
-
+  empty:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+  },
+  empty_font:{
+    marginTop:160,
+    fontSize:18,
+    color:StyleConfig.C_D4D4D4,
   },
 })
 function mapStateToProps(state) {

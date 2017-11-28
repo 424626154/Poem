@@ -1,4 +1,8 @@
 'use strict'
+/**
+ * action types
+ * @flow
+ */
 export const MSGREAD = 'msgread';//读消息
 export const AUTO_LOGIN = 'auto_login';
 export const UP_USER_INFO = 'up_user_info';//更新用户信息
@@ -8,6 +12,8 @@ export const PUSHID = 'pushid';//推送id
 export const PERMISSION = 'permission';//修改权限
 
 export const UP_HOME_POEMS = 'up_home_poems';
+export const HEAD_HOME_POEMS = 'head_home_poems';
+export const FOOTER_HOME_POEMS = 'footer_home_poems';
 export const UP_MY_POEMS = 'up_my_poems';
 export const UP_POEM_INFO = 'up_poem_info';
 export const ADDPOEM = 'addpoem';

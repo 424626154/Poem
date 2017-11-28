@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 消息页
+ * @flow
  */
 import React from 'react';
 import {
@@ -10,7 +11,6 @@ import {
       View,
       FlatList,
       TouchableOpacity,
-      DeviceEventEmitter,
       Alert,
      } from 'react-native';
 import {
@@ -26,32 +26,39 @@ import {
     } from '../../AppUtil';
 import ChatListItem from '../ChatListItem';
 
-export default class ChatPage extends React.Component{
+type Props = {
+      navigation:any,
+      papp:Object,
+      reduxMsgRead:Function,
+};
+
+type State = {
+    sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    refreshing:boolean,
+    isSwiping:boolean,
+};
+export default class ChatPage extends React.Component<Props,State>{
   dataContainer = [];
-  constructor(props){
-    super(props);
-    console.log('---ChatPage()---')
-    this.state = {
-        // 存储数据的状态
-        sourceData : [],
-        selected: (new Map(): Map<String, boolean>),
-        refreshing: false,
-    }
+  state = {
+      // 存储数据的状态
+      sourceData : [],
+      selected: (new Map(): Map<string, boolean>),
+      refreshing: false,
+      isSwiping:false,
   }
   componentDidMount(){
-    DeviceEventEmitter.addListener(Emitter.OBSERVER,obj=>{
-       this._parseObserver(obj);
-    });
+
   }
   componentWillUnmount(){
-    DeviceEventEmitter.removeAllListeners();
+
   }
   render(){
     return(
       <FlatList
             data={ this.state.sourceData }
             extraData={ this.state.selected }
-            keyExtractor={ (item, index) => index}
+            keyExtractor={ (item, index) => index+''}
             renderItem={ this._renderItem }
             onEndReachedThreshold={0.1}
             onEndReached={ this._onEndReached }
@@ -94,7 +101,7 @@ export default class ChatPage extends React.Component{
       goPersonalUI(this.props.navigation.navigate,userid);
     }
   }
-  _onDelItem = (id: int,item:Object) => {
+  _onDelItem = (id: number,item:Object) => {
     if(Platform.OS === 'android'){
       Alert.alert('删除私信',null,
             [

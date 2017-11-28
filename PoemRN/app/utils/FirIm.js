@@ -1,3 +1,8 @@
+'use strict';
+/**
+ * FirIm
+ * @flow
+ */
 import{
   Platform,
 } from 'react-native';
@@ -11,7 +16,7 @@ FirIm.API_TOKEN = '686e7a53c3eab242b665beaf4972cf5c';
  * 版本查询
  * http://api.fir.im/apps/latest/xxx?api_token=xxx
  */
-FirIm.queryVersion = function(){
+FirIm.queryVersion = function():Promise<Object> {
   return new Promise(function (resolve, reject) {
     let base_url = 'http://api.fir.im/apps/latest';
     let id = '';
@@ -30,6 +35,7 @@ FirIm.queryVersion = function(){
     let params = {
       api_token:FirIm.API_TOKEN
     }
+    console.log('---queryVersion url:',url)
     FirIm.get(url,params).then(res=>{
         resolve(res);
     }).catch(err=>{
@@ -38,7 +44,7 @@ FirIm.queryVersion = function(){
   });
 }
 
-FirIm.get = function(url,params){
+FirIm.get = function(url:string,params:any):Promise<void> {
      return new Promise(function (resolve, reject) {
          if (params) {
              let paramsArray = [];

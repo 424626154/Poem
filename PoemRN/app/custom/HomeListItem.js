@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 主页列表item
+ * @flow
  */
 import React from 'react';
 import {
@@ -11,7 +12,17 @@ import {
      } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
-class HomeListItem extends React.PureComponent {
+type Props = {
+    onPressItem:Function,
+    onLove:Function,
+    onComment:Function,
+    onPersonal:Function,
+    id:number,
+    item:Object,
+    time:string,
+    headurl:any,
+};
+class HomeListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id);
     };
@@ -32,8 +43,9 @@ class HomeListItem extends React.PureComponent {
                     this.props.onPersonal(item.userid);
                   }}>
                 <PImage
-                  style={styles.small_head}
+                  style={pstyles.small_head}
                   source={this.props.headurl}
+                  borderRadius={5}
                   />
                 <View style={styles.fitem_header_info}>
                   <Text style={styles.fitem_name}>
@@ -58,7 +70,7 @@ class HomeListItem extends React.PureComponent {
                   {item.title}
                 </Text>
                 <Text
-                  style={pstyles.poem_content}
+                  style={[pstyles.poem_content,{textAlign:this._renderAlign(item)}]}
                   numberOfLines={8}
                   ellipsizeMode='tail'
                 >
@@ -108,14 +120,22 @@ class HomeListItem extends React.PureComponent {
         );
     }
 
-    renderCommentnum(commentnum){
+    renderCommentnum(commentnum:number){
       return commentnum > 0 ? commentnum:'';
     }
-    renderLivenum(lovenum){
+    renderLivenum(lovenum:number){
       return lovenum > 0 ? lovenum:'';
     }
     _renderLoveColor(){
-      return this.props.item.mylove > 0 ? StyleConfig.C_1E8AE8:StyleConfig.C_D4D4D4;
+      return this.props.item.mylove > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
+    }
+    _renderAlign(item){
+      let align = 'center';
+      if(item.extend){
+        let extend = JSON.parse(item.extend)
+        if(extend.align)align = extend.align
+      }
+      return align;
     }
 }
 const styles = StyleSheet.create({
@@ -128,14 +148,6 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
   },
-  small_head:{
-    height:30,
-    width:30,
-    // 设置图片填充模式
-   resizeMode:'cover',
-   // 设置圆角
-   borderRadius:15,
- },
   fitem_header_info:{
     paddingLeft:4,
   },

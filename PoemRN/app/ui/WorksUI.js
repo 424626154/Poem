@@ -1,6 +1,7 @@
 'use strict';
 /**
  * 我的作品
+ * @flow
  */
  import React from 'react';
  import { Icon } from 'react-native-elements';
@@ -25,22 +26,33 @@ import{
   HttpUtil,
   Emitter,
   UIName,
+  showToast,
 } from '../AppUtil'
+
+import{
+    NavBack,
+  } from '../custom/Custom';
+
 import WorksListItem from '../custom/WorksListItem';
- /**
-  * 我的作品列表
-  */
-class WorksUI extends React.Component {
+
+type Props = {
+    papp:Object,
+    navigation:any,
+    mypoems:Array<Object>,
+};
+
+type State = {
+    // sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    refreshing:boolean,
+};
+class WorksUI extends React.Component<Props,State> {
    static navigationOptions = ({navigation}) => ({
          title: '作品',
-         headerTintColor:StyleConfig.C_FFFFFF,
+         headerTintColor:HeaderConfig.headerTintColor,
          headerTitleStyle:HeaderConfig.headerTitleStyle,
          headerStyle:HeaderConfig.headerStyle,
-         headerLeft:(
-           <TouchableOpacity  onPress={()=>navigation.goBack()}>
-             <Text style={pstyles.nav_left}>返回</Text>
-           </TouchableOpacity>
-         ),
+         headerLeft:(<NavBack navigation={navigation}/>),
       });
 
       // 数据容器，用来存储数据
@@ -48,8 +60,8 @@ class WorksUI extends React.Component {
           super(props);
           this.state = {
               // 存储数据的状态
-              sourceData : [],
-              selected: (new Map(): Map<String, boolean>),
+              // sourceData : [],
+              selected: (new Map(): Map<string, boolean>),
               refreshing: false,
           }
       }
@@ -72,9 +84,9 @@ class WorksUI extends React.Component {
          }else{
            let { dispatch } = this.props.navigation;
            dispatch(PoemsActions.raUpMyPoems([]));
-           this.setState({
-             sourceData: [],
-           });
+           // this.setState({
+           //   sourceData: [],
+           // });
          }
        }
        if(nextProps.papp.user.per,this.props.papp.user.per){
@@ -82,13 +94,16 @@ class WorksUI extends React.Component {
        }
        if(nextProps.mypoems !== this.props.mypoems){
          console.log('--- up mypoems');
-         console.log(this.state.sourceData)
-         Object.assign(this.props.mypoems,nextProps.mypoems);
-         let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
-         this.setState({
-           sourceData:mypoems,
-         })
-         console.log(mypoems)
+         // console.log(this.state.sourceData)
+         // // Object.assign(this.props.mypoems,nextProps.mypoems);
+         // // let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
+         // this.props.mypoems = [...nextProps.mypoems];
+         // let  mypoems = [...this.props.mypoems];
+         // this.setState({
+         //   sourceData:mypoems,
+         // })
+         console.log(nextProps.mypoems)
+         console.log(this.props.mypoems)
        }
        return true;
      }
@@ -97,7 +112,7 @@ class WorksUI extends React.Component {
      return (
        <View style={pstyles.container}>
        <FlatList
-                 data={ this.state.sourceData }
+                 data={ this.props.mypoems }
                  extraData={ this.state.selected }
                  keyExtractor={ this._keyExtractor }
                  renderItem={ this._renderItem }
@@ -133,7 +148,7 @@ class WorksUI extends React.Component {
      * @private
      */
     // 这里指定使用数组下标作为唯一索引
-    _keyExtractor = (item, index) => index;
+    _keyExtractor = (item, index) => index+'';
 
     /**
      * 使用箭头函数防止不必要的re-render；
@@ -176,7 +191,7 @@ class WorksUI extends React.Component {
 
     // 自定义分割线
     _renderItemSeparatorComponent = ({highlighted}) => (
-        <View style={{ height:1, backgroundColor:'#d4d4d4' }}></View>
+        <View style={pstyles.separator}></View>
     );
 
     // 空布局
@@ -202,8 +217,12 @@ class WorksUI extends React.Component {
       }
      this.setState({refreshing: true})
      var fromid = 0;
-     if(this.state.sourceData.length > 0 ){
-       fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     // if(this.state.sourceData.length > 0 ){
+     //   fromid = this.state.sourceData[this.state.sourceData.length-1].id;
+     // }
+     let mypoems = this.props.mypoems;
+     if(mypoems.length > 0 ){
+       fromid = mypoems[mypoems.length-1].id;
      }
      var json = JSON.stringify({
        id:fromid,
@@ -213,13 +232,14 @@ class WorksUI extends React.Component {
        if(res.code == 0){
            var poems = res.data;
             if(poems.length > 0){
-              let mypoems = Object.assign([], this.props.mypoems);
+              // let mypoems = Object.assign([], this.props.mypoems);
+              let mypoems = this.props.mypoems;
               mypoems = mypoems.concat(poems);
               let { dispatch } = this.props.navigation;
               dispatch(PoemsActions.raUpMyPoems(mypoems));
-              this.setState({
-                sourceData: mypoems
-              });
+              // this.setState({
+              //   sourceData: mypoems
+              // });
             }
        }else{
          Alert.alert(res.errmsg);
@@ -238,7 +258,7 @@ class WorksUI extends React.Component {
          name='add-box'
          size={44}
          type="MaterialIcons"
-         color={'#1e8ae8'}
+         color={StyleConfig.C_232323}
        />
      )
    }
@@ -268,8 +288,12 @@ class WorksUI extends React.Component {
        }
       this.setState({refreshing: true});
       var fromid = 0;
-      if(this.state.sourceData.length > 0 ){
-        fromid = this.state.sourceData[0].id;
+      // if(this.state.sourceData.length > 0 ){
+      //   fromid = this.state.sourceData[0].id;
+      // }
+      let mypoems = this.props.mypoems;
+      if(mypoems.length > 0 ){
+        fromid = mypoems[0].id;
       }
       var json = JSON.stringify({
         id:fromid,
@@ -279,16 +303,18 @@ class WorksUI extends React.Component {
         if(res.code == 0 ){
           var poems = res.data;
            if(poems.length > 0){
-             let mypoems = Object.assign([], this.props.mypoems);
+             // let mypoems = Object.assign([], this.props.mypoems);
+             // let mypoems = this.props.mypoems?[...this.props.mypoems]:[];
+             let mypoems = this.props.mypoems;
              mypoems = poems.concat(mypoems);
              let { dispatch } = this.props.navigation;
              dispatch(PoemsActions.raUpMyPoems(mypoems));
-             this.setState({
-               sourceData:mypoems,
-             });
+             // this.setState({
+             //   sourceData:mypoems,
+             // });
            }
         }else{
-          Alert.alert(res.errmsg);
+          showToast(res.errmsg);
         }
         this.setState({refreshing: false});
       }).catch(err=>{

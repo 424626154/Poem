@@ -1,13 +1,14 @@
 'use strict'
 /**
  * 本地存储DAO
+ * @flow
  */
 import realm from './RealmDB';
 import RealmName from './RealmName';
 import uuid from 'uuid';
 
 class StorageDao {
-  setItem(key,value){
+  setItem(key:string,value:any){
     let temp_value = '';
     console.log('------setItem key:'+key+' value:'+value)
     try {
@@ -47,7 +48,7 @@ class StorageDao {
        return temp_value;
     }
   }
-  getItem(key){
+  getItem(key:string){
     let value = '';
     try {
       realm.write(() => {

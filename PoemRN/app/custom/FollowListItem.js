@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 点赞组件item
+ * @flow
  */
  import React from 'react';
  import {
@@ -14,8 +15,15 @@ import {
      pstyles,
      PImage,
    } from '../AppUtil';
-
-export default class FollowListItem extends React.PureComponent {
+type Props = {
+   onPressItem:Function,
+   onFollow:Function,
+   head:any,
+   id:number,
+   follow:Object,
+   followbut:string,
+};
+export default class FollowListItem extends React.PureComponent<Props> {
     _onPress = () => {
         this.props.onPressItem(this.props.id,this.props.follow);
     };
@@ -68,11 +76,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     borderRadius:8,
     borderWidth:1,
-    borderColor:StyleConfig.C_1E8AE8,
+    borderColor:StyleConfig.C_000000,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,
-    color:StyleConfig.C_1E8AE8,
+    color:StyleConfig.C_000000,
     marginLeft:-2,
   },
 });

@@ -6,7 +6,6 @@
  */
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { combineReducers } from "redux";
 import {AppNavigator} from '../../AppNavigator';
 import rootReducer from '../reducers/Reducers';
 import {NavigationActions} from 'react-navigation';
@@ -14,11 +13,7 @@ const navReducer = (state,action) => {
     const newState = AppNavigator.router.getStateForAction(action, state);
     return newState || state;
 }
-// const rootReducer = (navReducer)=> {
-//     return combineReducers({
-//         nav: navReducer,
-//     });
-// }
+
 const logger = store => next => action => {
 	// console.log('@@@@@@@@@ logger:'+JSON.stringify(action))
 	console.log('@@@@@@@@@ logger:')

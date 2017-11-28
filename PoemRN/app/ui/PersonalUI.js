@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 个人信息
+ * @flow
  */
 import React from 'react';
 import {
@@ -16,32 +17,48 @@ import {connect} from 'react-redux';
 import { Icon } from 'react-native-elements';
 import PersonalListItem from '../custom/PersonalListItem';
 import {
-  StyleConfig,
-  HeaderConfig,
-  StorageConfig,
-  HttpUtil,
-  Utils,
-  pstyles,
-  PImage,
-  UIName,
-} from '../AppUtil';
+        StyleConfig,
+        HeaderConfig,
+        StorageConfig,
+        HttpUtil,
+        Utils,
+        pstyles,
+        PImage,
+        UIName,
+      } from '../AppUtil';
+
+import{
+      NavBack,
+      }from '../custom/Custom';
 
 const nothead = require('../images/nothead.png');
+type Props = {
+    navigation:any,
+    papp:Object,
+};
 
+type State = {
+    userid:string,
+    myfollow_title:string,
+    followme_title:string,
+    refreshing:boolean,
+    sourceData:Array<Object>,
+    selected:Map<string, boolean>,
+    user:Object,
+    headurl:any,
+    pseudonym:string,
+    follow:string,
+    head:string,
+};
 
-class PersonalUI extends React.Component{
+class PersonalUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title: '个人信息',
-        headerTintColor:StyleConfig.C_FFFFFF,
+        headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(
-          <TouchableOpacity  onPress={()=>navigation.goBack()}>
-            <Text style={pstyles.nav_left}>返回</Text>
-          </TouchableOpacity>
-        ),
+        headerLeft:(<NavBack navigation={navigation}/>),
      });
-  navigate = this.props.navigation.navigate;
   dataContainer = [];
   constructor(props){
     super(props)
@@ -57,7 +74,7 @@ class PersonalUI extends React.Component{
       myfollow_title:'我关注的',
       followme_title:'关注我的',
       sourceData : [],
-      selected: (new Map(): Map<String, boolean>),
+      selected: (new Map(): Map<string, boolean>),
       refreshing: false,
     }
   }
@@ -77,7 +94,7 @@ class PersonalUI extends React.Component{
   }
   render(){
     return(
-      <View style={styles.container}>
+      <View style={pstyles.container}>
         <View style={styles.header}>
           <View style={styles.personal}>
             <TouchableOpacity
@@ -88,6 +105,7 @@ class PersonalUI extends React.Component{
               <PImage
                 style={pstyles.big_head}
                 source={this.state.headurl}
+                borderRadius={0}
                 />
               </TouchableOpacity>
               <View style={styles.head_bg}>
@@ -100,9 +118,10 @@ class PersonalUI extends React.Component{
             </View>
           {this._renderFollow()}
           {this._renderFollowOP()}
+          <View style={pstyles.line}/>
         </View>
         <FlatList
-                  style={{backgroundColor:'#e7e7e7'}}
+                  style={pstyles.flatlist}
                   data={ this.state.sourceData }
                   extraData={ this.state.selected }
                   keyExtractor={ this._keyExtractor }
@@ -117,7 +136,7 @@ class PersonalUI extends React.Component{
       </View>
     )
   }
-  _keyExtractor = (item, index) => index;
+  _keyExtractor = (item, index) => index+'';
   _onPressItem = (id: string) => {
       this.setState((state) => {
           const selected = new Map(state.selected);
@@ -140,7 +159,7 @@ class PersonalUI extends React.Component{
   };
   // 自定义分割线
   _renderItemSeparatorComponent = ({highlighted}) => (
-      <View style={{ height:6, backgroundColor:'transparent' }}></View>
+      <View style={pstyles.separator_transparent}></View>
   );
 
   // 空布局
@@ -235,6 +254,7 @@ class PersonalUI extends React.Component{
                 {'私信'}
               </Text>
           </TouchableOpacity>
+          <View style={{width:4,}}></View>
       </View>
     )
   }
@@ -346,38 +366,19 @@ class PersonalUI extends React.Component{
    * 我的关注
    */
   _onMeFollow(){
-    this.navigate('FollowUI',{userid:this.state.userid,title:this.state.myfollow_title,type:0});
+    this.props.navigation.navigate('FollowUI',{userid:this.state.userid,title:this.state.myfollow_title,type:0});
   }
   /**
    * 关注我的
    */
   _onFollowMe(){
-    this.navigate('FollowUI',{userid:this.state.userid,title:this.state.followme_title,type:1});
+    this.props.navigation.navigate('FollowUI',{userid:this.state.userid,title:this.state.followme_title,type:1});
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  nav_left:{
-    fontSize:18,
-    color:'#ffffff',
-    marginLeft:10,
-  },
-  nav_right:{
-    fontSize:18,
-    color:'#ffffff',
-    marginRight:10,
-  },
   header:{
-    backgroundColor: '#1e8ae8',
-  },
-  header_title:{
-    fontSize:20,
-    color:'#ffffff',
-    textAlign:'center',
+    backgroundColor: StyleConfig.C_FFFFFF,
   },
   personal:{
     flexDirection:'row',
@@ -393,7 +394,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color:StyleConfig.C_FFFFFF,
+    color:StyleConfig.C_000000,
   },
   //关注按钮
   follow:{
@@ -410,10 +411,12 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     borderRadius:8,
+    borderWidth:1,
+    borderColor:StyleConfig.C_000000,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,
-    color:StyleConfig.C_1E8AE8,
+    color:StyleConfig.C_000000,
     fontWeight:'bold',
   },
   //关注
@@ -426,13 +429,16 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_D4D4D4,
+    color:StyleConfig.C_000000,
   },
   follow_item_font:{
     marginTop:6,
     fontSize:StyleConfig.F_12,
-    color:StyleConfig.C_D4D4D4,
+    color:StyleConfig.C_000000,
   },
+  personal_more:{
+
+  }
 })
 export default connect(
     state => ({

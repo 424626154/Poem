@@ -1,10 +1,14 @@
 'use strict';
+/**
+ * Poem Actions
+ * @flow
+ */
 import * as TYPES from './ActionTypes';
 /**
  * 更新列表
  */
-export function raUpHomePoems(homepoems){
-  return (dispatch) => {
+export function raUpHomePoems(homepoems:Array<Object>){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.UP_HOME_POEMS,
         homepoems:homepoems,
@@ -12,8 +16,26 @@ export function raUpHomePoems(homepoems){
       dispatch(action);
   }
 }
-export function raUpMyPoems(mypoems){
-  return (dispatch) => {
+export function raHeadHomePoems(temps:Array<Object>){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.HEAD_HOME_POEMS,
+        temps:temps,
+      }
+      dispatch(action);
+  }
+}
+export function raFooterHomePoems(temps:Array<Object>){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.FOOTER_HOME_POEMS,
+        temps:temps,
+      }
+      dispatch(action);
+  }
+}
+export function raUpMyPoems(mypoems:Array<Object>){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.UP_MY_POEMS,
         mypoems:mypoems,
@@ -21,8 +43,8 @@ export function raUpMyPoems(mypoems){
       dispatch(action);
   }
 }
-export function raAddPoem(poem){
-  return (dispatch) => {
+export function raAddPoem(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.ADDPOEM,
         poem:poem,
@@ -30,9 +52,11 @@ export function raAddPoem(poem){
       dispatch(action);
   }
 }
-
-export function raUpPoemInfo(poem){
-  return (dispatch) => {
+/**
+*修改作品信息
+*/
+export function raUpPoemInfo(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.UP_POEM_INFO,
         poem:poem,
@@ -40,8 +64,8 @@ export function raUpPoemInfo(poem){
       dispatch(action);
   }
 }
-export function raSetPoem(poem){
-  return (dispatch) => {
+export function raSetPoem(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.SETPOEM,
         poem:poem,
@@ -49,8 +73,8 @@ export function raSetPoem(poem){
       dispatch(action);
   }
 }
-export function raLoveMe(poem){
-  return (dispatch) => {
+export function raLoveMe(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.LOVEME,
         poem:poem,
@@ -59,8 +83,8 @@ export function raLoveMe(poem){
   }
 }
 
-export function raUpPoemLC(poem){
-  return (dispatch) => {
+export function raUpPoemLC(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.UP_POEM_LC,
         poem:poem,
@@ -69,8 +93,8 @@ export function raUpPoemLC(poem){
   }
 }
 
-export function raDelPoem(poem){
-  return (dispatch) => {
+export function raDelPoem(poem:Object){
+  return (dispatch:any) => {
       let action = {
         type:TYPES.DELPOEM,
         poem:poem,

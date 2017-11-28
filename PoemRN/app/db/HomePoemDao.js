@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 主页作品DAO
+ * @flow
  */
 import realm from './RealmDB';
 import RealmName from './RealmName';
@@ -12,7 +13,7 @@ class HomePoemDao{
   isAccount(){
     return Global.userid||'';
   }
-  addHomePoems(homepoems){
+  addHomePoems(homepoems:Array<Object>){
     let temp_chats = [];
     try {
       realm.write(() => {
@@ -27,6 +28,7 @@ class HomePoemDao{
                 pseudonym:temp_homepoem.pseudonym,
                 title: temp_homepoem.title,
                 content: temp_homepoem.content,
+                extend: temp_homepoem.extend||'',
                 lovenum:temp_homepoem.lovenum,
                 commentnum:temp_homepoem.commentnum,
                 mylove:temp_homepoem.mylove,
@@ -43,7 +45,7 @@ class HomePoemDao{
       return temp_chats;
     }
   }
-  updateHomePoemLove(poem){
+  updateHomePoemLove(poem:Object){
     console.log(poem);
     try {
       realm.write(()=> {
@@ -85,7 +87,7 @@ class HomePoemDao{
     }
     return homepoems;
   }
-  deleteMessage(rid){
+  deleteMessage(rid:string){
       try {
         realm.write(() => {
             // let msgToBeDeleted = realm.objectForPrimaryKey(RealmName.HomePoem, id);
@@ -129,7 +131,7 @@ class HomePoemDao{
      }
    }
 
-   realmsToObjs(realms){
+   realmsToObjs(realms:Array<Object>){
      let objs = [];
      realms.map(function(realms) {
          if (typeof realms.snapshot == 'function') {

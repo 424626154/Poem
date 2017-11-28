@@ -1,3 +1,7 @@
+'use strict'
+/**
+ * 消息tabbar
+ */
 const React = require('react');
 const { ViewPropTypes } = ReactNative = require('react-native');
 const PropTypes = require('prop-types');
@@ -61,10 +65,11 @@ const MessageTabBar = createReactClass({
     const numberOfTabs = this.props.tabs.length;
     const tabUnderlineStyle = {
       position: 'absolute',
-      width: containerWidth / numberOfTabs,
+      width: 80,//containerWidth / numberOfTabs,
       height: 4,
-      backgroundColor: '#1e89e8',
+      backgroundColor: '#000000',
       bottom: 0,
+      left:(containerWidth / numberOfTabs-80)/2,
     };
 
     const translateX = this.props.scrollValue.interpolate({

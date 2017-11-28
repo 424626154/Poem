@@ -1,3 +1,6 @@
+/**
+ * 消息tab ios 按钮
+ */
 const React = require('react');
 const ReactNative = require('react-native');
 const {

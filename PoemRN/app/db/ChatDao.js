@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 私信dao
+ * @flow
  */
  import realm from './RealmDB';
  import RealmName from './RealmName';
@@ -19,7 +20,7 @@
      * @param {Object} chat  私信对象
     * @param {int} style 布局样式 0 左 1右
     */
-   addChat(temp_chat,style,send){
+   addChat(temp_chat:Object,style:number,send:number){
      let chat = {
            rid:uuid.v1(),
            account:this.isAccount(),
@@ -48,7 +49,7 @@
      * @param {Object} chats  私信对象 数组
     * @param {int} style 布局样式 0 左 1右
     */
-   addChats(chats,style){
+   addChats(chats:Array<Object>,style:number){
      let temp_chats = [];
      try {
        realm.write(() => {
@@ -83,7 +84,7 @@
     * @param  {string} chatuid 对方账号 userid
     * @return {Objects} chats
     */
-   queryChats(chatuid){
+   queryChats(chatuid:string){
      let chats = [];
      try{
        let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
@@ -110,7 +111,7 @@
    /**
     * 查询未读
     */
-    queryUnreadChats(chatuid){
+    queryUnreadChats(chatuid:string){
       let chats = [];
       try{
         let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'" AND read = 0';
@@ -134,7 +135,7 @@
    /**
     * 更新发送状态
     */
-   updateChatSend(rid,id,extend,send){
+   updateChatSend(rid:string,id:string,extend:string,send:number){
      try {
        realm.write(()=> {
            realm.create(RealmName.Chat, {
@@ -150,7 +151,7 @@
 
      }
    }
-   setChatRead(rids,read){
+   setChatRead(rids:Array<number>,read:number){
      try {
        realm.write(()=> {
          for(var i = 0 ;i < rids.length;i ++){
@@ -167,7 +168,7 @@
 
      }
    }
-   getUnreadNum(chauid){
+   getUnreadNum(chatuid:string){
      let num  = 0;
       try {
         realm.write(()=>{
@@ -196,7 +197,7 @@
    /**
     * 删除私信
     */
-   deletaFUidChat(chatuid){
+   deletaFUidChat(chatuid:string){
      try {
        realm.write(() => {
            let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
@@ -209,7 +210,7 @@
 
      }
    }
-   deleteChat(rid){
+   deleteChat(rid:string){
      try {
        realm.write(() => {
            console.log('------ ChatDao() deleteChat')
@@ -278,7 +279,7 @@
    /**
     * 添加私信列表组
     */
-   addChatLists(chats){
+   addChatLists(chats:Array<Object>){
      console.log('---addChatLists---')
      console.log(chats)
      let temp_chats = [];
@@ -332,7 +333,7 @@
    /**
     * 用户添加列表
     */
-   addChatList(temp_chat){
+   addChatList(temp_chat:Object){
      try {
        realm.write(() => {
            let chatuid = temp_chat.tuserid;
@@ -404,7 +405,7 @@
    /**
     * 删除私信列表
     */
-   deletaFUidChatList(chatuid){
+   deletaFUidChatList(chatuid:string){
      try {
        realm.write(() => {
            let filtered = 'account = "'+this.isAccount()+'" AND chatuid = "'+chatuid+'"';
@@ -417,7 +418,7 @@
 
      }
    }
-   realmsToObjs(realms){
+   realmsToObjs(realms:Array<Object>){
      let objs = [];
      realms.map(function(realms) {
          if (typeof realms.snapshot == 'function') {
@@ -428,7 +429,7 @@
      });
      return objs;
    }
-   updateChatListNum(chatuid){
+   updateChatListNum(chatuid:string){
      console.log('---updateChatListNum---')
      let lastnum = 0;
      try {
