@@ -13,8 +13,6 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* PoemRNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PoemRNTests.m */; };
-		077DA0160A43471A870B15C7 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71F098C8C3C8499C871AFC83 /* libSplashScreen.a */; };
-		090364E7A47C45148857B76C /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FAB6D8715E4D00AEAC58C4 /* libRealmReact.a */; };
 		0EDE4BFCDA554A53B28C33C1 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FC5A984F4C49888FCA3722 /* UserNotifications.framework */; };
 		0EF323E059524F67A4B4C99F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8C99BBBB04F4AA4BC3EC6 /* libc++.tbd */; };
 		1001B0E699444671B9E928D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8214BAA9CDC4F98BAC66E8A /* SystemConfiguration.framework */; };
@@ -41,7 +39,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* PoemRNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PoemRNTests.m */; };
 		3013F2689D0244868A20B575 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 798C947468674C2AB002BFC4 /* libresolv.tbd */; };
 		307C22157AAF4E728112115D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BB874239934B6ABAA7FB6E /* CoreFoundation.framework */; };
-		32F1C270C42A45CFA7F8C61B /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0E618F38E24A4B8F3304EF /* libRCTJCoreModule.a */; };
 		3D40C0AAFF0B4B68AE5F9817 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 275C207C5AE04224BF5172D4 /* Octicons.ttf */; };
 		4CEC93D47D9147A0ACC5B4A5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19211768DB294F90A7A8DBE8 /* CFNetwork.framework */; };
 		55696D66F1FF41949FE4D9E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D4FB96C7A14C64ACACEB21 /* CoreTelephony.framework */; };
@@ -55,21 +52,24 @@
 		69424B781FCC113900720323 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 69424B761FCC113900720323 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		69424C2F1FCD14AC00720323 /* HYZhongSongJ.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69424C2E1FCD0B1900720323 /* HYZhongSongJ.ttf */; };
 		69DD27291FCC008900259067 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DD27281FCC008900259067 /* Default-568.png */; };
-		6B93038BBBC647BDA0782157 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1746253DD84716B97CEEC5 /* libRNFetchBlob.a */; };
+		69FDBFE41FCEF5750024AC9F /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B41D21FCA712700CB14ED /* libSplashScreen.a */; };
+		69FDBFE51FCEF5CB0024AC9F /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B42111FCA9DDE00CB14ED /* libRCTJCoreModule.a */; };
+		69FDBFE61FCEF5E30024AC9F /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B42271FCA9DDE00CB14ED /* libRCTJPushModule.a */; };
+		69FDBFE71FCEF5FC0024AC9F /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B42221FCA9DDE00CB14ED /* libimageCropPicker.a */; };
+		69FDBFE81FCEF60A0024AC9F /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B42181FCA9DDE00CB14ED /* libRNDeviceInfo.a */; };
+		69FDBFE91FCEF6160024AC9F /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B422C1FCA9DDE00CB14ED /* libRNVectorIcons.a */; };
+		69FDBFEA1FCEF6270024AC9F /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B42141FCA9DDE00CB14ED /* libRealmReact.a */; };
+		69FDBFEB1FCEF6320024AC9F /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691B421D1FCA9DDE00CB14ED /* libRNFetchBlob.a */; };
 		6F6B0555F0FB45EDA99DE0E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633708513CBF4F56B1CDC240 /* Foundation.framework */; };
-		73B35C2A8639440482ADDDE7 /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A1BDB873D247B8A8DE5C49 /* libRCTJPushModule.a */; };
 		753A47A79FA04AE1A5C812BD /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F700FD6C99EB4063AEECB688 /* Foundation.ttf */; };
 		780B183AC5134F39900B4F69 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 180C2877239F4605A0E159C4 /* Feather.ttf */; };
-		78C37EF353864CB0840BDB1E /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2178E36B3541B38F795F1F /* libRNVectorIcons.a */; };
 		79D523B587864CCC97925958 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2536EBC9350F45B3AA76FE13 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8377E9B7F87E43DB82057296 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8C5E9A497CA4924AA54E098 /* MaterialCommunityIcons.ttf */; };
 		909D9C722EF34AC1BE5BA0FF /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C05BD001B21647169C63D09A /* Entypo.ttf */; };
-		9BCEF3814E584FFCB16C76C7 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4757A01C010F4F5196EBE700 /* libRNDeviceInfo.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B296EA7B46F54CB9A434B5A2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A304B48FD0134D06B476A90F /* FontAwesome.ttf */; };
 		BBA3E79C415445D48C0B7220 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34371B1CC9914F269989D87A /* UIKit.framework */; };
-		E4514D1314C045F68F1EF1A3 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 126117E67CD345D284E5E405 /* libimageCropPicker.a */; };
 		E4B5E637C96F48099F047721 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BC1C6FE5EA43F089239350 /* CoreGraphics.framework */; };
 		EBE277ACA04C454997731273 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DA2C3DA0ABD44C29BBE0703 /* libz.tbd */; };
 		F1A197BDAD4F41F0BBBCAAF1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C0F23CBEA8F4EA2B8AB7CD2 /* SimpleLineIcons.ttf */; };
@@ -502,6 +502,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69FDBFE41FCEF5750024AC9F /* libSplashScreen.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -515,9 +516,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				077DA0160A43471A870B15C7 /* libSplashScreen.a in Frameworks */,
-				32F1C270C42A45CFA7F8C61B /* libRCTJCoreModule.a in Frameworks */,
-				73B35C2A8639440482ADDDE7 /* libRCTJPushModule.a in Frameworks */,
+				69FDBFE51FCEF5CB0024AC9F /* libRCTJCoreModule.a in Frameworks */,
+				69FDBFE61FCEF5E30024AC9F /* libRCTJPushModule.a in Frameworks */,
 				EBE277ACA04C454997731273 /* libz.tbd in Frameworks */,
 				0EDE4BFCDA554A53B28C33C1 /* UserNotifications.framework in Frameworks */,
 				55696D66F1FF41949FE4D9E5 /* CoreTelephony.framework in Frameworks */,
@@ -531,12 +531,12 @@
 				69424B741FCC113400720323 /* RSKImageCropper.framework in Frameworks */,
 				3013F2689D0244868A20B575 /* libresolv.tbd in Frameworks */,
 				E4B5E637C96F48099F047721 /* CoreGraphics.framework in Frameworks */,
-				E4514D1314C045F68F1EF1A3 /* libimageCropPicker.a in Frameworks */,
-				9BCEF3814E584FFCB16C76C7 /* libRNDeviceInfo.a in Frameworks */,
-				78C37EF353864CB0840BDB1E /* libRNVectorIcons.a in Frameworks */,
-				090364E7A47C45148857B76C /* libRealmReact.a in Frameworks */,
+				69FDBFE71FCEF5FC0024AC9F /* libimageCropPicker.a in Frameworks */,
+				69FDBFE81FCEF60A0024AC9F /* libRNDeviceInfo.a in Frameworks */,
+				69FDBFE91FCEF6160024AC9F /* libRNVectorIcons.a in Frameworks */,
+				69FDBFEA1FCEF6270024AC9F /* libRealmReact.a in Frameworks */,
 				0EF323E059524F67A4B4C99F /* libc++.tbd in Frameworks */,
-				6B93038BBBC647BDA0782157 /* libRNFetchBlob.a in Frameworks */,
+				69FDBFEB1FCEF6320024AC9F /* libRNFetchBlob.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +994,9 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = ZERU4NU5ED;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
