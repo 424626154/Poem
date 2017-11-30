@@ -22,10 +22,12 @@ import { Icon } from 'react-native-elements';
 type Props = {
     onPressItem:Function,
     onPersonal:Function,
+    onDelComment:Function,//删除
     id:number,
     comment:Object,
     time:string,
     headurl:any,
+    userid:string,
 };
 
 type State = {
@@ -60,19 +62,42 @@ class CommentListItem extends React.PureComponent<Props> {
                       {this._loadComment(comment)}
                       <View style={styles.line}></View>
                     </View>
-                    <TouchableOpacity
-                      style={styles.comment_but}
-                      onPress={this._onPress}>
-                      <Icon
-                        name='sms'
-                        size={18}
-                        type="MaterialIcons"
-                        color={StyleConfig.C_D4D4D4}
-                        />
-                    </TouchableOpacity>
+                    <View style={styles.more}>
+                      <TouchableOpacity
+                        style={styles.more_item}
+                        onPress={this._onPress}>
+                        <Icon
+                          name='sms'
+                          size={18}
+                          type="MaterialIcons"
+                          color={StyleConfig.C_D4D4D4}
+                          />
+                      </TouchableOpacity>
+                      {this._renderDel(comment,this.props.userid)}
+                    </View>
                 </View>
             </TouchableOpacity>
         );
+    }
+    _renderDel(comment,userid){
+      if(comment.userid === userid){
+        return(
+          <TouchableOpacity
+            style={styles.more_item}
+            onPress={()=>{
+              this.props.onDelComment(comment);
+            }}>
+            <Icon
+              name='delete'
+              size={18}
+              type="MaterialIcons"
+              color={StyleConfig.C_D4D4D4}
+              />
+          </TouchableOpacity>
+        )
+      }else{
+        return null;
+      }
     }
     _loadComment(comment){
       var comment_html = '';
@@ -140,9 +165,13 @@ const styles = StyleSheet.create({
     fontSize:12,
     color:StyleConfig.C_D4D4D4,
   },
-  comment_but:{
+  more:{
+    flexDirection:'row',
     position: 'absolute',
-    right:0,
+    right:4,
+  },
+  more_item:{
+    padding:4,
   },
   line:{
     flex:1,

@@ -10,11 +10,13 @@ import {
       View,
       TouchableOpacity,
      } from 'react-native';
-import {UIName,pstyles,PImage} from '../AppUtil';
+import {UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
+const boundary = 80;
 type Props = {
     onPressItem:Function,
     id:string,
     item:Object,
+    extend:Object,
     time:string,
 };
 export default class WorksListItem extends React.PureComponent<Props> {
@@ -22,7 +24,8 @@ export default class WorksListItem extends React.PureComponent<Props> {
         this.props.onPressItem(this.props.id,this.props.item);
     };
     render() {
-      const item = this.props.item;
+        let item = this.props.item;
+        let extend = this.props.extend;
         return(
             <TouchableOpacity
                 {...this.props}
@@ -30,18 +33,7 @@ export default class WorksListItem extends React.PureComponent<Props> {
                 >
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
-                  <View style={pstyles.poem}>
-                    <Text style={pstyles.poem_title}>
-                      {item.title}
-                    </Text>
-                    <Text
-                      numberOfLines={8}
-                      ellipsizeMode='tail'
-                      style={[pstyles.poem_content,{textAlign:this._renderAlign(item)}]}
-                    >
-                      {item.content}
-                    </Text>
-                  </View>
+                  {this._renderPoem(item,extend)}
                   <View style={styles.fitem_more}>
                     <Text style={styles.fitem_time}>
                       {this.props.time}
@@ -58,6 +50,67 @@ export default class WorksListItem extends React.PureComponent<Props> {
         if(extend.align)align = extend.align
       }
       return align;
+    }
+    _renderPoem(item,extend){
+      if(this._isPhoto(extend)){
+        return(
+          <View style={pstyles.poem}>
+            <View style={pstyles.photo}>
+              <PImage
+                style={this._getStyle(extend)}
+                source={Utils.getPhoto(extend.photo)}
+                noborder={true}
+                />
+            </View>
+              <Text style={pstyles.poem_title}>
+                {item.title}
+              </Text>
+              <Text
+                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                numberOfLines={1}
+                ellipsizeMode='tail'
+              >
+                {item.content}
+              </Text>
+          </View>
+        )
+      }else{
+        return(
+          <View style={pstyles.poem}>
+            <Text style={pstyles.poem_title}>
+              {item.title}
+            </Text>
+            <Text
+              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              numberOfLines={8}
+              ellipsizeMode='tail'
+            >
+              {item.content}
+            </Text>
+          </View>
+        )
+      }
+    }
+    _isPhoto(extend){
+      let isphoto = false;
+      if(extend&&extend.photo&&extend.pw&&extend.ph){
+        isphoto = true;
+      }
+      return isphoto;
+    }
+    _getStyle(extend){
+        let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
+        if(extend.pw > extend.ph){
+          let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+          style = Object.assign({},style,style1)
+        }
+        if(extend.pw < extend.ph){
+          let style2 = {resizeMode:'cover'}
+          style = Object.assign({},style,style2)
+          console.log('-------_getStyle')
+          console.log(style)
+        }
+        return style;
     }
 }
 

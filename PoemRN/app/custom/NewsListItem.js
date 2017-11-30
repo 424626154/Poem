@@ -1,6 +1,7 @@
 'use strict'
 /**
  * 消息列表
+ * @flow
  */
 import React from 'react';
 import {
@@ -8,6 +9,9 @@ import {
    Text,
    View,
    TouchableOpacity,
+   TouchableNativeFeedback,
+   Platform,
+   Vibration,
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import HTMLView from 'react-native-htmlview';
@@ -19,11 +23,16 @@ import {
       HttpUtil,
       PImage,
     } from '../AppUtil';
-export default class NewsListItem extends React.Component{
-  swipeable = null;
-  constructor(props){
-    super(props);
-  }
+type Props = {
+      onPressItem:Function,
+      onIconItem:Function,
+      onDelItem:Function,
+      id:number,
+      message:Object,
+};
+
+export default class NewsListItem extends React.Component<Props>{
+  swipeable:any;
   componentDidMount(){
 
   }
@@ -31,12 +40,14 @@ export default class NewsListItem extends React.Component{
 
   }
   _onPress = () => {
-    console.log(this.props.onPressItem)
       this.props.onPressItem(this.props.id,this.props.message);
   };
   _onDel = () => {
-    this.swipeable.recenter();
-    console.log(this.props.onPressItem)
+    if (Platform.OS === 'android') {
+        Vibration.vibrate([0,10],false);
+    }else{
+        this.swipeable.recenter();
+    }
     this.props.onDelItem(this.props.id,this.props.message);
   };
   _onIcon = ()=>{
@@ -44,33 +55,61 @@ export default class NewsListItem extends React.Component{
   }
   render(){
     const message = this.props.message
-    return (
-      <Swipeable
-        onRef={ref => this.swipeable = ref}
-        rightButtons={this._renserRightButtons()}>
-      <TouchableOpacity
-        {...this.props}
-        onPress={this._onPress}
-        >
-        <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
+    if (Platform.OS === 'android') {
+      return (
+          <TouchableNativeFeedback
+            {...this.props}
+            delayLongPress={1000}
+            onLongPress={this._onDel}
+            onPress={this._onPress}
+            >
+            <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
+              <TouchableNativeFeedback
+                style={styles.msg_icon}
+                onPress={this._onIcon}>
+                <PImage
+                  style={pstyles.small_head}
+                  source={this._logicSource(message)}
+                  />
+              </TouchableNativeFeedback>
+              <View style={styles.msg_text}>
+                {this._renderMsg(message)}
+              </View>
+              <View style={styles.msg_more}>
+                <Text style={styles.msg_time}>{Utils.dateStr(message.time)}</Text>
+              </View>
+            </View>
+          </TouchableNativeFeedback>
+        );
+    }else{
+      return (
+          <Swipeable
+            onRef={ref => this.swipeable = ref}
+            rightButtons={this._renserRightButtons()}>
           <TouchableOpacity
-            style={styles.msg_icon}
-            onPress={this._onIcon}>
-            <PImage
-              style={pstyles.small_head}
-              source={this._logicSource(message)}
-              />
+            {...this.props}
+            onPress={this._onPress}
+            >
+            <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
+              <TouchableOpacity
+                style={styles.msg_icon}
+                onPress={this._onIcon}>
+                <PImage
+                  style={pstyles.small_head}
+                  source={this._logicSource(message)}
+                  />
+              </TouchableOpacity>
+              <View style={styles.msg_text}>
+                {this._renderMsg(message)}
+              </View>
+              <View style={styles.msg_more}>
+                <Text style={styles.msg_time}>{Utils.dateStr(message.time)}</Text>
+              </View>
+            </View>
           </TouchableOpacity>
-          <View style={styles.msg_text}>
-            {this._renderMsg(message)}
-          </View>
-          <View style={styles.msg_more}>
-            <Text style={styles.msg_time}>{Utils.dateStr(message.time)}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </Swipeable>
-      );
+        </Swipeable>
+        );
+    }
   }
   _renderMsg(message){
     var extend = JSON.parse(message.extend);

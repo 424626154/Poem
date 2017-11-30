@@ -11,13 +11,15 @@ import {
       TouchableOpacity,
      } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
+import {StyleConfig,UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
+const boundary = 80;
 type Props = {
     onPressItem:Function,
     onLove:Function,
     onComment:Function,
     onPersonal:Function,
     id:number,
+    extend:Object,
     item:Object,
     time:string,
     headurl:any,
@@ -27,7 +29,8 @@ class HomeListItem extends React.PureComponent<Props> {
         this.props.onPressItem(this.props.id);
     };
     render() {
-      let item = this.props.item;
+        let item = this.props.item;
+        let extend = this.props.extend;
         return(
             <TouchableOpacity
                 key={item.rid}
@@ -65,18 +68,7 @@ class HomeListItem extends React.PureComponent<Props> {
                 </TouchableOpacity>
               </View>
               {/* 诗歌 */}
-              <View style={pstyles.poem}>
-                <Text style={pstyles.poem_title}>
-                  {item.title}
-                </Text>
-                <Text
-                  style={[pstyles.poem_content,{textAlign:this._renderAlign(item)}]}
-                  numberOfLines={8}
-                  ellipsizeMode='tail'
-                >
-                  {item.content}
-                </Text>
-              </View>
+              {this._renderPoem(item,extend)}
               {/* menu */}
               <View style={styles.menu}>
                   <TouchableOpacity
@@ -129,13 +121,73 @@ class HomeListItem extends React.PureComponent<Props> {
     _renderLoveColor(){
       return this.props.item.mylove > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
     }
-    _renderAlign(item){
+    _renderAlign(extend){
       let align = 'center';
-      if(item.extend){
-        let extend = JSON.parse(item.extend)
+      if(extend){
         if(extend.align)align = extend.align
       }
       return align;
+    }
+    _renderPoem(item,extend){
+      if(this._isPhoto(extend)){
+        return(
+          <View style={pstyles.poem}>
+            <View style={pstyles.photo}>
+            <PImage
+              style={this._getStyle(extend)}
+              source={Utils.getPhoto(extend.photo)}
+              noborder={true}
+              />
+            </View>
+              <Text style={pstyles.poem_title}>
+                {item.title}
+              </Text>
+              <Text
+                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                numberOfLines={1}
+                ellipsizeMode='tail'
+              >
+                {item.content}
+              </Text>
+          </View>
+        )
+      }else{
+        return(
+          <View style={pstyles.poem}>
+            <Text style={pstyles.poem_title}>
+              {item.title}
+            </Text>
+            <Text
+              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              numberOfLines={8}
+              ellipsizeMode='tail'
+            >
+              {item.content}
+            </Text>
+          </View>
+        )
+      }
+    }
+    _isPhoto(extend){
+      let isphoto = false;
+      if(extend&&extend.photo&&extend.pw&&extend.ph){
+        isphoto = true;
+      }
+      return isphoto;
+    }
+    _getStyle(extend){
+        let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
+        if(extend.pw > extend.ph){
+          let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+          style = Object.assign({},style,style1)
+        }
+        if(extend.pw < extend.ph){
+          let style2 = {resizeMode:'cover'}
+          style = Object.assign({},style,style2)
+          console.log('-------_getStyle')
+          console.log(style)
+        }
+        return style;
     }
 }
 const styles = StyleSheet.create({

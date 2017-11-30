@@ -11,7 +11,6 @@ import {
 }from 'react-native';
 import { Icon } from 'react-native-elements';
 import {
-  Emitter,
   MessageDao,
   ChatDao,
 } from '../AppUtil'

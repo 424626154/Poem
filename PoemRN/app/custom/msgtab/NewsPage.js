@@ -22,7 +22,6 @@ import {
        pstyles,
        MessageDao,
        ChatDao,
-       Emitter,
        goPersonalUI,
      } from '../../AppUtil';
 

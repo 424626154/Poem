@@ -21,7 +21,6 @@ import {
       pstyles,
       MessageDao,
       ChatDao,
-      Emitter,
       goPersonalUI,
     } from '../../AppUtil';
 import ChatListItem from '../ChatListItem';
@@ -170,38 +169,6 @@ export default class ChatPage extends React.Component<Props,State>{
     this.setState({
       sourceData:db_chatlist,
     })
-  }
-  /**
-   * 解析观察者
-   */
-  _parseObserver(obj){
-    var action = obj.action;
-    var param = obj.param;
-    console.log('---emitter action:'+action);
-    console.log('---emitter param:');
-    console.log(param);
-    switch (action) {
-      case Emitter.READCHAT:
-        let chatuid = param.chatuid;
-        let num = param.num;
-        let ischange = false;
-        this.dataContainer = this.state.sourceData;
-        for(var i = 0 ; i < this.dataContainer.length;i++){
-          if(this.dataContainer[i].chatuid == chatuid){
-            this.dataContainer[i].num = num;
-            ischange = true;
-          }
-        }
-        console.log(this.dataContainer);
-        if(ischange){
-          this.setState({
-            sourceData:this.dataContainer,
-          })
-        }
-        break;
-      default:
-        break;
-    }
   }
   /**
    * 请求私信列表
