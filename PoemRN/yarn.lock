@@ -1025,8 +1025,8 @@ chalk@^2.0.0, chalk@^2.0.1:
     supports-color "^4.0.0"
 
 chardet@^0.4.0:
-  version "0.4.0"
-  resolved "http://registry.npm.taobao.org/chardet/download/chardet-0.4.0.tgz#0bbe1355ac44d7a3ed4a925707c4ef70f8190f6c"
+  version "0.4.2"
+  resolved "http://registry.npm.taobao.org/chardet/download/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
 
 charenc@~0.0.1:
   version "0.0.2"
@@ -1107,8 +1107,8 @@ command-line-args@^4.0.6:
     typical "^2.6.1"
 
 commander@^2.9.0, commander@~2.12.1:
-  version "2.12.1"
-  resolved "http://registry.npm.taobao.org/commander/download/commander-2.12.1.tgz#468635c4168d06145b9323356d1da84d14ac4a7a"
+  version "2.12.2"
+  resolved "http://registry.npm.taobao.org/commander/download/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
 commander@~2.8.1:
   version "2.8.1"
@@ -2970,8 +2970,8 @@ lru-cache@^4.0.1:
     yallist "^2.1.2"
 
 lzma-native@^3.0.1:
-  version "3.0.2"
-  resolved "http://registry.npm.taobao.org/lzma-native/download/lzma-native-3.0.2.tgz#a3a7542664f246f2461c102f55ff89a639feb98b"
+  version "3.0.4"
+  resolved "http://registry.npm.taobao.org/lzma-native/download/lzma-native-3.0.4.tgz#1fe863dbbbaa58f8132dfcf7df261ec9af6f2b72"
   dependencies:
     nan "2.5.1"
     node-pre-gyp "^0.6.39"
@@ -4597,8 +4597,8 @@ supports-color@^4.0.0:
     has-flag "^2.0.0"
 
 symbol-observable@^1.0.3:
-  version "1.0.4"
-  resolved "http://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.1.0.tgz#5c68fd8d54115d9dfb72a84720549222e8db9b32"
 
 symbol-tree@^3.2.1:
   version "3.2.2"
