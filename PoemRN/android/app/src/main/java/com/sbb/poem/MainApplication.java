@@ -2,30 +2,29 @@ package com.sbb.poem;
 
 import android.app.Application;
 
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
+import io.realm.react.RealmReactPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import cn.jpush.reactnativejpush.JPushPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import org.pgsqlite.SQLitePluginPackage;
 
 import java.util.Arrays;
 import java.util.List;
 
-import cn.jpush.reactnativejpush.JPushPackage;
-import io.realm.react.RealmReactPackage;
-
 public class MainApplication extends Application implements ReactApplication {
+  // 设置为 true 将不弹出 toast
+  private boolean SHUTDOWN_TOAST = false;
+  // 设置为 true 将不打印 log
+  private boolean SHUTDOWN_LOG = false;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -36,15 +35,18 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RealmReactPackage(),
-            new WebViewBridgePackage(),
             new VectorIconsPackage(),
-            new SplashScreenReactPackage(),
-            new PickerPackage(),
             new RNFetchBlobPackage(),
             new RNDeviceInfo(),
-            new SQLitePluginPackage(),
-            new JPushPackage(false,false)//第一个参数设置为 true 表示关闭 toast 提示，第二个设置为 true 表示关闭日志打印，建议在 debug 版本中打开
+            new PickerPackage(),
+            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+            new SplashScreenReactPackage()
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 
