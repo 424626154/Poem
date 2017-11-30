@@ -31,6 +31,7 @@ HttpUtil.POEM_HISTORY_POEM = 'poem/historypoem';
 HttpUtil.POEM_UPPOEM = 'poem/uppoem';
 HttpUtil.POEM_DELPOEM = 'poem/delpoem';
 HttpUtil.POEM_COMMENTPOEM = 'poem/commentpoem';
+HttpUtil.POEM_DELCOMMENT = 'poem/delcomment';
 HttpUtil.POEM_LOVEPOEM = 'poem/lovepoem';
 HttpUtil.POEM_LOVES = 'poem/getloves';
 HttpUtil.POEM_NEWEST_COMMENT = 'poem/newestcomment';

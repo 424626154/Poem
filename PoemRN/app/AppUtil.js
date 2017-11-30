@@ -65,6 +65,11 @@ Utils.getHead = function(head:string){
   let headurl = head?{uri:HttpUtil.getHeadurl(head)}:ImageConfig.nothead;
   return headurl
 }
+
+Utils.getPhoto = function(photo:string){
+  let photourl = photo?{uri:HttpUtil.getHeadurl(photo)}:ImageConfig.notphoto;
+  return photourl
+}
 /**
  * 判断登录
  */

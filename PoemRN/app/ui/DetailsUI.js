@@ -30,15 +30,17 @@ import {
       UIName,
       Utils,
       HttpUtil,
-      Emitter,
       pstyles,
       goPersonalUI,
       HomePoemDao,
+      Global,
+      PImage,
+      showToast,
       } from '../AppUtil';
 import{
       NavBack,
       }from '../custom/Custom';
-
+const boundary = 80;
 type Props = {
     navigation:any,
     mypoem:Object,
@@ -51,6 +53,10 @@ type State = {
     sourceData:Array<Object>,
     loves:Array<Object>,
     selected:Map<string, boolean>,
+    labels:Array<Object>,
+    extend:Object,
+    photo:string,
+    isphoto:boolean,
 };
 
 class DetailsUI extends React.Component<Props,State>{
@@ -68,6 +74,7 @@ class DetailsUI extends React.Component<Props,State>{
   _onLoves:Function;
   _onPoemLayout:Function;
   _onPersonal:Function;
+  _onDelComment:Function;
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
@@ -80,12 +87,17 @@ class DetailsUI extends React.Component<Props,State>{
         selected: (new Map(): Map<string, boolean>),
         refreshing: false,
         loves:[],//点赞列表
+        labels:[],
+        extend:{},
+        photo:'',
+        isphoto:false,
     }
     this._onLove = this._onLove.bind(this);
     this._onLoveItem = this._onLoveItem.bind(this);
     this._onLoves= this._onLoves.bind(this);
     this._onPoemLayout = this._onPoemLayout.bind(this);
     this._onPersonal = this._onPersonal.bind(this);
+    this._onDelComment = this._onDelComment.bind(this);
   }
 
   componentDidMount(){
@@ -99,25 +111,48 @@ class DetailsUI extends React.Component<Props,State>{
   }
   shouldComponentUpdate(nextProps, nextState){
     // console.log('---DetailsUI() shouldComponentUpdate');
-    // console.log(this.papp);
+    // // console.log(this.papp);
     // console.log(this.props.papp);
     // console.log(nextProps.papp);
     //切换用户id
-    if(nextProps.papp.userid !== this.props.papp.userid){
-      console.log('---DetailsUI() shouldComponentUpdate');
-      console.log('---up papp');
-      Object.assign(this.props.papp,nextProps.papp);
-    }
-    if(nextProps.papp.refcomment !== this.props.papp.refcomment){
-      console.log('---DetailsUI() shouldComponentUpdate');
-      console.log('---up papp');
-      Object.assign(this.props.papp,nextProps.papp);
-      if(this.props.papp.refcomment){
+    // if(nextProps.papp.userid !== this.props.papp.userid){
+    //   console.log('------DetailsUI() shouldComponentUpdate');
+    //   console.log('------change userid');
+    //   Object.assign(this.props.papp,nextProps.papp);
+    // }
+    // console.log('------DetailsUI() shouldComponentUpdate');
+    // console.log('------change refcomment');
+    console.log('------nextProps.papp.refcomment:',nextProps.papp.refcomment);
+    console.log('------this.props.papp.refcomment:',this.props.papp.refcomment);
+    if(nextProps.papp.refcomment == true && this.props.papp.refcomment == false){
+      console.log('------DetailsUI() shouldComponentUpdate');
+      console.log('------change refcomment');
+      console.log('------nextProps.papp.refcomment:',nextProps.papp.refcomment);
+      console.log('------this.props.papp.refcomment:',this.props.papp.refcomment);
+      // Object.assign(this.props.papp,nextProps.papp);
+      // if(nextProps.papp.refcomment){
         let { dispatch } = this.props.navigation;
         dispatch(UserActions.raRefComment(false));
+        console.log('------_requestNewestComment tag1')
         this._requestNewestComment();
         this._requestLoveComment();
+      // }
+    }
+    if(nextProps.mypoem != this.props.mypoem){
+      console.log('------DetailsUI() shouldComponentUpdate');
+      console.log('------change mypoem');
+      console.log('------nextProps.mypoem');
+      console.log(nextProps.mypoem)
+      console.log('------this.props.mypoem');
+      console.log(this.props.mypoem)
+      let extend = this._getExtend(nextProps.mypoem);
+      let isphoto = this._isPhoto(extend);
+      let photo = '';
+      if(isphoto){
+        photo = extend.photo;
       }
+      this.setState({extend:extend,photo:photo,isphoto:isphoto});
+      this._loadLabels(nextProps.mypoem)
     }
     return true;
   }
@@ -126,17 +161,8 @@ class DetailsUI extends React.Component<Props,State>{
       <ScrollView
         ref="ScrollView"
         style={pstyles.container}>
-        <View
-          ref="poem"
-          style={pstyles.poem}
-          onLayout={this._onPoemLayout}>
-          <Text style={pstyles.poem_title}>
-            {this.props.mypoem.title}
-          </Text>
-          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)}]}>
-            {this.props.mypoem.content}
-          </Text>
-        </View>
+        {this._renderPoem()}
+        {this._renderLabels()}
         {/* ---menu--- */}
         {this._renderMenu()}
         {/* --点赞列表-- */}
@@ -167,6 +193,61 @@ class DetailsUI extends React.Component<Props,State>{
       </ScrollView>
     )
   }
+  _renderPoem(){
+    if(this.state.isphoto){
+      return(
+        <View
+          ref="poem"
+          style={pstyles.poem}
+          onLayout={this._onPoemLayout}>
+          <View style={pstyles.photo}>
+            <PImage
+              style={this._getStyle(this.state.extend)}
+              source={Utils.getPhoto(this.state.photo?this.state.photo+'_big':'')}
+              noborder={true}
+              />
+          </View>
+          <Text style={pstyles.poem_title}>
+            {this.props.mypoem.title}
+          </Text>
+          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)}]}>
+            {this.props.mypoem.content}
+          </Text>
+        </View>
+      )
+    }else{
+      return(
+        <View
+          ref="poem"
+          style={pstyles.poem}
+          onLayout={this._onPoemLayout}>
+          <Text style={pstyles.poem_title}>
+            {this.props.mypoem.title}
+          </Text>
+          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)}]}>
+            {this.props.mypoem.content}
+          </Text>
+        </View>
+      )
+    }
+  }
+  _renderLabels(){
+    return(
+      <View style={styles.labels}>
+          {this.state.labels.map((item, index) => {
+            return(
+              <View
+                key={item.key}
+                style={styles.labelbg}>
+                <Text style={styles.label}>
+                  {item.name}
+                </Text>
+              </View>
+            )
+          })}
+      </View>
+    )
+  }
   /**
    * 功能视图
    */
@@ -177,19 +258,57 @@ class DetailsUI extends React.Component<Props,State>{
           ref="menu"
           style={styles.menu}
         >
+            {/* 评论 */}
             <TouchableOpacity
               onPress={()=>{
-                this.props.navigation.navigate(UIName.ModifyPoemUI,{id:this.state.id,poem:this.props.mypoem})
+                if(Utils.isLogin(this.props.navigation)){
+                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,cid:0})
+                }
               }}>
               <View style={styles.menu_item}>
                 <Icon
-                  name='receipt'
+                  name='sms'
+                  size={26}
+                  type="MaterialIcons"
+                  color={StyleConfig.C_D4D4D4}
+                  />
+                  <Text style={styles.menu_font}>
+                    {this._renderCommentnum(this.props.mypoem.commentnum)}
+                  </Text>
+              </View>
+            </TouchableOpacity>
+            {/* 点赞 */}
+            <TouchableOpacity
+              onPress={()=>{
+                this._onLove();
+              }}>
+              <View style={styles.menu_item}>
+                <Icon
+                  name='thumb-up'
+                  size={26}
+                  type="MaterialIcons"
+                  color={this._renderLoveColor()}
+                  />
+                  <Text style={styles.menu_font}>
+                    {this._renderLovenum(this.props.mypoem.lovenum)}
+                  </Text>
+              </View>
+            </TouchableOpacity>
+            {/* 修改 */}
+            <TouchableOpacity
+              onPress={()=>{
+                this.props.navigation.navigate(UIName.AddPoemUI,{ftype:1,id:this.state.id,poem:this.props.mypoem})
+              }}>
+              <View style={styles.menu_item}>
+                <Icon
+                  name='border-color'
                   size={26}
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
               </View>
             </TouchableOpacity>
+            {/* 删除 */}
             <TouchableOpacity
               onPress={()=>Alert.alert(
               '删除',
@@ -209,40 +328,6 @@ class DetailsUI extends React.Component<Props,State>{
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={()=>{
-                if(Utils.isLogin(this.props.navigation)){
-                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,cid:0})
-                }
-              }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='sms'
-                  size={26}
-                  type="MaterialIcons"
-                  color={StyleConfig.C_D4D4D4}
-                  />
-                  <Text style={styles.menu_font}>
-                    {this._renderCommentnum(this.props.mypoem.commentnum)}
-                  </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={()=>{
-                this._onLove();
-              }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='thumb-up'
-                  size={26}
-                  type="MaterialIcons"
-                  color={this._renderLoveColor()}
-                  />
-                  <Text style={styles.menu_font}>
-                    {this._renderLovenum(this.props.mypoem.lovenum)}
-                  </Text>
               </View>
             </TouchableOpacity>
         </View>
@@ -318,10 +403,53 @@ class DetailsUI extends React.Component<Props,State>{
     }
     return align;
   }
+  _isPhoto(extend:Object):boolean{
+    let isphoto = false;
+    if(extend&&extend.photo&&extend.pw&&extend.ph){
+      isphoto = true;
+    }
+    return isphoto;
+  }
+  _getStyle(extend){
+      let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
+      if(extend.pw > extend.ph){
+        let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+        style = Object.assign({},style,style1)
+      }
+      if(extend.pw < extend.ph){
+        let style2 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+        style = Object.assign({},style,style2)
+        console.log('-------_getStyle')
+        console.log(style)
+      }
+      return style;
+  }
+  _getExtend(item:Object):Object{
+    let extend = {}
+    if(item&&item.extend){
+      extend = JSON.parse(item.extend);
+    }
+    console.log('------_getExtend')
+    console.log(extend)
+    return extend;
+  }
+  _loadLabels(poem){
+    let labelsarray = [];
+    let extend = this.state.extend;
+    if(extend&&extend.labels){
+      let labels = extend.labels.split(',');
+      for(var i = 0 ; i < labels.length;i++){
+        labelsarray.push({key:i,name:labels[i]})
+      }
+    }
+    console.log('------labelsarray')
+    console.log(labelsarray)
+    this.setState({labels:labelsarray})
+  }
   _renderEmptyView = () => (
     <View style={styles.empty}>
-     <Text style={styles.empty_font}>暂无内容
-     </Text>
+     {/* <Text style={styles.empty_font}>暂无内容
+     </Text> */}
     </View>
   );
   /**
@@ -379,6 +507,52 @@ class DetailsUI extends React.Component<Props,State>{
     console.log(userid)
     goPersonalUI(this.props.navigation.navigate,userid);
   }
+  _onDelComment(comment:Object){
+    if(comment.userid == this.props.papp.userid){
+      Alert.alert(
+        '删除评论',
+        '是否确认删除？',
+        [
+          {text: '取消', style: 'cancel'},
+          {text: '确认', onPress: () => {
+              var json = JSON.stringify({
+                id:comment.id,
+                pid:comment.pid,
+                userid:this.props.papp.userid,
+              });
+              HttpUtil.post(HttpUtil.POEM_DELCOMMENT,json).then((res)=>{
+                if(res.code == 0){
+                  let id = res.data.id;
+                  let comments = this.state.sourceData;
+                  let del_num = 0;
+                  for(var i = comments.length-1;i >= 0 ; i --){
+                    if(comments[i].id == id){
+                      comments.splice(i, 1);
+                      del_num += 1;
+                    }
+                  }
+                  this.setState({sourceData:comments});
+                  if(del_num > 0){
+                    let poem = this.props.mypoem;
+                    let commentnum = poem.commentnum >= del_num?poem.commentnum-del_num:0;
+                    poem.commentnum = commentnum;
+                    let { dispatch } = this.props.navigation;
+                    dispatch(PoemsActions.raUpPoemLC(poem));
+                  }
+
+
+                }else{
+                  showToast(res.errmsg);
+                }
+              }).catch((err)=>{
+                  console.error(err);
+              });
+          }},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
   _renderItem = ({item}) =>{
       return(
           <CommentListItem
@@ -389,6 +563,8 @@ class DetailsUI extends React.Component<Props,State>{
               headurl={Utils.getHead(item.head)}
               time={Utils.dateStr(item.time)}
               onPersonal={this._onPersonal}
+              userid={this.props.papp.userid}
+              onDelComment={this._onDelComment}
           />
       );
   };
@@ -397,6 +573,7 @@ class DetailsUI extends React.Component<Props,State>{
   );
   // 下拉刷新
   _renderRefresh = () => {
+      console.log('------_requestNewestComment tag2');
      this._requestNewestComment();
   }
   // 上拉刷新
@@ -425,7 +602,7 @@ class DetailsUI extends React.Component<Props,State>{
              });
            }
       }else{
-        Alert.alert(data.errmsg);
+        showToast(data.errmsg);
       }
       this.setState({refreshing: false});
     }).catch((err)=>{
@@ -450,10 +627,10 @@ class DetailsUI extends React.Component<Props,State>{
         dispatch(PoemsActions.raDelPoem(poem));
      	  this.props.navigation.goBack();
       }else{
-        Alert.alert(data.errmsg);
+        showToast(data.errmsg);
       }
     }).catch((err)=>{
-        Alert.alert('删除诗歌失败:',err);
+        console.error(err);
     });
   }
   /**
@@ -515,7 +692,7 @@ class DetailsUI extends React.Component<Props,State>{
         this.refs.lovelistview.loadPages();
         this._requestLoveComment();
       }else{
-        Alert.alert(result.errmsg);
+        showToast(result.errmsg);
       }
     }).catch((err)=>{
       console.error(err);
@@ -556,7 +733,7 @@ class DetailsUI extends React.Component<Props,State>{
           let { dispatch } = this.props.navigation;
           dispatch(PoemsActions.raSetPoem(poem));
         }else{
-          Alert.alert(res.errmsg);
+          showToast(res.errmsg);
         }
       }).catch(err=>{
         console.error(err);
@@ -578,7 +755,7 @@ class DetailsUI extends React.Component<Props,State>{
           })
           this.refs.lovelistview.loadPages();
         }else{
-          Alert.alert(data.errmsg);
+          showToast(data.errmsg);
         }
     }).catch((err)=>{
       console.error(err);
@@ -612,7 +789,7 @@ class DetailsUI extends React.Component<Props,State>{
              });
            }
       }else{
-        Alert.alert(data.errmsg);
+        showToast(data.errmsg);
       }
       this.setState({refreshing: false});
     }).catch((err)=>{
@@ -637,7 +814,7 @@ class DetailsUI extends React.Component<Props,State>{
             dispatch(PoemsActions.raUpPoemLC(poem));
           }
       }else{
-        Alert.alert(res.errmsg);
+        showToast(res.errmsg);
       }
     }).catch(err=>{
       console.error(err);
@@ -670,6 +847,26 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:StyleConfig.C_D4D4D4,
   },
+  labels:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+    paddingLeft:10,
+    paddingRight:10,
+  },
+  labelbg:{
+    padding:4,
+  },
+  label:{
+    fontSize:18,
+    paddingLeft:6,
+    paddingRight:6,
+    paddingTop:2,
+    paddingBottom:2,
+    color:StyleConfig.C_000000,
+    borderColor:StyleConfig.C_000000,
+    borderWidth:1,
+    borderRadius:4,
+  }
 })
 function mapStateToProps(state) {
   return {

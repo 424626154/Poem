@@ -22,6 +22,7 @@ import{
   Permission,
   Utils,
   HttpUtil,
+  UIName,
 } from '../AppUtil';
 
 import{
@@ -123,7 +124,11 @@ class AgreementUI extends React.Component<Props,State>{
             dispatch(UserActions.rePermission(user.userid,user.per));
             if(this.state.toui){
               this.props.navigation.goBack();
-              this.props.navigation.navigate(this.state.toui);
+              let params = {};
+              if(this.state.toui == UIName.AddPoemUI){
+                params = Object.assign({},params,{ftype:0})
+              }
+              this.props.navigation.navigate(this.state.toui,params);
             }else{
               this.props.navigation.goBack();
             }

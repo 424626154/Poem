@@ -26,7 +26,6 @@ import {
   UIName,
   Utils,
   HttpUtil,
-  Emitter,
   pstyles,
   HomePoemDao,
   goPersonalUI,
@@ -87,27 +86,21 @@ class HomeTab extends React.Component<Props,State> {
       this.net_time && clearTimeout(this.net_time);
     }
   shouldComponentUpdate(nextProps, nextState){
-    console.log('---HomeTab() shouldComponentUpdate');
-    console.log('---nextProps:');
-    console.log(nextProps)
-    console.log('---nextState:');
-    console.log(nextState)
-    console.log('---this.props:');
-    console.log(this.props)
     //切换用户id
     if(nextProps.papp.userid !== this.props.papp.userid){
-      console.log('---HomeTab() shouldComponentUpdate');
-      console.log('--- up papp');
-      Object.assign(this.props.papp,nextProps.papp);
-      // console.log(nextProps.papp)
-      // console.log(this.props.papp)
+      console.log('------HomeTab() shouldComponentUpdate');
+      console.log('------change userid');
+      console.log('------nextProps.papp.userid:',nextProps.papp.userid);
+      console.log('------this.props.papp.userid:',this.props.papp.userid);
       this._initPoems();
     }
-    if(shallowEqual(this.props.homepoems,nextProps.homepoems)){
-      console.log('---HomeTab() shouldComponentUpdate');
-      console.log('--- up homepoems');
-      console.log(nextProps.homepoems)
-      console.log(this.props.homepoems)
+    // if(shallowEqual(this.props.homepoems,nextProps.homepoems)){
+    //   console.log('------HomeTab() shouldComponentUpdate');
+    //   console.log('------change homepoems');
+    //   console.log('------nextProps.homepoems');
+    //   console.log(nextProps.homepoems)
+    //   console.log('------this.props.homepoems');
+    //   console.log(this.props.homepoems)
       // Object.assign(this.props.homepoems,nextProps.homepoems);
       // let homepoems = copyArray(nextProps.homepoems);
       // this.setState({
@@ -115,7 +108,7 @@ class HomeTab extends React.Component<Props,State> {
       // });
       // console.log('---this.state.sourceData:');
       // console.log(this.state.sourceData);
-    }
+    // }
     return true;
   }
   render() {
@@ -167,6 +160,7 @@ class HomeTab extends React.Component<Props,State> {
                onLove={this._onLove}
                onComment={this._onComment}
                onPersonal={this._onPersonal}
+               extend={this._getExtend(item)}
            />
        );
    };
@@ -305,6 +299,15 @@ class HomeTab extends React.Component<Props,State> {
   _onPersonal(userid){
      goPersonalUI(this.props.navigation.navigate,userid);
    }
+   _getExtend(item:Object):Object{
+     let extend = {}
+     if(item.extend){
+       extend = JSON.parse(item.extend);
+     }
+     // console.log('------_getExtend')
+     // console.log(extend)
+     return extend;
+   }
   _initPoems(){
     console.log('---_initPoems homepoems---');
     HomePoemDao.deleteHomePoems();
@@ -407,23 +410,6 @@ class HomeTab extends React.Component<Props,State> {
       .catch((error) => {
         console.error(error);
       });
-  }
-  /**
-   * 解析广播数据
-   */
-  _parseObserver(obj){
-    var action = obj.action;
-    var param = obj.param;
-    console.log('------HomeTab() _parseObserver')
-    console.log(action)
-    console.log(param)
-    switch (action) {
-      case Emitter.CLEAR:
-        this._initPoems();
-        break;
-      default:
-        break;
-    }
   }
 
 }

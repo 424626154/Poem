@@ -20,7 +20,6 @@ import{
   StorageConfig,
   pstyles,
   Utils,
-  Emitter,
   HttpUtil,
   PImage,
   UIName,
@@ -35,11 +34,11 @@ type Props = {
 };
 
 type State = {
-    userid:string,
-    pseudonym:string,
-    headurl:any,
-    myfollow:number,
-    followme:number,
+    // userid:string,
+    // pseudonym:string,
+    // headurl:any,
+    // myfollow:number,
+    // followme:number,
 };
 
 class MyTab extends React.Component<Props,State> {
@@ -56,18 +55,18 @@ class MyTab extends React.Component<Props,State> {
    constructor(props){
      super(props);
      console.log('---MyTab()---')
-     this.state={
-       headurl:nothead,
-       pseudonym:'',
-       userid:this.props.papp.userid,
-       myfollow:0,
-       followme:0,
-     }
+     // this.state={
+     //   headurl:nothead,
+     //   pseudonym:'',
+     //   userid:this.props.papp.userid,
+     //   myfollow:0,
+     //   followme:0,
+     // }
      this._onStting = this._onStting.bind(this);
      this._onWorks = this._onWorks.bind(this);
    }
    componentDidMount(){
-     this._reloadUserInfo();
+     // this._reloadUserInfo();
    }
    componentWillUnmount(){
    }
@@ -83,85 +82,104 @@ class MyTab extends React.Component<Props,State> {
      // console.log(nextProps.papp)
      console.log(this.props.papp);
      //用户信息更新 或者id
-     if(nextProps.papp.user !== this.props.papp.user
-       ||nextProps.papp.userid !== this.props.papp.userid){
-        console.log('---up papp');
-       Object.assign(this.props.papp,nextProps.papp);
-       this._reloadUserInfo();
-     }
-     if(this.props.papp.userid != this.state.userid){
-       console.log('---up papp1');
-       this._reloadUserInfo();
-     }
+     // if(nextProps.papp.user !== this.props.papp.user
+     //   ||nextProps.papp.userid !== this.props.papp.userid){
+     //    console.log('---up papp');
+     //   // Object.assign(this.props.papp,nextProps.papp);
+     //   this._reloadUserInfo();
+     // }
+     // if(this.props.papp.userid != this.state.userid){
+     //   console.log('---up papp1');
+     //   this._reloadUserInfo();
+     // }
      return true;
    }
   render() {
     const { state,navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={()=>{
-              if(this.state.userid){
-                navigate(UIName.PerfectUI);
-              }else{
-                navigate(UIName.LoginUI);
-              }
-            }}>
-            <View style={styles.personal}>
-              <TouchableOpacity
-                onPress={()=>{
-                  if(this.state.userid){
-                    Alert.alert(
-                        '设置头像',
-                        null,
-                        [
-                          {text: '查看大图', onPress: () =>{
-                            navigate(UIName.PhotoUI,{photo:this.props.papp.user.head})
-                          }},
-                          {text: '设置头像', onPress: () =>{
-                            navigate(UIName.PerfectUI)
-                          }},
-                        ]
-                      )
-                  }else{
-                    navigate(UIName.LoginUI);
-                  }
-                }}>
-                <PImage
-                  style={pstyles.big_head}
-                  source={this.state.headurl}
-                  />
-                </TouchableOpacity>
-                <View style={styles.head_bg}>
-                  <Text style={styles.name}>
-                    {this.state.pseudonym}
-                  </Text>
-                </View>
-                <View style={styles.personal_more}>
-                    {this._renderMore()}
-                </View>
-              </View>
-            </TouchableOpacity>
-            {this._renderFollow()}
-          </View>
+        {this._renderUserInfo()}
         <View style={styles.interval}></View>
         {this._renderWorks()}
         {this._renderItem('settings-applications','设置',this._onStting,false)}
       </View>
     );
   }
+  _renderUserInfo(){
+    if(this.props.papp.userid){
+      return(
+        <View style={styles.header}>
+          <TouchableOpacity onPress={()=>{
+            this.props.navigation.navigate(UIName.PerfectUI);
+          }}>
+          <View style={styles.personal}>
+            <TouchableOpacity
+              onPress={()=>{
+                Alert.alert(
+                    '设置头像',
+                    null,
+                    [
+                      {text: '查看大图', onPress: () =>{
+                        this.props.navigation.navigate(UIName.PhotoUI,{photo:this.props.papp.user.head})
+                      }},
+                      {text: '设置头像', onPress: () =>{
+                        this.props.navigation.navigate(UIName.PerfectUI)
+                      }},
+                    ]
+                  )
+              }}>
+              <PImage
+                style={pstyles.big_head}
+                source={this._getHeadurl()}
+                />
+              </TouchableOpacity>
+              <View style={styles.head_bg}>
+                <Text style={styles.name}>
+                  {this.props.papp.user.pseudonym}
+                </Text>
+              </View>
+              <View style={styles.personal_more}>
+                  {this._renderMore()}
+              </View>
+            </View>
+          </TouchableOpacity>
+          {this._renderFollow()}
+        </View>
+      )
+    }else{
+      return(
+        <View style={styles.header}>
+          <TouchableOpacity onPress={()=>{
+            this.props.navigation.navigate(UIName.LoginUI);
+          }}>
+          <View style={styles.personal}>
+              <PImage
+                style={pstyles.big_head}
+                source={nothead}
+                />
+              <View style={styles.head_bg}>
+                <Text style={styles.name}>
+                  未登录
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
   /**
    * 关注
    */
   _renderFollow(){
-    if(this.state.userid){
+    if(this.props.papp.userid){
       return(
         <View style={styles.follow_bg}>
           <TouchableOpacity onPress={()=>{
             this._onMeFollow();
           }}>
             <View style={styles.follow_item_bg}>
-              <Text style={styles.follow_item_num}>{this.state.myfollow}</Text>
+              <Text style={styles.follow_item_num}>{this.props.papp.user.myfollow}</Text>
               <Text style={styles.follow_item_font}>我关注的人</Text>
             </View>
           </TouchableOpacity>
@@ -169,7 +187,7 @@ class MyTab extends React.Component<Props,State> {
             this._onFollowMe();
           }}>
             <View style={styles.follow_item_bg}>
-              <Text style={styles.follow_item_num}>{this.state.followme}</Text>
+              <Text style={styles.follow_item_num}>{this.props.papp.user.followme}</Text>
               <Text style={styles.follow_item_font}>关注我的人</Text>
             </View>
           </TouchableOpacity>
@@ -219,7 +237,7 @@ class MyTab extends React.Component<Props,State> {
     }
   }
   _renderMore(){
-    if(this.state.userid){
+    if(this.props.papp.userid){
       return(
         <Icon
           name='create'
@@ -235,7 +253,7 @@ class MyTab extends React.Component<Props,State> {
     }
   }
   _renderWorks(){
-    if(this.state.userid){
+    if(this.props.papp.userid){
       return(this._renderItem('inbox','我的作品',this._onWorks,false))
     }
   }
@@ -246,28 +264,36 @@ class MyTab extends React.Component<Props,State> {
   _onStting(){
     this.props.navigation.navigate(UIName.SettingUI);
   }
-  _reloadUserInfo(){
-    // console.log(this)
-    // let user = this.props.papp.user;
-    // console.log('_reloadUserInfo:'+JSON.stringify(user));
+  // _reloadUserInfo(){
+  //   // console.log(this)
+  //   // let user = this.props.papp.user;
+  //   // console.log('_reloadUserInfo:'+JSON.stringify(user));
+  //   if(this.props.papp.userid){
+  //     let user = this.props.papp.user;
+  //     let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
+  //     let pseudonym = user.pseudonym;
+  //     // this.setState({
+  //     //   headurl:headurl,
+  //     //   pseudonym:pseudonym,
+  //     //   myfollow:user.myfollow,
+  //     //   followme:user.followme,
+  //     //   userid:this.props.papp.userid,
+  //     // })
+  //   }else{
+  //     this.setState({
+  //       headurl:nothead,
+  //       pseudonym:'未登录',
+  //       userid:'',
+  //     })
+  //   }
+  // }
+  _getHeadurl(){
     if(this.props.papp.userid){
       let user = this.props.papp.user;
       let headurl = user.head?{uri:HttpUtil.getHeadurl(user.head)}:nothead;
-      let pseudonym = user.pseudonym;
-      this.setState({
-        headurl:headurl,
-        pseudonym:pseudonym,
-        userid:user.userid,
-        myfollow:user.myfollow,
-        followme:user.followme,
-        userid:this.props.papp.userid,
-      })
+      return headurl;
     }else{
-      this.setState({
-        headurl:nothead,
-        pseudonym:'未登录',
-        userid:'',
-      })
+      return nothead
     }
   }
   /**

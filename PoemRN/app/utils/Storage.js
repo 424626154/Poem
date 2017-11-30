@@ -91,4 +91,22 @@ Storage.getLastPhone = function(){
   }
 }
 
+Storage.getLabelHistory = function(){
+  try {
+      let label_history = StorageDao.getItem(StorageConfig.LABEL_HISTORY);
+      return label_history;
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.saveLabelHistory = function(label_history:string){
+  try {
+      let value = StorageDao.setItem(StorageConfig.LABEL_HISTORY,label_history);
+      console.log(value)
+  } catch (error) {
+      console.error(error);
+  }
+}
+
 export default Storage;

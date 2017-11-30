@@ -20,7 +20,6 @@ import{
         StorageConfig,
         pstyles,
         Utils,
-        Emitter,
         HttpUtil,
         goPersonalUI,
       } from '../AppUtil';

@@ -21,7 +21,6 @@ import{
       HeaderConfig,
       StorageConfig,
       HttpUtil,
-      Emitter,
       pstyles,
       Storage,
     } from '../AppUtil'

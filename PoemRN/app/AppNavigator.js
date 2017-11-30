@@ -25,7 +25,7 @@ import AddPoemUI from './ui/AddPoemUI';//添加诗词
 import LoginUI from './ui/LoginUI';
 import RegisterUI from './ui/RegisterUI';
 import DetailsUI from './ui/DetailsUI';
-import ModifyPoemUI from './ui/ModifyPoemUI';
+// import ModifyPoemUI from './ui/ModifyPoemUI';
 import CommentUI from './ui/CommentUI';
 import PerfectUI from './ui/PerfectUI';
 import PersonalUI from './ui/PersonalUI';
@@ -41,7 +41,7 @@ import PhotoUI from './ui/PhotoUI';
 import AgreementUI from './ui/AgreementUI';
 import ReportUI from './ui/ReportUI';
 import ProtocolUI from './ui/ProtocolUI';
-
+import PoemLabelUI from './ui/PoemLabelUI';
 
 const Tabs = TabNavigator({
   HomeTab: {
@@ -98,6 +98,7 @@ const Tabs = TabNavigator({
           backgroundColor:StyleConfig.C_FFFFFF,
         },
         activeTintColor:StyleConfig.C_000000,
+        inactiveTintColor:StyleConfig.C_7B8992,
     },
     swipeEnabled:false,
     // tabBarVisible:false,
@@ -128,9 +129,9 @@ const AppNavigator = StackNavigator({
   DetailsUI:{
     screen:DetailsUI,
   },
-  ModifyPoemUI:{
-    screen:ModifyPoemUI,
-  },
+  // ModifyPoemUI:{
+  //   screen:ModifyPoemUI,
+  // },
   CommentUI:{
     screen:CommentUI,
   },
@@ -175,6 +176,9 @@ const AppNavigator = StackNavigator({
   },
   ProtocolUI:{
     screen:ProtocolUI,
+  },
+  PoemLabelUI:{
+    screen:PoemLabelUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

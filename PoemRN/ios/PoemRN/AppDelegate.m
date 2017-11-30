@@ -21,9 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-     entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
-     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+  JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+  entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+  [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
   [JPUSHService setupWithOption:launchOptions appKey:jpush_appKey
                         channel:jpush_channel apsForProduction:isProduction];
   NSURL *jsCodeLocation;
@@ -41,17 +41,18 @@ JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  NSLog(@"------------------@");
-  for (NSString* family in [UIFont familyNames])
-  {
-    NSLog(@"%@", family);
-    for (NSString* name in [UIFont fontNamesForFamilyName: family])
-    {
-      NSLog(@"%@", name);
-    }
-  }
-  NSLog(@"------------------@");
-  [SplashScreen show]; 
+//  打印字体名称
+//  NSLog(@"------------------@");
+//  for (NSString* family in [UIFont familyNames])
+//  {
+//    NSLog(@"%@", family);
+//    for (NSString* name in [UIFont fontNamesForFamilyName: family])
+//    {
+//      NSLog(@"%@", name);
+//    }
+//  }
+//  NSLog(@"------------------@");
+  [SplashScreen show];
   return YES;
 }
 

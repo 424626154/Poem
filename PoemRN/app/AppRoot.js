@@ -19,7 +19,6 @@ import {
     HttpUtil,
     MessageDao,
     ChatDao,
-    Emitter,
 } from './AppUtil';
 
 import JPushModule from 'jpush-react-native';
@@ -172,20 +171,23 @@ class AppRoot extends Component <Props,State>{
     }
     shouldComponentUpdate(nextProps, nextState){
       if(nextProps.papp.userid !== this.props.papp.userid){
-        console.log('---AppRoot() up papp');
-        let pushid = Storage.getPushId();
-        console.log('---pushid:',pushid);
-        if(pushid&&this.props.papp.userid){
-          let { dispatch } = this.props;
-          dispatch(UserActions.raPushId(this.props.papp.userid,pushid));
+        console.log('------AppRoot() shouldComponentUpdate');
+        console.log('-----change userid')
+        console.log('------nextProps.papp.userid:',nextProps.papp.userid)
+        console.log('------this.props.papp.userid:',this.props.papp.userid)
+        if(nextProps.papp.userid){
+          let pushid = Storage.getPushId();
+          console.log('------pushid:',pushid);
+          if(pushid){
+            let { dispatch } = this.props;
+            dispatch(UserActions.raPushId(nextProps.papp.userid,pushid));
+          }
         }
       }
-      console.log('------ AppRoot() shouldComponentUpdate')
-      console.log(nextProps.papp)
-      console.log(this.props.papp);
       if(nextProps.papp.num !== this.props.papp.num){
-        Object.assign(this.props.papp,nextProps.papp);
-        this._setMsgState();
+        console.log('------ AppRoot() shouldComponentUpdate')
+        console.log('-----change num')
+        this._setMsgState(nextProps.papp.num);
       }
       return true;
     }
@@ -204,10 +206,9 @@ class AppRoot extends Component <Props,State>{
     onBackPress = () =>{
       console.log('---onBackPress---')
       const { dispatch, nav } = this.props;
-      console.log(this);
-      console.log(nav);
       if (this.isRootScreen(nav)){
         console.log('---return false')
+        BackHandler.exitApp();
         return false
       }
       dispatch(NavigationActions.back());
@@ -216,22 +217,7 @@ class AppRoot extends Component <Props,State>{
     isRootScreen(nav) {
       console.log('---isRootScreen')
       console.log(nav)
-      // if (typeof navigator.index == 'undefined') return true;
-      // let isCurrentRoot = navigator.index == 0;
-      // if (navigator.routes && !_.isEmpty(navigator.routes)) {
-      //   return _.every(navigator.routes, (r) => this.isRootScreen(r)) && isCurrentRoot;
-      // }
-      // console.log('---isCurrentRoot',isCurrentRoot)
-      // return isCurrentRoot;
-      // console.log(nav.routes&&nav.routes.length)
-      // console.log('nav.routes')
-      // console.log(nav.routes)
-      // console.log('nav.index')
-      // console.log(nav.index)
-      const activeRoute = nav.routes[nav.index];
-      // console.log('activeRoute')
-      // console.log(activeRoute)
-      if (activeRoute.index === 0) {
+      if (nav.index === 0&&nav.routes.length === 1&&nav.routes[0].index === 0) {
          return true;
        }
       return false;
@@ -377,8 +363,7 @@ class AppRoot extends Component <Props,State>{
     //     //监听第一次改变后, 可以取消监听.或者在componentUnmount中取消监听
     //    NetInfo.removeEventListener('change', this.handleConnectivityChange);
     // }
-    _setMsgState(){
-      let num = this.props.papp.num;
+    _setMsgState(num:number){
       console.log('---_setMsgState num:'+num);
       if(Platform.OS == 'ios'){
         JPushModule.setBadge(num, (success) => {

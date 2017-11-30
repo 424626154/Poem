@@ -83,7 +83,7 @@ const ptyles = StyleSheet.create({
   poem_title:{
     fontSize:24,
     textAlign:'center',
-    fontWeight:'bold',
+    // fontWeight:'bold',
     fontFamily: StyleConfig.FONT_FAMILY,
   },
   poem_content:{
@@ -105,6 +105,11 @@ const ptyles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center',
   },
+  centering: {
+   alignItems: 'center',
+   justifyContent: 'center',
+   padding: 8,
+ },
   flatlist:{
     backgroundColor:StyleConfig.C_E7E7E7,
   },
@@ -118,6 +123,11 @@ const ptyles = StyleSheet.create({
   separator_transparent:{
     height:6,
     backgroundColor:'transparent'
+  },
+  photo:{
+    padding:10,
+    alignItems:'center',
+    justifyContent:'center',
   }
 });
 

@@ -24,7 +24,6 @@ import{
       HeaderConfig,
       StorageConfig,
       HttpUtil,
-      Emitter,
       pstyles,
       Storage,
       UIName,
@@ -193,7 +192,7 @@ class LoginUI extends React.Component<Props,State> {
         <View style={pstyles.loading}>
           <ActivityIndicator
            animating={this.state.animating}
-           style={styles.centering}
+           style={pstyles.centering}
            color="white"
            size="large"/>
         </View>
@@ -390,11 +389,6 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginBottom:10,
   },
-  centering: {
-   alignItems: 'center',
-   justifyContent: 'center',
-   padding: 8,
- },
 });
 export default connect(
     state => ({

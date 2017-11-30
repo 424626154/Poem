@@ -11,8 +11,8 @@ AppConf.ALI = 'ali';
 AppConf.APPSTORE = 'appstore';
 AppConf.YIYONGBAO = 'yingyongbao';
 
-AppConf.ENV = AppConf.DEBUG;
-// AppConf.ENV = AppConf.ALI;
+// AppConf.ENV = AppConf.DEBUG;
+AppConf.ENV = AppConf.ALI;
 
 AppConf.IOS_CHANNEL = AppConf.APPSTORE
 AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO

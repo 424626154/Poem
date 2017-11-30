@@ -28,8 +28,8 @@ import{
       StorageConfig,
       pstyles,
       HttpUtil,
-      Emitter,
       Utils,
+      showToast,
       } from '../AppUtil';
 
 import{
@@ -136,17 +136,17 @@ class PerfectUI extends React.Component<Props,State>{
 
   _onSave(){
     if(!this.state.pseudonym){
-      Alert.alert('请输入笔名')
+      showToast('请输入笔名')
       return;
     }
     let strlen = Utils.strlen(this.state.pseudonym);
     // console.log(strlen);
     if(strlen > 20){
-      Alert.alert('笔名过长')
+      showToast('笔名过长')
       return;
     }
     if(!this.state.sheadurl){
-      Alert.alert('请选择头像')
+      showToast('请选择头像')
       return;
     }
     var json = JSON.stringify({
@@ -167,7 +167,7 @@ class PerfectUI extends React.Component<Props,State>{
           this.props.navigation.goBack();
         }
       }else{
-        Alert.alert(res.errmsg);
+        showToast(res.errmsg);
       }
     }).catch((err)=>{
       console.error(err);
@@ -183,7 +183,7 @@ class PerfectUI extends React.Component<Props,State>{
           })
         }
       }else{
-        Alert.alert(res.errmsg);
+        showToast(res.errmsg);
       }
     }).catch((err)=>{
       console.error(err);
@@ -191,7 +191,7 @@ class PerfectUI extends React.Component<Props,State>{
   }
   showAlertSelected(){
         this.dialog.show("请选择照片", selectedArr, '#333333', this.callbackSelected);
-    }
+  }
     // 回调
     callbackSelected(i){
         switch (i){
@@ -258,7 +258,6 @@ const styles = StyleSheet.create({
   mhead:{
     width:20,
     height:20,
-    right:1,
     position: 'absolute',//相对父元素进行绝对定位
     top: 0,
     right: 0,

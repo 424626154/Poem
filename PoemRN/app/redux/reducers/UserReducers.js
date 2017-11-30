@@ -11,7 +11,7 @@ const initialState = {
 	userid:Storage.getUserid(),
 	user:{},
 	homepoems:[],
-	refcomment:false,
+	refcomment:false,//刷新评论
 	push_news:false,
 	push_chat:false,
 	chatuser:'',

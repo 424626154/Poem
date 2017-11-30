@@ -20,7 +20,6 @@ import {
   HttpUtil,
   pstyles,
   MessageDao,
-  Emitter,
   goPersonalUI,
 } from '../AppUtil';
 import { Icon } from 'react-native-elements';

@@ -19,7 +19,7 @@
  } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
-
+import {ImageCache} from "react-native-img-cache";
 import DeviceInfo from 'react-native-device-info';
 
 import {
@@ -28,7 +28,6 @@ import {
         Storage,
         UIName,
         HttpUtil,
-        Emitter,
         pstyles,
         HomePoemDao,
         MessageDao,
@@ -77,7 +76,8 @@ class SettingUI extends React.Component<Props,State> {
         if(AppConf.ENV = AppConf.DEBUG){
             type = 'Debug_';
         }else if(AppConf.ENV = AppConf.ALI){
-            type = 'Bate_';
+            // type = 'Bate_';
+            type = '';
         }
         var version = '版本信息:'+type+DeviceInfo.getVersion()
         this.setState({
@@ -270,6 +270,7 @@ class SettingUI extends React.Component<Props,State> {
                MessageDao.deleteAll();
                ChatDao.deleteAllChat();
                ChatDao.deleteAllChatList();
+               ImageCache.get().clear();
                this.setState({
                  animating:false,
                });

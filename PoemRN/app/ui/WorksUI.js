@@ -24,7 +24,6 @@ import{
   pstyles,
   Utils,
   HttpUtil,
-  Emitter,
   UIName,
   showToast,
 } from '../AppUtil'
@@ -75,11 +74,13 @@ class WorksUI extends React.Component<Props,State> {
      componentWillUnmount(){
      }
      shouldComponentUpdate(nextProps, nextState){
-       console.log('------WorksUI() shouldComponentUpdate ')
        //切换用户id
        if(nextProps.papp.userid !== this.props.papp.userid){
-         Object.assign(this.props.papp,nextProps.papp);
-         if(this.props.papp.userid){
+          console.log('------WorksUI() shouldComponentUpdate')
+          console.log('------change userid')
+          console.log('------nextProps.papp.userid :',nextProps.papp.userid )
+          console.log('------this.props.papp.userid :',this.props.papp.userid )
+         if(nextProps.papp.userid){
            this._queryPoems();
          }else{
            let { dispatch } = this.props.navigation;
@@ -89,22 +90,25 @@ class WorksUI extends React.Component<Props,State> {
            // });
          }
        }
-       if(nextProps.papp.user.per,this.props.papp.user.per){
-         Object.assign(this.props.papp,nextProps.papp);
-       }
-       if(nextProps.mypoems !== this.props.mypoems){
-         console.log('--- up mypoems');
-         // console.log(this.state.sourceData)
-         // // Object.assign(this.props.mypoems,nextProps.mypoems);
-         // // let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
-         // this.props.mypoems = [...nextProps.mypoems];
-         // let  mypoems = [...this.props.mypoems];
-         // this.setState({
-         //   sourceData:mypoems,
-         // })
-         console.log(nextProps.mypoems)
-         console.log(this.props.mypoems)
-       }
+       // if(nextProps.papp.user.per,this.props.papp.user.per){
+         // Object.assign(this.props.papp,nextProps.papp);
+       // }
+       // if(nextProps.mypoems !== this.props.mypoems){
+       //   console.log('------WorksUI() shouldComponentUpdate')
+       //   console.log('------change mypoems')
+       //   console.log('------nextProps.mypoems')
+       //   console.log(nextProps.mypoems)
+       //   console.log('------this.props.mypoems)')
+       //   console.log(this.props.mypoems)
+       //   // console.log(this.state.sourceData)
+       //   // // Object.assign(this.props.mypoems,nextProps.mypoems);
+       //   // // let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
+       //   // this.props.mypoems = [...nextProps.mypoems];
+       //   // let  mypoems = [...this.props.mypoems];
+       //   // this.setState({
+       //   //   sourceData:mypoems,
+       //   // })
+       // }
        return true;
      }
    render() {
@@ -175,7 +179,7 @@ class WorksUI extends React.Component<Props,State> {
                 selected={ !!this.state.selected.get(item.id) }
                 item={item}
                 time={Utils.dateStr(item.time)}
-                navigate = {this.props.navigation.navigate}
+                extend={this._getExtend(item)}
             />
         );
     };
@@ -258,18 +262,26 @@ class WorksUI extends React.Component<Props,State> {
          name='add-box'
          size={44}
          type="MaterialIcons"
-         color={StyleConfig.C_232323}
+         color={StyleConfig.C_FFCA28}
        />
      )
    }
-
+   _getExtend(item:Object):Object{
+     let extend = {}
+     if(item.extend){
+       extend = JSON.parse(item.extend);
+     }
+     // console.log('------_getExtend')
+     // console.log(extend)
+     return extend;
+   }
    onAdd(){
      if(this.props.papp.userid){
        console.log('---per',this.props.papp.user.per)
        if(!Utils.getPermission(Permission.WRITE,this.props.papp.user.per)){
             this.props.navigation.navigate(UIName.AgreementUI,{toui:UIName.AddPoemUI});
        } else{
-            this.props.navigation.navigate(UIName.AddPoemUI);
+            this.props.navigation.navigate(UIName.AddPoemUI,{ftype:0});
        }
      }
    }

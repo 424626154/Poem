@@ -7,8 +7,8 @@ var StyleConfig = {
 
 };
 
-StyleConfig.C_176EB9 = '#176eb9';//深蓝
-StyleConfig.C_1E8AE8 = '#1e8ae8';//蓝色
+// StyleConfig.C_176EB9 = '#176eb9';//深蓝
+// StyleConfig.C_1E8AE8 = '#1e8ae8';//蓝色
 /*白色*/
 StyleConfig.C_FFFFFF = '#ffffff';
 StyleConfig.C_000000 = '#000000';//黑色
@@ -49,14 +49,22 @@ var StorageConfig = {
 StorageConfig.USERID = 'userid';
 StorageConfig.PUSHIID = 'pushid';
 StorageConfig.LAST_PHONE = 'last_phone';//上次登录手机号
-const nothead = require('./images/nothead.png');
-const official = require('./images/official.png');
+StorageConfig.LABEL_HISTORY = 'label_history';//标签历史
 
+
+const nothead = require('./images/nothead.png');
+const notphoto = require('./images/notphoto.png');
+const official = require('./images/official.png');
+const zoomin = require('./images/zoom_in.png');
+const clear = require('./images/clear.png');
 var ImageConfig = {
 
 }
 ImageConfig.nothead = nothead;
+ImageConfig.notphoto = notphoto;
 ImageConfig.official = official;
+ImageConfig.zoomin = zoomin;
+ImageConfig.clear = clear;
 
 var UIName = {}
 UIName.LoginUI = 'LoginUI';
@@ -65,7 +73,7 @@ UIName.RegisterUI = 'RegisterUI';
 UIName.PersonalUI = 'PersonalUI';
 UIName.DetailsUI = 'DetailsUI';
 UIName.AddPoemUI = 'AddPoemUI';
-UIName.ModifyPoemUI = 'ModifyPoemUI';
+// UIName.ModifyPoemUI = 'ModifyPoemUI';
 UIName.CommentUI = 'CommentUI';
 UIName.LovesUI = 'LovesUI';
 UIName.MsgContentUI = 'MsgContentUI';
@@ -79,6 +87,7 @@ UIName.AgreementUI = 'AgreementUI';
 UIName.ReportUI = 'ReportUI';
 UIName.ProtocolUI = 'ProtocolUI';
 UIName.FollowUI = 'FollowUI';
+UIName.PoemLabelUI = 'PoemLabelUI';
 
 var Permission = {
 
