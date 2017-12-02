@@ -117,16 +117,16 @@ class ChatUI extends React.Component<Props,State>{
     this.timer && clearTimeout(this.timer)
   }
   shouldComponentUpdate(nextProps, nextState){
-    console.log('----- ChatUI() shouldComponentUpdate')
-    if(nextProps.papp.push_chat_user !== this.props.papp.push_chat_user){
-      Object.assign(this.props.papp,nextProps.papp);
-      if(this.props.papp.push_chat_user){
+    if(nextProps.papp.push_chat_user&&!this.props.papp.push_chat_user){//
+      console.log('----- ChatUI() shouldComponentUpdate')
+      console.log('------change push_chat_user')
+      console.log('------nextProps.papp.push_chat_user:',nextProps.papp.push_chat_user)
+      console.log('------this.props.papp.push_chat_user:',this.props.papp.push_chat_user)
         let db_chats = ChatDao.queryUnreadChats(this.state.tuserid);
         this._setRead(db_chats);
         this._addMessages(db_chats);
         let { dispatch } = this.props.navigation;
         dispatch(UserActions.raSetPushChatUser(false));
-      }
     }
     return true;
   }

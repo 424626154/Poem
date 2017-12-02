@@ -53,7 +53,7 @@ class WorksUI extends React.Component<Props,State> {
          headerStyle:HeaderConfig.headerStyle,
          headerLeft:(<NavBack navigation={navigation}/>),
       });
-
+      refresh_time:number;
       // 数据容器，用来存储数据
       constructor(props) {
           super(props);
@@ -72,6 +72,7 @@ class WorksUI extends React.Component<Props,State> {
          }
      }
      componentWillUnmount(){
+       this.refresh_time && clearTimeout(this.refresh_time);
      }
      shouldComponentUpdate(nextProps, nextState){
        //切换用户id
@@ -85,30 +86,8 @@ class WorksUI extends React.Component<Props,State> {
          }else{
            let { dispatch } = this.props.navigation;
            dispatch(PoemsActions.raUpMyPoems([]));
-           // this.setState({
-           //   sourceData: [],
-           // });
          }
        }
-       // if(nextProps.papp.user.per,this.props.papp.user.per){
-         // Object.assign(this.props.papp,nextProps.papp);
-       // }
-       // if(nextProps.mypoems !== this.props.mypoems){
-       //   console.log('------WorksUI() shouldComponentUpdate')
-       //   console.log('------change mypoems')
-       //   console.log('------nextProps.mypoems')
-       //   console.log(nextProps.mypoems)
-       //   console.log('------this.props.mypoems)')
-       //   console.log(this.props.mypoems)
-       //   // console.log(this.state.sourceData)
-       //   // // Object.assign(this.props.mypoems,nextProps.mypoems);
-       //   // // let mypoems = Object.assign([], this.props.mypoems);//此次需要用const 用let不刷新
-       //   // this.props.mypoems = [...nextProps.mypoems];
-       //   // let  mypoems = [...this.props.mypoems];
-       //   // this.setState({
-       //   //   sourceData:mypoems,
-       //   // })
-       // }
        return true;
      }
    render() {
@@ -219,7 +198,7 @@ class WorksUI extends React.Component<Props,State> {
       if(!this.props.papp.userid){
         return;
       }
-     this.setState({refreshing: true})
+     this._startRefres();
      var fromid = 0;
      // if(this.state.sourceData.length > 0 ){
      //   fromid = this.state.sourceData[this.state.sourceData.length-1].id;
@@ -246,13 +225,26 @@ class WorksUI extends React.Component<Props,State> {
               // });
             }
        }else{
-         Alert.alert(res.errmsg);
+        showToast(res.errmsg);
        }
-       this.setState({refreshing: false});
+       this._endRefres()
      }).catch(err=>{
        console.log(err);
      })
   };
+  _startRefres(){
+    this.setState({refreshing: true})
+    this.refresh_time = setTimeout(
+    () => {
+      if(this.state.refreshing){
+        this.setState({refreshing: false})
+      }
+    },3000);
+  }
+    _endRefres(){
+      this.setState({refreshing: false});
+      this.refresh_time&&clearTimeout(this.refresh_time);
+    }
    /**
     * 添加按钮
     */
@@ -298,7 +290,7 @@ class WorksUI extends React.Component<Props,State> {
        if(!this.props.papp.userid){
          return;
        }
-      this.setState({refreshing: true});
+      this._startRefres();
       var fromid = 0;
       // if(this.state.sourceData.length > 0 ){
       //   fromid = this.state.sourceData[0].id;
@@ -328,7 +320,7 @@ class WorksUI extends React.Component<Props,State> {
         }else{
           showToast(res.errmsg);
         }
-        this.setState({refreshing: false});
+        this._endRefres()
       }).catch(err=>{
         console.error(err);
       });

@@ -128,6 +128,7 @@ export default function poems(state:any=initialState, action:any){
 			for(var i = 0 ; i < homepoems.length ; i ++ ){
 				if(homepoems[i].id == action.poem.id){
 					homepoems[i].mylove = action.poem.mylove;
+					homepoems[i].lovenum = action.poem.lovenum;
 					clone1 = true;
 				}
 			}
@@ -151,6 +152,7 @@ export default function poems(state:any=initialState, action:any){
 					homepoems[i].lovenum = action.poem.lovenum;
 					homepoems[i].commentnum = action.poem.commentnum;
 					clone1 = true;
+					console.log('-----change homepoems')
 				}
 			}
 			if(clone1){

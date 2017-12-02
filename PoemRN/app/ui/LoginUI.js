@@ -31,6 +31,8 @@ import{
 import{
       NavBack,
       }from '../custom/Custom';
+import AnalyticsUtil from '../AnalyticsUtil';
+
 type Props = {
     navigation:any,
 };
@@ -311,6 +313,7 @@ class LoginUI extends React.Component<Props,State> {
           let userid = user.userid;
           let { dispatch } = this.props.navigation;
           dispatch(UserActions.raAutoLogin(userid));
+          AnalyticsUtil.profileSignInWithPUID(userid);
           Storage.saveUserid(userid);
           Storage.saveLastPhone(this.state.phone);
           this.props.navigation.goBack();

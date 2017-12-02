@@ -29,6 +29,7 @@ import{
 import{
       NavBack,
       }from '../custom/Custom';
+import AnalyticsUtil from '../AnalyticsUtil';
 
 type Props = {
     navigation:any,
@@ -335,6 +336,7 @@ export default class RegisterUI extends React.Component<Props,State> {
             Storage.saveUserid(userid);
             let { dispatch } = this.props.navigation;
             dispatch(UserActions.raAutoLogin(userid));
+            AnalyticsUtil.profileSignInWithPUID(userid);
             const fui = this.props.navigation.state.params.fui;
             console.log('------fui:'+fui);
             this.props.navigation.navigate(UIName.PerfectUI,{fui:fui});

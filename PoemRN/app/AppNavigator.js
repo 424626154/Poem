@@ -42,6 +42,7 @@ import AgreementUI from './ui/AgreementUI';
 import ReportUI from './ui/ReportUI';
 import ProtocolUI from './ui/ProtocolUI';
 import PoemLabelUI from './ui/PoemLabelUI';
+import AnnotationUI from './ui/AnnotationUI';
 
 const Tabs = TabNavigator({
   HomeTab: {
@@ -179,6 +180,9 @@ const AppNavigator = StackNavigator({
   },
   PoemLabelUI:{
     screen:PoemLabelUI,
+  },
+  AnnotationUI:{
+    screen:AnnotationUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

@@ -10,11 +10,13 @@
        View,
        TouchableOpacity,
       } from 'react-native';
- import {StyleConfig,UIName,pstyles,PImage} from '../AppUtil';
+ import {StyleConfig,UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
+const boundary = 80;
  type Props = {
     onPressItem:Function,
     id:string,
-    poem:Object,
+    item:Object,
+    extend:Object,
     time:string,
  };
 class PersonalListItem extends React.PureComponent<Props> {
@@ -29,19 +31,7 @@ class PersonalListItem extends React.PureComponent<Props> {
                 >
                 <View style={styles.fitem}>
                   {/* 诗歌 */}
-                  <View style={styles.poem_bg}>
-                  <View style={styles.poem}>
-                    <Text style={pstyles.poem_title}>
-                      {this.props.poem.title}
-                    </Text>
-                    <Text
-                      style={pstyles.poem_content}
-                      numberOfLines={8}
-                    >
-                      {this.props.poem.content}
-                    </Text>
-                  </View>
-                  </View>
+                  {this._renderPoem(this.props.item,this.props.extend)}
                   <View style={styles.fitem_more}>
                     <Text style={styles.fitem_time}>
                       {this.props.time}
@@ -50,6 +40,76 @@ class PersonalListItem extends React.PureComponent<Props> {
                 </View>
             </TouchableOpacity>
         );
+    }
+    _renderPoem(item,extend){
+      if(this._isPhoto(extend)){
+        return(
+          <View style={pstyles.poem}>
+            <View style={pstyles.photo}>
+              <PImage
+                style={this._getStyle(extend)}
+                source={Utils.getPhoto(extend.photo)}
+                noborder={true}
+                />
+            </View>
+              <Text style={pstyles.poem_title}>
+                {item.title}
+              </Text>
+              <Text
+                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                numberOfLines={1}
+                ellipsizeMode='tail'
+              >
+                {item.content}
+              </Text>
+          </View>
+        )
+      }else{
+        return(
+          <View style={pstyles.poem}>
+            <Text style={pstyles.poem_title}>
+              {item.title}
+            </Text>
+            <Text
+              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              numberOfLines={8}
+              ellipsizeMode='tail'
+            >
+              {item.content}
+            </Text>
+          </View>
+        )
+      }
+    }
+
+    _isPhoto(extend){
+      let isphoto = false;
+      if(extend&&extend.photo&&extend.pw&&extend.ph){
+        isphoto = true;
+      }
+      return isphoto;
+    }
+    _getStyle(extend){
+        let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
+        if(extend.pw > extend.ph){
+          let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+          style = Object.assign({},style,style1)
+        }
+        if(extend.pw < extend.ph){
+          let style2 = {resizeMode:'cover'}
+          style = Object.assign({},style,style2)
+          console.log('-------_getStyle')
+          console.log(style)
+        }
+        return style;
+    }
+    _renderAlign(item){
+      let align = 'center';
+      if(item.extend){
+        let extend = JSON.parse(item.extend)
+        if(extend.align)align = extend.align
+      }
+      return align;
     }
 }
 

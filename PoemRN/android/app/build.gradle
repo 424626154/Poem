@@ -102,8 +102,8 @@ android {
         applicationId "com.sbb.poem"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 9
-        versionName "1.0"
+        versionCode 11
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -111,6 +111,7 @@ android {
                 JPUSH_APPKEY: "cc767f6ba7191d12afe767af", //在此替换你的APPKey
                 APP_CHANNEL: "developer-default"    //应用渠道号
         ]
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -157,10 +158,16 @@ android {
 // //        yingyongbao {dimension "default"} // 腾讯应用宝
 //         fir_im {dimension "default"} // 豌豆荚
 //     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 def releaseTime() {
     return new Date().format("yyyy-MM-dd_HH:mm", TimeZone.getDefault())
 }
+
 dependencies {
     api project(':react-native-fetch-blob')
     implementation project(':realm')
@@ -168,11 +175,20 @@ dependencies {
     api project(':react-native-device-info')
     api project(':react-native-image-crop-picker')
     api project(':jpush-react-native')
-    api project(':jcore-react-native')  // 添加 jcore 依赖
+    api project(':jcore-react-native')
+    // 添加 jcore 依赖
     api project(':react-native-splash-screen')
-    api fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:26.0.0-beta1"
-    api "com.facebook.react:react-native:+"  // From node_modules
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
+    api 'com.facebook.react:react-native:+'
+    // From node_modules
+    implementation files('libs/umeng-common-1.4.0.jar')
+    implementation files('libs/umeng-analytics-7.4.0.jar')
+    implementation files('libs/umerror_android_1.0.0.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng-visual-base-1.0.0.jar')
+    implementation files('libs/umeng-visual-connect-1.0.0.jar')
 }
 
 // Run this once to be able to run the application with BUCK

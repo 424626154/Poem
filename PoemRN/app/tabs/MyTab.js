@@ -69,29 +69,10 @@ class MyTab extends React.Component<Props,State> {
      // this._reloadUserInfo();
    }
    componentWillUnmount(){
+     
    }
-   // componentWillReceiveProps(){
-   //   console.log('---MyTab() componentWillReceiveProps');
-   // }
+
    shouldComponentUpdate(nextProps, nextState){
-     console.log('---MyTab() shouldComponentUpdate');
-     // console.log('---nextProps');
-     // console.log(nextProps)
-     // console.log('---nextState');
-     // console.log(nextState);
-     // console.log(nextProps.papp)
-     console.log(this.props.papp);
-     //用户信息更新 或者id
-     // if(nextProps.papp.user !== this.props.papp.user
-     //   ||nextProps.papp.userid !== this.props.papp.userid){
-     //    console.log('---up papp');
-     //   // Object.assign(this.props.papp,nextProps.papp);
-     //   this._reloadUserInfo();
-     // }
-     // if(this.props.papp.userid != this.state.userid){
-     //   console.log('---up papp1');
-     //   this._reloadUserInfo();
-     // }
      return true;
    }
   render() {

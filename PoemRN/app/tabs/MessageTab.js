@@ -92,42 +92,23 @@ class MessageTab extends Component <Props,State>{
      }
      shouldComponentUpdate(nextProps, nextState){
        //切换用户id
-       if(nextProps.papp.userid !== this.props.papp.userid){
-         console.log('---MessageTab() up papp');
-         console.log(nextProps.papp)
-         console.log(this.props.papp)
-       }
-       console.log('------MessageTab() shouldComponentUpdate ')
-       console.log('--- nextProps push_news',nextProps.papp.push_news)
-       console.log('--- this.props push_news',this.props.papp.push_news)
-       console.log('--- nextProps push_chat',nextProps.papp.push_chat)
-       console.log('--- this.props push_chat',this.props.papp.push_chat)
-       if(nextProps.papp.push_news !== this.props.papp.push_news){
-         Object.assign(this.props.papp,nextProps.papp);
-         console.log('--- up push_news');
-         if(!this.props.papp.push_news){
-           return false;
-         }
-       }
-       if(this.props.papp.push_news){
-         if(this.refs.NewsPage)this.refs.NewsPage._pushNews();
+       if(nextProps.papp.push_news&&nextProps.papp.push_news !== this.props.papp.push_news){
+         console.log('------MessageTab() shouldComponentUpdate ')
+         console.log('------change push_news');
+         console.log('------nextProps push_news',nextProps.papp.push_news)
+         console.log('------this.props push_news',this.props.papp.push_news)
          let { dispatch } = this.props.navigation;
          dispatch(UserActions.raSetPushNews(false));
-         console.log('--- set push_news');
+         this.refs.NewsPage&&this.refs.NewsPage._pushNews();
        }
-       if(nextProps.papp.push_chat !== this.props.papp.push_chat){
-         Object.assign(this.props.papp,nextProps.papp);
-         console.log('--- up push_chat');
-         if(!this.props.papp.push_chat){
-           return false;
-         }
-       }
-       if(this.props.papp.push_chat){
-         console.log(this.refs.ChatPage)
-         if(this.refs.ChatPage)this.refs.ChatPage._pushChat();
+       if(nextProps.papp.push_chat&&nextProps.papp.push_chat !== this.props.papp.push_chat){
+         console.log('------MessageTab() shouldComponentUpdate ')
+         console.log('------change push_chat');
+         console.log('------nextProps push_chat',nextProps.papp.push_chat)
+         console.log('------this.props push_chat',this.props.papp.push_chat)
          let { dispatch } = this.props.navigation;
          dispatch(UserActions.raSetPushChat(false));
-         console.log('--- set push_chat');
+         this.refs.ChatPage&&this.refs.ChatPage._pushChat();
        }
        return true;
      }

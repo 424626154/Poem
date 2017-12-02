@@ -46,6 +46,13 @@
 		66562CBF5B8048EABBA6704F /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 324342F33A864DFA971E83DD /* MaterialIcons.ttf */; };
 		668DB198C6424313BF77C7A2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0CD32E74F436A99604CD8 /* Security.framework */; };
 		685233D0609D45EEBCC9DDA6 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849D9B858A1447A98BAAF7E5 /* Ionicons.ttf */; };
+		6939F8771FD1858000D8BD65 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939F8741FD1858000D8BD65 /* UMCommon.framework */; };
+		6939F8781FD1858000D8BD65 /* UMErrorCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939F8751FD1858000D8BD65 /* UMErrorCatch.framework */; };
+		6939F8791FD1858000D8BD65 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939F8761FD1858000D8BD65 /* UMAnalytics.framework */; };
+		6939F8821FD189A900D8BD65 /* RNUMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 6939F87F1FD189A900D8BD65 /* RNUMConfigure.m */; };
+		6939F8831FD189A900D8BD65 /* UMAnalyticsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6939F8801FD189A900D8BD65 /* UMAnalyticsModule.m */; };
+		6939F8851FD18B1300D8BD65 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939F8841FD18B1300D8BD65 /* libsqlite3.tbd */; };
+		6939F9481FD26D2F00D8BD65 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939F91B1FD26D2F00D8BD65 /* libc++abi.tbd */; };
 		69424B741FCC113400720323 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69424B731FCC113400720323 /* RSKImageCropper.framework */; };
 		69424B751FCC113400720323 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 69424B731FCC113400720323 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		69424B771FCC113900720323 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69424B761FCC113900720323 /* QBImagePicker.framework */; };
@@ -458,6 +465,15 @@
 		5C0F23CBEA8F4EA2B8AB7CD2 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		633708513CBF4F56B1CDC240 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6939F8741FD1858000D8BD65 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
+		6939F8751FD1858000D8BD65 /* UMErrorCatch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMErrorCatch.framework; sourceTree = "<group>"; };
+		6939F8761FD1858000D8BD65 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
+		6939F87E1FD189A900D8BD65 /* UMAnalyticsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsModule.h; sourceTree = "<group>"; };
+		6939F87F1FD189A900D8BD65 /* RNUMConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNUMConfigure.m; sourceTree = "<group>"; };
+		6939F8801FD189A900D8BD65 /* UMAnalyticsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAnalyticsModule.m; sourceTree = "<group>"; };
+		6939F8811FD189A900D8BD65 /* RNUMConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNUMConfigure.h; sourceTree = "<group>"; };
+		6939F8841FD18B1300D8BD65 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		6939F91B1FD26D2F00D8BD65 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		69424B731FCC113400720323 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69424B761FCC113900720323 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69424C2E1FCD0B1900720323 /* HYZhongSongJ.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HYZhongSongJ.ttf; sourceTree = "<group>"; };
@@ -504,6 +520,7 @@
 			files = (
 				69FDBFE41FCEF5750024AC9F /* libSplashScreen.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
+				6939F8771FD1858000D8BD65 /* UMCommon.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -518,7 +535,9 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				69FDBFE51FCEF5CB0024AC9F /* libRCTJCoreModule.a in Frameworks */,
 				69FDBFE61FCEF5E30024AC9F /* libRCTJPushModule.a in Frameworks */,
+				6939F9481FD26D2F00D8BD65 /* libc++abi.tbd in Frameworks */,
 				EBE277ACA04C454997731273 /* libz.tbd in Frameworks */,
+				6939F8851FD18B1300D8BD65 /* libsqlite3.tbd in Frameworks */,
 				0EDE4BFCDA554A53B28C33C1 /* UserNotifications.framework in Frameworks */,
 				55696D66F1FF41949FE4D9E5 /* CoreTelephony.framework in Frameworks */,
 				668DB198C6424313BF77C7A2 /* Security.framework in Frameworks */,
@@ -531,10 +550,12 @@
 				69424B741FCC113400720323 /* RSKImageCropper.framework in Frameworks */,
 				3013F2689D0244868A20B575 /* libresolv.tbd in Frameworks */,
 				E4B5E637C96F48099F047721 /* CoreGraphics.framework in Frameworks */,
+				6939F8781FD1858000D8BD65 /* UMErrorCatch.framework in Frameworks */,
 				69FDBFE71FCEF5FC0024AC9F /* libimageCropPicker.a in Frameworks */,
 				69FDBFE81FCEF60A0024AC9F /* libRNDeviceInfo.a in Frameworks */,
 				69FDBFE91FCEF6160024AC9F /* libRNVectorIcons.a in Frameworks */,
 				69FDBFEA1FCEF6270024AC9F /* libRealmReact.a in Frameworks */,
+				6939F8791FD1858000D8BD65 /* UMAnalytics.framework in Frameworks */,
 				0EF323E059524F67A4B4C99F /* libc++.tbd in Frameworks */,
 				69FDBFEB1FCEF6320024AC9F /* libRNFetchBlob.a in Frameworks */,
 			);
@@ -647,6 +668,7 @@
 		13B07FAE1A68108700A75B9A /* PoemRN */ = {
 			isa = PBXGroup;
 			children = (
+				6939F87D1FD189A900D8BD65 /* UMReactBridge */,
 				69DD27281FCC008900259067 /* Default-568.png */,
 				69DD27211FCBFF2E00259067 /* PoemRN.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -771,6 +793,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6939F8731FD1858000D8BD65 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				6939F8741FD1858000D8BD65 /* UMCommon.framework */,
+				6939F8751FD1858000D8BD65 /* UMErrorCatch.framework */,
+				6939F8761FD1858000D8BD65 /* UMAnalytics.framework */,
+			);
+			name = UIComponents;
+			path = PoemRN/UIComponents;
+			sourceTree = "<group>";
+		};
+		6939F87D1FD189A900D8BD65 /* UMReactBridge */ = {
+			isa = PBXGroup;
+			children = (
+				6939F87E1FD189A900D8BD65 /* UMAnalyticsModule.h */,
+				6939F87F1FD189A900D8BD65 /* RNUMConfigure.m */,
+				6939F8801FD189A900D8BD65 /* UMAnalyticsModule.m */,
+				6939F8811FD189A900D8BD65 /* RNUMConfigure.h */,
+			);
+			name = UMReactBridge;
+			path = PoemRN/UMReactBridge;
+			sourceTree = "<group>";
+		};
 		69424C011FCD0AFB00720323 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,6 +911,8 @@
 		B232E544376E443BA3E0AF9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6939F91B1FD26D2F00D8BD65 /* libc++abi.tbd */,
+				6939F8841FD18B1300D8BD65 /* libsqlite3.tbd */,
 				3DA2C3DA0ABD44C29BBE0703 /* libz.tbd */,
 				59FC5A984F4C49888FCA3722 /* UserNotifications.framework */,
 				E0D4FB96C7A14C64ACACEB21 /* CoreTelephony.framework */,
@@ -885,6 +932,7 @@
 		DFF9B186E6F6470195D190C5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6939F8731FD1858000D8BD65 /* UIComponents */,
 				69424C011FCD0AFB00720323 /* fonts */,
 				C05BD001B21647169C63D09A /* Entypo.ttf */,
 				2536EBC9350F45B3AA76FE13 /* EvilIcons.ttf */,
@@ -1520,6 +1568,8 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6939F8831FD189A900D8BD65 /* UMAnalyticsModule.m in Sources */,
+				6939F8821FD189A900D8BD65 /* RNUMConfigure.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1662,6 +1712,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PoemRN/UIComponents",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1694,6 +1748,10 @@
 				CODE_SIGN_ENTITLEMENTS = PoemRN/PoemRN.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZERU4NU5ED;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PoemRN/UIComponents",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",

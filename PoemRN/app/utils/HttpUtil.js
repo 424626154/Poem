@@ -120,7 +120,7 @@ HttpUtil.post = function(rep_url:string,body:any):Promise<Object> {
 //     });
 // };
 
-HttpUtil.uploadImageData = function(imagedata:any):Promise<Object>{
+HttpUtil.uploadImageData = function(imagedata:any,zoom:number=8):Promise<Object>{
   return new Promise(function (resolve, reject) {
       console.log(imagedata);
       let uri = imagedata['path'];
@@ -156,11 +156,15 @@ HttpUtil.uploadImageData = function(imagedata:any):Promise<Object>{
          name: 'file',
          filename: name,
          data: RNFetchBlob.wrap(PATH)
+     },{
+       name:'info',
+       data:JSON.stringify({zoom:zoom})
      }];
      RNFetchBlob
          .fetch('POST',url,{
              // 上传图片要设置Header
              'Content-Type' : 'multipart/form-data',
+             // 'zoom':zoom,
          },body)
          .uploadProgress((written, total) => {
              // 本地查找进度

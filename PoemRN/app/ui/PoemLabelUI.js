@@ -26,6 +26,7 @@ import{
       NavBack,
       }from '../custom/Custom';
 import { Icon } from 'react-native-elements';
+import PeomLabelListItem from '../custom/PoemLabelListItem';
 const label_max = 5;
 type Props = {
       navigation:any,
@@ -39,6 +40,7 @@ type State = {
     historys:Array<string>,
     historysdata:Array<Object>,
     label_clear:boolean,
+    selected:Map<string, boolean>,
 };
 
 export default class PoemLabelUI extends React.Component<Props,State> {
@@ -51,14 +53,14 @@ export default class PoemLabelUI extends React.Component<Props,State> {
      });
 
     // _onAddLabel:Function;
-    // _onDeleteHistory:Function;
+    _onDeleteHistory:Function;
     _renderHItem:Function;
-    // constructor(props) {
-    //     super(props);
+    constructor(props:Props) {
+        super(props);
      // this._renderHItem = this._renderHItem.bind(this);
      // this._onAddLabel = this._onAddLabel.bind(this);
-     // this._onDeleteHistory = this._onDeleteHistory.bind(this);
-   // }
+     this._onDeleteHistory = this._onDeleteHistory.bind(this);
+   }
    state = {
       addlabel:'',
       labelviews:[],
@@ -66,6 +68,7 @@ export default class PoemLabelUI extends React.Component<Props,State> {
       historys:[],
       historysdata:[],
       label_clear:false,
+      selected: (new Map(): Map<string, boolean>),
     }
 
     shouldComponentUpdate(nextProps:Props, nextState:State){
@@ -168,10 +171,11 @@ export default class PoemLabelUI extends React.Component<Props,State> {
             </View>
             <FlatList
               data={this.state.historysdata}
+              extraData={ this.state.selected }
+              keyExtractor={(item, index) => index+'' }
               renderItem={this._renderHItem}
               ItemSeparatorComponent={({highlighted}) => (<View style={pstyles.separator}></View>)}
             />
-
           </View>
       </View>
     )
@@ -251,33 +255,23 @@ export default class PoemLabelUI extends React.Component<Props,State> {
   }
   _renderHItem = ({item}:Object)=>{
     return(
-      <TouchableOpacity
-        key={item.key}
-        style={styles.hitem}
-        onPress={()=>{
-            this._onAddLabel(item.name);
-        }}
-        >
-        <Text style={styles.hitem_name}>
-            {item.name}
-        </Text>
-        <TouchableOpacity
-          style={styles.hitem_clear}
-          onPress={()=>{
-            this._onDeleteHistory(item.name);
-          }}
-          >
-          <Icon
-            name='clear'
-            size={30}
-            type="MaterialIcons"
-            color={StyleConfig.C_D4D4D4}
-          />
-        </TouchableOpacity>
-      </TouchableOpacity>
+      <PeomLabelListItem
+        id={item.key}
+        item={item}
+        selected={ !!this.state.selected.get(item.id) }
+        onPressItem={this._onPressItem}
+        onDeleteHistory={this._onDeleteHistory}
+      />
     )
   }
-
+  _onPressItem = (id: string,item:Object) => {
+      this.setState((state) => {
+          const selected = new Map(state.selected);
+          selected.set(id, !selected.get(id));
+          return {selected}
+      });
+     this._onAddLabel(item.name)
+  };
   /**
    * 转成labels字符串
    */
@@ -390,7 +384,8 @@ export default class PoemLabelUI extends React.Component<Props,State> {
     let params = this.props.navigation.state.params;
     params.onChangeLabels&&params.onChangeLabels(labels_str)
   }
-  _onDeleteHistory(dellable:string){
+  _onDeleteHistory(item:Object){
+    let dellable = item.name;
     if(this.state.historysdata.length < 0){
       return;
     }
@@ -491,15 +486,4 @@ const styles = StyleSheet.create({
       color:StyleConfig.C_232323,
       fontSize:20,
     },
-    hitem:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      padding:10,
-    },
-    hitem_name:{
-      color:StyleConfig.C_000000,
-    },
-    hitem_clear:{
-
-    }
 });

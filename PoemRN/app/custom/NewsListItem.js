@@ -64,14 +64,14 @@ export default class NewsListItem extends React.Component<Props>{
             onPress={this._onPress}
             >
             <View style={[styles.msg,{backgroundColor:message.state == 1?StyleConfig.C_FFFFFF:'#d4d4d422'}]}>
-              <TouchableNativeFeedback
+              <TouchableOpacity
                 style={styles.msg_icon}
                 onPress={this._onIcon}>
                 <PImage
                   style={pstyles.small_head}
                   source={this._logicSource(message)}
                   />
-              </TouchableNativeFeedback>
+              </TouchableOpacity>
               <View style={styles.msg_text}>
                 {this._renderMsg(message)}
               </View>

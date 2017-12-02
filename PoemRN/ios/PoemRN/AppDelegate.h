@@ -13,6 +13,9 @@ static NSString *jpush_appKey = @"cc767f6ba7191d12afe767af";     //填写appkey
 static NSString *jpush_channel = @"";    //填写channel   一般为nil
 static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
 
+static NSString *um_appkey = @"5a214740a40fa32e1d000361";
+static NSString *um_channel = @"App Store";
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;

@@ -25,6 +25,7 @@ type Props = {
       onShowSelect:Function,
       onImagePicker:Function,//0相机 1相册
       onLabel:Function,//标签页
+      onAnnotation:Function,//注释页
 }
 type State = {
       align:string,
@@ -53,38 +54,48 @@ export default class WritingToolbar extends React.Component<Props,State>{
     callbackSelected:Function;
     render(){
       return(
-        <View style={styles.bg}>
-          <TouchableOpacity style={styles.item}
-            onPress={()=>{
-              this.setState({align:'left'})
-              this.props.onItem('left');
-            }}>
-            <Icon
-              name='format-align-left'
-              size={30}
-              type="MaterialIcons"
-              color={this._renderIcon('left')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.item}
-            onPress={()=>{
-              this.setState({align:'center'})
-              this.props.onItem('center');
-            }}>
-            <Icon
-              name='format-align-center'
-              size={30}
-              type="MaterialIcons"
-              color={this._renderIcon('center')}
-            />
-          </TouchableOpacity>
-          {this._renderToolItem('crop-original',()=>{
-            this._onShowPhoto();
-          })}
-          {this._renderToolItem('label',()=>{
-            this.props.onLabel();
-          })}
+        <View>
           {this._renderModel()}
+          <View style={styles.bg}>
+            <TouchableOpacity style={styles.item}
+              onPress={()=>{
+                this.setState({align:'left'})
+                this.props.onItem('left');
+              }}>
+              <Icon
+                name='format-align-left'
+                size={30}
+                type="MaterialIcons"
+                color={this._renderIcon('left')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}
+              onPress={()=>{
+                this.setState({align:'center'})
+                this.props.onItem('center');
+              }}>
+              <Icon
+                name='format-align-center'
+                size={30}
+                type="MaterialIcons"
+                color={this._renderIcon('center')}
+              />
+            </TouchableOpacity>
+            {/* 添加照片 */}
+            {this._renderToolItem('crop-original',()=>{
+              // console.log('------_onShowPhoto')
+              this._onShowPhoto();
+            })}
+            {/* 添加标签 */}
+            {this._renderToolItem('label',()=>{
+              this.props.onLabel();
+            })}
+            {/* 添加注释 */}
+            {this._renderToolItem('date-range',()=>{
+              this.props.onAnnotation();
+            })}
+            {/* {this._renderModel()} */}
+          </View>
         </View>
       )
     }
@@ -123,9 +134,12 @@ export default class WritingToolbar extends React.Component<Props,State>{
         //       console.log('onShow')
         //   }}
         //   >
+        console.log('------_renderModel',this.state.model)
         if(this.state.model){
+          console.log('------this.state.model',this.state.model)
+          console.log('------this.state.photo',this.state.photo)
           return(
-            <View style={{flex:1,position: 'absolute',bottom:0}}>
+            <View >
               {this._renderPhotoModel()}
               {this._renderSelectModle()}
             </View>
@@ -291,6 +305,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     right:0,
+    top:4,
     width:40,
     height:40,
   },
@@ -299,6 +314,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     right:40,
+    top:4,
     width:40,
     height:40,
   },
@@ -307,7 +323,6 @@ const styles = StyleSheet.create({
     // backgroundColor:'#ff00ff',
   },
   mbg:{
-    height:40,
     width:width,
     flexDirection:'row',
     backgroundColor:StyleConfig.C_FFFFFF,
@@ -315,7 +330,7 @@ const styles = StyleSheet.create({
     borderTopColor:StyleConfig.C_D4D4D4,
     paddingLeft:10,
     paddingRight:10,
-    position: 'absolute',
-    bottom:40,
+    // position: 'absolute',
+    // bottom:40,
   }
 })

@@ -10,12 +10,16 @@ AppConf.DEBUG = 'debug';
 AppConf.ALI = 'ali';
 AppConf.APPSTORE = 'appstore';
 AppConf.YIYONGBAO = 'yingyongbao';
+AppConf.FIR_IM = 'fir_im';
 
+//服务器环境
 // AppConf.ENV = AppConf.DEBUG;
 AppConf.ENV = AppConf.ALI;
-
-AppConf.IOS_CHANNEL = AppConf.APPSTORE
-AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO
+// ios渠道
+AppConf.IOS_CHANNEL = AppConf.APPSTORE;
+//android渠道
+AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO;
+// AppConf.ANDROID_CHANNEL = AppConf.FIR_IM;
 
 AppConf.DEBUG_IP = '192.168.1.7';
 // AppConf.DEBUG_IP = 'localhost';

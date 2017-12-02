@@ -16,6 +16,13 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "SplashScreen.h"
+#import "RNUMConfigure.h"
+#import <UMAnalytics/MobClick.h>
+#import <UMErrorCatch/UMErrorCatch.h>
+
+@interface AppDelegate ()<JPUSHRegisterDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -29,7 +36,12 @@
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-
+  //  友盟
+  [UMConfigure setLogEnabled:YES];
+  [MobClick setScenarioType:E_UM_DPLUS];
+  [RNUMConfigure initWithAppkey:um_appkey channel:um_channel];
+  [UMErrorCatch initErrorCatch];
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"PoemRN"
                                                initialProperties:nil
@@ -57,7 +69,7 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-[JPUSHService registerDeviceToken:deviceToken];
+    [JPUSHService registerDeviceToken:deviceToken];
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
@@ -66,11 +78,11 @@
 [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
- NSDictionary * userInfo = notification.request.content.userInfo;
-  [JPUSHService handleRemoteNotification:userInfo];
- [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
-    
- completionHandler(UNNotificationPresentationOptionAlert);
+   NSDictionary * userInfo = notification.request.content.userInfo;
+    [JPUSHService handleRemoteNotification:userInfo];
+   [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+  
+   completionHandler(UNNotificationPresentationOptionAlert);
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
 NSDictionary * userInfo = response.notification.request.content.userInfo;

@@ -107,8 +107,10 @@ class CommentUI extends React.Component<Props,State>{
     HttpUtil.post(HttpUtil.POEM_COMMENTPOEM,json).then((data)=>{
       if(data.code == 0){
         var comment = data.data;
-        let { dispatch } = this.props.navigation;
-        dispatch(UserActions.raRefComment(true));
+        // let { dispatch } = this.props.navigation;
+        // dispatch(UserActions.raRefComment(true));
+        let params = this.props.navigation.state.params;
+        params.onComment&&params.onComment(comment) 
         showToast('评论成功')
         this.props.navigation.goBack();
       }else{

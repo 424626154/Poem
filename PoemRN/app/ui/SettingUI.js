@@ -21,6 +21,7 @@ import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
 import {ImageCache} from "react-native-img-cache";
 import DeviceInfo from 'react-native-device-info';
+import AnalyticsUtil from '../AnalyticsUtil';
 
 import {
         StyleConfig,
@@ -73,37 +74,35 @@ class SettingUI extends React.Component<Props,State> {
      }
      componentDidMount(){
         let type = ''
-        if(AppConf.ENV = AppConf.DEBUG){
+        if(AppConf.ENV == AppConf.DEBUG){
             type = 'Debug_';
-        }else if(AppConf.ENV = AppConf.ALI){
+        }else if(AppConf.ENV == AppConf.ALI){
             // type = 'Bate_';
             type = '';
         }
+        console.log('------type:',type)
         var version = '版本信息:'+type+DeviceInfo.getVersion()
         this.setState({
           version:version,
           update:false,
         });
-        if(Platform.OS == 'ios'&&//appstore 关闭版本更新
-          AppConf.IOS_CHANNEL == AppConf.APPSTORE){
-            return;
-          }
-        if(Platform.OS == 'android'&&//应用宝 关闭版本更新
-          AppConf.ANDROID_CHANNEL == AppConf.YIYONGBAO){
-            return;
-          }
-        FirIm.queryVersion().then((ver)=>{
-          if(ver.versionShort != DeviceInfo.getVersion()
-          || ver.build != DeviceInfo.getBuildNumber()){
-            this.setState({update:true});
-          }else{
-            this.setState({update:false});
-          }
-          // console.log(ver.versionShort)
-          // console.log(ver.build );
-          // console.log(DeviceInfo.getVersion());
-          // console.log(DeviceInfo.getBuildNumber());
-        });
+        // fir_im更新
+        if(Platform.OS == 'android'
+        &&AppConf.ENV == AppConf.ALI
+        &&AppConf.ANDROID_CHANNEL == AppConf.FIR_IM){
+          FirIm.queryVersion().then((ver)=>{
+            if(ver.versionShort != DeviceInfo.getVersion()
+            || ver.build != DeviceInfo.getBuildNumber()){
+              this.setState({update:true});
+            }else{
+              this.setState({update:false});
+            }
+            // console.log(ver.versionShort)
+            // console.log(ver.build );
+            // console.log(DeviceInfo.getVersion());
+            // console.log(DeviceInfo.getBuildNumber());
+          });
+        }
      }
      componentWillUnmount(){
 
@@ -214,41 +213,38 @@ class SettingUI extends React.Component<Props,State> {
    }
    _checkUpdate(){
      console.log('------_checkUpdate')
-     if(Platform.OS == 'ios'&&//appstore 关闭版本更新
-       AppConf.IOS_CHANNEL == AppConf.APPSTORE){
-         return;
-       }
-     if(Platform.OS == 'android'&&//应用宝 关闭版本更新
-       AppConf.ANDROID_CHANNEL == AppConf.YIYONGBAO){
-         return;
-       }
-     FirIm.queryVersion().then(ver=>{
-       if(ver.versionShort != DeviceInfo.getVersion()
-       || ver.build != DeviceInfo.getBuildNumber()){
-         this.setState({update:true});
-         let fsize = ver.binary.fsize;
-         let size = Math.floor((fsize/(1024*1024))*100)/100;
-         console.log(size)
-         let alertMsg = '检测到有新版本,是否升级？\n'+
-         '更新日志:\n'+
-         ver.changelog+'\n'+
-         '版本号:'+ver.versionShort+'\n'+
-         '包大小:'+size+'M';
-         Alert.alert(
-         '版本检测',
-         alertMsg,
-         [
-           {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-           {text: '升级', onPress: () => {
-             Linking.openURL(ver.update_url).catch(err => console.error('An error occurred', err));
-           }},
-         ]
-        );
-       }else{
-         this.setState({update:false});
-         Alert.alert('当前已是最新版本');
-       }
-     })
+     //fir_im运行
+     if(Platform.OS == 'android'
+     &&AppConf.ENV == AppConf.ALI
+     &&AppConf.ANDROID_CHANNEL == AppConf.FIR_IM){
+       FirIm.queryVersion().then(ver=>{
+         if(ver.versionShort != DeviceInfo.getVersion()
+         || ver.build != DeviceInfo.getBuildNumber()){
+           this.setState({update:true});
+           let fsize = ver.binary.fsize;
+           let size = Math.floor((fsize/(1024*1024))*100)/100;
+           console.log(size)
+           let alertMsg = '检测到有新版本,是否升级？\n'+
+           '更新日志:\n'+
+           ver.changelog+'\n'+
+           '版本号:'+ver.versionShort+'\n'+
+           '包大小:'+size+'M';
+           Alert.alert(
+           '版本检测',
+           alertMsg,
+           [
+             {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+             {text: '升级', onPress: () => {
+               Linking.openURL(ver.update_url).catch(err => console.error('An error occurred', err));
+             }},
+           ]
+          );
+         }else{
+           this.setState({update:false});
+           Alert.alert('当前已是最新版本');
+         }
+       })
+     }
   };
    _onFeedback(){
      this.props.navigation.navigate(UIName.FeedbackUI);
@@ -293,6 +289,7 @@ class SettingUI extends React.Component<Props,State> {
        if(res.code == 0){
          let { dispatch } = this.props.navigation;
          dispatch(UserActions.raLogout());
+         AnalyticsUtil.profileSignOff();
          Storage.saveUserid('');
          this.props.navigation.goBack();
        }else{

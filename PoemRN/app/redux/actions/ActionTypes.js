@@ -19,7 +19,7 @@ export const UP_POEM_INFO = 'up_poem_info';
 export const ADDPOEM = 'addpoem';
 export const SETPOEM = 'setpoem';
 export const LOVEME = 'loveme';//给自己点赞
-export const REFCOMMENT = 'refcomment';//刷新评论
+// export const REFCOMMENT = 'refcomment';//刷新评论
 export const UP_POEM_LC = 'up_poem_lc';//刷新评论点赞数
 export const DELPOEM = 'delpoem';
 

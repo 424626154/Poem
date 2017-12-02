@@ -68,3 +68,23 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+#umcommon
+-keep class com.umeng.commonsdk.** {*;}
+
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#umerror
+-keep class com.umeng.error.UMError{ public ; }
+
+-keep class com.umeng.error.UMErrorCatch{ public ; }
+
+-keep class com.umeng.error.UMErrorDataManger{ public ; }
+
+-keep class com.umeng.error.BatteryUtils{ public ; }

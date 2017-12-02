@@ -30,6 +30,7 @@ import {
   HomePoemDao,
   goPersonalUI,
   shallowEqual,
+  showToast,
 } from '../AppUtil';
 const timeout  = 5000;
 type Props = {
@@ -55,8 +56,8 @@ class HomeTab extends React.Component<Props,State> {
      _onLove:Function;
      _onComment:Function;
      _onPersonal:Function;
-     timer:any;
-     net_time:number;
+     timer:number;
+     refresh_time:number;
      state = {
          // 存储数据的状态
          // sourceData : [],
@@ -83,7 +84,7 @@ class HomeTab extends React.Component<Props,State> {
     }
     componentWillUnmount(){
       this.timer && clearTimeout(this.timer);
-      this.net_time && clearTimeout(this.net_time);
+      this.refresh_time && clearTimeout(this.refresh_time);
     }
   shouldComponentUpdate(nextProps, nextState){
     //切换用户id
@@ -94,21 +95,6 @@ class HomeTab extends React.Component<Props,State> {
       console.log('------this.props.papp.userid:',this.props.papp.userid);
       this._initPoems();
     }
-    // if(shallowEqual(this.props.homepoems,nextProps.homepoems)){
-    //   console.log('------HomeTab() shouldComponentUpdate');
-    //   console.log('------change homepoems');
-    //   console.log('------nextProps.homepoems');
-    //   console.log(nextProps.homepoems)
-    //   console.log('------this.props.homepoems');
-    //   console.log(this.props.homepoems)
-      // Object.assign(this.props.homepoems,nextProps.homepoems);
-      // let homepoems = copyArray(nextProps.homepoems);
-      // this.setState({
-      //   sourceData:homepoems,
-      // });
-      // console.log('---this.state.sourceData:');
-      // console.log(this.state.sourceData);
-    // }
     return true;
   }
   render() {
@@ -185,21 +171,12 @@ class HomeTab extends React.Component<Props,State> {
    );
      // 下拉刷新
    _renderRefresh = () => {
-     if(this.state.refreshing){
-       return;
-     }
      this._requestNewestAllPoem();
    };
 
    // 上拉加载更多
    _onEndReached = () => {
-     if(this.state.refreshing){
-       return;
-     }
-     this.setState({refreshing: true});
-     this.net_time = setTimeout(()=>{
-       this.setState({refreshing: false})
-     },timeout);
+     this._startRefres();
      var fromid = 0;
      // if(this.state.sourceData.length > 0 ){
      //   fromid = this.state.sourceData[this.state.sourceData.length-1].id;
@@ -233,13 +210,25 @@ class HomeTab extends React.Component<Props,State> {
          }else{
            Alert.alert(res.errmsg);
          }
-        this.setState({refreshing: false});
-        this.net_time && clearTimeout(this.net_time);
+        this._endRefres();
        })
        .catch((error) => {
          console.error(error);
        });
    };
+   _startRefres(){
+     this.setState({refreshing: true})
+     this.refresh_time = setTimeout(
+     () => {
+       if(this.state.refreshing){
+         this.setState({refreshing: false})
+       }
+     },3000);
+   }
+     _endRefres(){
+       this.setState({refreshing: false});
+       this.refresh_time&&clearTimeout(this.refresh_time);
+     }
    /**
     * 点击评论
     */
@@ -262,7 +251,8 @@ class HomeTab extends React.Component<Props,State> {
         var love = result.data;
         // let sourceData = this.state.sourceData;
         let sourceData = this.props.homepoems;
-        var isRefresh = false;
+        let isRefresh = false;
+        let poem = {};
         for(var i = 0 ; i < sourceData.length ; i ++ ){
           if(sourceData[i].id == love.pid){
             var lovenum = sourceData[i].lovenum;
@@ -275,19 +265,17 @@ class HomeTab extends React.Component<Props,State> {
             }
             sourceData[i].lovenum = lovenum;
             sourceData[i].mylove = love.love;
+            poem = sourceData[i];
             isRefresh = true;
             HomePoemDao.updateHomePoemLove(sourceData[i]);
           }
         }
         if(isRefresh){
           let { dispatch } = this.props.navigation;
-          dispatch(PoemsActions.raUpHomePoems(sourceData));
-          // this.setState({
-          //     sourceData: sourceData
-          // });
+          dispatch(PoemsActions.raLoveMe(poem));
         }
       }else{
-        Alert.alert(result.errmsg);
+        showToast(result.errmsg);
       }
     }).catch((err)=>{
       console.error(err);
@@ -325,10 +313,7 @@ class HomeTab extends React.Component<Props,State> {
    _requestInitAllPoem(poems){
      console.log('------_requestInitAllPoem')
      console.log(this.props.papp)
-     this.setState({refreshing: true}) // 开始刷新
-     this.net_time = setTimeout(()=>{
-       this.setState({refreshing: false})
-     },timeout);
+     this._startRefres();
      var fromid = 0;
      if(poems.length > 0 ){
        fromid = poems[0].id;
@@ -355,8 +340,7 @@ class HomeTab extends React.Component<Props,State> {
          }else{
            Alert.alert(res.errmsg);
          }
-         this.setState({refreshing: false});
-         this.net_time && clearTimeout(this.net_time);
+         this._endRefres();
        })
        .catch((error) => {
          console.error(error);
@@ -367,10 +351,7 @@ class HomeTab extends React.Component<Props,State> {
    * 请求最新的作品集
    */
   _requestNewestAllPoem(){
-    this.setState({refreshing: true}) // 开始刷新
-    this.net_time = setTimeout(()=>{
-      this.setState({refreshing: false})
-    },timeout);
+    this._startRefres();
     var fromid = 0;
     // if(this.state.sourceData.length > 0 ){
     //   fromid = this.state.sourceData[0].id;
@@ -404,8 +385,7 @@ class HomeTab extends React.Component<Props,State> {
         }else{
           Alert.alert(res.errmsg);
         }
-        this.setState({refreshing: false});
-        this.net_time && clearTimeout(this.net_time);
+        this._endRefres();
       })
       .catch((error) => {
         console.error(error);

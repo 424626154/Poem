@@ -75,11 +75,12 @@ class DetailsUI extends React.Component<Props,State>{
   _onPoemLayout:Function;
   _onPersonal:Function;
   _onDelComment:Function;
+  _onComment:Function;
   constructor(props){
     super(props);
     let params = this.props.navigation.state.params;
     let poem = {userid:'',content:'',lovenum:0,commentnum:0,love:0};
-    Object.assign(this.props.mypoem,poem);
+    // Object.assign(this.props.mypoem,poem);
     this.state = {
         id:params.id,
         ftype:params.ftype,
@@ -98,11 +99,13 @@ class DetailsUI extends React.Component<Props,State>{
     this._onPoemLayout = this._onPoemLayout.bind(this);
     this._onPersonal = this._onPersonal.bind(this);
     this._onDelComment = this._onDelComment.bind(this);
+    this._onComment = this._onComment.bind(this);
   }
 
   componentDidMount(){
     this._requestPoem();
     this._requestLoves();
+    this._requestLoveComment()
     this._requestNewestComment();
   }
 
@@ -110,34 +113,6 @@ class DetailsUI extends React.Component<Props,State>{
 
   }
   shouldComponentUpdate(nextProps, nextState){
-    // console.log('---DetailsUI() shouldComponentUpdate');
-    // // console.log(this.papp);
-    // console.log(this.props.papp);
-    // console.log(nextProps.papp);
-    //切换用户id
-    // if(nextProps.papp.userid !== this.props.papp.userid){
-    //   console.log('------DetailsUI() shouldComponentUpdate');
-    //   console.log('------change userid');
-    //   Object.assign(this.props.papp,nextProps.papp);
-    // }
-    // console.log('------DetailsUI() shouldComponentUpdate');
-    // console.log('------change refcomment');
-    console.log('------nextProps.papp.refcomment:',nextProps.papp.refcomment);
-    console.log('------this.props.papp.refcomment:',this.props.papp.refcomment);
-    if(nextProps.papp.refcomment == true && this.props.papp.refcomment == false){
-      console.log('------DetailsUI() shouldComponentUpdate');
-      console.log('------change refcomment');
-      console.log('------nextProps.papp.refcomment:',nextProps.papp.refcomment);
-      console.log('------this.props.papp.refcomment:',this.props.papp.refcomment);
-      // Object.assign(this.props.papp,nextProps.papp);
-      // if(nextProps.papp.refcomment){
-        let { dispatch } = this.props.navigation;
-        dispatch(UserActions.raRefComment(false));
-        console.log('------_requestNewestComment tag1')
-        this._requestNewestComment();
-        this._requestLoveComment();
-      // }
-    }
     if(nextProps.mypoem != this.props.mypoem){
       console.log('------DetailsUI() shouldComponentUpdate');
       console.log('------change mypoem');
@@ -152,7 +127,7 @@ class DetailsUI extends React.Component<Props,State>{
         photo = extend.photo;
       }
       this.setState({extend:extend,photo:photo,isphoto:isphoto});
-      this._loadLabels(nextProps.mypoem)
+      this._loadLabels(extend);
     }
     return true;
   }
@@ -161,8 +136,13 @@ class DetailsUI extends React.Component<Props,State>{
       <ScrollView
         ref="ScrollView"
         style={pstyles.container}>
+        <View
+          onLayout={this._onPoemLayout}
+        >
         {this._renderPoem()}
         {this._renderLabels()}
+        {this._renderAnnotation()}
+        </View>
         {/* ---menu--- */}
         {this._renderMenu()}
         {/* --点赞列表-- */}
@@ -198,8 +178,7 @@ class DetailsUI extends React.Component<Props,State>{
       return(
         <View
           ref="poem"
-          style={pstyles.poem}
-          onLayout={this._onPoemLayout}>
+          style={pstyles.poem}>
           <View style={pstyles.photo}>
             <PImage
               style={this._getStyle(this.state.extend)}
@@ -219,8 +198,7 @@ class DetailsUI extends React.Component<Props,State>{
       return(
         <View
           ref="poem"
-          style={pstyles.poem}
-          onLayout={this._onPoemLayout}>
+          style={pstyles.poem}>
           <Text style={pstyles.poem_title}>
             {this.props.mypoem.title}
           </Text>
@@ -248,6 +226,19 @@ class DetailsUI extends React.Component<Props,State>{
       </View>
     )
   }
+  _renderAnnotation(){
+    if(this.state.extend.annotation){
+        return(
+          <View style={styles.annotation_bg}>
+            <Text style={styles.annotation}>
+              {this.state.extend.annotation}
+            </Text>
+          </View>
+        )
+      }else{
+        return null;
+      }
+  }
   /**
    * 功能视图
    */
@@ -262,7 +253,7 @@ class DetailsUI extends React.Component<Props,State>{
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.props.navigation)){
-                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,cid:0})
+                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,cid:0,onComment:this._onComment})
                 }
               }}>
               <View style={styles.menu_item}>
@@ -341,7 +332,7 @@ class DetailsUI extends React.Component<Props,State>{
             <TouchableOpacity
               onPress={()=>{
                 if(Utils.isLogin(this.props.navigation)){
-                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id});
+                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,onComment:this._onComment});
                 }
               }}>
               <View style={styles.menu_item}>
@@ -393,6 +384,7 @@ class DetailsUI extends React.Component<Props,State>{
    * 评论数
    */
   _renderCommentnum(commentnum){
+    // console.log('------_renderCommentnum:',commentnum)
     return commentnum > 0 ? commentnum:'';
   }
   _renderAlign(item){
@@ -433,9 +425,8 @@ class DetailsUI extends React.Component<Props,State>{
     console.log(extend)
     return extend;
   }
-  _loadLabels(poem){
+  _loadLabels(extend:Object){
     let labelsarray = [];
-    let extend = this.state.extend;
     if(extend&&extend.labels){
       let labels = extend.labels.split(',');
       for(var i = 0 ; i < labels.length;i++){
@@ -486,7 +477,7 @@ class DetailsUI extends React.Component<Props,State>{
          //获取根View的宽高，以及左上角的坐标值
          let {x, y, width, height} = event.nativeEvent.layout;
          if(this.props.mypoem.content){
-           this.refs.ScrollView.scrollTo({x: 0, y: height+10, animated: false})
+           this.refs.ScrollView.scrollTo({x: 0, y: height, animated: false})
          }
       //  }
     }
@@ -500,7 +491,7 @@ class DetailsUI extends React.Component<Props,State>{
       });
       // console.log(this)
       if(Utils.isLogin(this.props.navigation)){
-          this.props.navigation.navigate(UIName.CommentUI,{id:item.pid,cid:item.id,cpseudonym:item.pseudonym});
+          this.props.navigation.navigate(UIName.CommentUI,{id:item.pid,cid:item.id,cpseudonym:item.pseudonym,onComment:this._onComment});
       }
   };
   _onPersonal(userid){
@@ -536,6 +527,7 @@ class DetailsUI extends React.Component<Props,State>{
                     let poem = this.props.mypoem;
                     let commentnum = poem.commentnum >= del_num?poem.commentnum-del_num:0;
                     poem.commentnum = commentnum;
+                    // console.log(commentnum)
                     let { dispatch } = this.props.navigation;
                     dispatch(PoemsActions.raUpPoemLC(poem));
                   }
@@ -553,6 +545,22 @@ class DetailsUI extends React.Component<Props,State>{
       )
     }
   }
+
+  _onComment(comment:Object){
+    console.log('-----_onComment');
+    console.log(comment);
+    // this._requestNewestComment();
+    // this._requestLoveComment();
+    this.dataContainer = [comment].concat(this.dataContainer);
+    this.setState({
+      sourceData: this.dataContainer
+    });
+    let poem = this.props.mypoem;
+    poem.commentnum = poem.commentnum+1;
+    let { dispatch } = this.props.navigation;
+    dispatch(PoemsActions.raUpPoemLC(poem));
+  }
+
   _renderItem = ({item}) =>{
       return(
           <CommentListItem
@@ -690,7 +698,6 @@ class DetailsUI extends React.Component<Props,State>{
         let { dispatch } = this.props.navigation;
         dispatch(PoemsActions.raLoveMe(poem));
         this.refs.lovelistview.loadPages();
-        this._requestLoveComment();
       }else{
         showToast(result.errmsg);
       }
@@ -866,6 +873,13 @@ const styles = StyleSheet.create({
     borderColor:StyleConfig.C_000000,
     borderWidth:1,
     borderRadius:4,
+  },
+  annotation_bg:{
+    padding:10,
+  },
+  annotation:{
+    fontSize:18,
+    color:StyleConfig.C_D4D4D4
   }
 })
 function mapStateToProps(state) {

@@ -22,6 +22,7 @@ import {
 } from './AppUtil';
 
 import JPushModule from 'jpush-react-native';
+import AnalyticsUtil from './AnalyticsUtil';
 
 const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
 
@@ -54,6 +55,7 @@ class AppRoot extends Component <Props,State>{
       if(userid){
         const { dispatch } = this.props;
         dispatch(UserActions.raAutoLogin(userid));
+        AnalyticsUtil.profileSignInWithPUID(userid);
         this._requestMessages();
         this._requestChats();
       }
@@ -367,7 +369,7 @@ class AppRoot extends Component <Props,State>{
       console.log('---_setMsgState num:'+num);
       if(Platform.OS == 'ios'){
         JPushModule.setBadge(num, (success) => {
-          console.log('------JPushModule');
+          console.log('------JPushModule setBadge');
           console.log(success)
         });
       }

@@ -42,11 +42,11 @@ export default class FollowListItem extends React.PureComponent<Props> {
                       {this.props.follow.pseudonym}
                     </Text>
                     <TouchableOpacity
-                      style={styles.follow_button}
+                      style={[styles.follow_button,{borderColor:this.props.follow.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}
                       onPress={()=>{
                         this.props.onFollow(this.props.follow);
                       }}>
-                      <Text style={styles.follow_font}>
+                      <Text style={[styles.follow_font,{color:this.props.follow.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}>
                         {this.props.followbut}
                       </Text>
                     </TouchableOpacity>

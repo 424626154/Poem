@@ -152,7 +152,8 @@ class PersonalUI extends React.Component<Props,State>{
               onPressItem={ this._onPressItem }
               selected={ !!this.state.selected.get(item.id) }
               name= { item.name }
-              poem={item}
+              item={item}
+              extend={this._getExtend(item)}
               time={Utils.dateStr(item.time)}
           />
       );
@@ -236,11 +237,11 @@ class PersonalUI extends React.Component<Props,State>{
     return(
     <View style={styles.follow}>
           <TouchableOpacity
-            style={styles.follow_button}
+            style={[styles.follow_button,{borderColor:this.state.user.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}
             onPress={()=>{
               this._onFollow();
             }}>
-              <Text style={styles.follow_font}>
+              <Text style={[styles.follow_font,{color:this.state.user.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}>
                 {this.state.follow}
               </Text>
           </TouchableOpacity>
@@ -373,6 +374,13 @@ class PersonalUI extends React.Component<Props,State>{
    */
   _onFollowMe(){
     this.props.navigation.navigate('FollowUI',{userid:this.state.userid,title:this.state.followme_title,type:1});
+  }
+  _getExtend(item:Object):Object{
+    let extend = {}
+    if(item.extend){
+      extend = JSON.parse(item.extend);
+    }
+    return extend;
   }
 }
 

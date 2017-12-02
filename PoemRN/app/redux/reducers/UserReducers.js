@@ -11,11 +11,11 @@ const initialState = {
 	userid:Storage.getUserid(),
 	user:{},
 	homepoems:[],
-	refcomment:false,//刷新评论
+	// refcomment:false,//刷新评论
 	push_news:false,
 	push_chat:false,
 	chatuser:'',
-	push_chat_user:false,
+	push_chat_user:false,//推送消息中是否包含当前用户
 };
 
 export default function papp(state:any=initialState, action:any){
@@ -91,13 +91,13 @@ export default function papp(state:any=initialState, action:any){
 				 });
 				}
 	 			return state;
-		case TYPES.REFCOMMENT:
-				// console.log('------papp')
-				// console.log('----action')
-				// console.log(action)
-				return Object.assign({}, state, {
-					 refcomment:action.state,
-				 });
+		// case TYPES.REFCOMMENT:
+		// 		// console.log('------papp')
+		// 		// console.log('----action')
+		// 		// console.log(action)
+		// 		return Object.assign({}, state, {
+		// 			 refcomment:action.state,
+		// 		 });
 		 case TYPES.SET_PUSH_NEWS:
 					// console.log('------papp')
 					// console.log('----action')

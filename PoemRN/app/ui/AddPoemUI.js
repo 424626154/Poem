@@ -61,6 +61,7 @@ type State = {
       pw:number,
       ph:number,
       labels:string,//标签
+      annotation:string,//注释
       keyboardHeight:number,
       animating:boolean,
       pstyle:number,
@@ -82,6 +83,7 @@ class AddPoemUI extends React.Component<Props,State> {
     });
     onRelease:Function;
     _onChangeLabels:Function;
+    _onChangeAnnotation:Function;
     keyboardDidShowListener:any;
     keyboardDidHideListener:any;
     scroll:any;
@@ -101,6 +103,7 @@ class AddPoemUI extends React.Component<Props,State> {
         let pw = 0;
         let ph = 0;
         let labels = '';
+        let annotation = '';
         if(ftype == 1){
           if(poem){
             pid = poem.id;
@@ -118,6 +121,9 @@ class AddPoemUI extends React.Component<Props,State> {
               if(extend.labels){
                 labels = extend.labels;
               }
+              if(extend.annotation){
+                annotation = extend.annotation;
+              }
             }
           }
         }
@@ -133,6 +139,7 @@ class AddPoemUI extends React.Component<Props,State> {
             pw:pw,
             ph:ph,
             labels:labels,
+            annotation:annotation,
             animating:false,
             pstyle:0,
             pzoom:pzoom
@@ -143,6 +150,7 @@ class AddPoemUI extends React.Component<Props,State> {
         this.props.navigation.setParams({nav_title:nav_title});
         this.props.navigation.setParams({nav_right:nav_right});
         this._onChangeLabels = this._onChangeLabels.bind(this);
+        this._onChangeAnnotation = this._onChangeAnnotation.bind(this);
     }
     componentDidMount(){
        this.props.navigation.setParams({onRelease:this.onRelease});
@@ -209,6 +217,9 @@ class AddPoemUI extends React.Component<Props,State> {
           console.log(this.state.labels)
           this.props.navigation.navigate(UIName.PoemLabelUI,{labels:this.state.labels,onChangeLabels:this._onChangeLabels});
       }}
+      onAnnotation={()=>{
+        this.props.navigation.navigate(UIName.AnnotationUI,{annotation:this.state.annotation,onChangeAnnotation:this._onChangeAnnotation});
+      }}
       />
     {Platform.OS === 'ios' && <KeyboardSpacer/>}
     </View>
@@ -255,10 +266,10 @@ class AddPoemUI extends React.Component<Props,State> {
       }else{
         return(
           <View style={styles.big_photo}>
-            <View style={styles.bg_photo}>
+            <View style={[styles.bg_photo,{height:this.getPhotoH()}]}>
               <PImage
                 style={{resizeMode:'cover',width:this.getPhotoW(),height:this.getPhotoH()}}
-                source={Utils.getPhoto(this.state.photo)}
+                source={Utils.getPhoto(this.state.photo+'_big')}
                 noborder={true}
                 />
             </View>
@@ -322,6 +333,8 @@ class AddPoemUI extends React.Component<Props,State> {
   }
   //相册
   pickMultiple(style:number){
+    // console.log('------width:',width)
+    // console.log('------height:',height)
     ImagePicker.openPicker({
       width: this.getStyleW(style),
       height: this.getStyleH(style),
@@ -334,26 +347,35 @@ class AddPoemUI extends React.Component<Props,State> {
     });
   }
   getStyleW(style:number){
-    let w = 800;
+    // 16:9
+    // let w = 800;
+    let w = width;
     if(style == 1){
-      w = 1200;
+      // w = 1200;
+      w = width;
     }else if(style == 2){
-      w = 800;
+      // w = 800;
+      w = width;
     }else if(style == 3){
-      w = 600;
+      // w = 600;
+      w = height*9/16;
     }
     this.setState({pw:w});
     console.log('---getStyleW:',w)
     return w;
   }
   getStyleH(style:number){
-    let h = 800;
+    // let h = 800;
+    let h = width;
     if(style == 1){
-      h = 600;
+      // h = 600;
+      h = width*9/16
     }else if(style == 2){
-      h = 800;
+      // h = 800;
+      h = width;
     }else if(style == 3){
-      h = 1200;
+      // h = 1200;
+      h = height;//height-100;
     }
     this.setState({ph:h});
     console.log('---getStyleH:',h)
@@ -404,7 +426,7 @@ class AddPoemUI extends React.Component<Props,State> {
   }
   _uploadImage(){
     this.setState({animating:true})
-    HttpUtil.uploadImageData(this._imageObj).then((res)=>{
+    HttpUtil.uploadImageData(this._imageObj,4).then((res)=>{
       if(res.code == 0){
         var name = res.data.name;
         if(name){
@@ -427,6 +449,11 @@ class AddPoemUI extends React.Component<Props,State> {
     console.log('------_onChangeLabels')
     console.log(labels);
     this.setState({labels:labels});
+  }
+  _onChangeAnnotation(annotation:string){
+    console.log('------_onChangeAnnotation')
+    console.log(annotation);
+    this.setState({annotation:annotation});
   }
   onRelease(){
     var title = this.state.title;
@@ -457,6 +484,12 @@ class AddPoemUI extends React.Component<Props,State> {
         labels:this.state.labels,
       }
       extend = Object.assign({},extend, labels);
+    }
+    if(this.state.annotation){
+      let annotation = {
+        annotation:this.state.annotation,
+      }
+      extend = Object.assign({},extend, annotation);
     }
     console.log('------extend');
     console.log(extend);

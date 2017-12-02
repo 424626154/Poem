@@ -88,6 +88,7 @@ UIName.ReportUI = 'ReportUI';
 UIName.ProtocolUI = 'ProtocolUI';
 UIName.FollowUI = 'FollowUI';
 UIName.PoemLabelUI = 'PoemLabelUI';
+UIName.AnnotationUI = 'AnnotationUI';
 
 var Permission = {
 
