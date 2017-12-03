@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
@@ -19,7 +18,6 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.sbb.poem.invokenative.DplusReactPackage;
 import com.sbb.poem.invokenative.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
-import com.umeng.socialize.Config;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
@@ -42,7 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
 
   public static String um_appkey = "5a2146eb8f4a9d2dd800024f";
 
-  public static String um_channel = "frim.im";
+//  public static String um_channel = "frim.im";
+  public static String um_channel = "xiaomi";
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 

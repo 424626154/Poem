@@ -102,7 +102,7 @@ android {
         applicationId "com.sbb.poem"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 11
+        versionCode 13
         versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -184,11 +184,14 @@ dependencies {
     // From node_modules
     implementation files('libs/umeng-common-1.4.0.jar')
     implementation files('libs/umeng-analytics-7.4.0.jar')
-    implementation files('libs/umerror_android_1.0.0.jar')
     implementation files('libs/umeng_social_net.jar')
     implementation files('libs/umeng_social_api.jar')
     implementation files('libs/umeng-visual-base-1.0.0.jar')
     implementation files('libs/umeng-visual-connect-1.0.0.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    implementation files('libs/umeng_social_shareboard.jar')
+    implementation files('libs/umeng_social_tool.jar')
+    implementation files('libs/umeng-push-3.3.3.jar')
 }
 
 // Run this once to be able to run the application with BUCK

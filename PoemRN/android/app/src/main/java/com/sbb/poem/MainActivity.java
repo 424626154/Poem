@@ -3,10 +3,7 @@ package com.sbb.poem;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
-import com.facebook.soloader.SoLoader;
-import com.sbb.poem.invokenative.RNUMConfigure;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
 
 import org.devio.rn.splashscreen.SplashScreen;
 

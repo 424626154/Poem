@@ -80,11 +80,3 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-#umerror
--keep class com.umeng.error.UMError{ public ; }
-
--keep class com.umeng.error.UMErrorCatch{ public ; }
-
--keep class com.umeng.error.UMErrorDataManger{ public ; }
-
--keep class com.umeng.error.BatteryUtils{ public ; }
