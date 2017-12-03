@@ -6,7 +6,7 @@
 [服务器工程](https://github.com/424626154/poemserver.git)
 [后台工程](https://github.com/424626154/poemweb.git)
 # 部分截图
-![](image/github/首页.jpg)
+![](image/github/首页.jpg =100x100)
 ![](image/github/详情.jpg)
 ![](image/github/我的作品.jpg)
 ![](image/github/发布.jpg)
