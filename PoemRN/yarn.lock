@@ -3311,6 +3311,10 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+nt-transmit-transparently@^1.0.7:
+  version "1.0.7"
+  resolved "http://registry.npm.taobao.org/nt-transmit-transparently/download/nt-transmit-transparently-1.0.7.tgz#345cf3ffda06ba1bd629935bafac9e7820385076"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
@@ -3775,11 +3779,22 @@ react-native-image-crop-picker@^0.18.1:
   version "0.18.1"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.18.1.tgz#ebdbe72def5afb6c69aa6e2ad72fd3a7de8ee408"
 
+react-native-image-pan-zoom@^2.0.8, react-native-image-pan-zoom@^2.0.9:
+  version "2.0.9"
+  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.0.9.tgz#0d933800c986164cefd5221550cedbfda596b916"
+
 react-native-image-progress@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/react-native-image-progress/download/react-native-image-progress-1.0.1.tgz#5ceb4cfefd39d7ebdffab802bc984b5a0fc41021"
   dependencies:
     prop-types "^15.5.10"
+
+react-native-image-zoom-viewer@^2.0.14:
+  version "2.0.14"
+  resolved "http://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.0.14.tgz#f0e686dbad9513622bb0aa65e25449dcfafd8131"
+  dependencies:
+    nt-transmit-transparently "^1.0.7"
+    react-native-image-pan-zoom "^2.0.8"
 
 react-native-img-cache@^1.5.2:
   version "1.5.2"
@@ -3864,6 +3879,12 @@ react-native-swipeable@^0.6.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-swiper@^1.5.13:
+  version "1.5.13"
+  resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@^0.0.70:
   version "0.0.70"
   resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.70.tgz#1dd2ded32acd0cb6bfef38d26e53675db733b37b"
@@ -3877,6 +3898,10 @@ react-native-vector-icons@^4.4.2:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
+
+react-native-view-shot@^2.2.0:
+  version "2.2.0"
+  resolved "http://registry.npm.taobao.org/react-native-view-shot/download/react-native-view-shot-2.2.0.tgz#482dc21bc37379aca8f3f97a694c080a57f1ea78"
 
 react-native@0.50.4:
   version "0.50.4"

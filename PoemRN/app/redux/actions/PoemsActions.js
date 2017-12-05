@@ -102,3 +102,11 @@ export function raDelPoem(poem:Object){
       dispatch(action);
   }
 }
+export function raUpFont(){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.UPFONT,
+      }
+      dispatch(action);
+  }
+}

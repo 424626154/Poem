@@ -371,7 +371,7 @@ export default class RegisterUI extends React.Component<Props,State> {
             this.countTime(time);
             // Alert.alert(validate.code);
         }else{
-          alert(res.errmsg);
+          Alert.alert(res.errmsg);
         }
       })
       .catch((error) => {

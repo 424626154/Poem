@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
-
+import { Icon } from 'react-native-elements';
 import{
   StyleConfig,
   HeaderConfig,
@@ -67,6 +67,7 @@ const agreement =
 (6) 含有其他干扰本服务正常运营和侵犯其他用户或第三方合法权益内容的信息。`
 
 type Props = {
+    onAgrBack:Function,
     navigation:any,
     papp:Object,
 };
@@ -81,8 +82,20 @@ class AgreementUI extends React.Component<Props,State>{
         headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
-        headerLeft:(<NavBack navigation={navigation}/>),
+        headerLeft:(
+        <TouchableOpacity
+          style={pstyles.nav_left}
+          onPress={()=>navigation.state.params.onBack()}>
+          <Icon
+            name='navigate-before'
+            size={26}
+            type="MaterialIcons"
+            color={StyleConfig.C_000000}
+            />
+        </TouchableOpacity>
+      ),
      });
+     onBack:Function;
      constructor(props){
        super(props);
        let params = this.props.navigation.state.params;
@@ -90,11 +103,17 @@ class AgreementUI extends React.Component<Props,State>{
        this.state = {
          toui:toui
        }
+       this.onBack= this.onBack.bind(this);
      }
+     componentDidMount(){
+        this.props.navigation.setParams({onBack:this.onBack});
+      }
     render(){
       return(
         <View style={pstyles.container}>
-        <ScrollView >
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+          >
           <Text style={styles.agreement}>{agreement}</Text>
         </ScrollView>
         <View style={styles.button}>
@@ -109,7 +128,13 @@ class AgreementUI extends React.Component<Props,State>{
         </View>
       )
     }
-
+    onBack(){
+      console.log('------onBack')
+      this.props.onAgrBack&&this.props.onAgrBack();
+      setTimeout(()=>{
+      this.props.navigation.goBack()
+    },10)
+    }
     _requestPer(){
       let per = Utils.setPermission(Permission.WRITE,true,this.props.papp.user.per);
       console.log(per)

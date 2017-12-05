@@ -52,11 +52,11 @@ class PersonalListItem extends React.PureComponent<Props> {
                 noborder={true}
                 />
             </View>
-              <Text style={pstyles.poem_title}>
+              <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
                 {item.title}
               </Text>
               <Text
-                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
                 numberOfLines={1}
                 ellipsizeMode='tail'
               >
@@ -67,11 +67,11 @@ class PersonalListItem extends React.PureComponent<Props> {
       }else{
         return(
           <View style={pstyles.poem}>
-            <Text style={pstyles.poem_title}>
+            <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
               {item.title}
             </Text>
             <Text
-              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
               numberOfLines={8}
               ellipsizeMode='tail'
             >

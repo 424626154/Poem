@@ -62,11 +62,11 @@ export default class WorksListItem extends React.PureComponent<Props> {
                 noborder={true}
                 />
             </View>
-              <Text style={pstyles.poem_title}>
+              <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
                 {item.title}
               </Text>
               <Text
-                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
                 numberOfLines={1}
                 ellipsizeMode='tail'
               >
@@ -77,11 +77,11 @@ export default class WorksListItem extends React.PureComponent<Props> {
       }else{
         return(
           <View style={pstyles.poem}>
-            <Text style={pstyles.poem_title}>
+            <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
               {item.title}
             </Text>
             <Text
-              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
               numberOfLines={8}
               ellipsizeMode='tail'
             >
@@ -99,18 +99,10 @@ export default class WorksListItem extends React.PureComponent<Props> {
       return isphoto;
     }
     _getStyle(extend){
-        let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
-        if(extend.pw > extend.ph){
-          let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
-          style = Object.assign({},style,style1)
-        }
-        if(extend.pw < extend.ph){
-          let style2 = {resizeMode:'cover'}
-          style = Object.assign({},style,style2)
-          console.log('-------_getStyle')
-          console.log(style)
-        }
-        return style;
+      let width = Global.width;
+      let height = Global.width*9/16;
+      let style = {resizeMode:'cover',width:width,height:height};
+      return style;
     }
 }
 

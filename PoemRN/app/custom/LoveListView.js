@@ -99,7 +99,7 @@ class LoveListView extends React.Component<Props,State>{
           this._onLove()
         }}>
         <Icon key={'love_icon'}
-          name='thumb-up'
+          name={this._renderLoveName()}
           size={20}
           type="MaterialIcons"
           color={this._renderLoveColor()}
@@ -150,6 +150,9 @@ class LoveListView extends React.Component<Props,State>{
           </TouchableOpacity>
       </View>
     )
+  }
+  _renderLoveName(){
+    return this.props.poem.love > 0 ? 'favorite':'favorite-border';
   }
   _renderLoveColor(){
     return this.props.poem.love > 0 ? StyleConfig.C_000000:StyleConfig.C_7B8992;

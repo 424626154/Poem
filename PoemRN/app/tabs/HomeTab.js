@@ -16,8 +16,9 @@ import {
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
 import * as PoemsActions from '../redux/actions/PoemsActions';
-
 import HomeListItem from '../custom/HomeListItem';
+import Banner from '../custom/Banner';
+
 import {
   StyleConfig,
   HeaderConfig,
@@ -31,6 +32,7 @@ import {
   goPersonalUI,
   shallowEqual,
   showToast,
+  Global,
 } from '../AppUtil';
 const timeout  = 5000;
 type Props = {
@@ -43,6 +45,7 @@ type State = {
     // sourceData:Array<Object>,
     selected:Map<string, boolean>,
     refreshing:boolean,
+    banners:Array<Object>,
 };
 
 class HomeTab extends React.Component<Props,State> {
@@ -56,6 +59,7 @@ class HomeTab extends React.Component<Props,State> {
      _onLove:Function;
      _onComment:Function;
      _onPersonal:Function;
+     _onBannerItem:Function;
      timer:number;
      refresh_time:number;
      state = {
@@ -63,6 +67,7 @@ class HomeTab extends React.Component<Props,State> {
          // sourceData : [],
          selected: (new Map(): Map<string, boolean>),
          refreshing: false,
+         banners:[],
      }
      // 数据容器，用来存储数据
      constructor(props) {
@@ -71,6 +76,7 @@ class HomeTab extends React.Component<Props,State> {
          this._onLove = this._onLove.bind(this);
          this._onComment = this._onComment.bind(this);
          this._onPersonal = this._onPersonal.bind(this);
+         this._onBannerItem = this._onBannerItem.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
@@ -81,6 +87,7 @@ class HomeTab extends React.Component<Props,State> {
        },500);
       HomePoemDao.deleteHomePoems();
       this._initPoems();
+      this._requestBanners();
     }
     componentWillUnmount(){
       this.timer && clearTimeout(this.timer);
@@ -110,7 +117,7 @@ class HomeTab extends React.Component<Props,State> {
                 onEndReachedThreshold={0.1}
                 // 当列表被滚动到距离内容最底部不足onEndReacchedThreshold设置的距离时调用
                 onEndReached={ this._onEndReached }
-                // ListHeaderComponent={ this._renderHeader }
+                ListHeaderComponent={ this._renderBanner }
                 // ListFooterComponent={ this._renderFooter }
                 ItemSeparatorComponent={ this._renderItemSeparatorComponent }
                 ListEmptyComponent={ this._renderEmptyView }
@@ -122,6 +129,7 @@ class HomeTab extends React.Component<Props,State> {
       </View>
     );
   }
+
    _keyExtractor = (item, index) => index+'';
 
    _onPressItem = (id: string) => {
@@ -162,6 +170,21 @@ class HomeTab extends React.Component<Props,State> {
    _renderItemSeparatorComponent = ({highlighted}) => (
        <View style={pstyles.separator_transparent}></View>
    );
+   _renderBanner = () => (
+       <Banner
+         banners={this.state.banners}
+         onBannerItem={this._onBannerItem}
+       />
+   );
+   _onBannerItem(item){
+     if(item){
+       if(item.type == 1){
+         this.props.navigation.navigate(UIName.BannerWebUI,{banner:item})
+       }else if(item.type == 2){
+         this.props.navigation.navigate(UIName.DetailsUI,{id:item.pid});
+       }
+     }
+   }
    // 空布局
    _renderEmptyView = () => (
      <View style={styles.empty}>
@@ -208,7 +231,7 @@ class HomeTab extends React.Component<Props,State> {
                 // });
               }
          }else{
-           Alert.alert(res.errmsg);
+           showToast(res.errmsg);
          }
         this._endRefres();
        })
@@ -225,10 +248,10 @@ class HomeTab extends React.Component<Props,State> {
        }
      },3000);
    }
-     _endRefres(){
-       this.setState({refreshing: false});
-       this.refresh_time&&clearTimeout(this.refresh_time);
-     }
+   _endRefres(){
+     this.setState({refreshing: false});
+     this.refresh_time&&clearTimeout(this.refresh_time);
+   }
    /**
     * 点击评论
     */
@@ -338,7 +361,7 @@ class HomeTab extends React.Component<Props,State> {
                 dispatch(PoemsActions.raHeadHomePoems(tepm_poems));
               }
          }else{
-           Alert.alert(res.errmsg);
+           showToast(res.errmsg);
          }
          this._endRefres();
        })
@@ -383,7 +406,7 @@ class HomeTab extends React.Component<Props,State> {
                dispatch(PoemsActions.raHeadHomePoems(homepoems));
              }
         }else{
-          Alert.alert(res.errmsg);
+          showToast(res.errmsg);
         }
         this._endRefres();
       })
@@ -391,7 +414,36 @@ class HomeTab extends React.Component<Props,State> {
         console.error(error);
       });
   }
-
+  _requestBanners(){
+    let fromid = 0;
+    if(this.state.banners.length > 0){
+      fromid = this.state.banners[this.state.banners.length-1].id;
+    }
+    var json = JSON.stringify({
+      id:fromid,
+    });
+    HttpUtil.post(HttpUtil.BANNER_ALL,json).then((res) => {
+        if(res.code == 0){
+            var banners = res.data;
+            console.log('---_requestBanners---')
+            console.log(banners)
+             if(banners.length > 0){
+               let temp_banners = this.state.banners;
+               temp_banners = banners.concat(temp_banners)
+               for(var i = 0 ; i < temp_banners.length ; i++){
+                 temp_banners[i].key = 'banner_'+i;
+               }
+               this.setState({banners:temp_banners});
+             }
+        }else{
+          showToast(res.errmsg);
+        }
+        this._endRefres();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 }
 
 const styles = StyleSheet.create({
@@ -426,6 +478,32 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:'#d4d4d4',
   },
+  wrapper: {
+
+  },
+  slide1: {
+    height:40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  slide2: {
+    height:40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    height:40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  }
 });
 export default connect(
     state => ({

@@ -197,6 +197,15 @@ export default function poems(state:any=initialState, action:any){
 					});
 				}
 				return state;
+		case TYPES.UPFONT:
+				var homepoems = Object.assign([],state.homepoems);
+				var mypoems = Object.assign([],state.mypoems);
+				var mypoem = Object.assign({},state.mypoem);
+				return Object.assign({}, state, {
+					homepoems:homepoems,
+					mypoems:mypoems,
+					mypoem:mypoem,
+				});
 		default:
 			return state;
 	}

@@ -8,7 +8,6 @@ import {
         StyleSheet,
         View,
         TouchableOpacity,
-        Alert,
         Text,
         TextInput,
         FlatList,
@@ -25,6 +24,7 @@ import {
         pstyles,
         PImage,
         UIName,
+        showToast,
       } from '../AppUtil';
 
 import{
@@ -201,7 +201,7 @@ class PersonalUI extends React.Component<Props,State>{
               });
             }
        }else{
-         Alert.alert(res.errmsg);
+         showToast(res.errmsg);
        }
        this.setState({refreshing: false});
      }).catch(err=>{
@@ -288,7 +288,7 @@ class PersonalUI extends React.Component<Props,State>{
           follow:this._getFollowStr(user),
         })
       }else{
-        Alert.alert(res.errmsg);
+        showToast(res.errmsg);
       }
     }).catch(err=>{
       console.log(err);
@@ -327,7 +327,7 @@ class PersonalUI extends React.Component<Props,State>{
             follow:this._getFollowStr(temp_user),
         })
       }else{
-        Alert.alert(res.errmsg);
+        showToast(res.errmsg);
       }
     }).catch(err=>{
       console.log(err);
@@ -356,7 +356,7 @@ class PersonalUI extends React.Component<Props,State>{
             });
           }
        }else{
-         Alert.alert(res.errmsg);
+         showToast(res.errmsg);
        }
        this.setState({refreshing: false});
      }).catch(err=>{

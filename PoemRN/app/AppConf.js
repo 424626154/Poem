@@ -15,8 +15,8 @@ AppConf.XIAOMI = 'xiaomi';
 AppConf.QIHU360 = 'qihu360';
 
 //服务器环境
-// AppConf.ENV = AppConf.DEBUG;
-AppConf.ENV = AppConf.ALI;
+AppConf.ENV = AppConf.DEBUG;
+// AppConf.ENV = AppConf.ALI;
 // ios渠道
 AppConf.IOS_CHANNEL = AppConf.APPSTORE;
 //android渠道

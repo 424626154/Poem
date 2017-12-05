@@ -6,6 +6,7 @@
 import {
   Dimensions
 } from 'react-native';
+import Storage from './utils/Storage';
 const Global = {
     // user:{
     //   userid:'',
@@ -18,6 +19,8 @@ const Global = {
     width:0,
     height:0,
     userid:'',
+    per:0,
+    font:Storage.getFontFamily(),
 };
 const {width, height} = Dimensions.get('window');
 Global.width = width;

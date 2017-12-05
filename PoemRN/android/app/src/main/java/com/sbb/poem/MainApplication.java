@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNViewShotPackage(),
             new RealmReactPackage(),
             new VectorIconsPackage(),
             new RNFetchBlobPackage(),

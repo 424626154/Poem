@@ -114,10 +114,10 @@ class WorksUI extends React.Component<Props,State> {
              />
 
          <TouchableOpacity style={styles.add} onPress={()=>{
-           this.onAdd()
-         }}>
-         {this._renderAdd()}
-       </TouchableOpacity>
+             this.onAdd()
+           }}>
+           {this._renderAdd()}
+         </TouchableOpacity>
        </View>
      );
    }
@@ -268,7 +268,7 @@ class WorksUI extends React.Component<Props,State> {
      return extend;
    }
    onAdd(){
-     if(this.props.papp.userid){
+     if(Utils.isLogin(this.props.navigation)){
        console.log('---per',this.props.papp.user.per)
        if(!Utils.getPermission(Permission.WRITE,this.props.papp.user.per)){
             this.props.navigation.navigate(UIName.AgreementUI,{toui:UIName.AddPoemUI});

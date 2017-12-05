@@ -44,6 +44,7 @@ export function raAutoLogin(userid:string){
               user:user,
             }
             Global.userid = userid;
+      			Global.per = user.per;
             dispatch(action);
           }else{
             console.log('---Post User Info Code :',res.code);
@@ -77,6 +78,7 @@ export function raLogin(userid:string,user:Object){
         userid:userid,
         user:user,
       }
+			Global.per = user.per;
       dispatch(action);
   }
 }
@@ -143,6 +145,7 @@ export function rePermission(userid:string,per:number){
         userid:userid,
         per:per,
       }
+      Global.per = per;
       dispatch(action);
   }
 }

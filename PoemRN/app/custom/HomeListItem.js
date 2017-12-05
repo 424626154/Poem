@@ -9,10 +9,20 @@ import {
       Text,
       View,
       TouchableOpacity,
+      Image,
+      Animated,
      } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {StyleConfig,UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
-const boundary = 80;
+import {
+  StyleConfig,
+  UIName,
+  pstyles,
+  PImage,
+  Utils,
+  Global,
+  ImageConfig,
+} from '../AppUtil';
+const boundary = 0;
 type Props = {
     onPressItem:Function,
     onLove:Function,
@@ -24,10 +34,23 @@ type Props = {
     time:string,
     headurl:any,
 };
-class HomeListItem extends React.PureComponent<Props> {
+type State = {
+      loveani:Animated.Value,
+}
+class HomeListItem extends React.PureComponent<Props,State> {
+    state = {
+      loveani:new Animated.Value(1),
+    }
     _onPress = () => {
         this.props.onPressItem(this.props.id);
     };
+    _onLove(){
+      if(this.props.item.mylove == 0){
+        console.log('_onLoveAni')
+        this._onLoveAni()
+      }
+      this.props.onLove(this.props.item);
+    }
     render() {
         let item = this.props.item;
         let extend = this.props.extend;
@@ -89,15 +112,21 @@ class HomeListItem extends React.PureComponent<Props> {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={()=>{
-                      this.props.onLove(item);
+                      this._onLove();
                     }}>
                     <View style={styles.menu_item}>
-                      <Icon
+                      {/* <Icon
                         name='thumb-up'
                         size={26}
                         type="MaterialIcons"
                         color={this._renderLoveColor()}
-                        />
+                        /> */}
+                        <Animated.Image
+                          source={this._renderLoveSource()}
+                          style={[styles.love,
+                            this._renderLoveStyle(),
+                            {transform: [{scale: this.state.loveani}]}
+                          ]}/>
                         <Text style={styles.menu_font}>
                           {this.renderLivenum(item.lovenum)}
                         </Text>
@@ -121,6 +150,14 @@ class HomeListItem extends React.PureComponent<Props> {
     _renderLoveColor(){
       return this.props.item.mylove > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
     }
+    _renderLoveSource(){
+      return this.props.item.mylove > 0 ?ImageConfig.favorite:ImageConfig.favorite_border;
+    }
+    _renderLoveStyle(){
+      return {
+        tintColor:this._renderLoveColor(),
+      }
+    }
     _renderAlign(extend){
       let align = 'center';
       if(extend){
@@ -139,11 +176,11 @@ class HomeListItem extends React.PureComponent<Props> {
               noborder={true}
               />
             </View>
-              <Text style={pstyles.poem_title}>
+              <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
                 {item.title}
               </Text>
               <Text
-                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+                style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
                 numberOfLines={1}
                 ellipsizeMode='tail'
               >
@@ -154,11 +191,11 @@ class HomeListItem extends React.PureComponent<Props> {
       }else{
         return(
           <View style={pstyles.poem}>
-            <Text style={pstyles.poem_title}>
+            <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
               {item.title}
             </Text>
             <Text
-              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)}]}
+              style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
               numberOfLines={8}
               ellipsizeMode='tail'
             >
@@ -168,6 +205,17 @@ class HomeListItem extends React.PureComponent<Props> {
         )
       }
     }
+    _onLoveAni(){
+        this.state.loveani.setValue(0.6);
+        Animated.spring(
+          this.state.loveani,
+          {
+            toValue: 1,
+            friction: 7,//摩擦力值  默认为7
+            tension:40,//弹跳的速度值  默认为40
+          }
+        ).start()
+    }
     _isPhoto(extend){
       let isphoto = false;
       if(extend&&extend.photo&&extend.pw&&extend.ph){
@@ -176,17 +224,18 @@ class HomeListItem extends React.PureComponent<Props> {
       return isphoto;
     }
     _getStyle(extend){
-        let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
-        if(extend.pw > extend.ph){
-          let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
-          style = Object.assign({},style,style1)
-        }
-        if(extend.pw < extend.ph){
-          let style2 = {resizeMode:'cover'}
-          style = Object.assign({},style,style2)
-          console.log('-------_getStyle')
-          console.log(style)
-        }
+        // let style = {resizeMode:'cover',width:Global.width-boundary,height:Global.width-boundary};
+        // if(extend.pw > extend.ph){
+        //   let style1 = {width:Global.width-boundary,height:(Global.width-boundary)*extend.ph/extend.pw}
+        //   style = Object.assign({},style,style1)
+        // }
+        // if(extend.pw < extend.ph){
+        //   let style2 = {resizeMode:'cover'}
+        //   style = Object.assign({},style,style2)
+        // }
+        let width = Global.width;
+        let height = Global.width*9/16;
+        let style = {resizeMode:'cover',width:width,height:height};
         return style;
     }
 }
@@ -233,6 +282,10 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_D4D4D4,
     marginLeft:4,
   },
+  love:{
+    width:26,
+    height:26,
+  }
 });
 
 export default HomeListItem;

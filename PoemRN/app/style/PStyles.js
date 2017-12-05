@@ -84,13 +84,11 @@ const ptyles = StyleSheet.create({
     fontSize:24,
     textAlign:'center',
     // fontWeight:'bold',
-    fontFamily: StyleConfig.FONT_FAMILY,
   },
   poem_content:{
     fontSize:18,
     textAlign:'center',
     padding:10,
-    fontFamily: StyleConfig.FONT_FAMILY,
   },
   line:{
     height:1,

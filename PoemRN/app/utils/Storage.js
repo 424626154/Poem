@@ -109,4 +109,22 @@ Storage.saveLabelHistory = function(label_history:string){
   }
 }
 
+Storage.getFontFamily = function(){
+  try {
+      let label_history = StorageDao.getItem(StorageConfig.FontFamily);
+      return label_history||'HYZhongSongJ';
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.saveFontFamily = function(fontFamily:string){
+  try {
+      let value = StorageDao.setItem(StorageConfig.FontFamily,fontFamily);
+      console.log(value)
+  } catch (error) {
+      console.error(error);
+  }
+}
+
 export default Storage;

@@ -50,6 +50,9 @@ HttpUtil.MESSAGE_MESSAGES = 'message/messages';
 HttpUtil.MESSAGE_READ = 'message/read';
 HttpUtil.MESSAGE_FEEDBACK = 'message/feedback';
 
+HttpUtil.BANNER_ALL = 'banner/all';
+
+
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
 console.log('---http url :'+HttpUtil.BASE_URL);
 

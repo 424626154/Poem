@@ -14,11 +14,12 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  Animated,
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as PoemsActions from '../redux/actions/PoemsActions';
 import * as UserActions from '../redux/actions/UserActions';
-
+import { captureRef } from "react-native-view-shot";
 import {
   CommentListItem,
   LoveListView,
@@ -36,11 +37,12 @@ import {
       Global,
       PImage,
       showToast,
+      ImageConfig,
       } from '../AppUtil';
 import{
       NavBack,
       }from '../custom/Custom';
-const boundary = 80;
+const boundary = 0;
 type Props = {
     navigation:any,
     mypoem:Object,
@@ -49,6 +51,7 @@ type Props = {
 
 type State = {
     id:string,
+    ftype:number,//1评论入口
     refreshing:boolean,
     sourceData:Array<Object>,
     loves:Array<Object>,
@@ -57,6 +60,7 @@ type State = {
     extend:Object,
     photo:string,
     isphoto:boolean,
+    loveani:Animated.Value,
 };
 
 class DetailsUI extends React.Component<Props,State>{
@@ -92,6 +96,7 @@ class DetailsUI extends React.Component<Props,State>{
         extend:{},
         photo:'',
         isphoto:false,
+        loveani:new Animated.Value(1),
     }
     this._onLove = this._onLove.bind(this);
     this._onLoveItem = this._onLoveItem.bind(this);
@@ -137,6 +142,8 @@ class DetailsUI extends React.Component<Props,State>{
         ref="ScrollView"
         style={pstyles.container}>
         <View
+          ref="poemsnapshot"
+          style={{backgroundColor:StyleConfig.C_FFFFFF}}
           onLayout={this._onPoemLayout}
         >
         {this._renderPoem()}
@@ -178,18 +185,18 @@ class DetailsUI extends React.Component<Props,State>{
       return(
         <View
           ref="poem"
-          style={pstyles.poem}>
-          <View style={pstyles.photo}>
+          style={[pstyles.poem,{paddingTop:0}]}>
+          <View style={[pstyles.photo,{paddingTop:0}]}>
             <PImage
               style={this._getStyle(this.state.extend)}
               source={Utils.getPhoto(this.state.photo?this.state.photo+'_big':'')}
               noborder={true}
               />
           </View>
-          <Text style={pstyles.poem_title}>
+          <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
             {this.props.mypoem.title}
           </Text>
-          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)}]}>
+          <Text style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(this.props.mypoem)}]}>
             {this.props.mypoem.content}
           </Text>
         </View>
@@ -243,7 +250,6 @@ class DetailsUI extends React.Component<Props,State>{
    * 功能视图
    */
   _renderMenu(){
-    if(this.props.mypoem.userid == this.props.papp.userid){
       return(
         <View
           ref="menu"
@@ -256,7 +262,7 @@ class DetailsUI extends React.Component<Props,State>{
                   this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,cid:0,onComment:this._onComment})
                 }
               }}>
-              <View style={styles.menu_item}>
+              <View style={[styles.menu_item,{paddingRight:0}]}>
                 <Icon
                   name='sms'
                   size={26}
@@ -273,18 +279,58 @@ class DetailsUI extends React.Component<Props,State>{
               onPress={()=>{
                 this._onLove();
               }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='thumb-up'
-                  size={26}
-                  type="MaterialIcons"
-                  color={this._renderLoveColor()}
-                  />
+              <View style={[styles.menu_item,{paddingLeft:0,paddingRight:0}]}>
+                <Animated.Image
+                  source={this._renderLoveSource()}
+                  style={[styles.love,
+                    this._renderLoveStyle(),
+                    {transform: [{scale: this.state.loveani}]}
+                  ]}/>
                   <Text style={styles.menu_font}>
                     {this._renderLovenum(this.props.mypoem.lovenum)}
                   </Text>
               </View>
             </TouchableOpacity>
+            {/* 截图 */}
+            <TouchableOpacity
+                onPress={()=>{
+                  captureRef(this.refs.poemsnapshot, {format: 'png', quality: 1}).then(
+                      (uri) =>{
+                        // alert(uri)
+                        this.refs.poemsnapshot.measure((x,y,width,height,px,py)=>{
+                          console.log('x:',x)
+                          console.log('y:',y)
+                          console.log('width:',width)
+                          console.log('height:',height)
+                          console.log('px:',px)
+                          console.log('py:',py)
+                          this.props.navigation.navigate(UIName.SnapshotUI,{uri:uri,imgw:width,imgh:height})
+                        });
+                      }
+                  ).catch(
+                      (error) => alert(error)
+                  );
+                }}>
+              <View style={[styles.menu_item,,{paddingLeft:0}]}>
+                <Icon
+                  name='collections'
+                  size={26}
+                  type="MaterialIcons"
+                  color={StyleConfig.C_D4D4D4}
+                  />
+              </View>
+            </TouchableOpacity>
+            {this._renderMenuDis()}
+        </View>
+      )
+  }
+  /**
+   * menu 区别
+   */
+  _renderMenuDis(){
+    if(this.props.mypoem.userid == this.props.papp.userid){
+        return(
+          <View style={{flexDirection:'row'}}>
             {/* 修改 */}
             <TouchableOpacity
               onPress={()=>{
@@ -321,63 +367,47 @@ class DetailsUI extends React.Component<Props,State>{
                   />
               </View>
             </TouchableOpacity>
-        </View>
-      )
+          </View>
+        )
     }else{
       return(
-        <View
-          ref="menu"
-          style={styles.menu}
-        >
-            <TouchableOpacity
-              onPress={()=>{
-                if(Utils.isLogin(this.props.navigation)){
-                  this.props.navigation.navigate(UIName.CommentUI,{id:this.state.id,onComment:this._onComment});
-                }
-              }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='sms'
-                  size={26}
-                  type="MaterialIcons"
-                  color={StyleConfig.C_D4D4D4}
-                  />
-                  <Text style={styles.menu_font}>
-                    {this._renderCommentnum(this.props.mypoem.commentnum)}
-                  </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={()=>{
-                this._onLove();
-              }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='thumb-up'
-                  size={26}
-                  type="MaterialIcons"
-                  color={this._renderLoveColor()}
-                  />
-                  <Text style={styles.menu_font}>
-                    {this._renderLovenum(this.props.mypoem.lovenum)}
-                  </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={()=>{
-                this._onReport();
-              }}>
-              <View style={styles.menu_item}>
-                <Icon
-                  name='new-releases'
-                  size={26}
-                  type="MaterialIcons"
-                  color={StyleConfig.C_D4D4D4}
-                  />
-              </View>
-            </TouchableOpacity>
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity
+            onPress={()=>{
+              this._onPersonal(this.props.mypoem.userid);
+            }}>
+            <View style={styles.menu_item}>
+              <Icon
+                name='person'
+                size={26}
+                type="MaterialIcons"
+                color={StyleConfig.C_D4D4D4}
+                />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={()=>{
+              this._onReport();
+            }}>
+            <View style={styles.menu_item}>
+              <Icon
+                name='new-releases'
+                size={26}
+                type="MaterialIcons"
+                color={StyleConfig.C_D4D4D4}
+                />
+            </View>
+          </TouchableOpacity>
         </View>
       )
+    }
+  }
+  _renderLoveSource(){
+    return this.props.mypoem.love> 0 ?ImageConfig.favorite:ImageConfig.favorite_border;
+  }
+  _renderLoveStyle(){
+    return {
+      tintColor:this._renderLoveColor(),
     }
   }
   /**
@@ -645,6 +675,10 @@ class DetailsUI extends React.Component<Props,State>{
    * 点赞
    */
   _onLove(){
+    if(this.props.mypoem.mylove == 0){
+      console.log('_onLoveAni')
+      this._onLoveAni()
+    }
     if(!Utils.isLogin(this.props.navigation)){
         return;
     }
@@ -704,6 +738,17 @@ class DetailsUI extends React.Component<Props,State>{
     }).catch((err)=>{
       console.error(err);
     })
+  }
+  _onLoveAni(){
+      this.state.loveani.setValue(0.6);
+      Animated.spring(
+        this.state.loveani,
+        {
+          toValue: 1,
+          friction: 7,//摩擦力值  默认为7
+          tension:40,//弹跳的速度值  默认为40
+        }
+      ).start()
   }
   /**
    * 点赞列表
@@ -843,6 +888,8 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:StyleConfig.C_D4D4D4,
     marginLeft:4,
+    width:18,
+    // backgroundColor:'#ff00ff',
   },
   empty:{
       flex:1,
@@ -880,6 +927,10 @@ const styles = StyleSheet.create({
   annotation:{
     fontSize:18,
     color:StyleConfig.C_D4D4D4
+  },
+  love:{
+    width:26,
+    height:26,
   }
 })
 function mapStateToProps(state) {

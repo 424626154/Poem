@@ -22,6 +22,7 @@ export const LOVEME = 'loveme';//给自己点赞
 // export const REFCOMMENT = 'refcomment';//刷新评论
 export const UP_POEM_LC = 'up_poem_lc';//刷新评论点赞数
 export const DELPOEM = 'delpoem';
+export const UPFONT = 'upfont';//修改字体
 
 export const SET_PUSH_NEWS = 'set_push_news';
 export const SET_PUSH_CHAT = 'set_push_chat';

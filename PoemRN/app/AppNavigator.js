@@ -12,14 +12,18 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabNavigator,StackNavigator } from 'react-navigation';
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 
 import{
     StyleConfig,
+    UIName,
   } from './AppUtil';
 
 import HomeTab from './tabs/HomeTab';
 import MessageTab from './tabs/MessageTab';
 import MyTab from './tabs/MyTab';
+import WorksTab from './tabs/WorksTab';
+import AddPoemTab from './tabs/AddPoemTab';
 
 import AddPoemUI from './ui/AddPoemUI';//添加诗词
 import LoginUI from './ui/LoginUI';
@@ -43,6 +47,28 @@ import ReportUI from './ui/ReportUI';
 import ProtocolUI from './ui/ProtocolUI';
 import PoemLabelUI from './ui/PoemLabelUI';
 import AnnotationUI from './ui/AnnotationUI';
+import BannerWebUI from './ui/BannerWebUI';
+import SnapshotUI from './ui/SnapshotUI';
+import FontUI from './ui/FontUI';
+
+const fade = (props) => {
+    const {position, scene} = props
+
+    const index = scene.index
+
+    const translateX = 0
+    const translateY = 0
+
+    const opacity = position.interpolate({
+        inputRange: [index - 0.7, index, index + 0.7],
+        outputRange: [0.3, 1, 0.3]
+    })
+
+    return {
+        opacity,
+        transform: [{translateX}, {translateY}]
+    }
+}
 
 const Tabs = TabNavigator({
   HomeTab: {
@@ -59,6 +85,37 @@ const Tabs = TabNavigator({
         ),
       }
   },
+  WorksTab: {
+    screen: WorksTab,
+    navigationOptions: {
+        tabBarLabel: '作品',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='inbox'
+            size={26}
+            type="MaterialIcons"
+            color={tintColor}
+          />
+        ),
+      }
+  },
+  // AddPoemTab:{
+  //   screen: AddPoemTab,
+  //   navigationOptions: {
+  //       tabBarLabel: '',
+  //       // tabBarIcon: ({ tintColor, focused }) => (
+  //       //   <Icon
+  //       //     name='add-box'
+  //       //     size={26}
+  //       //     type="MaterialIcons"
+  //       //     color={tintColor}
+  //       //   />
+  //       // ),
+  //       tabBarOptions:{
+  //         showLabel:false,
+  //       }
+  //     },
+  // },
   MessageTab: {
     screen: MessageTab,
     // navigationOptions: {
@@ -86,7 +143,7 @@ const Tabs = TabNavigator({
           />
         ),
       }
-  }
+  },
 },{
     tabBarPosition: 'bottom',
     tabBarOptions:{
@@ -183,9 +240,25 @@ const AppNavigator = StackNavigator({
   },
   AnnotationUI:{
     screen:AnnotationUI,
+  },
+  BannerWebUI:{
+    screen:BannerWebUI,
+  },
+  SnapshotUI:{
+    screen:SnapshotUI,
+  },
+  FontUI:{
+    screen:FontUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面
+  // transitionConfig:()=>({
+  //       screenInterpolator:(props)=> {
+  //           const {scene} = props
+  //           if (scene.route.routeName === UIName.AddPoemUI) return fade(props)
+  //           return CardStackStyleInterpolator.forHorizontal(props)
+  //      }
+  //  })
 })
 
 const styles = StyleSheet.create({

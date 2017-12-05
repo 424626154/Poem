@@ -45,6 +45,10 @@
 	<string>使用相册</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>WenQuanYiZenHei.ttf</string>
+		<string>SentyXWZ.ttf</string>
+		<string>SentyZHAO.ttf</string>
+		<string>FZSKBXK.TTF</string>
 		<string>HYZhongSongJ.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

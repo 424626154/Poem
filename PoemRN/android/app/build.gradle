@@ -169,6 +169,7 @@ def releaseTime() {
 }
 
 dependencies {
+    compile project(':react-native-view-shot')
     api project(':react-native-fetch-blob')
     implementation project(':realm')
     api project(':react-native-vector-icons')

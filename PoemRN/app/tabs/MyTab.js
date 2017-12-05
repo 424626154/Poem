@@ -52,6 +52,7 @@ class MyTab extends React.Component<Props,State> {
 
      _onStting:Function;
      _onWorks:Function;
+     _onFont:Function;
    constructor(props){
      super(props);
      console.log('---MyTab()---')
@@ -64,12 +65,13 @@ class MyTab extends React.Component<Props,State> {
      // }
      this._onStting = this._onStting.bind(this);
      this._onWorks = this._onWorks.bind(this);
+     this._onFont = this._onFont.bind(this);
    }
    componentDidMount(){
      // this._reloadUserInfo();
    }
    componentWillUnmount(){
-     
+
    }
 
    shouldComponentUpdate(nextProps, nextState){
@@ -81,7 +83,8 @@ class MyTab extends React.Component<Props,State> {
       <View style={styles.container}>
         {this._renderUserInfo()}
         <View style={styles.interval}></View>
-        {this._renderWorks()}
+        {/* {this._renderWorks()} */}
+        {this._renderItem('font-download','作品字体',this._onFont,false)}
         {this._renderItem('settings-applications','设置',this._onStting,false)}
       </View>
     );
@@ -241,6 +244,9 @@ class MyTab extends React.Component<Props,State> {
 
   _onWorks(){
     this.props.navigation.navigate(UIName.WorksUI);
+  }
+  _onFont(){
+    this.props.navigation.navigate(UIName.FontUI);
   }
   _onStting(){
     this.props.navigation.navigate(UIName.SettingUI);

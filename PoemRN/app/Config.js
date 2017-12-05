@@ -3,6 +3,7 @@
  * Config
  * @flow
  */
+
 var StyleConfig = {
 
 };
@@ -27,7 +28,10 @@ StyleConfig.F_10 = 10;
 StyleConfig.IOS_NAV = 20;
 
 StyleConfig.FONT_FAMILY ='HYZhongSongJ';
-
+StyleConfig.FONT_FZSKBXKJW = 'FZSKBXKJW--GB1-0';
+StyleConfig.SentyZHAO = 'SentyZHAO';
+StyleConfig.AppleColorEmoji = 'AppleColorEmoji';
+StyleConfig.WenQuanYiZenHei = 'WenQuanYiZenHei'
 var HeaderConfig = {
 
 };
@@ -50,13 +54,16 @@ StorageConfig.USERID = 'userid';
 StorageConfig.PUSHIID = 'pushid';
 StorageConfig.LAST_PHONE = 'last_phone';//上次登录手机号
 StorageConfig.LABEL_HISTORY = 'label_history';//标签历史
-
+StorageConfig.FontFamily = 'fontFamily';
 
 const nothead = require('./images/nothead.png');
 const notphoto = require('./images/notphoto.png');
 const official = require('./images/official.png');
 const zoomin = require('./images/zoom_in.png');
 const clear = require('./images/clear.png');
+const addbox = require('./images/add_box.png');
+const favorite_border = require('./images/favorite_border.png');
+const favorite = require('./images/favorite.png');
 var ImageConfig = {
 
 }
@@ -65,6 +72,9 @@ ImageConfig.notphoto = notphoto;
 ImageConfig.official = official;
 ImageConfig.zoomin = zoomin;
 ImageConfig.clear = clear;
+ImageConfig.addbox = addbox;
+ImageConfig.favorite = favorite;
+ImageConfig.favorite_border = favorite_border;
 
 var UIName = {}
 UIName.LoginUI = 'LoginUI';
@@ -89,6 +99,9 @@ UIName.ProtocolUI = 'ProtocolUI';
 UIName.FollowUI = 'FollowUI';
 UIName.PoemLabelUI = 'PoemLabelUI';
 UIName.AnnotationUI = 'AnnotationUI';
+UIName.BannerWebUI = 'BannerWebUI';
+UIName.SnapshotUI = 'SnapshotUI';
+UIName.FontUI = 'FontUI';
 
 var Permission = {
 

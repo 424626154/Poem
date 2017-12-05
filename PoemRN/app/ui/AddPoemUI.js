@@ -40,6 +40,8 @@ import {
   PImage,
   Utils,
   UIName,
+  Permission,
+  Global,
 } from '../AppUtil';
 import ImagePicker from 'react-native-image-crop-picker';
 import{
@@ -80,6 +82,7 @@ class AddPoemUI extends React.Component<Props,State> {
            <Text style={pstyles.nav_right}>{navigation.state.params.nav_right}</Text>
          </TouchableOpacity>
        ),
+       mode: 'modal',
     });
     onRelease:Function;
     _onChangeLabels:Function;
@@ -153,6 +156,8 @@ class AddPoemUI extends React.Component<Props,State> {
         this._onChangeAnnotation = this._onChangeAnnotation.bind(this);
     }
     componentDidMount(){
+      console.log('-----AddPoemUI componentDidMount------')
+      console.log(Global.font)
        this.props.navigation.setParams({onRelease:this.onRelease});
        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
@@ -166,7 +171,7 @@ class AddPoemUI extends React.Component<Props,State> {
     return (
     <View style={pstyles.container}>
         <TextInput
-          style={styles.title}
+          style={[styles.title,{fontFamily: Global.font}]}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入标题'}
           onChangeText={(text) => this.setState({title:text})}
@@ -181,7 +186,7 @@ class AddPoemUI extends React.Component<Props,State> {
        <View style={{flex:1}}>
         <TextInput
           ref='content'
-          style={styles.content}
+          style={[styles.content,{fontFamily: Global.font}]}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入内容'}
           onChangeText={(text) => this.setState({content:text})}
@@ -538,13 +543,11 @@ const styles = StyleSheet.create({
     // height:30,
     padding:10,
     fontSize:24,
-    fontFamily: StyleConfig.FONT_FAMILY,
   },
   content:{
     // height:height,
     padding:10,
     fontSize:18,
-    fontFamily: StyleConfig.FONT_FAMILY,
   },
   line:{
     height:1,

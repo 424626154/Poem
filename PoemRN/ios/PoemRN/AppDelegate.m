@@ -54,16 +54,16 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 //  打印字体名称
-//  NSLog(@"------------------@");
-//  for (NSString* family in [UIFont familyNames])
-//  {
-//    NSLog(@"%@", family);
-//    for (NSString* name in [UIFont fontNamesForFamilyName: family])
-//    {
-//      NSLog(@"%@", name);
-//    }
-//  }
-//  NSLog(@"------------------@");
+  NSLog(@"------------------@");
+  for (NSString* family in [UIFont familyNames])
+  {
+    NSLog(@"%@", family);
+    for (NSString* name in [UIFont fontNamesForFamilyName: family])
+    {
+      NSLog(@"%@", name);
+    }
+  }
+  NSLog(@"------------------@");
   [SplashScreen show];
   return YES;
 }
