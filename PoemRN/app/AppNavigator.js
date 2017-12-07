@@ -23,7 +23,8 @@ import HomeTab from './tabs/HomeTab';
 import MessageTab from './tabs/MessageTab';
 import MyTab from './tabs/MyTab';
 import WorksTab from './tabs/WorksTab';
-import AddPoemTab from './tabs/AddPoemTab';
+// import AddPoemTab from './tabs/AddPoemTab';
+import FamousTab from './tabs/FamousTab';
 
 import AddPoemUI from './ui/AddPoemUI';//添加诗词
 import LoginUI from './ui/LoginUI';
@@ -50,6 +51,10 @@ import AnnotationUI from './ui/AnnotationUI';
 import BannerWebUI from './ui/BannerWebUI';
 import SnapshotUI from './ui/SnapshotUI';
 import FontUI from './ui/FontUI';
+import FamousUI from './ui/FamousUI';
+import SearchFamousUI from './ui/SearchFamousUI';
+import PoemUI from './ui/PoemUI';
+import CommentsUI from './ui/CommentsUI';
 
 const fade = (props) => {
     const {position, scene} = props
@@ -85,13 +90,13 @@ const Tabs = TabNavigator({
         ),
       }
   },
-  WorksTab: {
-    screen: WorksTab,
+  FamousTab: {
+    screen: FamousTab,
     navigationOptions: {
-        tabBarLabel: '作品',
+        tabBarLabel: '名家',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name='inbox'
+            name='face'
             size={26}
             type="MaterialIcons"
             color={tintColor}
@@ -249,6 +254,18 @@ const AppNavigator = StackNavigator({
   },
   FontUI:{
     screen:FontUI,
+  },
+  FamousUI:{
+    screen:FamousUI,
+  },
+  SearchFamousUI:{
+    screen:SearchFamousUI,
+  },
+  PoemUI:{
+    screen:PoemUI,
+  },
+  CommentsUI:{
+    screen:CommentsUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

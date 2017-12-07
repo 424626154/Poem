@@ -83,7 +83,7 @@ class MyTab extends React.Component<Props,State> {
       <View style={styles.container}>
         {this._renderUserInfo()}
         <View style={styles.interval}></View>
-        {/* {this._renderWorks()} */}
+        {this._renderWorks()}
         {this._renderItem('font-download','作品字体',this._onFont,false)}
         {this._renderItem('settings-applications','设置',this._onStting,false)}
       </View>

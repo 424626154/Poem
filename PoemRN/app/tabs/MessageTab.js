@@ -24,9 +24,9 @@ import {
 } from '../AppUtil';
 import { Icon } from 'react-native-elements';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import NewsPage from '../custom/msgtab/NewsPage';
-import ChatPage from '../custom/msgtab/ChatPage';
-import MessageTabBar from '../custom/msgtab/MessageTabBar';
+import NewsPage from '../custom/msgpage/NewsPage';
+import ChatPage from '../custom/msgpage/ChatPage';
+import TopTabBar from '../custom/toptabbar/TopTabBar';
 import TabBarIcon from '../custom/TabBarIcon';
 
 import {connect} from 'react-redux';
@@ -121,7 +121,7 @@ class MessageTab extends Component <Props,State>{
             onChangeTab={(fnc)=>{
               this._onChangeTab(fnc.i);
             }}
-            renderTabBar={() => <MessageTabBar someProp={'here'} />}>
+            renderTabBar={() => <TopTabBar someProp={'here'} />}>
            <NewsPage
              ref='NewsPage'
              tabLabel="通知"

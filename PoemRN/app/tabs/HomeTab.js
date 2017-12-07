@@ -12,6 +12,7 @@ import {
       FlatList,
       TouchableOpacity,
       Alert,
+      Animated,
      } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
@@ -33,6 +34,7 @@ import {
   shallowEqual,
   showToast,
   Global,
+  Permission,
 } from '../AppUtil';
 const timeout  = 5000;
 type Props = {
@@ -46,6 +48,7 @@ type State = {
     selected:Map<string, boolean>,
     refreshing:boolean,
     banners:Array<Object>,
+    addbox:Animated.Value,
 };
 
 class HomeTab extends React.Component<Props,State> {
@@ -55,11 +58,19 @@ class HomeTab extends React.Component<Props,State> {
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:null,
+        tabBarOnPress:(({previousScene,scene,jumpToIndex})=>{
+            let index = scene.index;
+            if(navigation.state.params){
+              navigation.state.params.onAddAni();
+            }
+            jumpToIndex(index);
+        }),
      });
      _onLove:Function;
      _onComment:Function;
      _onPersonal:Function;
      _onBannerItem:Function;
+     _onAddAni:Function;
      timer:number;
      refresh_time:number;
      state = {
@@ -68,6 +79,7 @@ class HomeTab extends React.Component<Props,State> {
          selected: (new Map(): Map<string, boolean>),
          refreshing: false,
          banners:[],
+         addbox:new Animated.Value(1),
      }
      // 数据容器，用来存储数据
      constructor(props) {
@@ -77,9 +89,12 @@ class HomeTab extends React.Component<Props,State> {
          this._onComment = this._onComment.bind(this);
          this._onPersonal = this._onPersonal.bind(this);
          this._onBannerItem = this._onBannerItem.bind(this);
+         this._onAddAni = this._onAddAni.bind(this);
      }
    // 当视图全部渲染完毕之后执行该生命周期方法
     componentDidMount() {
+      this.props.navigation.setParams({onAddAni:this._onAddAni});
+      this._onAddAni();
       this.timer = setTimeout(
       () => {
         let { dispatch } = this.props.navigation;
@@ -126,10 +141,36 @@ class HomeTab extends React.Component<Props,State> {
                 // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
                 getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
             />
+        <TouchableOpacity style={styles.add} onPress={()=>{
+            this._onAdd()
+          }}>
+          {this._renderAdd()}
+        </TouchableOpacity>
       </View>
     );
   }
-
+  _onAddAni() {
+    this.state.addbox.setValue(0.3);
+    Animated.spring(
+      this.state.addbox,
+      {
+        toValue: 1,
+        friction: 7,//摩擦力值  默认为7
+        tension:40,//弹跳的速度值  默认为40
+      }
+    ).start()
+  }
+  /**
+   * 添加按钮
+   */
+  _renderAdd(){
+    return(
+      <Animated.Image
+        source={ImageConfig.addbox}
+        style={[styles.addbox,{transform: [{scale: this.state.addbox}]}]}
+      />
+    )
+  }
    _keyExtractor = (item, index) => index+'';
 
    _onPressItem = (id: string) => {
@@ -182,6 +223,8 @@ class HomeTab extends React.Component<Props,State> {
          this.props.navigation.navigate(UIName.BannerWebUI,{banner:item})
        }else if(item.type == 2){
          this.props.navigation.navigate(UIName.DetailsUI,{id:item.pid});
+       }else if(item.type == 3){
+         this.props.navigation.navigate(UIName.PoemUI,{id:item.pid});
        }
      }
    }
@@ -194,11 +237,13 @@ class HomeTab extends React.Component<Props,State> {
    );
      // 下拉刷新
    _renderRefresh = () => {
+     console.log('------_renderRefresh-----')
      this._requestNewestAllPoem();
    };
 
    // 上拉加载更多
    _onEndReached = () => {
+     console.log('------_onEndReached-----')
      this._startRefres();
      var fromid = 0;
      // if(this.state.sourceData.length > 0 ){
@@ -256,7 +301,18 @@ class HomeTab extends React.Component<Props,State> {
     * 点击评论
     */
    _onComment(item){
-     this.props.navigation.navigate(UIName.DetailsUI,{id:item.id,ftype:1});
+     this.props.navigation.navigate(UIName.CommentsUI,{id:item.id,ftype:1});
+   }
+   _onAdd(){
+     if(!Utils.isLogin(this.props.navigation)){
+         return;
+     }
+       console.log('---per',this.props.papp.user.per)
+       if(!Utils.getPermission(Permission.WRITE,this.props.papp.user.per)){
+            this.props.navigation.navigate(UIName.AgreementUI,{toui:UIName.AddPoemUI});
+       } else{
+            this.props.navigation.navigate(UIName.AddPoemUI,{ftype:0});
+       }
    }
    /**
     * 点赞
@@ -467,6 +523,18 @@ const styles = StyleSheet.create({
     fontSize:StyleConfig.F_22,
     textAlign:'center',
     color:StyleConfig.C_FFFFFF,
+  },
+  add:{
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    width: 44,
+    height: 44,
+  },
+  addbox:{
+    width:44,
+    height:44,
+    tintColor:StyleConfig.C_FFCA28,
   },
   empty:{
       flex:1,

@@ -110,3 +110,14 @@ export function raUpFont(){
       dispatch(action);
   }
 }
+
+export function raUpCommNum(id:number,commentnum:number){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.UPCOMMNUM,
+        id:id,
+        commentnum:commentnum,
+      }
+      dispatch(action);
+  }
+}

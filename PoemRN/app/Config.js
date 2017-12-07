@@ -102,6 +102,11 @@ UIName.AnnotationUI = 'AnnotationUI';
 UIName.BannerWebUI = 'BannerWebUI';
 UIName.SnapshotUI = 'SnapshotUI';
 UIName.FontUI = 'FontUI';
+UIName.FamousUI = 'FamousUI';
+UIName.FamousUI = 'FamousUI';
+UIName.SearchFamousUI = 'SearchFamousUI';
+UIName.PoemUI = 'PoemUI';
+UIName.CommentsUI = 'CommentsUI';
 
 var Permission = {
 

@@ -206,6 +206,41 @@ export default function poems(state:any=initialState, action:any){
 					mypoems:mypoems,
 					mypoem:mypoem,
 				});
+		case TYPES.UPCOMMNUM:
+				var homepoems = state.homepoems;
+				var uphomepoems = false;
+				for(var i = 0 ; i < homepoems.length ; i ++ ){
+					if(homepoems[i].id == action.id&&homepoems[i].commentnum != action.commentnum){
+						homepoems[i].commentnum = action.commentnum;
+						uphomepoems = true;
+						console.log('-----change homepoems')
+					}
+				}
+				var upmypoem = false;
+				var mypoem = state.mypoem;
+				if(mypoem.id == action.id && mypoem.commentnum != action.commentnum){
+						mypoem.commentnum = action.commentnum;
+						upmypoem = true;
+				}
+				if(uphomepoems&&upmypoem){
+					homepoems = Object.assign([], homepoems);
+					mypoem = Object.assign({}, mypoem);
+					return Object.assign({}, state, {
+						homepoems:homepoems,
+						mypoem:mypoem,
+					});
+				}else if(uphomepoems){
+					homepoems = Object.assign([], homepoems);
+					return Object.assign({}, state, {
+						homepoems:homepoems,
+					});
+				}else if(upmypoem){
+					mypoem = Object.assign({}, mypoem);
+					return Object.assign({}, state, {
+						mypoem:mypoem,
+					});
+				}
+				return state;
 		default:
 			return state;
 	}

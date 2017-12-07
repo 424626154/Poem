@@ -24,6 +24,8 @@ export const UP_POEM_LC = 'up_poem_lc';//刷新评论点赞数
 export const DELPOEM = 'delpoem';
 export const UPFONT = 'upfont';//修改字体
 
+export const UPCOMMNUM = 'upcommnum';//修正评论数
+
 export const SET_PUSH_NEWS = 'set_push_news';
 export const SET_PUSH_CHAT = 'set_push_chat';
 export const SET_CHAT_USER = 'set_chat_user';

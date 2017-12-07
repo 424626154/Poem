@@ -276,12 +276,6 @@ class WorksTab extends React.Component<Props,State> {
     */
    _renderAdd(){
      return(
-       // <Icon
-       //   name='add-box'
-       //   size={44}
-       //   type="MaterialIcons"
-       //   color={StyleConfig.C_FFCA28}
-       // />
        <Animated.Image
          source={ImageConfig.addbox}
          style={[styles.addbox,{transform: [{scale: this.state.addbox}]}]}

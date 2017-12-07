@@ -52,6 +52,12 @@ HttpUtil.MESSAGE_FEEDBACK = 'message/feedback';
 
 HttpUtil.BANNER_ALL = 'banner/all';
 
+HttpUtil.FAMOUS_OPLABELS = 'famous/oplabels';
+HttpUtil.FAMOUS_NOPOEM = 'famous/nopoems';
+HttpUtil.FAMOUS_HOPOEM = 'famous/hopoems';
+HttpUtil.FAMOUS_SEARCH = 'famous/search';
+HttpUtil.FAMOUS_OPOEM = 'famous/opoem';
+HttpUtil.FAMOUS_AUTHOR = 'famous/author';
 
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
 console.log('---http url :'+HttpUtil.BASE_URL);

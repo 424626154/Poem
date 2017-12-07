@@ -113,11 +113,11 @@ class WorksUI extends React.Component<Props,State> {
                  // getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
              />
 
-         <TouchableOpacity style={styles.add} onPress={()=>{
+         {/* <TouchableOpacity style={styles.add} onPress={()=>{
              this.onAdd()
            }}>
            {this._renderAdd()}
-         </TouchableOpacity>
+         </TouchableOpacity> */}
        </View>
      );
    }

@@ -22,8 +22,8 @@ AppConf.IOS_CHANNEL = AppConf.APPSTORE;
 //android渠道
 // AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO;
 // AppConf.ANDROID_CHANNEL = AppConf.FIR_IM;
-// AppConf.ANDROID_CHANNEL = AppConf.XIAOMI;
-AppConf.ANDROID_CHANNEL = AppConf.QIHU360;
+AppConf.ANDROID_CHANNEL = AppConf.XIAOMI;
+// AppConf.ANDROID_CHANNEL = AppConf.QIHU360;
 
 AppConf.DEBUG_IP = '192.168.1.7';
 // AppConf.DEBUG_IP = 'localhost';
