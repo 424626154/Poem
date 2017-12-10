@@ -120,6 +120,15 @@ Utils.setPermission = function(per_key:number,per_bool:boolean,per:number){
   bitset.setBit(per_key,per_bool);
   return bitset.getLon();
 }
+Utils.getExtend = function(item:Object):Object{
+  let extend = {}
+  if(item.extend){
+    extend = JSON.parse(item.extend);
+  }
+  // console.log('------_getExtend')
+  // console.log(extend)
+  return extend;
+}
 /**
  * 跳转个人页面
  */

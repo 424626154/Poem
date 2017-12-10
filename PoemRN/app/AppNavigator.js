@@ -55,6 +55,7 @@ import FamousUI from './ui/FamousUI';
 import SearchFamousUI from './ui/SearchFamousUI';
 import PoemUI from './ui/PoemUI';
 import CommentsUI from './ui/CommentsUI';
+import StarUI from './ui/StarUI';
 
 const fade = (props) => {
     const {position, scene} = props
@@ -266,6 +267,9 @@ const AppNavigator = StackNavigator({
   },
   CommentsUI:{
     screen:CommentsUI,
+  },
+  StarUI:{
+    screen:StarUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

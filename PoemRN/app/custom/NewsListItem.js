@@ -113,7 +113,7 @@ export default class NewsListItem extends React.Component<Props>{
   }
   _renderMsg(message){
     var extend = JSON.parse(message.extend);
-    if(message.type == 1||message.type == 2||message.type == 3){//点赞 评论 关注
+    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5){//点赞 评论 关注 发布作品
       var msg_html =  '';
       if(message.type == 1){
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
@@ -134,6 +134,11 @@ export default class NewsListItem extends React.Component<Props>{
       if(message.type == 3){
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
                       '<span><msg_love>关注了你</msg_love></span></div>'
+      }
+      if(message.type == 5){
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>发布了</msg_love></span>'+
+                      '<span><msg_info>['+extend.title+']</msg_info></span></div>';
       }
       // console.log(msg_html);
       return(
@@ -156,7 +161,7 @@ export default class NewsListItem extends React.Component<Props>{
     var source = ImageConfig.nothead;
       if(message.type == 0||message.type == 4){
         source = ImageConfig.official;
-      }else if (message.type == 1||message.type == 2||message.type == 3){
+      }else if (message.type == 1||message.type == 2||message.type == 3||message.type == 5){
         // console.log('---extend---');
         var extend = JSON.parse(message.extend);
         // console.log(extend);

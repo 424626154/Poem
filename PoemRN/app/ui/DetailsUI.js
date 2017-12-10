@@ -406,6 +406,22 @@ class DetailsUI extends React.Component<Props,State>{
               style={styles.modal_item}
               onPress={()=>{
                 this._onCloseModal();
+                this._onStar(this.props.mypoem.id);
+              }}>
+                <Icon
+                  name={this.props.mypoem.star == 1?'star':'star-border'}
+                  size={26}
+                  type="MaterialIcons"
+                  color={StyleConfig.C_D4D4D4}
+                  />
+
+            </TouchableOpacity>
+          </View>
+          <View style={styles.modal_item_bg}>
+            <TouchableOpacity
+              style={styles.modal_item}
+              onPress={()=>{
+                this._onCloseModal();
                 this._onPersonal(this.props.mypoem.userid);
               }}>
                 <Icon
@@ -841,6 +857,34 @@ class DetailsUI extends React.Component<Props,State>{
    */
   _onLoves(){
     this.props.navigation.navigate(UIName.LovesUI,{id:this.state.id})
+  }
+  _onStar(id){
+    if(!Utils.isLogin(this.props.navigation)){
+      return;
+    }
+    let star = this.props.mypoem.star == 1?0:1;
+    var json = JSON.stringify({
+      type:1,
+      userid:this.props.papp.userid,
+      sid:this.props.mypoem.id,
+      star:star,
+    });
+    HttpUtil.post(HttpUtil.STATR, json)
+    .then(res=>{
+      if(res.code == 0){
+        let tips = '取消收藏'
+        if(star == 1){
+            tips = '收藏成功';
+        }
+        let { dispatch } = this.props.navigation;
+        dispatch(PoemsActions.raUpStart(1,this.props.mypoem.id,star));
+        showToast(tips)
+      }else{
+        showToast(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
   }
   _onReport(){
     if(!Utils.isLogin(this.props.navigation)){

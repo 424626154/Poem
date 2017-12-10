@@ -59,6 +59,10 @@ HttpUtil.FAMOUS_SEARCH = 'famous/search';
 HttpUtil.FAMOUS_OPOEM = 'famous/opoem';
 HttpUtil.FAMOUS_AUTHOR = 'famous/author';
 
+HttpUtil.STATR = 'star/star';
+HttpUtil.NSTARS = 'star/nstars';
+HttpUtil.HSTARS = 'star/hstars';
+
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
 console.log('---http url :'+HttpUtil.BASE_URL);
 

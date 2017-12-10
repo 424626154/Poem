@@ -30,11 +30,11 @@ export default class FamousListItem extends React.PureComponent<Props> {
                 >
                 <View style={styles.fitem}>
                   <View style={pstyles.poem}>
-                    <Text style={pstyles.poem_title}>
+                    <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
                       {item.title}
                     </Text>
                     <Text
-                      style={[pstyles.poem_content,{textAlign:'center'}]}
+                      style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:'center'}]}
                       numberOfLines={8}
                       ellipsizeMode='tail'
                     >

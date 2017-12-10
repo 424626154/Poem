@@ -50,9 +50,10 @@ class MyTab extends React.Component<Props,State> {
         headerLeft:null,
      });
 
-     _onStting:Function;
-     _onWorks:Function;
-     _onFont:Function;
+   _onStting:Function;
+   _onWorks:Function;
+   _onFont:Function;
+   _onStar:Function;
    constructor(props){
      super(props);
      console.log('---MyTab()---')
@@ -66,6 +67,7 @@ class MyTab extends React.Component<Props,State> {
      this._onStting = this._onStting.bind(this);
      this._onWorks = this._onWorks.bind(this);
      this._onFont = this._onFont.bind(this);
+     this._onStar = this._onStar.bind(this);
    }
    componentDidMount(){
      // this._reloadUserInfo();
@@ -84,6 +86,7 @@ class MyTab extends React.Component<Props,State> {
         {this._renderUserInfo()}
         <View style={styles.interval}></View>
         {this._renderWorks()}
+        {this._renderStar()}
         {this._renderItem('font-download','作品字体',this._onFont,false)}
         {this._renderItem('settings-applications','设置',this._onStting,false)}
       </View>
@@ -241,9 +244,16 @@ class MyTab extends React.Component<Props,State> {
       return(this._renderItem('inbox','我的作品',this._onWorks,false))
     }
   }
-
+  _renderStar(){
+    if(this.props.papp.userid){
+      return(this._renderItem('star','我的收藏',this._onStar,false))
+    }
+  }
   _onWorks(){
     this.props.navigation.navigate(UIName.WorksUI);
+  }
+  _onStar(){
+    this.props.navigation.navigate(UIName.StarUI,{userid:this.props.papp.userid});
   }
   _onFont(){
     this.props.navigation.navigate(UIName.FontUI);
@@ -348,6 +358,7 @@ const styles = StyleSheet.create({
   },
   follow_item_bg:{
     padding:10,
+    alignItems:'center',
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,

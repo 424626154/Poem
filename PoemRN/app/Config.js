@@ -107,6 +107,7 @@ UIName.FamousUI = 'FamousUI';
 UIName.SearchFamousUI = 'SearchFamousUI';
 UIName.PoemUI = 'PoemUI';
 UIName.CommentsUI = 'CommentsUI';
+UIName.StarUI = 'StarUI';
 
 var Permission = {
 

@@ -98,7 +98,7 @@ class NewsPage extends React.Component<Props,State>{
         MessageDao.updateMessageState(message);
         this.props.reduxMsgRead();
       }
-      if(message.type == 1||message.type == 2){
+      if(message.type == 1||message.type == 2||message.type == 5){
         var extend = JSON.parse(message.extend);
         console.log("------extend------");
         console.log(extend);
@@ -117,7 +117,7 @@ class NewsPage extends React.Component<Props,State>{
       }
   };
   _onIconItem = (id: string,message:Object) => {
-    if(message.type == 1||message.type == 2||message.type == 3){
+    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5){
       var extend = JSON.parse(message.extend);
       var userid = extend.userid;
       if(userid){

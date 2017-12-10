@@ -241,6 +241,23 @@ export default function poems(state:any=initialState, action:any){
 					});
 				}
 				return state;
+		case TYPES.UPSTAR:
+				// console.log('------PoemsReducers')
+				// console.log('----action')
+				// console.log(action)
+				if(action.stype == 1){
+					let mypoem = state.mypoem
+					console.log(mypoem.id == action.sid)
+					if(mypoem.id == action.sid){
+						mypoem.star = action.star;
+						mypoem = Object.assign({}, mypoem);
+						console.log('-----upstart')
+						return Object.assign({}, state, {
+							mypoem:mypoem,
+						});
+					}
+				}
+				return state;
 		default:
 			return state;
 	}

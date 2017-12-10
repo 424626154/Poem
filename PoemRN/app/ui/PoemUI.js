@@ -102,10 +102,10 @@ class PoemUI extends React.Component<Props,State>{
       <View
         ref="poem"
         style={pstyles.poem}>
-        <Text style={pstyles.poem_title}>
+        <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
           {this.state.poem.title}
         </Text>
-        <Text style={pstyles.poem_content}>
+        <Text style={[pstyles.poem_content,{fontFamily:Global.font}]}>
           {this.state.poem.content}
         </Text>
       </View>
@@ -115,6 +115,20 @@ class PoemUI extends React.Component<Props,State>{
     return(
       <View
         style={styles.menu}>
+        {/* 收藏 */}
+        <TouchableOpacity
+            onPress={()=>{
+              this._onStar();
+            }}>
+          <View style={styles.menu_item}>
+            <Icon
+              name={this.state.poem.star == 1?'star':'star-border'}
+              size={26}
+              type="MaterialIcons"
+              color={StyleConfig.C_D4D4D4}
+              />
+          </View>
+        </TouchableOpacity>
         {/* 截图 */}
         <TouchableOpacity
             onPress={()=>{
@@ -146,6 +160,22 @@ class PoemUI extends React.Component<Props,State>{
           <View style={styles.menu_item}>
             <Icon
               name='person'
+              size={26}
+              type="MaterialIcons"
+              color={StyleConfig.C_D4D4D4}
+              />
+          </View>
+        </TouchableOpacity>
+        {/* 名言报错 */}
+        <TouchableOpacity
+            onPress={()=>{
+              if(Utils.isLogin(this.props.navigation)){
+                  this.props.navigation.navigate(UIName.ReportUI,{title:'名言报错',type:2,rid:this.state.id});
+              }
+            }}>
+          <View style={styles.menu_item}>
+            <Icon
+              name='error-outline'
               size={26}
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
@@ -194,12 +224,41 @@ class PoemUI extends React.Component<Props,State>{
   _onCloseModal(){
     this.setState({modal:false})
   }
-
+  _onStar(){
+    if(!Utils.isLogin(this.props.navigation)){
+      return;
+    }
+    let star = this.state.poem.star == 1?0:1;
+    var json = JSON.stringify({
+      type:2,
+      userid:this.props.papp.userid,
+      sid:this.state.poem.id,
+      star:star,
+    });
+    HttpUtil.post(HttpUtil.STATR, json)
+    .then(res=>{
+      if(res.code == 0){
+        let tips = '取消收藏'
+        if(star == 1){
+            tips = '收藏成功';
+        }
+        let poem = this.state.poem;
+        poem.star = star;
+        this.setState({poem:poem})
+        showToast(tips)
+      }else{
+        showToast(res.errmsg);
+      }
+    }).catch(err=>{
+      console.error(err);
+    })
+  }
   _requestOPoem(){
     if(!this.state.id){
       showToast('id错误!')
     }
     var json = JSON.stringify({
+      userid:this.props.papp.userid,
       id:this.state.id,
     })
     HttpUtil.post(HttpUtil.FAMOUS_OPOEM, json).then(res=>{
@@ -250,7 +309,7 @@ const styles = StyleSheet.create({
   },
   menu_item:{
     height:50,
-    width:Global.width/2,
+    width:Global.width/4,
     padding:10,
     alignItems:'center',
     justifyContent: 'center',

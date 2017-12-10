@@ -121,3 +121,15 @@ export function raUpCommNum(id:number,commentnum:number){
       dispatch(action);
   }
 }
+
+export function raUpStart(stype:number,sid:number,star:number){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.UPSTAR,
+        stype:stype,
+        sid:sid,
+        star:star,
+      }
+      dispatch(action);
+  }
+}

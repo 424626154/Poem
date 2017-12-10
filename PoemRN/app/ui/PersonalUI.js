@@ -25,6 +25,7 @@ import {
         PImage,
         UIName,
         showToast,
+        Global,
       } from '../AppUtil';
 
 import{
@@ -116,10 +117,11 @@ class PersonalUI extends React.Component<Props,State>{
               <View style={styles.personal_more}>
               </View>
             </View>
-          {this._renderFollow()}
           {this._renderFollowOP()}
+          {this._renderFollow()}
           <View style={pstyles.line}/>
         </View>
+        <View style={styles.line}/>
         <FlatList
                   style={pstyles.flatlist}
                   data={ this.state.sourceData }
@@ -230,6 +232,14 @@ class PersonalUI extends React.Component<Props,State>{
               <Text style={styles.follow_item_font}>{this.state.followme_title}</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            this._onStar();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.user.starnum}</Text>
+              <Text style={styles.follow_item_font}>{'收藏'}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       )
   }
@@ -255,7 +265,6 @@ class PersonalUI extends React.Component<Props,State>{
                 {'私信'}
               </Text>
           </TouchableOpacity>
-          <View style={{width:4,}}></View>
       </View>
     )
   }
@@ -270,6 +279,10 @@ class PersonalUI extends React.Component<Props,State>{
     if(!Utils.isLogin(this.props.navigation))return;
     this.props.navigation.navigate(UIName.ChatUI,{tuserid:this.state.userid,head:this.state.head,pseudonym:this.state.pseudonym});
   }
+  _onStar(){
+    this.props.navigation.navigate(UIName.StarUI,{userid:this.state.userid})
+  }
+
   _requestOtherInfo(userid){
     var json = JSON.stringify({
       myid:this.props.papp.user.userid,
@@ -406,11 +419,12 @@ const styles = StyleSheet.create({
   },
   //关注按钮
   follow:{
-    flex:1,
+    // flex:1,
     flexDirection:'row',
-    paddingBottom:14,
-    alignItems:'flex-end',
+    // paddingBottom:14,
+    // alignItems:'flex-end',
     justifyContent:'flex-end',
+    paddingRight:10,
   },
   follow_button:{
     width:80,
@@ -434,6 +448,8 @@ const styles = StyleSheet.create({
   },
   follow_item_bg:{
     padding:10,
+    width:Global.width/3,
+    alignItems:'center',
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
@@ -446,6 +462,10 @@ const styles = StyleSheet.create({
   },
   personal_more:{
 
+  },
+  line:{
+    height:10,
+    backgroundColor:StyleConfig.C_E7E7E7,
   }
 })
 export default connect(

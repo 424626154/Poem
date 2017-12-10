@@ -30,3 +30,5 @@ export const SET_PUSH_NEWS = 'set_push_news';
 export const SET_PUSH_CHAT = 'set_push_chat';
 export const SET_CHAT_USER = 'set_chat_user';
 export const SET_PUSH_CHAT_USER = 'set_push_chat_user';
+
+export const UPSTAR = 'upstar';
