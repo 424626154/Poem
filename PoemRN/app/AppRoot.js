@@ -22,7 +22,7 @@ import {
 } from './AppUtil';
 
 import JPushModule from 'jpush-react-native';
-import AnalyticsUtil from './AnalyticsUtil';
+import AnalyticsUtil from './umeng/AnalyticsUtil';
 
 const uriPrefix = Platform.OS == 'ios'?'poem://':'poem://poem/';
 

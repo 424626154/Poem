@@ -345,15 +345,15 @@ class SearchFamousUI extends React.Component<Props,State> {
    },
    nav_right_font:{
        fontSize:18,
-       color:StyleConfig.C_000000,
+       color:StyleConfig.C_333333,
    },
    search:{
      flex:1,
      flexDirection:'row',
-     backgroundColor:StyleConfig.C_E7E7E7,
+     backgroundColor:StyleConfig.C_EDEDED,
      borderWidth:1,
      borderRadius:6,
-     borderColor:StyleConfig.C_E7E7E7,
+     borderColor:StyleConfig.C_EDEDED,
      alignItems:'center',
      // justifyContent:'center',
    },
@@ -368,7 +368,7 @@ class SearchFamousUI extends React.Component<Props,State> {
    },
    tips_font:{
      fontSize:16,
-     color:StyleConfig.C_000000,
+     color:StyleConfig.C_333333,
    }
  });
  export default connect(

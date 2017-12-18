@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TabNavigator,StackNavigator } from 'react-navigation';
+import { TabNavigator,StackNavigator,TabBarBottom } from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 
 import{
@@ -23,7 +23,7 @@ import HomeTab from './tabs/HomeTab';
 import MessageTab from './tabs/MessageTab';
 import MyTab from './tabs/MyTab';
 import WorksTab from './tabs/WorksTab';
-// import AddPoemTab from './tabs/AddPoemTab';
+import AddPoemTab from './tabs/AddPoemTab';
 import FamousTab from './tabs/FamousTab';
 
 import AddPoemUI from './ui/AddPoemUI';//添加诗词
@@ -94,10 +94,10 @@ const Tabs = TabNavigator({
   FamousTab: {
     screen: FamousTab,
     navigationOptions: {
-        tabBarLabel: '名家',
+        tabBarLabel: '收录',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name='face'
+            name='import-contacts'
             size={26}
             type="MaterialIcons"
             color={tintColor}
@@ -161,13 +161,26 @@ const Tabs = TabNavigator({
         style: {
           backgroundColor:StyleConfig.C_FFFFFF,
         },
-        activeTintColor:StyleConfig.C_000000,
-        inactiveTintColor:StyleConfig.C_7B8992,
+        activeTintColor:StyleConfig.C_333333,
+        inactiveTintColor:'#bfbfbf',
     },
     swipeEnabled:false,
     // tabBarVisible:false,
     // backBehavior:'none',
     lazy:true,
+    // tabBarComponent: ({jumpToIndex, ...props, navigation}) => (
+    //     <TabBarBottom
+    //         {...props}
+    //         jumpToIndex={index => {
+    //             if (index === 2) {
+    //                 navigation.navigate(UIName.AddPoemUI,{ftype:0})
+    //             }
+    //             else {
+    //                 jumpToIndex(index)
+    //             }
+    //         }}
+    //     />
+    // )
 });
 
 

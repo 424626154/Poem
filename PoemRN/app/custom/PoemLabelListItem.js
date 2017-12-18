@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     padding:10,
   },
   hitem_name:{
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   hitem_clear:{
 

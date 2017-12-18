@@ -149,7 +149,7 @@ export default class PoemLabelUI extends React.Component<Props,State> {
               name='add-box'
               size={30}
               type="MaterialIcons"
-              color={StyleConfig.C_000000}
+              color={StyleConfig.C_333333}
             />
           </TouchableOpacity>
           </View>
@@ -456,8 +456,8 @@ const styles = StyleSheet.create({
       paddingRight:6,
       paddingTop:2,
       paddingBottom:2,
-      color:StyleConfig.C_000000,
-      borderColor:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
+      borderColor:StyleConfig.C_333333,
       borderWidth:1,
       borderRadius:4,
     },

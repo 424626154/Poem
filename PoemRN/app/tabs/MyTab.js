@@ -10,8 +10,11 @@ import {
         View,
         TouchableOpacity,
         Alert,
+        ScrollView,
+        RefreshControl,
       } from 'react-native';
 import {connect} from 'react-redux';
+import * as UserActions from '../redux/actions/UserActions';
 import { Icon } from 'react-native-elements';
 
 import{
@@ -39,6 +42,7 @@ type State = {
     // headurl:any,
     // myfollow:number,
     // followme:number,
+    isRefreshing:boolean,
 };
 
 class MyTab extends React.Component<Props,State> {
@@ -54,20 +58,23 @@ class MyTab extends React.Component<Props,State> {
    _onWorks:Function;
    _onFont:Function;
    _onStar:Function;
+   _onRefresh:Function;
    constructor(props){
      super(props);
      console.log('---MyTab()---')
-     // this.state={
+     this.state={
      //   headurl:nothead,
      //   pseudonym:'',
      //   userid:this.props.papp.userid,
      //   myfollow:0,
      //   followme:0,
-     // }
+       isRefreshing:false,
+     }
      this._onStting = this._onStting.bind(this);
      this._onWorks = this._onWorks.bind(this);
      this._onFont = this._onFont.bind(this);
      this._onStar = this._onStar.bind(this);
+     this._onRefresh = this._onRefresh.bind(this);
    }
    componentDidMount(){
      // this._reloadUserInfo();
@@ -82,14 +89,25 @@ class MyTab extends React.Component<Props,State> {
   render() {
     const { state,navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this._onRefresh}
+            tintColor={StyleConfig.C_FFFFFF}
+            title=""
+            titleColor={StyleConfig.C_FFFFFF}
+            colors={[StyleConfig.C_FFFFFF]}
+            progressBackgroundColor={StyleConfig.C_FFFFFF}
+          />
+        }>
         {this._renderUserInfo()}
         <View style={styles.interval}></View>
         {this._renderWorks()}
         {this._renderStar()}
         {this._renderItem('font-download','作品字体',this._onFont,false)}
         {this._renderItem('settings-applications','设置',this._onStting,false)}
-      </View>
+      </ScrollView>
     );
   }
   _renderUserInfo(){
@@ -118,6 +136,7 @@ class MyTab extends React.Component<Props,State> {
               <PImage
                 style={pstyles.big_head}
                 source={this._getHeadurl()}
+                noborder={true}
                 />
               </TouchableOpacity>
               <View style={styles.head_bg}>
@@ -143,6 +162,7 @@ class MyTab extends React.Component<Props,State> {
               <PImage
                 style={pstyles.big_head}
                 source={nothead}
+                noborder={true}
                 />
               <View style={styles.head_bg}>
                 <Text style={styles.name}>
@@ -196,7 +216,7 @@ class MyTab extends React.Component<Props,State> {
           name={icon}
           size={28}
           type="MaterialIcons"
-          color={StyleConfig.C_000000}
+          color={StyleConfig.C_333333}
         />
         <Text style={styles.item_title}>
           {title}
@@ -305,12 +325,21 @@ class MyTab extends React.Component<Props,State> {
   _onFollowMe(){
     this.props.navigation.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'关注我的',type:1});
   }
+
+  _onRefresh(){
+    if(this.props.papp.userid){
+      this.setState({isRefreshing: true});
+      let { dispatch } = this.props.navigation;
+      dispatch(UserActions.raAutoLogin(this.props.papp.userid));
+      this.setState({isRefreshing: false,});
+    }
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
-    backgroundColor: '#ebebeb',
+    backgroundColor: StyleConfig.C_EDEDED,
   },
   header:{
     backgroundColor:StyleConfig.C_FFFFFF,
@@ -330,7 +359,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   personal_more:{
     justifyContent:'center',
@@ -362,12 +391,12 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   follow_item_font:{
     marginTop:6,
     fontSize:StyleConfig.F_12,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   item:{
     // flex:1,
@@ -386,7 +415,7 @@ const styles = StyleSheet.create({
     // marginTop:10,
     paddingLeft:10,
     fontSize:16,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   dot:{
     position: 'absolute',

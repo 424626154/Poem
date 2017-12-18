@@ -85,6 +85,7 @@ class DynastyPage extends React.Component<Props,State>{
   _renderEmptyView = () => (
       <View style={pstyles.empty}>
        <Text style={pstyles.empty_font}>
+         暂无内容
        </Text>
       </View>
   );

@@ -70,6 +70,7 @@ export default class ChatListItem extends React.Component<Props>{
                     <PImage
                     style={pstyles.small_head}
                     source={this._logicSource(item)}
+                    noborder={true}
                     />
                     {this._renderNum(item)}
                   </View>
@@ -103,6 +104,7 @@ export default class ChatListItem extends React.Component<Props>{
                   <PImage
                   style={pstyles.small_head}
                   source={this._logicSource(item)}
+                  noborder={true}
                   />
                   {this._renderNum(item)}
                 </View>
@@ -213,7 +215,7 @@ const styles = StyleSheet.create({
   },
   msg_info:{
     fontSize:18,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   msg_time:{
     color:StyleConfig.C_7B8992,

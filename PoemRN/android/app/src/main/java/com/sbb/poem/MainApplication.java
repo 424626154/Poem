@@ -19,6 +19,7 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.sbb.poem.invokenative.DplusReactPackage;
 import com.sbb.poem.invokenative.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
@@ -43,6 +44,8 @@ public class MainApplication extends Application implements ReactApplication {
 
 //  public static String um_channel = "frim.im";
   public static String um_channel = "xiaomi";
+
+
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
@@ -168,5 +171,11 @@ public class MainApplication extends Application implements ReactApplication {
       e.printStackTrace();
     }
     return null;
+  }
+
+  {
+    PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+    PlatformConfig.setQQZone("1106540600", "qlZjCQ25ec2bbhby");
+    PlatformConfig.setSinaWeibo("1444689788", "1b4994a8f185b77d00cd7d9d1f61b96d", "http://sns.whalecloud.com");
   }
 }

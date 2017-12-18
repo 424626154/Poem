@@ -54,6 +54,7 @@ class CommentListItem extends React.PureComponent<Props> {
                     <PImage
                       style={pstyles.small_head}
                       source={this.props.headurl}
+                      noborder={true}
                       />
                   </TouchableOpacity>
                     <View style={styles.bg1}>
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
   },
   comment_font0:{
     fontSize:16,
-    color:'#000000',
+    color:StyleConfig.C_333333,
   },
   comment_font1:{
     fontSize:14,
@@ -155,11 +156,11 @@ const styles = StyleSheet.create({
   },
   comment_name1:{
     fontSize:14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   name:{
     fontSize:14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   time:{
     fontSize:12,

@@ -21,7 +21,7 @@ import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
 import {ImageCache} from "react-native-img-cache";
 import DeviceInfo from 'react-native-device-info';
-import AnalyticsUtil from '../AnalyticsUtil';
+import AnalyticsUtil from '../umeng/AnalyticsUtil';
 
 import {
         StyleConfig,
@@ -110,7 +110,7 @@ class SettingUI extends React.Component<Props,State> {
    render() {
      const { state,navigate,goBack } = this.props.navigation;
      return (
-       <View style={[pstyles.container,{backgroundColor:StyleConfig.C_E7E7E7}]}>
+       <View style={[pstyles.container,{backgroundColor:StyleConfig.C_EDEDED}]}>
         {this._renderItem(this.state.version,this._checkUpdate,this.state.update,false)}
         {this._renderItem('意见反馈',this._onFeedback,false,true)}
         {this._renderItem('清空缓存',this._onClear,false,false)}
@@ -349,7 +349,7 @@ class SettingUI extends React.Component<Props,State> {
   item_title:{
     paddingLeft:10,
     fontSize:16,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   }
  });
  export default connect(

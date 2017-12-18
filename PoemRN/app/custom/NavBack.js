@@ -25,7 +25,7 @@ export default class NavBack extends React.Component<Props>{
           name='navigate-before'
           size={26}
           type="MaterialIcons"
-          color={StyleConfig.C_000000}
+          color={StyleConfig.C_333333}
           />
       </TouchableOpacity>
     )

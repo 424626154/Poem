@@ -87,6 +87,7 @@ class FamousUI extends React.Component<Props,State> {
      return (
        <View style={pstyles.container}>
        <FlatList
+                 style={pstyles.flatlist}
                  data={ this.state.sourceData }
                  extraData={ this.state.selected }
                  keyExtractor={ this._keyExtractor }

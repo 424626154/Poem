@@ -19,6 +19,7 @@
 #import "RNUMConfigure.h"
 #import <UMAnalytics/MobClick.h>
 #import <UMErrorCatch/UMErrorCatch.h>
+#import <UMShare/UMShare.h>
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
@@ -41,6 +42,8 @@
   [MobClick setScenarioType:E_UM_DPLUS];
   [RNUMConfigure initWithAppkey:um_appkey channel:um_channel];
   [UMErrorCatch initErrorCatch];
+  // U-Share 平台设置
+  [self configUSharePlatforms];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"PoemRN"
@@ -54,16 +57,16 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 //  打印字体名称
-  NSLog(@"------------------@");
-  for (NSString* family in [UIFont familyNames])
-  {
-    NSLog(@"%@", family);
-    for (NSString* name in [UIFont fontNamesForFamilyName: family])
-    {
-      NSLog(@"%@", name);
-    }
-  }
-  NSLog(@"------------------@");
+//  NSLog(@"------------------@");
+//  for (NSString* family in [UIFont familyNames])
+//  {
+//    NSLog(@"%@", family);
+//    for (NSString* name in [UIFont fontNamesForFamilyName: family])
+//    {
+//      NSLog(@"%@", name);
+//    }
+//  }
+//  NSLog(@"------------------@");
   [SplashScreen show];
   return YES;
 }
@@ -94,4 +97,27 @@ completionHandler();
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:notification.userInfo];
 }
+
+// 支持所有iOS系统
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+  BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+  if (!result) {
+    // 其他如支付等SDK的回调
+  }
+  return result;
+}
+
+- (void)configUSharePlatforms
+{
+  /* 设置微信的appKey和appSecret */
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:@"http://mobile.umeng.com/social"];
+  
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1106540600"/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
+  
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"1444689788"  appSecret:@"1b4994a8f185b77d00cd7d9d1f61b96d" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
+}
+
+
 @end

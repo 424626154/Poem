@@ -155,7 +155,7 @@ class LoveListView extends React.Component<Props,State>{
     return this.props.poem.love > 0 ? 'favorite':'favorite-border';
   }
   _renderLoveColor(){
-    return this.props.poem.love > 0 ? StyleConfig.C_000000:StyleConfig.C_7B8992;
+    return this.props.poem.love > 0 ? StyleConfig.C_333333:StyleConfig.C_7B8992;
   }
 }
 
@@ -169,10 +169,10 @@ const styles = StyleSheet.create({
   },
   love_name:{
       fontSize:18,
-      color:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
   },
   love_p:{
-    color:'#000000',
+    color:StyleConfig.C_333333,
     fontWeight:'bold',
     paddingTop:4,
   },

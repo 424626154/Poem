@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   },
   author:{
       fontSize:22,
-      color:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
   },
   profile:{
     fontSize:15,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
 });

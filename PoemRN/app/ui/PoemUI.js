@@ -34,7 +34,6 @@ import {
       goPersonalUI,
       HomePoemDao,
       Global,
-      PImage,
       showToast,
       ImageConfig,
       } from '../AppUtil';
@@ -84,6 +83,7 @@ class PoemUI extends React.Component<Props,State>{
       >
         <ScrollView
           ref="ScrollView"
+          style={styles.scrollview}
         >
           <View
             ref="poemsnapshot"
@@ -127,6 +127,7 @@ class PoemUI extends React.Component<Props,State>{
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
               />
+              <Text style={styles.modal_item_font}>{this.state.poem.star == 1?'取消收藏':'收藏'}</Text>
           </View>
         </TouchableOpacity>
         {/* 截图 */}
@@ -144,11 +145,12 @@ class PoemUI extends React.Component<Props,State>{
             }}>
           <View style={styles.menu_item}>
             <Icon
-              name='collections'
+              name='share'
               size={26}
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
               />
+              <Text style={styles.modal_item_font}>分享</Text>
           </View>
         </TouchableOpacity>
         {/* 作者 */}
@@ -164,13 +166,14 @@ class PoemUI extends React.Component<Props,State>{
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
               />
+              <Text style={styles.modal_item_font}>作者</Text>
           </View>
         </TouchableOpacity>
         {/* 名言报错 */}
         <TouchableOpacity
             onPress={()=>{
               if(Utils.isLogin(this.props.navigation)){
-                  this.props.navigation.navigate(UIName.ReportUI,{title:'名言报错',type:2,rid:this.state.id});
+                  this.props.navigation.navigate(UIName.ReportUI,{title:'收录报错',type:2,rid:this.state.id});
               }
             }}>
           <View style={styles.menu_item}>
@@ -180,6 +183,7 @@ class PoemUI extends React.Component<Props,State>{
               type="MaterialIcons"
               color={StyleConfig.C_D4D4D4}
               />
+              <Text style={styles.modal_item_font}>报错</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -297,8 +301,11 @@ class PoemUI extends React.Component<Props,State>{
 
 }
 const styles = StyleSheet.create({
+  scrollview:{
+    marginBottom:60,
+  },
   menu:{
-    height:50,
+    height:60,
     width:Global.width,
     flexDirection:'row',
     position: 'absolute',
@@ -308,7 +315,7 @@ const styles = StyleSheet.create({
     backgroundColor:StyleConfig.C_FFFFFF,
   },
   menu_item:{
-    height:50,
+    height:60,
     width:Global.width/4,
     padding:10,
     alignItems:'center',
@@ -320,6 +327,11 @@ const styles = StyleSheet.create({
     marginLeft:4,
     width:18,
     // backgroundColor:'#ff00ff',
+  },
+  modal_item_font:{
+    marginTop:6,
+    fontSize:14,
+    color:StyleConfig.C_D4D4D4,
   },
   empty:{
       flex:1,
@@ -346,8 +358,8 @@ const styles = StyleSheet.create({
     paddingRight:6,
     paddingTop:2,
     paddingBottom:2,
-    color:StyleConfig.C_000000,
-    borderColor:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
+    borderColor:StyleConfig.C_333333,
     borderWidth:1,
     borderRadius:4,
   },
@@ -373,7 +385,6 @@ const styles = StyleSheet.create({
   },
   model_cancel_bg:{
     height:50,width:Global.width,
-    backgroundColor:'#ff00ff',
     borderTopWidth:1,
     borderTopColor:StyleConfig.C_D4D4D4,
     backgroundColor:StyleConfig.C_FFFFFF,
@@ -385,17 +396,22 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_D4D4D4
   },
   modal_author_bg:{
-    padding:20,
-    // maxHeight:100,
+    paddingLeft:20,
+    paddingRight:20,
+    // paddingTop:20,
+    // paddingBottom:20,
+    marginTop:20,
+    marginBottom:20,
+    maxHeight:Global.height/3*2,
   },
   modal_author:{
     fontSize:22,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   modal_profile:{
     marginTop:10,
     fontSize:18,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
 })
 

@@ -112,13 +112,13 @@ export default class WritingToolbar extends React.Component<Props,State>{
             name={icon}
             size={30}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
         </TouchableOpacity>
       )
     }
     _renderIcon(item_align){
-      return this.state.align == item_align?StyleConfig.C_000000:StyleConfig.C_D4D4D4;
+      return this.state.align == item_align?StyleConfig.C_333333:StyleConfig.C_D4D4D4;
     }
     _renderModel(){
       // return(
@@ -232,7 +232,7 @@ export default class WritingToolbar extends React.Component<Props,State>{
             name={icon}
             size={30}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
         </TouchableOpacity>
       )
@@ -247,7 +247,7 @@ export default class WritingToolbar extends React.Component<Props,State>{
             name='reply'
             size={30}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
         </TouchableOpacity>
       )
@@ -262,7 +262,7 @@ export default class WritingToolbar extends React.Component<Props,State>{
             name='close'
             size={30}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
         </TouchableOpacity>
       )

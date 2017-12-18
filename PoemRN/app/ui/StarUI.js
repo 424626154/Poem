@@ -95,7 +95,7 @@ class StarUI extends React.Component<Props,State> {
           />
           <FamousPage
             ref='FamousPage'
-            tabLabel="名家"
+            tabLabel="收录"
             userid={this.state.userid}
             papp={this.props.papp}
             navigation={this.props.navigation}

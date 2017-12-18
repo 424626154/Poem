@@ -61,6 +61,8 @@ class PersonalUI extends React.Component<Props,State>{
         headerLeft:(<NavBack navigation={navigation}/>),
      });
   dataContainer = [];
+  _renderHead:Function;
+  _renderFollowOP:Function;
   constructor(props){
     super(props)
     let params = this.props.navigation.state.params;
@@ -78,6 +80,8 @@ class PersonalUI extends React.Component<Props,State>{
       selected: (new Map(): Map<string, boolean>),
       refreshing: false,
     }
+    this._renderHead = this._renderHead.bind(this);
+    this._renderFollowOP = this._renderFollowOP.bind(this);
   }
   componentDidMount(){
     const { navigate } = this.props.navigation;
@@ -93,37 +97,15 @@ class PersonalUI extends React.Component<Props,State>{
   componentWillUnmount(){
 
   }
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('------PersonalUI() shouldComponentUpdate')
+    return true;
+  }
   render(){
     return(
       <View style={pstyles.container}>
-        <View style={styles.header}>
-          <View style={styles.personal}>
-            <TouchableOpacity
-              onPress={()=>{
-                this._onPhoto();
-              }}
-              >
-              <PImage
-                style={pstyles.big_head}
-                source={this.state.headurl}
-                borderRadius={0}
-                />
-              </TouchableOpacity>
-              <View style={styles.head_bg}>
-                <Text style={styles.name}>
-                  {this.state.pseudonym}
-                </Text>
-              </View>
-              <View style={styles.personal_more}>
-              </View>
-            </View>
-          {this._renderFollowOP()}
-          {this._renderFollow()}
-          <View style={pstyles.line}/>
-        </View>
-        <View style={styles.line}/>
+        {/* {this._renderHead()} */}
         <FlatList
-                  style={pstyles.flatlist}
                   data={ this.state.sourceData }
                   extraData={ this.state.selected }
                   keyExtractor={ this._keyExtractor }
@@ -131,10 +113,41 @@ class PersonalUI extends React.Component<Props,State>{
                   onEndReachedThreshold={0.1}
                   onEndReached={ this._onEndReached }
                   ItemSeparatorComponent={ this._renderItemSeparatorComponent }
+                  ListHeaderComponent={ this._renderHead }
                   ListEmptyComponent={ this._renderEmptyView }
                   refreshing={ this.state.refreshing }
                   onRefresh={ this._renderRefresh }
               />
+      </View>
+    )
+  }
+  _renderHead(){
+    return(
+      <View style={styles.header}>
+        <View style={styles.personal}>
+          <TouchableOpacity
+            onPress={()=>{
+              this._onPhoto();
+            }}
+            >
+            <PImage
+              style={pstyles.big_head}
+              source={this.state.headurl}
+              // borderRadius={0}
+              noborder={true}
+              />
+            </TouchableOpacity>
+            <View style={styles.head_bg}>
+              <Text style={styles.name}>
+                {this.state.pseudonym}
+              </Text>
+            </View>
+            <View style={styles.personal_more}>
+            </View>
+          </View>
+        {this._renderFollowOP()}
+        {this._renderFollow()}
+        <View style={pstyles.line}/>
       </View>
     )
   }
@@ -162,7 +175,7 @@ class PersonalUI extends React.Component<Props,State>{
   };
   // 自定义分割线
   _renderItemSeparatorComponent = ({highlighted}) => (
-      <View style={pstyles.separator_transparent}></View>
+      <View style={pstyles.separator}></View>
   );
 
   // 空布局
@@ -244,14 +257,15 @@ class PersonalUI extends React.Component<Props,State>{
       )
   }
   _renderFollowOP(){
+    // console.log('------_renderFollowOP')
     return(
     <View style={styles.follow}>
           <TouchableOpacity
-            style={[styles.follow_button,{borderColor:this.state.user.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}
+            style={[styles.follow_button,{borderColor:this.state.user.fstate == 0?StyleConfig.C_666666:StyleConfig.C_D4D4D4}]}
             onPress={()=>{
               this._onFollow();
             }}>
-              <Text style={[styles.follow_font,{color:this.state.user.fstate == 0?StyleConfig.C_000000:StyleConfig.C_D4D4D4}]}>
+              <Text style={[styles.follow_font,{color:this.state.user.fstate == 0?StyleConfig.C_333333:StyleConfig.C_D4D4D4}]}>
                 {this.state.follow}
               </Text>
           </TouchableOpacity>
@@ -333,12 +347,20 @@ class PersonalUI extends React.Component<Props,State>{
         let followme = temp_user.followme;
         if(user.fstate == 0&&followme > 0){
             followme -= 1;
+        }else if(user.fstate == 1){
+            followme += 1;
         }
         temp_user.followme = followme;
+        let follow = this._getFollowStr(temp_user);
+        console.log(follow)
         this.setState({
             user:temp_user,
-            follow:this._getFollowStr(temp_user),
+            follow:follow,
         })
+        let dataContainer = [...this.dataContainer];
+        this.setState({
+          sourceData: dataContainer,
+        });
       }else{
         showToast(res.errmsg);
       }
@@ -415,7 +437,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   //关注按钮
   follow:{
@@ -434,11 +456,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     borderRadius:8,
     borderWidth:1,
-    borderColor:StyleConfig.C_000000,
+    borderColor:StyleConfig.C_666666,
   },
   follow_font:{
     fontSize:StyleConfig.F_18,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
     fontWeight:'bold',
   },
   //关注
@@ -453,19 +475,19 @@ const styles = StyleSheet.create({
   },
   follow_item_num:{
     fontSize:StyleConfig.F_14,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   follow_item_font:{
     marginTop:6,
     fontSize:StyleConfig.F_12,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   personal_more:{
 
   },
   line:{
     height:10,
-    backgroundColor:StyleConfig.C_E7E7E7,
+    backgroundColor:StyleConfig.C_EDEDED,
   }
 })
 export default connect(

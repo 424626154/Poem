@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     FlatList,
     Text,
+    Alert,
 } from 'react-native';
 
 import {
@@ -46,7 +47,7 @@ class FamousTab extends Component <Props,State>{
         // headerStyle:HeaderConfig.headerStyle,
         // headerLeft:null,
         header:null,
-        tabBarLabel: '名家',
+        tabBarLabel: '收录',
         tabBarIcon: ({ tintColor, focused }) => (
           <TabBarIcon
             tintColor={tintColor}/>
@@ -134,9 +135,15 @@ class FamousTab extends Component <Props,State>{
               />
           </View>
         </TouchableOpacity>
-          <View style={styles.nav_right}>
-            <Text style={styles.nav_right_font}>名家</Text>
-          </View>
+        <TouchableOpacity
+          style={styles.nav_right}
+          onPress={()=>{
+            Alert.alert('免责声明',
+            '本app所收录的内容，均来源于互联网以及同行业的站点以及网编自愿者所提供，如果您对本app所收录的内容有任何疑问或问题可通过收录报错或意见反馈与本app沟通处理，若侵删。')
+          }}
+          >
+            <Text style={styles.nav_right_font}>声明</Text>
+        </TouchableOpacity>
         </View>
       )
     }
@@ -177,14 +184,14 @@ const styles = StyleSheet.create({
   },
   nav_right_font:{
       fontSize:18,
-      color:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
   },
   search:{
     flex:1,
-    backgroundColor:StyleConfig.C_E7E7E7,
+    backgroundColor:StyleConfig.C_EDEDED,
     borderWidth:1,
     borderRadius:6,
-    borderColor:StyleConfig.C_E7E7E7,
+    borderColor:StyleConfig.C_EDEDED,
     alignItems:'center',
     justifyContent:'center',
   },

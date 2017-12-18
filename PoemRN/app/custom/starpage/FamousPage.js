@@ -80,6 +80,7 @@ class FamousPage extends React.Component<Props,State>{
   _renderEmptyView = () => (
       <View style={pstyles.empty}>
        <Text style={pstyles.empty_font}>
+         暂无收藏
        </Text>
       </View>
   );

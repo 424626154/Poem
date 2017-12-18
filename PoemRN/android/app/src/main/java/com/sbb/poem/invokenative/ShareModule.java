@@ -1,9 +1,13 @@
 package com.sbb.poem.invokenative;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URLEncoder;
 import java.util.Map;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -116,8 +120,31 @@ public class ShareModule extends ReactContextBaseJavaModule {
             return new UMImage(ma,url);
         }else if(url.startsWith("/")){
             return new UMImage(ma,url);
-        }else if(url.startsWith("res")){
-            return new UMImage(ma, ResContainer.getResourceId(ma,"drawable",url.replace("res/","")));
+        }else if(url.startsWith("res")) {
+            return new UMImage(ma, ResContainer.getResourceId(ma, "drawable", url.replace("res/", "")));
+        }else if(url.startsWith("file:")){
+//            Bitmap bitmap = null;
+//            try{
+//                FileInputStream fis = new FileInputStream(url);
+//                Log.d("------FileInputStream",fis.toString());
+//                bitmap = BitmapFactory.decodeStream(fis);
+//            }catch (Exception e){
+//                Log.e("------e",e.toString());
+//            }finally {
+//                Log.d("------bitmap",bitmap.toString());
+//                return new UMImage(ma,bitmap);
+//            }
+            Bitmap bitmap = null;
+            try {
+                url = url.replaceFirst("file:","");
+                FileInputStream fis = new FileInputStream(url);
+                Log.e("poem",url);
+                bitmap = BitmapFactory.decodeStream(fis);
+                Log.e("poem bitmap",bitmap.getWidth()+"");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            return new UMImage(ma,bitmap);
         }else {
             return new UMImage(ma,url);
         }

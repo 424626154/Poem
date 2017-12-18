@@ -72,6 +72,7 @@ class FollowUI extends React.Component<Props,State> {
       return (
         <View style={pstyles.container}>
           <FlatList
+                    style={pstyles.flatlist}
                     data={ this.state.sourceData }
                     extraData={ this.state.selected }
                     keyExtractor={ (item, index) => index+''}
@@ -95,6 +96,7 @@ class FollowUI extends React.Component<Props,State> {
     _renderEmptyView = () => (
         <View style={pstyles.empty}>
          <Text style={pstyles.empty_font}>
+           暂无关注
          </Text>
         </View>
     );
@@ -191,7 +193,7 @@ class FollowUI extends React.Component<Props,State> {
               break;
             }
           }
-          var list = this.dataContainer;
+          var list = [...this.dataContainer];
           this.setState({
             sourceData: list,
           });

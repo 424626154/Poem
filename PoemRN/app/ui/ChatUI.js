@@ -24,7 +24,6 @@ import {
        HttpUtil,
        Utils,
        pstyles,
-       PImage,
        UIName,
        ChatDao,
        goPersonalUI,
@@ -215,7 +214,7 @@ class ChatUI extends React.Component<Props,State>{
         <ActivityIndicator
          animating={this.state.animating}
          style={styles.centering}
-         color={StyleConfig.C_000000}
+         color={StyleConfig.C_333333}
          size="large"/>
         <GiftedChat
           messages={this.state.messages}
@@ -269,10 +268,10 @@ class ChatUI extends React.Component<Props,State>{
           {...props}
           wrapperStyle={{
             left:{
-              backgroundColor: '#232323',
+              backgroundColor: '#666666',
             },
             right: {
-              backgroundColor: '#f0f0f0',
+              backgroundColor: '#ffffff',
             }
           }}
           textStyle = {{
@@ -280,7 +279,7 @@ class ChatUI extends React.Component<Props,State>{
                 color: '#ffffff',
               },
               right: {
-                color: '#000000',
+                color: StyleConfig.C_333333,
               }
             }}
         />
@@ -293,14 +292,14 @@ class ChatUI extends React.Component<Props,State>{
           {...props}
           imageStyle={{
             left: {
-              height: 36,
-              width: 36,
-              borderRadius: 4,
+              height: 40,
+              width: 40,
+              borderRadius: 20,
             },
             right:{
-              height: 36,
-              width: 36,
-              borderRadius: 4,
+              height: 40,
+              width: 40,
+              borderRadius: 20,
             }
           }}
         />
@@ -457,7 +456,7 @@ class ChatUI extends React.Component<Props,State>{
 const styles = StyleSheet.create({
       send:{
         fontSize:18,
-        color:StyleConfig.C_000000,
+        color:StyleConfig.C_333333,
         marginRight: 6,
         marginBottom: 10,
       },

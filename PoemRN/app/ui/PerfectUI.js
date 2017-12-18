@@ -12,6 +12,7 @@ import {
         Text,
         Image,
         TextInput,
+        ActivityIndicator,
       } from 'react-native';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/actions/UserActions';
@@ -48,6 +49,7 @@ type State = {
     headurl:any,
     pseudonym:string,
     sheadurl:string,
+    animating:boolean,
 };
 
 class PerfectUI extends React.Component<Props,State>{
@@ -75,6 +77,7 @@ class PerfectUI extends React.Component<Props,State>{
         headurl:nothead,
         sheadurl:'',
         pseudonym:'',
+        animating:false,
     }
     this.showAlertSelected = this.showAlertSelected.bind(this);
     this.callbackSelected = this.callbackSelected.bind(this);
@@ -130,10 +133,25 @@ class PerfectUI extends React.Component<Props,State>{
         <DialogSelected ref={(dialog)=>{
                    this.dialog = dialog;
                }} />
+        {this._renderLoading()}
       </View>
     )
   }
-
+  _renderLoading(){
+    if(this.state.animating){
+      return(
+        <View style={pstyles.loading}>
+          <ActivityIndicator
+           animating={this.state.animating}
+           style={pstyles.centering}
+           color="white"
+           size="large"/>
+        </View>
+      )
+    }else{
+      return null;
+    }
+  }
   _onSave(){
     if(!this.state.pseudonym){
       showToast('请输入笔名')
@@ -174,6 +192,7 @@ class PerfectUI extends React.Component<Props,State>{
     })
   }
   _uploadImage(){
+    this.setState({animating:true});
     HttpUtil.uploadImageData(this._imageObj).then((res)=>{
       if(res.code == 0){
         var name = res.data.name;
@@ -185,6 +204,7 @@ class PerfectUI extends React.Component<Props,State>{
       }else{
         showToast(res.errmsg);
       }
+      this.setState({animating:false});
     }).catch((err)=>{
       console.error(err);
     })
@@ -245,7 +265,7 @@ const styles = StyleSheet.create({
     width:122,
     backgroundColor:StyleConfig.C_FFFFFF,
     borderWidth:1,
-    borderColor:StyleConfig.C_000000,
+    borderColor:StyleConfig.C_333333,
     borderRadius:15,
   },
   head:{

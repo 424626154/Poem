@@ -272,15 +272,18 @@ class DetailsUI extends React.Component<Props,State>{
                 }
               }}>
               <View style={styles.menu_item}>
-                <Icon
-                  name='sms'
-                  size={26}
-                  type="MaterialIcons"
-                  color={StyleConfig.C_D4D4D4}
-                  />
-                  <Text style={styles.menu_font}>
-                    {this._renderCommentnum(this.props.mypoem.commentnum)}
-                  </Text>
+                {/* <View style={styles.menu_item_son}> */}
+                  <Icon
+                    name='sms'
+                    size={26}
+                    type="MaterialIcons"
+                    color={StyleConfig.C_D4D4D4}
+                    />
+                    {/* <Text style={styles.menu_font_son}>
+                      {this._renderCommentnum(this.props.mypoem.commentnum)}
+                    </Text> */}
+                {/* </View> */}
+                <Text style={styles.menu_font}>评论{this._renderCommentnum(this.props.mypoem.commentnum)}</Text>
               </View>
             </TouchableOpacity>
             {/* 点赞 */}
@@ -296,23 +299,17 @@ class DetailsUI extends React.Component<Props,State>{
                     {transform: [{scale: this.state.loveani}]}
                   ]}/>
                   <Text style={styles.menu_font}>
-                    {this._renderLovenum(this.props.mypoem.lovenum)}
+                    赞{this._renderLovenum(this.props.mypoem.lovenum)}
                   </Text>
               </View>
             </TouchableOpacity>
             {/* 截图 */}
             <TouchableOpacity
                 onPress={()=>{
-                  captureRef(this.refs.poemsnapshot, {format: 'png', quality: 1}).then(
+                  captureRef(this.refs.poemsnapshot, {format: 'jpg', quality: 0.8}).then(
                       (uri) =>{
                         // alert(uri)
                         this.refs.poemsnapshot.measure((x,y,width,height,px,py)=>{
-                          console.log('x:',x)
-                          console.log('y:',y)
-                          console.log('width:',width)
-                          console.log('height:',height)
-                          console.log('px:',px)
-                          console.log('py:',py)
                           this.props.navigation.navigate(UIName.SnapshotUI,{uri:uri,imgw:width,imgh:height})
                         });
                       }
@@ -322,11 +319,14 @@ class DetailsUI extends React.Component<Props,State>{
                 }}>
               <View style={styles.menu_item}>
                 <Icon
-                  name='collections'
+                  name='share'
                   size={26}
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
+                  <Text style={styles.menu_font}>
+                    分享
+                  </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -340,6 +340,9 @@ class DetailsUI extends React.Component<Props,State>{
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
+                  <Text style={styles.menu_font}>
+                    更多
+                  </Text>
               </View>
             </TouchableOpacity>
         </View>
@@ -367,6 +370,7 @@ class DetailsUI extends React.Component<Props,State>{
                     color={StyleConfig.C_D4D4D4}
                     />
               </TouchableOpacity>
+              <Text style={styles.modal_item_font}>修改</Text>
             </View>
             {/* 删除 */}
             <View style={styles.modal_item_bg}>
@@ -395,6 +399,7 @@ class DetailsUI extends React.Component<Props,State>{
                       color={StyleConfig.C_D4D4D4}
                       />
                 </TouchableOpacity>
+                <Text style={styles.modal_item_font}>删除</Text>
             </View>
           </View>
         )
@@ -414,8 +419,8 @@ class DetailsUI extends React.Component<Props,State>{
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
-
             </TouchableOpacity>
+            <Text style={styles.modal_item_font}>{this.props.mypoem.star == 1?'取消收藏':'收藏'}</Text>
           </View>
           <View style={styles.modal_item_bg}>
             <TouchableOpacity
@@ -430,8 +435,8 @@ class DetailsUI extends React.Component<Props,State>{
                   type="MaterialIcons"
                   color={StyleConfig.C_D4D4D4}
                   />
-
             </TouchableOpacity>
+            <Text style={styles.modal_item_font}>用户信息</Text>
           </View>
           <View style={styles.modal_item_bg}>
             <TouchableOpacity
@@ -447,6 +452,7 @@ class DetailsUI extends React.Component<Props,State>{
                 color={StyleConfig.C_D4D4D4}
                 />
             </TouchableOpacity>
+            <Text style={styles.modal_item_font}>举报</Text>
           </View>
         </View>
       )
@@ -468,7 +474,7 @@ class DetailsUI extends React.Component<Props,State>{
       );
   };
   _renderItemSeparatorComponent = ({highlighted}) => (
-      <View style={pstyles.separator_not}></View>
+      <View style={pstyles.separator}></View>
   );
   _renderModal(){
     return(
@@ -503,6 +509,7 @@ class DetailsUI extends React.Component<Props,State>{
                       color={StyleConfig.C_D4D4D4}
                       />
                 </TouchableOpacity>
+                <Text style={styles.modal_item_font}>点赞列表</Text>
               </View>
               {this._renderMenuDis()}
             </View>
@@ -598,7 +605,7 @@ class DetailsUI extends React.Component<Props,State>{
    * 点赞颜色
    */
   _renderLoveColor(){
-    return this.props.mypoem.love > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
+    return this.props.mypoem.love > 0 ? StyleConfig.C_333333:StyleConfig.C_D4D4D4;
   }
   /**
    * 点赞列表
@@ -1007,7 +1014,7 @@ class DetailsUI extends React.Component<Props,State>{
 const styles = StyleSheet.create({
   menu:{
     flexDirection:'row',
-    height:50,
+    height:60,
     width:Global.width,
     justifyContent:'space-around',
     position: 'absolute',
@@ -1019,17 +1026,20 @@ const styles = StyleSheet.create({
   menu_item:{
     flex: 1,
     width:Global.width/5,
-    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
     padding:10,
   },
   menu_font:{
-    fontSize:18,
+    fontSize:14,
     color:StyleConfig.C_D4D4D4,
     marginLeft:4,
     // backgroundColor:'#ff00ff',
   },
   modal_item_bg:{
     padding:10,
+    alignItems:'center',
+    justifyContent:'center',
   },
   modal_item:{
     width:60,
@@ -1039,6 +1049,11 @@ const styles = StyleSheet.create({
     borderRadius:30,
     alignItems:'center',
     justifyContent: 'center',
+  },
+  modal_item_font:{
+    marginTop:6,
+    fontSize:14,
+    color:StyleConfig.C_D4D4D4,
   },
   empty:{
       flex:1,
@@ -1065,8 +1080,8 @@ const styles = StyleSheet.create({
     paddingRight:6,
     paddingTop:2,
     paddingBottom:2,
-    color:StyleConfig.C_000000,
-    borderColor:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
+    borderColor:StyleConfig.C_333333,
     borderWidth:1,
     borderRadius:4,
   },
@@ -1092,7 +1107,6 @@ const styles = StyleSheet.create({
   },
   model_cancel_bg:{
     height:50,width:Global.width,
-    backgroundColor:'#ff00ff',
     borderTopWidth:1,
     borderTopColor:StyleConfig.C_D4D4D4,
     backgroundColor:StyleConfig.C_FFFFFF,

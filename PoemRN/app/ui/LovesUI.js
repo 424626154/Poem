@@ -1,6 +1,6 @@
 'use strict'
 /**
- * 关注列表
+ * 点赞列表
  * @flow
  */
 import React from 'react';
@@ -64,6 +64,7 @@ export default class LovesUI extends React.Component<Props,State> {
       return (
         <View style={pstyles.container}>
           <FlatList
+                    style={pstyles.flatlist}
                     data={ this.state.sourceData }
                     extraData={ this.state.selected }
                     keyExtractor={ (item, index) => index+''}
@@ -87,6 +88,7 @@ export default class LovesUI extends React.Component<Props,State> {
     _renderEmptyView = () => (
         <View style={pstyles.empty}>
          <Text style={pstyles.empty_font}>
+           暂无点赞
          </Text>
         </View>
     );

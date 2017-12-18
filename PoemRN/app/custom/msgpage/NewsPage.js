@@ -82,6 +82,7 @@ class NewsPage extends React.Component<Props,State>{
   _renderEmptyView = () => (
       <View style={pstyles.empty}>
        <Text style={pstyles.empty_font}>
+         暂无通知
        </Text>
       </View>
   );

@@ -78,6 +78,7 @@ export default class ChatPage extends React.Component<Props,State>{
   _renderEmptyView = () => (
       <View style={pstyles.empty}>
        <Text style={pstyles.empty_font}>
+         暂无私信
        </Text>
       </View>
   );

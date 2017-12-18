@@ -90,7 +90,7 @@ class AgreementUI extends React.Component<Props,State>{
             name='navigate-before'
             size={26}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
             />
         </TouchableOpacity>
       ),
@@ -172,13 +172,13 @@ const styles = StyleSheet.create({
       },
       but_text:{
           fontSize:20,
-          color:StyleConfig.C_000000,
+          color:StyleConfig.C_333333,
       },
       but_bg:{
           height:40,
           borderRadius:10,
           borderWidth:1,
-          borderColor:StyleConfig.C_000000,
+          borderColor:StyleConfig.C_666666,
           alignItems:'center',
           justifyContent:'center',
           backgroundColor:StyleConfig.C_FFFFFF,

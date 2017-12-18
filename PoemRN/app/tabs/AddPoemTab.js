@@ -24,7 +24,7 @@ type State = {
 };
 class WorksTab extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
-        title: '发布',
+        title: '',
         tabBarOnPress:(({previousScene,scene,jumpToIndex})=>{
             // navigation.navigate(UIName.AddPoemUI);
             // console.log(navigation)
@@ -42,10 +42,10 @@ class WorksTab extends React.Component<Props,State> {
             }
         }),
         tabBarIcon: ({ tintColor }) => (
-          <View >
+          <View style={{backgroundColor:'#ff00ff',width:50,height:50}}>
             <Icon
               name='add-box'
-              size={26}
+              size={50}
               type="MaterialIcons"
               color={StyleConfig.C_FFCA28}
             />

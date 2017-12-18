@@ -37,7 +37,6 @@ import {
       goPersonalUI,
       HomePoemDao,
       Global,
-      PImage,
       showToast,
       ImageConfig,
       } from '../AppUtil';
@@ -459,7 +458,7 @@ const styles = StyleSheet.create({
       padding:10,
       alignItems:'center',
       justifyContent:'space-between',
-      backgroundColor:StyleConfig.C_E7E7E7,
+      backgroundColor:StyleConfig.C_EDEDED,
   },
   ctips_left:{
       fontSize:14,

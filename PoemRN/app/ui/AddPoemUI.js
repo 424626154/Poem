@@ -318,7 +318,7 @@ class AddPoemUI extends React.Component<Props,State> {
           name={icon}
           size={30}
           type="MaterialIcons"
-          color={StyleConfig.C_000000}
+          color={StyleConfig.C_333333}
         />
       </TouchableOpacity>
     )

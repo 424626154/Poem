@@ -20,7 +20,7 @@ const ptyles = StyleSheet.create({
     },
     nav_right:{
       fontSize:18,
-      color:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
       marginRight:10,
     },
     // 公共背景
@@ -48,12 +48,12 @@ const ptyles = StyleSheet.create({
      borderRadius:5,
    },
    small_head:{
-     height:30,
-     width:30,
+     height:40,
+     width:40,
      // 设置图片填充模式
     resizeMode:'cover',
     // 设置圆角
-    borderRadius:5,
+    borderRadius:20,
   },
    big_head:{
      height:80,
@@ -61,7 +61,7 @@ const ptyles = StyleSheet.create({
      // 设置图片填充模式
     resizeMode:'cover',
     // 设置圆角
-    borderRadius:10,
+    borderRadius:40,
   },
   htmlview_bg:{
     padding:10,
@@ -95,7 +95,7 @@ const ptyles = StyleSheet.create({
     backgroundColor:StyleConfig.C_D4D4D4,
   },
   loading:{
-    backgroundColor:'#00000055',
+    backgroundColor:'#00000044',
     position: 'absolute',
     flex:1,
     width:width,
@@ -109,7 +109,7 @@ const ptyles = StyleSheet.create({
    padding: 8,
  },
   flatlist:{
-    backgroundColor:StyleConfig.C_E7E7E7,
+    backgroundColor:StyleConfig.C_FFFFFF,
   },
   separator:{
     height:1,

@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   },
   dynasty:{
       fontSize:22,
-      color:StyleConfig.C_000000,
+      color:StyleConfig.C_333333,
   },
   profile:{
     fontSize:15,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
 });

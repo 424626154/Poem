@@ -25,7 +25,7 @@ export default class PImage extends React.Component<Props,State>{
 
   render(){
     // console.log('----PImage render---')
-    // console.log(this.props)
+    console.log(this.props)
        if(typeof(this.props.source) === "number"
         ||this.props.source == undefined){
           if(this.props.noborder){
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
     bg:{
       backgroundColor:StyleConfig.C_FFFFFF,
       borderWidth:1,
-      borderColor:StyleConfig.C_000000,
+      borderColor:StyleConfig.C_333333,
     }
 })

@@ -28,6 +28,7 @@
 		"react-native-progress": "^3.4.0",
 		"react-native-root-toast": "^2.2.0",
 		"react-native-scrollable-tab-view": "^0.8.0",
+		"react-native-snap-carousel": "^3.4.0",
 		"react-native-splash-screen": "^3.0.6",
 		"react-native-swipeable": "^0.6.0",
 		"react-native-swiper": "^1.5.13",

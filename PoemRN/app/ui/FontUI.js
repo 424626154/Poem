@@ -95,7 +95,7 @@ class FontUI extends React.Component<Props,State>{
           <CheckBox
           style={styles.check}
           // title={this.state.check_title2}
-          checkedColor={StyleConfig.C_000000}
+          checkedColor={StyleConfig.C_333333}
           checked={this.state.checkeds[index]}
           onPress={() =>{
             onCheck(index)

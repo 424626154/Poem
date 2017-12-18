@@ -23,6 +23,7 @@ type Props = {
 };
 
 type State = {
+    small_photo:any,
     photo:any,
 };
 export default class PhotoUI extends React.Component<Props,State>{
@@ -31,6 +32,7 @@ export default class PhotoUI extends React.Component<Props,State>{
   });
 
   state = {
+    small_photo:Utils.getHead(this.props.navigation.state.params.photo),
     photo:Utils.getHead(this.props.navigation.state.params.photo+'_big'),
   }
 
@@ -43,10 +45,12 @@ export default class PhotoUI extends React.Component<Props,State>{
         }}
         >
           <View style={styles.bg}>
-          <Image
+          <PImage
             style={styles.bg_head}
-            source={big_head}
-            resizeMode={Image.resizeMode.cover}
+            source={this.state.small_photo}
+            padding={0}
+            borderRadius={0}
+            noborder={true}
           />
           <PImage
             style={styles.photo}

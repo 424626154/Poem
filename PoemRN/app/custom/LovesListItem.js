@@ -38,6 +38,7 @@ export default class LovesListItem extends React.PureComponent<Props> {
                     <PImage
                       style={pstyles.small_head}
                       source={this.props.head}
+                      noborder={true}
                       />
                     <Text style={styles.follow_pseudonym}>
                       {this.props.love.pseudonym}
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   follow_pseudonym:{
     flex:1,
     fontSize:StyleConfig.F_18,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
     padding:4,
   },
 })

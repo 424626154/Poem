@@ -30,8 +30,8 @@ const TopTabBar = createReactClass({
 
   getDefaultProps() {
     return {
-      activeTextColor: '#000000',
-      inactiveTextColor: '#7b8992',
+      activeTextColor: '#333333',
+      inactiveTextColor: '#bfbfbf',
       backgroundColor: null,
     };
   },
@@ -67,7 +67,7 @@ const TopTabBar = createReactClass({
       position: 'absolute',
       width: 80,//containerWidth / numberOfTabs,
       height: 4,
-      backgroundColor: '#000000',
+      backgroundColor: '#333333',
       bottom: 0,
       left:(containerWidth / numberOfTabs-80)/2,
     };

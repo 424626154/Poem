@@ -71,7 +71,8 @@ class HomeListItem extends React.PureComponent<Props,State> {
                 <PImage
                   style={pstyles.small_head}
                   source={this.props.headurl}
-                  borderRadius={5}
+                  // borderRadius={5}
+                  noborder={true}
                   />
                 <View style={styles.fitem_header_info}>
                   <Text style={styles.fitem_name}>
@@ -148,7 +149,7 @@ class HomeListItem extends React.PureComponent<Props,State> {
       return lovenum > 0 ? lovenum:'';
     }
     _renderLoveColor(){
-      return this.props.item.mylove > 0 ? StyleConfig.C_000000:StyleConfig.C_D4D4D4;
+      return this.props.item.mylove > 0 ? StyleConfig.C_333333:StyleConfig.C_D4D4D4;
     }
     _renderLoveSource(){
       return this.props.item.mylove > 0 ?ImageConfig.favorite:ImageConfig.favorite_border;

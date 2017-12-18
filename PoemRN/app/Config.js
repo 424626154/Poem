@@ -12,13 +12,20 @@ var StyleConfig = {
 // StyleConfig.C_1E8AE8 = '#1e8ae8';//蓝色
 /*白色*/
 StyleConfig.C_FFFFFF = '#ffffff';
-StyleConfig.C_000000 = '#000000';//黑色
+// StyleConfig.C_000000 = '#000000';//黑色
 StyleConfig.C_232323 = '#232323';//近黑色
 StyleConfig.C_7B8992 = '#7B8992';//深灰
 StyleConfig.C_D4D4D4 = '#d4d4d4';//浅灰
 StyleConfig.C_FFCA28 = '#ffca28';//黄色
-StyleConfig.C_E7E7E7 = '#e7e7e7';//浅灰色 列表背景
+// StyleConfig.C_E7E7E7 = '#e7e7e7';//浅灰色 列表背景
 StyleConfig.C_FF4040 = '#ff4040';//红色
+
+StyleConfig.C_333333 = '#333333';//深灰
+// StyleConfig.C_F0F0F0 = '#f0f0f0';//
+// StyleConfig.C_F9F9F9 = '#f9f9f9';
+StyleConfig.C_EDEDED = '#ededed';//背景
+StyleConfig.C_BFBFBF = '#bfbfbf';
+StyleConfig.C_666666 = '#666666';
 
 StyleConfig.F_22 = 22;
 StyleConfig.F_18 = 18;
@@ -45,7 +52,7 @@ HeaderConfig.headerStyle = {
 HeaderConfig.iosNavStyle = {
   height:20,
 }
-HeaderConfig.headerTintColor = StyleConfig.C_000000;
+HeaderConfig.headerTintColor = StyleConfig.C_333333;
 
 var StorageConfig = {
 

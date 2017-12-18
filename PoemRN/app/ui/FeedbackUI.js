@@ -62,7 +62,7 @@ class FeedbackUI extends React.Component<Props,State>{
   }
   render(){
     return(
-      <View style={[pstyles.container,{backgroundColor: StyleConfig.C_E7E7E7,padding:10}]}>
+      <View style={[pstyles.container,{backgroundColor: StyleConfig.C_EDEDED,padding:10}]}>
         <TextInput
           style={styles.feedback}
           underlineColorAndroid={'transparent'}

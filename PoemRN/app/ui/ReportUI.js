@@ -115,7 +115,7 @@ class ReportUI extends React.Component<Props,State>{
           <CheckBox
           style={styles.check}
           title={this.state.checktitles[index]}
-          checkedColor={StyleConfig.C_000000}
+          checkedColor={StyleConfig.C_333333}
           checked={this.state.checkeds[index]}
           onPress={() =>{
             this._onItem(index);

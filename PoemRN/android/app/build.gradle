@@ -169,7 +169,6 @@ def releaseTime() {
 }
 
 dependencies {
-    compile project(':react-native-view-shot')
     api project(':react-native-fetch-blob')
     implementation project(':realm')
     api project(':react-native-vector-icons')
@@ -178,6 +177,7 @@ dependencies {
     api project(':jpush-react-native')
     api project(':jcore-react-native')
     // 添加 jcore 依赖
+    compile project(':react-native-view-shot')
     api project(':react-native-splash-screen')
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
@@ -193,6 +193,12 @@ dependencies {
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_tool.jar')
     implementation files('libs/umeng-push-3.3.3.jar')
+    implementation files('libs/open_sdk_r5781.jar')
+    implementation files('libs/SocialSDK_WeiXin_Full.jar')
+    implementation files('libs/SocialSDK_QQ_Full.jar')
+    implementation files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+    implementation files('libs/SocialSDK_Sina_Full.jar')
+    implementation files('libs/weiboSDKCore.jar')
 }
 
 // Run this once to be able to run the application with BUCK

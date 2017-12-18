@@ -123,7 +123,6 @@ class HomeTab extends React.Component<Props,State> {
     return (
       <View style={pstyles.container}>
       <FlatList
-                style={{backgroundColor:'#e7e7e7'}}
                 data={this.props.homepoems }
                 extraData={ this.state.selected }
                 keyExtractor={ this._keyExtractor }
@@ -209,7 +208,7 @@ class HomeTab extends React.Component<Props,State> {
    );
    // 自定义分割线
    _renderItemSeparatorComponent = ({highlighted}) => (
-       <View style={pstyles.separator_transparent}></View>
+       <View style={pstyles.separator}></View>
    );
    _renderBanner = () => (
        <Banner
@@ -218,13 +217,14 @@ class HomeTab extends React.Component<Props,State> {
        />
    );
    _onBannerItem(item){
+     console.log(item);
      if(item){
        if(item.type == 1){
          this.props.navigation.navigate(UIName.BannerWebUI,{banner:item})
        }else if(item.type == 2){
          this.props.navigation.navigate(UIName.DetailsUI,{id:item.pid});
        }else if(item.type == 3){
-         this.props.navigation.navigate(UIName.PoemUI,{id:item.pid});
+         this.props.navigation.navigate(UIName.FamousUI,{type:0,label:item.author})
        }
      }
    }

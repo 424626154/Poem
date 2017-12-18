@@ -70,6 +70,7 @@ export default class NewsListItem extends React.Component<Props>{
                 <PImage
                   style={pstyles.small_head}
                   source={this._logicSource(message)}
+                  noborder={true}
                   />
               </TouchableOpacity>
               <View style={styles.msg_text}>
@@ -97,6 +98,7 @@ export default class NewsListItem extends React.Component<Props>{
                 <PImage
                   style={pstyles.small_head}
                   source={this._logicSource(message)}
+                  noborder={true}
                   />
               </TouchableOpacity>
               <View style={styles.msg_text}>
@@ -218,15 +220,15 @@ const styles = StyleSheet.create({
   },
   msg_name:{
     fontSize:16,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   msg_love:{
     fontSize:16,
-    color:StyleConfig.C_D4D4D4,
+    color:StyleConfig.C_666666,
   },
   msg_info:{
     fontSize:16,
-    color:StyleConfig.C_000000,
+    color:StyleConfig.C_333333,
   },
   msg_time:{
     color:StyleConfig.C_D4D4D4,

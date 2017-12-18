@@ -129,6 +129,10 @@ Utils.getExtend = function(item:Object):Object{
   // console.log(extend)
   return extend;
 }
+Utils.wp = function(percentage:number) {
+    const value = (percentage * Global.width) / 100;
+    return Math.round(value);
+}
 /**
  * 跳转个人页面
  */

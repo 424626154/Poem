@@ -15,8 +15,8 @@ AppConf.XIAOMI = 'xiaomi';
 AppConf.QIHU360 = 'qihu360';
 
 //服务器环境
-AppConf.ENV = AppConf.DEBUG;
-// AppConf.ENV = AppConf.ALI;
+// AppConf.ENV = AppConf.DEBUG;
+AppConf.ENV = AppConf.ALI;
 // ios渠道
 AppConf.IOS_CHANNEL = AppConf.APPSTORE;
 //android渠道
@@ -26,7 +26,7 @@ AppConf.ANDROID_CHANNEL = AppConf.XIAOMI;
 // AppConf.ANDROID_CHANNEL = AppConf.QIHU360;
 
 // AppConf.DEBUG_IP = '192.168.1.7';
-AppConf.DEBUG_IP = '192.168.1.9';
+AppConf.DEBUG_IP = '192.168.1.5';
 // AppConf.DEBUG_IP = 'localhost';
 AppConf.ALI_IP = '182.92.167.29';
 AppConf.HOST = 9001;

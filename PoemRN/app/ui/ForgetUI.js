@@ -81,7 +81,7 @@ export default class ForgetUI extends React.Component<Props,State> {
             name='phone'
             size={28}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
           <TextInput
             ref='phone'
@@ -117,7 +117,7 @@ export default class ForgetUI extends React.Component<Props,State> {
             name='keyboard'
             size={28}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
           <TextInput
             ref='password'
@@ -165,7 +165,7 @@ export default class ForgetUI extends React.Component<Props,State> {
             name='verified-user'
             size={28}
             type="MaterialIcons"
-            color={StyleConfig.C_000000}
+            color={StyleConfig.C_333333}
           />
           <TextInput
             ref='code'
@@ -284,7 +284,7 @@ export default class ForgetUI extends React.Component<Props,State> {
     return this.state.pwd_visibility?'visibility-off':'visibility';
   }
   _renderVColor(){
-    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_000000;
+    return this.state.pwd_visibility?StyleConfig.C_D4D4D4:StyleConfig.C_333333;
   }
   _onVsibility(){
     var isVis = true;
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
   },
   register_but:{
      backgroundColor:StyleConfig.C_FFFFFF,
-     borderColor:StyleConfig.C_000000,
+     borderColor:StyleConfig.C_333333,
      borderRadius: 5,
      borderWidth:1,
      margin:0
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
    register_text:{
      textAlign: 'center',
      fontSize:18,
-     color:StyleConfig.C_000000,
+     color:StyleConfig.C_333333,
    },
   input_bg:{
     flexDirection:'row',

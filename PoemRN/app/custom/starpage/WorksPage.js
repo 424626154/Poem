@@ -81,6 +81,7 @@ class WorksPage extends React.Component<Props,State>{
   _renderEmptyView = () => (
       <View style={pstyles.empty}>
        <Text style={pstyles.empty_font}>
+         暂无收藏
        </Text>
       </View>
   );
@@ -99,7 +100,6 @@ class WorksPage extends React.Component<Props,State>{
               onPressItem={ this._onPressItem }
               selected={ !!this.state.selected.get(item.id) }
               item= {item}
-              item={item}
               time={Utils.dateStr(item.time)}
               extend={Utils.getExtend(item)}
           />
