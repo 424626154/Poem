@@ -36,6 +36,7 @@ import {
       Global,
       showToast,
       ImageConfig,
+      UIUtil,
       } from '../AppUtil';
 import{
       NavBack,
@@ -102,10 +103,10 @@ class PoemUI extends React.Component<Props,State>{
       <View
         ref="poem"
         style={pstyles.poem}>
-        <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+        <Text style={[pstyles.poem_title,UIUtil.getFTFontStyle()]}>
           {this.state.poem.title}
         </Text>
-        <Text style={[pstyles.poem_content,{fontFamily:Global.font}]}>
+        <Text style={[pstyles.poem_content,UIUtil.getFCFontStyle()]}>
           {this.state.poem.content}
         </Text>
       </View>

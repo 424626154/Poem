@@ -10,7 +10,8 @@ import {
       View,
       TouchableOpacity,
      } from 'react-native';
-import {UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
+import {UIName,pstyles,PImage,Utils,UIUtil,Global} from '../AppUtil';
+
 const boundary = 80;
 type Props = {
     onPressItem:Function,
@@ -30,11 +31,11 @@ export default class FamousListItem extends React.PureComponent<Props> {
                 >
                 <View style={styles.fitem}>
                   <View style={pstyles.poem}>
-                    <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+                    <Text style={[pstyles.poem_title,UIUtil.getFTFontStyle()]}>
                       {item.title}
                     </Text>
                     <Text
-                      style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:'center'}]}
+                      style={[pstyles.poem_content,UIUtil.getFCFontStyle()]}
                       numberOfLines={8}
                       ellipsizeMode='tail'
                     >

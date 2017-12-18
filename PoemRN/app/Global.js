@@ -20,7 +20,10 @@ const Global = {
     height:0,
     userid:'',
     per:0,
-    font:Storage.getFontFamily(),
+    fontFamily:Storage.getFontFamily(),
+    fontSize:Storage.getFontSize(),
+    fontAlignment:Storage.getFontAlignment(),
+    lineHeight:Storage.getLineHeight(),
 };
 const {width, height} = Dimensions.get('window');
 Global.width = width;

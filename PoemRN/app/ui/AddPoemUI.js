@@ -42,6 +42,7 @@ import {
   UIName,
   Permission,
   Global,
+  UIUtil,
 } from '../AppUtil';
 import ImagePicker from 'react-native-image-crop-picker';
 import{
@@ -157,7 +158,6 @@ class AddPoemUI extends React.Component<Props,State> {
     }
     componentDidMount(){
       console.log('-----AddPoemUI componentDidMount------')
-      console.log(Global.font)
        this.props.navigation.setParams({onRelease:this.onRelease});
        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
@@ -171,7 +171,7 @@ class AddPoemUI extends React.Component<Props,State> {
     return (
     <View style={pstyles.container}>
         <TextInput
-          style={[styles.title,{fontFamily: Global.font}]}
+          style={[styles.title,UIUtil.getTFontStyle()]}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入标题'}
           onChangeText={(text) => this.setState({title:text})}
@@ -186,7 +186,7 @@ class AddPoemUI extends React.Component<Props,State> {
        <View style={{flex:1}}>
         <TextInput
           ref='content'
-          style={[styles.content,{fontFamily: Global.font}]}
+          style={[styles.content,UIUtil.getCFontStyle()]}
           underlineColorAndroid={'transparent'}
           placeholder={'请输入内容'}
           onChangeText={(text) => this.setState({content:text})}

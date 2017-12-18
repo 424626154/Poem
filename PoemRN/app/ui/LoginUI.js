@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   login_but:{
      backgroundColor:StyleConfig.C_FFFFFF,
-     borderColor:StyleConfig.C_333333,
+     borderColor:StyleConfig.C_666666,
      borderRadius: 5,
      borderWidth:1,
      margin:0

@@ -39,7 +39,7 @@ type State = {
 };
 class FontUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
-        title:'字体',
+        title:'字体样式',
         headerTintColor:HeaderConfig.headerTintColor,
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
@@ -58,7 +58,7 @@ class FontUI extends React.Component<Props,State>{
        let fonts = ['汉仪中宋简','方正宋刻本秀楷简体','新蒂赵孟钴体','新蒂小丸子','文泉驿正黑'];
        let checkeds = [false,false,false,false,false];
        let fontFamilys = [StyleConfig.FONT_FAMILY,StyleConfig.FONT_FZSKBXKJW,StyleConfig.SentyZHAO,StyleConfig.AppleColorEmoji,StyleConfig.WenQuanYiZenHei];
-       let fontFamily = Global.font;
+       let fontFamily = Global.fontFamily;
        for (var i = 0; i < fontFamilys.length; i++) {
          if(fontFamilys[i] == fontFamily){
            checkeds[i] = true;
@@ -82,6 +82,7 @@ class FontUI extends React.Component<Props,State>{
     render(){
       return(
           <View style={pstyles.container}>
+            <Text style={styles.tips}>字体样式修改只对作品和收录中展示内容有效</Text>
             {this.state.fonts.map((item,index)=>{{
               return(this._renderItem(index,this._onCheck))
             }})}
@@ -125,7 +126,7 @@ class FontUI extends React.Component<Props,State>{
         if(this.state.checkeds[i]){
           let fontFamily = this.state.fontFamilys[i]
           Storage.saveFontFamily(fontFamily);
-          Global.font = fontFamily;
+          Global.fontFamily = fontFamily;
         }
       }
       let { dispatch } = this.props.navigation;
@@ -135,6 +136,11 @@ class FontUI extends React.Component<Props,State>{
 }
 
 const styles = StyleSheet.create({
+    tips:{
+      fontSize:14,
+      padding:10,
+      color:StyleConfig.C_D4D4D4,
+    },
     select:{
 
     },

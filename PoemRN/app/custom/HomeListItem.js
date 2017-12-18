@@ -18,6 +18,7 @@ import {
   UIName,
   pstyles,
   PImage,
+  UIUtil,
   Utils,
   Global,
   ImageConfig,
@@ -177,11 +178,11 @@ class HomeListItem extends React.PureComponent<Props,State> {
               noborder={true}
               />
             </View>
-              <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+              <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
                 {item.title}
               </Text>
               <Text
-                style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
+                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)},UIUtil.getCFontStyle()]}
                 numberOfLines={1}
                 ellipsizeMode='tail'
               >
@@ -192,11 +193,11 @@ class HomeListItem extends React.PureComponent<Props,State> {
       }else{
         return(
           <View style={pstyles.poem}>
-            <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+            <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
               {item.title}
             </Text>
             <Text
-              style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
+              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)},UIUtil.getCFontStyle()]}
               numberOfLines={8}
               ellipsizeMode='tail'
             >

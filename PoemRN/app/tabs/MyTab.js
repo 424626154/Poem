@@ -59,6 +59,7 @@ class MyTab extends React.Component<Props,State> {
    _onFont:Function;
    _onStar:Function;
    _onRefresh:Function;
+   _onReadSet:Function;
    constructor(props){
      super(props);
      console.log('---MyTab()---')
@@ -75,6 +76,7 @@ class MyTab extends React.Component<Props,State> {
      this._onFont = this._onFont.bind(this);
      this._onStar = this._onStar.bind(this);
      this._onRefresh = this._onRefresh.bind(this);
+     this._onReadSet = this._onReadSet.bind(this);
    }
    componentDidMount(){
      // this._reloadUserInfo();
@@ -105,8 +107,8 @@ class MyTab extends React.Component<Props,State> {
         <View style={styles.interval}></View>
         {this._renderWorks()}
         {this._renderStar()}
-        {this._renderItem('font-download','作品字体',this._onFont,false)}
-        {this._renderItem('settings-applications','设置',this._onStting,false)}
+        {this._renderItem('read','material-community','阅读设置',this._onReadSet,false)}
+        {this._renderItem('settings-applications','MaterialIcons','设置',this._onStting,false)}
       </ScrollView>
     );
   }
@@ -205,7 +207,7 @@ class MyTab extends React.Component<Props,State> {
     }
   }
 
-  _renderItem(icon,title,func,rot){
+  _renderItem(icon,type,title,func,rot){
     return(
       <TouchableOpacity onPress={()=>{
           func();
@@ -215,7 +217,7 @@ class MyTab extends React.Component<Props,State> {
         <Icon
           name={icon}
           size={28}
-          type="MaterialIcons"
+          type={type}
           color={StyleConfig.C_333333}
         />
         <Text style={styles.item_title}>
@@ -261,12 +263,12 @@ class MyTab extends React.Component<Props,State> {
   }
   _renderWorks(){
     if(this.props.papp.userid){
-      return(this._renderItem('inbox','我的作品',this._onWorks,false))
+      return(this._renderItem('inbox','MaterialIcons','我的作品',this._onWorks,false))
     }
   }
   _renderStar(){
     if(this.props.papp.userid){
-      return(this._renderItem('star','我的收藏',this._onStar,false))
+      return(this._renderItem('star','MaterialIcons','我的收藏',this._onStar,false))
     }
   }
   _onWorks(){
@@ -277,6 +279,9 @@ class MyTab extends React.Component<Props,State> {
   }
   _onFont(){
     this.props.navigation.navigate(UIName.FontUI);
+  }
+  _onReadSet(){
+    this.props.navigation.navigate(UIName.ReadSetUI);
   }
   _onStting(){
     this.props.navigation.navigate(UIName.SettingUI);

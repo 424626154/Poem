@@ -36,6 +36,7 @@ import {
       goPersonalUI,
       HomePoemDao,
       Global,
+      UIUtil,
       PImage,
       showToast,
       ImageConfig,
@@ -202,10 +203,10 @@ class DetailsUI extends React.Component<Props,State>{
               noborder={true}
               />
           </View>
-          <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+          <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
             {this.props.mypoem.title}
           </Text>
-          <Text style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(this.props.mypoem)}]}>
+          <Text style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)},UIUtil.getCFontStyle()]}>
             {this.props.mypoem.content}
           </Text>
         </View>
@@ -215,10 +216,11 @@ class DetailsUI extends React.Component<Props,State>{
         <View
           ref="poem"
           style={pstyles.poem}>
-          <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+          <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
             {this.props.mypoem.title}
           </Text>
-          <Text style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(this.props.mypoem)}]}>
+          <Text
+            style={[pstyles.poem_content,{textAlign:this._renderAlign(this.props.mypoem)},UIUtil.getCFontStyle()]}>
             {this.props.mypoem.content}
           </Text>
         </View>

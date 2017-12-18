@@ -127,4 +127,69 @@ Storage.saveFontFamily = function(fontFamily:string){
   }
 }
 
+Storage.getFontSize = function():number{
+  let size = 1;
+  try {
+      let value = StorageDao.getItem(StorageConfig.FontSize);
+      if(!isNaN(parseInt(value))){
+        size = parseInt(value);
+      }
+  } catch (error) {
+      console.error(error);
+  }finally{
+    return size;
+  }
+}
+
+Storage.saveFontSize = function(fontSize:number){
+  try {
+      let value = StorageDao.setItem(StorageConfig.FontSize,fontSize+'');
+      console.log(value)
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+
+Storage.getFontAlignment = function(){
+  try {
+      let value = StorageDao.getItem(StorageConfig.FontAlignment);
+      return value == 'center'||'left'?value:'center';
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.saveFontAlignment = function(fontAlignment:string){
+  try {
+      let value = StorageDao.setItem(StorageConfig.FontAlignment,fontAlignment);
+      console.log(value)
+  } catch (error) {
+      console.error(error);
+  }
+}
+
+Storage.getLineHeight = function():number{
+  let lineHeight = 18;
+  try {
+      let value = StorageDao.getItem(StorageConfig.LineHeight);
+      if(!isNaN(parseInt(value))){
+        lineHeight = parseInt(value);
+      }
+  } catch (error) {
+      console.error(error);
+  }finally{
+    return lineHeight;
+  }
+}
+
+Storage.saveLineHeight = function(lineHeight:number){
+  try {
+      let value = StorageDao.setItem(StorageConfig.LineHeight,lineHeight+'');
+      console.log(value)
+  } catch (error) {
+      console.error(error);
+  }
+}
+
 export default Storage;

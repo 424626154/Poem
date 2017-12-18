@@ -16,6 +16,7 @@ import Emitter from './utils/Emitter';//监听
 import Global from './Global';//全局数据
 import pstyles from './style/PStyles';//公共样式
 import Storage from './utils/Storage';
+import UIUtil from './utils/UIUtil';
 import MessageDao from './db/MessageDao';
 import HomePoemDao from './db/HomePoemDao';
 import ChatDao from './db/ChatDao';
@@ -211,6 +212,7 @@ export {
   Global,
   pstyles,
   Storage,
+  UIUtil,
   MessageDao,
   HomePoemDao,
   ChatDao,

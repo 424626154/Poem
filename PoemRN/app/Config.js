@@ -62,6 +62,9 @@ StorageConfig.PUSHIID = 'pushid';
 StorageConfig.LAST_PHONE = 'last_phone';//上次登录手机号
 StorageConfig.LABEL_HISTORY = 'label_history';//标签历史
 StorageConfig.FontFamily = 'fontFamily';
+StorageConfig.FontSize = 'fontSize';
+StorageConfig.FontAlignment = 'fontAlignment'
+StorageConfig.LineHeight = 'lineHeight';
 
 const nothead = require('./images/nothead.png');
 const notphoto = require('./images/notphoto.png');
@@ -115,7 +118,7 @@ UIName.SearchFamousUI = 'SearchFamousUI';
 UIName.PoemUI = 'PoemUI';
 UIName.CommentsUI = 'CommentsUI';
 UIName.StarUI = 'StarUI';
-
+UIName.ReadSetUI = 'ReadSetUI';
 var Permission = {
 
 }

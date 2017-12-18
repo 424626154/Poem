@@ -10,7 +10,7 @@
        View,
        TouchableOpacity,
       } from 'react-native';
- import {StyleConfig,UIName,pstyles,PImage,Utils,Global} from '../AppUtil';
+ import {StyleConfig,UIName,pstyles,PImage,Utils,Global,UIUtil} from '../AppUtil';
 const boundary = 80;
  type Props = {
     onPressItem:Function,
@@ -52,11 +52,11 @@ class PersonalListItem extends React.PureComponent<Props> {
                 noborder={true}
                 />
             </View>
-              <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+              <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
                 {item.title}
               </Text>
               <Text
-                style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
+                style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)},UIUtil.getCFontStyle()]}
                 numberOfLines={1}
                 ellipsizeMode='tail'
               >
@@ -67,11 +67,11 @@ class PersonalListItem extends React.PureComponent<Props> {
       }else{
         return(
           <View style={pstyles.poem}>
-            <Text style={[pstyles.poem_title,{fontFamily:Global.font}]}>
+            <Text style={[pstyles.poem_title,UIUtil.getTFontStyle()]}>
               {item.title}
             </Text>
             <Text
-              style={[pstyles.poem_content,{fontFamily:Global.font,textAlign:this._renderAlign(extend)}]}
+              style={[pstyles.poem_content,{textAlign:this._renderAlign(extend)},UIUtil.getCFontStyle()]}
               numberOfLines={8}
               ellipsizeMode='tail'
             >
