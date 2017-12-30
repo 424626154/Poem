@@ -154,7 +154,13 @@ Storage.saveFontSize = function(fontSize:number){
 Storage.getFontAlignment = function(){
   try {
       let value = StorageDao.getItem(StorageConfig.FontAlignment);
-      return value == 'center'||'left'?value:'center';
+      console.log('------getFontAlignment')
+      let align = 'center';
+      if(value == 'center'||value == 'left'){
+        align = value;
+      }
+      console.log(align)
+      return align;
   } catch (error) {
       console.error(error);
   }
@@ -170,7 +176,7 @@ Storage.saveFontAlignment = function(fontAlignment:string){
 }
 
 Storage.getLineHeight = function():number{
-  let lineHeight = 18;
+  let lineHeight = 22;
   try {
       let value = StorageDao.getItem(StorageConfig.LineHeight);
       if(!isNaN(parseInt(value))){

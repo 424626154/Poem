@@ -25,7 +25,7 @@ export default class PImage extends React.Component<Props,State>{
 
   render(){
     // console.log('----PImage render---')
-    console.log(this.props)
+    // console.log(this.props)
        if(typeof(this.props.source) === "number"
         ||this.props.source == undefined){
           if(this.props.noborder){

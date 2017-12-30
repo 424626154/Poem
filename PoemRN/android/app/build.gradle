@@ -102,7 +102,7 @@ android {
         applicationId "com.sbb.poem"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 14
+        versionCode 15
         versionName "1.0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"

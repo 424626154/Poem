@@ -13,17 +13,20 @@ AppConf.YIYONGBAO = 'yingyongbao';
 AppConf.FIR_IM = 'fir_im';
 AppConf.XIAOMI = 'xiaomi';
 AppConf.QIHU360 = 'qihu360';
-
+AppConf.ALI_DIS = 'ali_dis';
+AppConf.BAIDU = 'baidu';
 //服务器环境
-// AppConf.ENV = AppConf.DEBUG;
-AppConf.ENV = AppConf.ALI;
+AppConf.ENV = AppConf.DEBUG;
+// AppConf.ENV = AppConf.ALI;
 // ios渠道
 AppConf.IOS_CHANNEL = AppConf.APPSTORE;
 //android渠道
 // AppConf.ANDROID_CHANNEL = AppConf.YIYONGBAO;
 // AppConf.ANDROID_CHANNEL = AppConf.FIR_IM;
-AppConf.ANDROID_CHANNEL = AppConf.XIAOMI;
+// AppConf.ANDROID_CHANNEL = AppConf.XIAOMI;
 // AppConf.ANDROID_CHANNEL = AppConf.QIHU360;
+// AppConf.ANDROID_CHANNEL = AppConf.ALI_DIS;
+AppConf.ANDROID_CHANNEL = AppConf.BAIDU;
 
 // AppConf.DEBUG_IP = '192.168.1.7';
 AppConf.DEBUG_IP = '192.168.1.5';

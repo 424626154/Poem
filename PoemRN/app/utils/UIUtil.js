@@ -76,6 +76,8 @@ UIUtil.getFTFontStyle = function(){
  * 收录内容样式
  */
 UIUtil.getFCFontStyle = function(){
+  console.log('----------------fontAlignment')
+  console.log(Global.fontAlignment)
   return {fontFamily:Global.fontFamily,
     fontSize:UIUtil.getFontSizeFSize(Global.fontSize).cSize,
     textAlign:Global.fontAlignment,
