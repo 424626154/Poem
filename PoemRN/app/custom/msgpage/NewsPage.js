@@ -157,6 +157,7 @@ class NewsPage extends React.Component<Props,State>{
     }
   }
   _renderItem = ({item}) =>{
+    console.log(item)
       return(
           <NewsListItem
               id={item.id}
