@@ -59,17 +59,19 @@ class MessageTab extends Component <Props,State>{
         //       />
         //     </View>
         ),
-        tabBarOnPress:(({previousScene,scene,jumpToIndex})=>{
+        tabBarOnPress:(({ navigation, defaultHandler })=>{
             // console.log('-------tabBarOnPress');
             // console.log(previousScene)
             // console.log(scene)
             // console.log(jumpToIndex)
-            let index = scene.index;
-            console.log(scene)
+            let index = 0;
+            // console.log(scene)
             if(navigation.state.params){
               navigation.state.params.onTabBarPress(index);
             }
-            jumpToIndex(index);
+            // jumpToIndex(index);
+
+            defaultHandler();
         }),
      });
      _renderRot: Function;

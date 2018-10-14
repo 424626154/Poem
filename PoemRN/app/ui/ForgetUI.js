@@ -14,8 +14,8 @@ import {
   TextInput,
   Platform,
   Keyboard,
-} from 'react-native';
-
+  } from 'react-native';
+import {connect} from 'react-redux';
 import{
       StyleConfig,
       HeaderConfig,
@@ -42,7 +42,7 @@ type State = {
   password_clear:boolean,
   pwd_visibility:boolean,
 };
-export default class ForgetUI extends React.Component<Props,State> {
+class ForgetUI extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title:'忘记密码',
         headerTintColor:HeaderConfig.headerTintColor,
@@ -61,7 +61,7 @@ export default class ForgetUI extends React.Component<Props,State> {
        password_clear:false,
        pwd_visibility:false,
      }
-     _timer:number;
+     _timer:any;
 
     componentDidMount(){
 
@@ -180,25 +180,39 @@ export default class ForgetUI extends React.Component<Props,State> {
               this._reloadFocus()
             }}
           />
-          <Button
+          {/* <Button
             buttonStyle={[styles.register_but,{marginRight:-14,backgroundColor: this.state.code_color}]}
             textStyle={styles.register_text}
             title={this.state.code_tips}
             onPress={()=>{
               this.onVerify()
             }}
-          />
+          /> */}
+          <TouchableOpacity onPress={()=>{
+            this.onVerify();
+          }}>
+            <View style={[styles.register_but,{backgroundColor: this.state.code_color}]}>
+              <Text style={styles.register_text}>{this.state.code_tips}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.line}></View>
         <View style={styles.interval}></View>
-        <Button
+        {/* <Button
           buttonStyle={styles.register_but}
           textStyle={styles.register_text}
           title={'修改'}
           onPress={()=>{
               this._onForget();
           }}
-        />
+        /> */}
+        <TouchableOpacity onPress={()=>{
+          this._onForget();
+        }}>
+          <View style={styles.register_but}>
+            <Text style={styles.register_text}>修改</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.interval}></View>
         </View>
       </View>
@@ -407,7 +421,10 @@ const styles = StyleSheet.create({
      borderColor:StyleConfig.C_666666,
      borderRadius: 5,
      borderWidth:1,
-     margin:0
+     margin:0,
+     padding:10,
+     marginLeft:10,
+     marginRight:10,
    },
    register_text:{
      textAlign: 'center',
@@ -434,3 +451,9 @@ const styles = StyleSheet.create({
     marginBottom:10,
   }
 });
+
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(ForgetUI);

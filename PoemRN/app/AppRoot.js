@@ -194,15 +194,8 @@ class AppRoot extends Component <Props,State>{
       return true;
     }
     render() {
-      const { dispatch, nav } = this.props;
-      const navigation = addNavigationHelpers({
-        dispatch:dispatch,
-        state:nav
-      });
         return (
-            <AppNavigator
-                navigation={navigation}
-            />
+            <AppNavigator/>
         );
     }
     onBackPress = () =>{

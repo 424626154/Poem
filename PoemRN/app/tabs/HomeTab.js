@@ -58,12 +58,13 @@ class HomeTab extends React.Component<Props,State> {
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:null,
-        tabBarOnPress:(({previousScene,scene,jumpToIndex})=>{
-            let index = scene.index;
+        tabBarOnPress:(({ navigation, defaultHandler })=>{
+            // let index = scene.index;
             if(navigation.state.params){
               navigation.state.params.onAddAni();
             }
-            jumpToIndex(index);
+            // jumpToIndex(index);
+            defaultHandler()
         }),
      });
      _onLove:Function;
@@ -71,8 +72,8 @@ class HomeTab extends React.Component<Props,State> {
      _onPersonal:Function;
      _onBannerItem:Function;
      _onAddAni:Function;
-     timer:number;
-     refresh_time:number;
+     timer:any;
+     refresh_time:any;
      state = {
          // 存储数据的状态
          // sourceData : [],

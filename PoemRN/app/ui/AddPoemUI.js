@@ -24,7 +24,7 @@ import {connect} from 'react-redux';
 import * as PoemsActions from '../redux/actions/PoemsActions';
 import { Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import dismissKeyboard from 'dismissKeyboard';
+// import dismissKeyboard from 'dismissKeyboard';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import WritingToolbar from '../custom/WritingToolbar';
 const {width, height} = Dimensions.get('window');

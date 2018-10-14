@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-} from 'react-native';
+  } from 'react-native';
+import {connect} from 'react-redux'
 import {
   StyleConfig,
   HeaderConfig,
@@ -41,9 +42,10 @@ type State = {
     historysdata:Array<Object>,
     label_clear:boolean,
     selected:Map<string, boolean>,
+    phone:string,
 };
 
-export default class PoemLabelUI extends React.Component<Props,State> {
+class PoemLabelUI extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title: '标签',
         headerTintColor:HeaderConfig.headerTintColor,
@@ -69,6 +71,7 @@ export default class PoemLabelUI extends React.Component<Props,State> {
       historysdata:[],
       label_clear:false,
       selected: (new Map(): Map<string, boolean>),
+      phone:'',
     }
 
     shouldComponentUpdate(nextProps:Props, nextState:State){
@@ -487,3 +490,9 @@ const styles = StyleSheet.create({
       fontSize:20,
     },
 });
+
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(PoemLabelUI);

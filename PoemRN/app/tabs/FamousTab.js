@@ -60,17 +60,21 @@ class FamousTab extends Component <Props,State>{
         //       />
         //     </View>
         ),
-        tabBarOnPress:(({previousScene,scene,jumpToIndex})=>{
+        tabBarOnPress:(({ navigation, defaultHandler })=>{
             // console.log('-------tabBarOnPress');
             // console.log(previousScene)
             // console.log(scene)
-            // console.log(jumpToIndex)
-            let index = scene.index;
-            console.log(scene)
-            if(navigation.state.params){
-              navigation.state.params.onTabBarPress(index);
-            }
-            jumpToIndex(index);
+            // console.log('------FamousTab navigation')
+            // console.log(navigation)
+            //
+            // let index = 0;
+            // console.log(scene)
+            // if(navigation.state.params){
+            //   navigation.state.params.onTabBarPress(index);
+            // }
+            //
+            // jumpToIndex(index);
+            defaultHandler();
         }),
      });
      _onTabBarPress: Function;
@@ -83,6 +87,7 @@ class FamousTab extends Component <Props,State>{
      }
      componentDidMount(){
        this.props.navigation.setParams({onTabBarPress:this._onTabBarPress});
+       this.props.navigation.setParams({son_index:this.state.son_index});
      }
      componentWillUnmount(){
 

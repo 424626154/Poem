@@ -12,6 +12,7 @@ import {
         Alert,
         FlatList,
       } from 'react-native';
+import {connect} from 'react-redux';
 import { SocialIcon } from 'react-native-elements';
 
 import{
@@ -37,7 +38,7 @@ type State = {
     selected:Map<string, boolean>,
     refreshing:boolean,
 };
-export default class LovesUI extends React.Component<Props,State> {
+class LovesUI extends React.Component<Props,State> {
  static navigationOptions = ({navigation}) => ({
        title:'点赞',
        headerTintColor:HeaderConfig.headerTintColor,
@@ -141,3 +142,8 @@ export default class LovesUI extends React.Component<Props,State> {
 const styles = StyleSheet.create({
 
 });
+export default  connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(LovesUI);

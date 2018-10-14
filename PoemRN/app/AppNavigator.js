@@ -11,8 +11,13 @@ import {
   View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TabNavigator,StackNavigator,TabBarBottom } from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
+import { createBottomTabNavigator,createStackNavigator } from 'react-navigation';
+
+import { connect } from 'react-redux';
+import {
+  createReactNavigationReduxMiddleware,
+  reduxifyNavigator,
+  } from 'react-navigation-redux-helpers';
 
 import{
     StyleConfig,
@@ -57,26 +62,26 @@ import PoemUI from './ui/PoemUI';
 import CommentsUI from './ui/CommentsUI';
 import StarUI from './ui/StarUI';
 import ReadSetUI from './ui/ReadSetUI';
-const fade = (props) => {
-    const {position, scene} = props
+// const fade = (props) => {
+//     const {position, scene} = props
+//
+//     const index = scene.index
+//
+//     const translateX = 0
+//     const translateY = 0
+//
+//     const opacity = position.interpolate({
+//         inputRange: [index - 0.7, index, index + 0.7],
+//         outputRange: [0.3, 1, 0.3]
+//     })
+//
+//     return {
+//         opacity,
+//         transform: [{translateX}, {translateY}]
+//     }
+// }
 
-    const index = scene.index
-
-    const translateX = 0
-    const translateY = 0
-
-    const opacity = position.interpolate({
-        inputRange: [index - 0.7, index, index + 0.7],
-        outputRange: [0.3, 1, 0.3]
-    })
-
-    return {
-        opacity,
-        transform: [{translateX}, {translateY}]
-    }
-}
-
-const Tabs = TabNavigator({
+const Tabs = createBottomTabNavigator({
   HomeTab: {
     screen: HomeTab,
     navigationOptions: {
@@ -185,7 +190,7 @@ const Tabs = TabNavigator({
 
 
 
-const AppNavigator = StackNavigator({
+const RootNavigator = createStackNavigator({
   Main: {
     screen: Tabs,
     navigationOptions:{
@@ -289,73 +294,19 @@ const AppNavigator = StackNavigator({
   }
 },{
   initialRouteName: 'Main', // 默认显示界面
-  // transitionConfig:()=>({
-  //       screenInterpolator:(props)=> {
-  //           const {scene} = props
-  //           if (scene.route.routeName === UIName.AddPoemUI) return fade(props)
-  //           return CardStackStyleInterpolator.forHorizontal(props)
-  //      }
-  //  })
 })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  nav:{
-    height:26,
-  },
-  header:{
-    backgroundColor: '#1e8ae8',
-  },
-  header_title:{
-    fontSize:20,
-    color:'#ffffff',
-    textAlign:'center',
-  },
-  personal:{
-    flexDirection:'row',
-    padding:10,
-  },
-  head_bg:{
-    flex:1,
-    padding:10,
-  },
-  head:{
-    height:80,
-    width:80,
-  },
-  name:{
-    fontSize:20,
-    color:'#ffffff',
-  },
-  personal_more:{
-    justifyContent:'center',
-  },
-  interval:{
-    height:10,
-  },
-  label:{
-    alignItems:'center',
-    height:40,
-    borderTopWidth:1,
-    borderTopColor:'#d4d4d4',
-    borderBottomWidth:1,
-    borderBottomColor:'#d4d4d4',
-  },
-  logout:{
-    marginTop:10,
-    fontSize:22,
-    color:'#d4d4d4',
-  },
-  dot:{
-    position: 'absolute',
-    top: -15,
-    right: -20,
-    height:12,
-    width:12,
-  }
-});
+const middleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.nav
+);
 
-export {AppNavigator} ;
+const AppWithNavigationState = reduxifyNavigator(RootNavigator, 'root');
+
+const mapStateToProps = state => ({
+  state: state.nav,
+});
+//
+const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
+
+export {AppNavigator,middleware,RootNavigator} ;

@@ -11,6 +11,7 @@ import {
     FlatList,
     Text,
 } from 'react-native';
+import {connect} from 'react-redux';
 import {
         StyleConfig,
         HeaderConfig,
@@ -27,7 +28,7 @@ type Props = {
 type State = {
     message:Object,
 };
-export default class MsgContentUI extends Component<Props,State> {
+class MsgContentUI extends Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title:navigation.state.params.message.title,
         headerTintColor:HeaderConfig.headerTintColor,
@@ -62,3 +63,9 @@ const styles = StyleSheet.create({
     fontSize:18,
   }
 });
+
+export default  connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(MsgContentUI);

@@ -24,6 +24,7 @@
             <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
+
       <activity
          android:name=".wxapi.WXEntryActivity"
          android:configChanges="keyboardHidden|orientation|screenSize"
@@ -74,15 +75,13 @@
 
         </activity>
 
-
-
-        <meta-data android:name="JPUSH_CHANNEL" android:value="${APP_CHANNEL}"/>
+      <meta-data android:name="JPUSH_CHANNEL" android:value="${APP_CHANNEL}"/>
       <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

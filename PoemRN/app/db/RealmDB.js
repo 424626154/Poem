@@ -3,7 +3,7 @@
  * realm db
  * @flow
  */
-import React from 'react';
+// import React from 'react';
 // const Realm = require('realm');
 import Realm from 'realm';
 import RealmName from './RealmName';
@@ -150,7 +150,6 @@ const realm = null;
 // })
 
 export default new Realm(schemas[schemas.length-1]);
-
 // export default new Realm({
 //     schema: schemas,
 //     schemaVersion: SchemaVersion,

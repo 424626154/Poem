@@ -40,7 +40,7 @@ type State = {
 class WorksPage extends React.Component<Props,State>{
   // 数据容器，用来存储数据
   dataContainer = [];
-  refresh_time:number;
+  refresh_time:any;
   state = {
       // 存储数据的状态
       sourceData : [],

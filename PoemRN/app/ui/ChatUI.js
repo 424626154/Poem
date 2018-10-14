@@ -67,7 +67,7 @@ class ChatUI extends React.Component<Props,State>{
      });
    handlePress:Function;
    showActionSheet:Function;
-   timer:number;
+   timer:any;
    ActionSheet:any;
   constructor(props){
     super(props);

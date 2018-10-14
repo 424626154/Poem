@@ -128,8 +128,14 @@ class NewsPage extends React.Component<Props,State>{
   }
   _onDelItem = (id: number,item:Object) => {
     if(Platform.OS === 'android'){
-      Alert.alert('删除通知',null,
+      Alert.alert('消息',null,
             [
+              {text: '全部删除', onPress: () =>{
+                this._onDelAll();
+              }},
+              {text: '全部已读', onPress: () =>{
+                this._onReadAll();
+              }},
               {text: '删除', onPress: () =>{
                 this._onDeleteItem(item);
               }},
@@ -156,6 +162,22 @@ class NewsPage extends React.Component<Props,State>{
       });
     }
   }
+  _onDelAll = () => {
+    MessageDao.deleteAllMessage();
+    this.setState({
+      sourceData:[],
+    });
+    this.props.reduxMsgRead();
+  }
+  _onReadAll = () => {
+    for(var i = this.dataContainer.length-1 ; i >= 0 ; i -- ){
+      if(this.dataContainer[i].state == 0){
+        this.dataContainer[i].state = 1;
+        MessageDao.updateState(this.dataContainer[i]);
+      }
+    }
+    this.props.reduxMsgRead();
+  }
   _renderItem = ({item}) =>{
     console.log(item)
       return(
@@ -163,6 +185,8 @@ class NewsPage extends React.Component<Props,State>{
               id={item.id}
               onPressItem={ this._onPressItem }
               onDelItem={this._onDelItem}
+              onDelAll={this._onDelAll}
+              onReadAll={this._onReadAll}
               onIconItem={this._onIconItem}
               selected={ !!this.state.selected.get(item.id) }
               message= {item}

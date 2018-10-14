@@ -17,6 +17,7 @@ import{
       Utils,
     }from '../AppUtil';
 const {width, height} = Dimensions.get('window');
+import {connect} from 'react-redux';
 const big_head = require('../images/big_head.png');
 type Props = {
     navigation:any,
@@ -26,7 +27,7 @@ type State = {
     small_photo:any,
     photo:any,
 };
-export default class PhotoUI extends React.Component<Props,State>{
+class PhotoUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
     header:null,
   });
@@ -86,3 +87,9 @@ const styles = StyleSheet.create({
       height:width,
     },
 })
+
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(PhotoUI);

@@ -15,7 +15,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import "SplashScreen.h"
+#import "RNSplashScreen.h"
 
 #import "RNUMConfigure.h"
 #import <UMAnalytics/MobClick.h>
@@ -68,7 +68,7 @@
 //    }
 //  }
 //  NSLog(@"------------------@");
-  [SplashScreen show];
+  [RNSplashScreen show];
   return YES;
 }
 

@@ -16,6 +16,10 @@ import {
     } from '../Config';
 type Props = {
     style:any,
+    borderRadius?:number,
+    padding?:number,
+    noborder:boolean,
+    source:any,
 };
 
 type State = {

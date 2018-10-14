@@ -161,7 +161,7 @@ class LoginUI extends React.Component<Props,State> {
         </View>
         <View style={styles.line}></View>
         <View style={styles.interval}></View>
-        <Button
+        {/* <Button
           buttonStyle={styles.login_but}
           textStyle={styles.login_text}
           title={'登录'}
@@ -169,7 +169,14 @@ class LoginUI extends React.Component<Props,State> {
             // alert(this.state.phone+'_'+this.state.password)
             this._onLogin();
           }}
-        />
+        /> */}
+        <TouchableOpacity onPress={()=>{
+          this._onLogin();
+        }}>
+          <View style={styles.login_but}>
+            <Text style={styles.login_text}>登录</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.other}>
           <TouchableOpacity onPress={()=>{
             let {state} = this.props.navigation;
@@ -350,7 +357,10 @@ const styles = StyleSheet.create({
      borderColor:StyleConfig.C_666666,
      borderRadius: 5,
      borderWidth:1,
-     margin:0
+     margin:0,
+     padding:10,
+     marginLeft:10,
+     marginRight:10,
    },
    login_text:{
      textAlign: 'center',

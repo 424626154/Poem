@@ -27,6 +27,8 @@ type Props = {
       onPressItem:Function,
       onIconItem:Function,
       onDelItem:Function,
+      onDelAll:Function,
+      onReadAll:Function,
       id:number,
       message:Object,
 };
@@ -49,6 +51,14 @@ export default class NewsListItem extends React.Component<Props>{
         this.swipeable.recenter();
     }
     this.props.onDelItem(this.props.id,this.props.message);
+  };
+  _onDelAll = () => {
+    this.swipeable.recenter();
+    this.props.onDelAll();
+  };
+  _onReadAll = () => {
+    this.swipeable.recenter();
+    this.props.onReadAll();
   };
   _onIcon = ()=>{
     this.props.onIconItem(this.props.id,this.props.message);
@@ -180,6 +190,20 @@ export default class NewsListItem extends React.Component<Props>{
     return(
       [
         <TouchableOpacity
+          onPress={this._onDelAll}>
+          <View style={styles.rbutt}>
+            <Text style={styles.rbutt_font}>全部删除</Text>
+          </View>
+        </TouchableOpacity>
+        ,
+        <TouchableOpacity
+          onPress={this._onReadAll}>
+          <View style={styles.rbutt}>
+            <Text style={styles.rbutt_font}>全部已读</Text>
+          </View>
+        </TouchableOpacity>
+        ,
+        <TouchableOpacity
           onPress={this._onDel}>
           <View style={styles.delete}>
             <Text style={styles.delete_font}>删除</Text>
@@ -243,5 +267,16 @@ const styles = StyleSheet.create({
     width:80,
     textAlign:'center',
     color:StyleConfig.C_FFFFFF,
-  }
+  },
+  rbutt:{
+    justifyContent:'center',
+    backgroundColor:StyleConfig.C_D4D4D4,
+    height:64,
+  },
+  rbutt_font:{
+    fontSize:14,
+    width:80,
+    textAlign:'center',
+    color:StyleConfig.C_FFFFFF,
+  },
 });

@@ -4,16 +4,10 @@
  * @flow
  */
 import React, { Component } from 'react';
-// import {
-  // NetInfo,
-  // BackHandler,
-  // Platform,
-// } from 'react-native';
 import {Provider } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import AppRoot from './AppRoot';
 import store from './redux/store/ConfigureStore';
-
 /**
  * 程序入口
  */

@@ -152,15 +152,15 @@ export function rePermission(userid:string,per:number){
 /**
  * 刷新是否评论状态
  */
-// export function raRefComment(state:boolean){
-//   return (dispatch:any) => {
-//       let action = {
-//         type:TYPES.REFCOMMENT,
-//         state:state,
-//       }
-//       dispatch(action);
-//   }
-// }
+export function raRefComment(state:boolean){
+  return (dispatch:any) => {
+      let action = {
+        type:TYPES.REFCOMMENT,
+        state:state,
+      }
+      dispatch(action);
+  }
+}
 
 export function raSetPushNews(push_news:boolean){
   return (dispatch:any) => {

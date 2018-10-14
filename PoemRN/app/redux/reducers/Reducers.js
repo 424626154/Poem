@@ -6,11 +6,11 @@
 import { combineReducers } from 'redux';
 import papp from './UserReducers';
 import poems from './PoemsReducers';
+import navReducer from './NavigationReducer';
 
-export default function getReducers(navReducer:any) {
-    return combineReducers({
-        nav: navReducer,
-				papp,
-				poems,
-    });
-}
+const rootReducer = combineReducers({
+  nav: navReducer,
+  papp,
+  poems,
+});
+export default rootReducer;

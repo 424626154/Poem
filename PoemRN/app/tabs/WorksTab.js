@@ -63,7 +63,7 @@ class WorksTab extends React.Component<Props,State> {
             jumpToIndex(index);
         }),
      });
-      refresh_time:number;
+      refresh_time:any;
       _onAddAni:Function;
       // 数据容器，用来存储数据
       constructor(props) {

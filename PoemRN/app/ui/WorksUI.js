@@ -53,7 +53,7 @@ class WorksUI extends React.Component<Props,State> {
          headerStyle:HeaderConfig.headerStyle,
          headerLeft:(<NavBack navigation={navigation}/>),
       });
-      refresh_time:number;
+      refresh_time:any;
       // 数据容器，用来存储数据
       constructor(props) {
           super(props);

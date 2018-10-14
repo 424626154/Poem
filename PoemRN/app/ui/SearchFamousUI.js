@@ -54,7 +54,7 @@ class SearchFamousUI extends React.Component<Props,State> {
    static navigationOptions = ({navigation}) => ({
          header:null,
       });
-      refresh_time:number;
+      refresh_time:any;
       keyboardDidShowListener:any;
       keyboardDidHideListener:any;
       keyBoardIsShow:boolean;

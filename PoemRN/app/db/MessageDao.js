@@ -98,7 +98,30 @@ class MessageDao{
 
       }
    }
+   deleteAllMessage(){
+      try {
+        realm.write(() => {
+            let filtered = 'account = "'+this.isAccount()+'"';
+            let del = realm.objects(RealmName.Message).filtered(filtered);
+            realm.delete(del);
+        });
+      } catch (e) {
+          console.error(e);
+      } finally {
 
+      }
+   }
+   updateState(notice:Object){
+      try {
+        realm.write(()=> {
+            realm.create(RealmName.Message, {rid: notice.rid,state: notice.state}, true)
+        });
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
+    }
    getUnreadNum(){
      try {
         return realm.objects(RealmName.Message).filtered('state = 0 AND account = "'+this.isAccount()+'"').length;

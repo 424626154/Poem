@@ -10,7 +10,7 @@ import {
   ScrollView ,
   TouchableOpacity,
 } from 'react-native';
-
+import {connect} from 'react-redux';
 import{
       StyleConfig,
       HeaderConfig,
@@ -128,7 +128,7 @@ type State = {
 
 };
 
-export default class ProtocolUI extends React.Component<Props,State>{
+class ProtocolUI extends React.Component<Props,State>{
   static navigationOptions = ({navigation}) => ({
         title:'用户协议',
         headerTintColor:HeaderConfig.headerTintColor,
@@ -153,3 +153,8 @@ const styles = StyleSheet.create({
       fontSize:18,
     }
 });
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(ProtocolUI);

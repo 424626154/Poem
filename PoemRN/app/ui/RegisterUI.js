@@ -15,7 +15,7 @@ import {
   Keyboard,
 } from 'react-native';
 import * as UserActions from '../redux/actions/UserActions';
-
+import {connect} from 'react-redux';
 import { Button,Icon } from 'react-native-elements';
 import{
       StyleConfig,
@@ -47,7 +47,7 @@ type State = {
   pwd_visibility:boolean,
 };
 
-export default class RegisterUI extends React.Component<Props,State> {
+class RegisterUI extends React.Component<Props,State> {
   static navigationOptions = ({navigation}) => ({
         title:'注册',
         headerTintColor:HeaderConfig.headerTintColor,
@@ -55,7 +55,7 @@ export default class RegisterUI extends React.Component<Props,State> {
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(<NavBack navigation={navigation}/>),
      });
-     _timer:number;
+     _timer:any;
      state={
        phone:'',
        password:'',
@@ -184,25 +184,39 @@ export default class RegisterUI extends React.Component<Props,State> {
               this._reloadFocus()
             }}
           />
-          <Button
+          {/* <Button
             buttonStyle={[styles.register_but,{marginRight:-14,backgroundColor: this.state.code_color}]}
             textStyle={styles.register_text}
             title={this.state.code_tips}
             onPress={()=>{
               this.onVerify()
             }}
-          />
+          /> */}
+          <TouchableOpacity onPress={()=>{
+            this.onVerify();
+          }}>
+            <View style={[styles.register_but,{backgroundColor: this.state.code_color}]}>
+              <Text style={styles.register_text}>{this.state.code_tips}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.line}></View>
         <View style={styles.interval}></View>
-        <Button
+        {/* <Button
           buttonStyle={styles.register_but}
           textStyle={styles.register_text}
           title={'注册'}
           onPress={()=>{
               this.onRegister();
           }}
-        />
+        /> */}
+        <TouchableOpacity onPress={()=>{
+          this.onRegister();
+        }}>
+          <View style={styles.register_but}>
+            <Text style={styles.register_text}>注册</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.interval}></View>
         <View style={styles.protocol}>
           <Text style={styles.protocol_font1}>注册代表您同意</Text>
@@ -430,7 +444,10 @@ const styles = StyleSheet.create({
      borderColor:StyleConfig.C_666666,
      borderRadius: 5,
      borderWidth:1,
-     margin:0
+     margin:0,
+     padding:10,
+     marginLeft:10,
+     marginRight:10,
    },
    register_text:{
      textAlign: 'center',
@@ -468,3 +485,9 @@ const styles = StyleSheet.create({
     color:StyleConfig.C_333333,
   }
 });
+
+export default connect(
+    state => ({
+        papp: state.papp,
+    }),
+)(RegisterUI);

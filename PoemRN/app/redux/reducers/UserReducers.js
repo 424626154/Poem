@@ -4,11 +4,11 @@
  * @flow
  */
 import * as TYPES from '../actions/ActionTypes';
-import Storage from '../../utils/Storage';
+// import Storage from '../../utils/Storage';
 
 const initialState = {
 	num:0,
-	userid:Storage.getUserid(),
+	userid:'',
 	user:{},
 	homepoems:[],
 	// refcomment:false,//刷新评论

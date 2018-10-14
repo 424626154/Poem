@@ -11,6 +11,7 @@
    TextInput,
    TouchableOpacity,
  } from 'react-native';
+ import {connect} from 'react-redux';
  import {
    StyleConfig,
    HeaderConfig,
@@ -33,7 +34,7 @@
       annotation:string
  };
 
- export default class AnnotationlUI extends React.Component<Props,State> {
+class AnnotationlUI extends React.Component<Props,State> {
    static navigationOptions = ({navigation}) => ({
          title: '注释',
          headerTintColor:HeaderConfig.headerTintColor,
@@ -92,3 +93,8 @@ const styles = StyleSheet.create({
     padding:10,
   }
 })
+ export default connect(
+     state => ({
+         papp: state.papp,
+     }),
+ )(AnnotationlUI);

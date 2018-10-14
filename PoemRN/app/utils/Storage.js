@@ -4,7 +4,18 @@
  * @flow
  */
 import StorageDao from '../db/StorageDao';
-import {StorageConfig} from '../Config'
+// import {StorageConfig} from '../Config';
+var StorageConfig = {
+
+};
+StorageConfig.USERID = 'userid';
+StorageConfig.PUSHIID = 'pushid';
+StorageConfig.LAST_PHONE = 'last_phone';//上次登录手机号
+StorageConfig.LABEL_HISTORY = 'label_history';//标签历史
+StorageConfig.FontFamily = 'fontFamily';
+StorageConfig.FontSize = 'fontSize';
+StorageConfig.FontAlignment = 'fontAlignment'
+StorageConfig.LineHeight = 'lineHeight';
 var Storage = {
 
 }
