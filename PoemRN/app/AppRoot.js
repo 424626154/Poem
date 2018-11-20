@@ -8,6 +8,7 @@ import {
   BackHandler,
   Platform,
   AppState,
+  NativeModules,
 } from 'react-native';
 import {AppNavigator} from './AppNavigator';
 import {addNavigationHelpers,NavigationActions} from 'react-navigation';
@@ -59,7 +60,7 @@ class AppRoot extends Component <Props,State>{
         this._requestMessages();
         this._requestChats();
       }
-
+      this._requesCloudConfig();
       /*****JPushModule*****/
       if(Platform.OS == 'android'){
         JPushModule.getInfo((map) => {
@@ -442,6 +443,35 @@ class AppRoot extends Component <Props,State>{
       }else if(type == 'news'){
           this._requestMessages();
       }
+    }
+    _requesCloudConfig(){
+      HttpUtil.post(HttpUtil.CLOUD_CONFIG,'').then(res=>{
+        if(res.code == 0){
+          var data = res.data;
+          var ios_start_page = data.ios_start_page;
+          var android_start_page = data.android_start_page;
+          // console.log('---ios_start_page')
+          // console.log(ios_start_page)
+          if(ios_start_page){
+            if(Platform.OS == 'ios'){
+              var YoumiModule = NativeModules.YoumiModule;
+              console.log('------YoumiModule')
+              console.log(YoumiModule)
+              YoumiModule.openNativeVC();
+            }
+          }
+          if(android_start_page){
+            if(Platform.OS == 'android'){
+              var XiaomiModule = NativeModules.XiaomiModule;
+              XiaomiModule.startXiaomiAdActivity()
+            }
+          }
+        }else{
+          console.log(res.errmsg);
+        }
+      }).catch(err=>{
+        console.error(err);
+      })
     }
 }
 

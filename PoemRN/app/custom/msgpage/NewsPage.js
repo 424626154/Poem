@@ -50,7 +50,7 @@ class NewsPage extends React.Component<Props,State>{
   }
   componentDidMount(){
     //因为tab采用lazy加载方式，所以第一次需要在此处调用
-      this._loadNews();
+      // this._loadNews();
   }
   componentWillUnmount(){
 
@@ -113,12 +113,19 @@ class NewsPage extends React.Component<Props,State>{
         if(userid){
           goPersonalUI(this.props.navigation.navigate,userid);
         }
+      }else if(message.type == 6||message.type == 7||message.type == 8){
+          var extend = JSON.parse(message.extend);
+          var id = extend.id;
+          if(id){
+            this.props.navigation.navigate(UIName.DiscussUI,{id:id});
+          }
       }else{
         this.props.navigation.navigate(UIName.MsgContentUI,{message:message});
       }
   };
   _onIconItem = (id: string,message:Object) => {
-    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5){
+    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5
+      ||message.type == 6||message.type == 7||message.type == 8){
       var extend = JSON.parse(message.extend);
       var userid = extend.userid;
       if(userid){

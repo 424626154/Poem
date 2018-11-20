@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sbb.poem"
     android:versionCode="1"
     android:versionName="1.0">
@@ -21,9 +22,17 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+     <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
+    <meta-data
+        android:name="JPUSH_APPKEY"
+        android:value="${JPUSH_APPKEY}" />
+    <meta-data
+        android:name="JPUSH_CHANNEL"
+        android:value="${APP_CHANNEL}" />
+
 
       <activity
          android:name=".wxapi.WXEntryActivity"
@@ -79,8 +88,30 @@
       <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <!--小米-->
+        <activity
+            android:name="com.miui.zeus.mimo.sdk.activityProxy.ProxyActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <activity android:name=".xiaomi.XiaomiAdActivity"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">;
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource"/>
+        </provider>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -94,4 +125,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <!--小米-->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
 </manifest>

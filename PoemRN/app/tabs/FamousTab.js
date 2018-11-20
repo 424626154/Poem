@@ -30,6 +30,7 @@ import TopTabBar from '../custom/toptabbar/TopTabBar';
 import TabBarIcon from '../custom/TabBarIcon';
 
 import {connect} from 'react-redux';
+import { SafeAreaView } from 'react-navigation';
 import * as UserActions from '../redux/actions/UserActions';
 type Props = {
       navigation:any,
@@ -98,28 +99,31 @@ class FamousTab extends Component <Props,State>{
      }
     render(){
       return(
-        <View style={styles.container}>
-          {this._renderSearch()}
-          <ScrollableTabView
-            locked={true}
-            onChangeTab={(fnc)=>{
-              this._onChangeTab(fnc.i);
-            }}
-            renderTabBar={() => <TopTabBar someProp={'here'} />}>
-           <AuthorPage
-             ref='AuthorPage'
-             tabLabel="作者"
-             papp={this.props.papp}
-             navigation={this.props.navigation}
-           />
-           <DynastyPage
-             ref='DynastyPage'
-             tabLabel="年代"
-             papp={this.props.papp}
-             navigation={this.props.navigation}
-           />
-         </ScrollableTabView>
-        </View>
+        <SafeAreaView
+          style={pstyles.safearea}>
+          <View style={styles.container}>
+            {this._renderSearch()}
+            <ScrollableTabView
+              locked={true}
+              onChangeTab={(fnc)=>{
+                this._onChangeTab(fnc.i);
+              }}
+              renderTabBar={() => <TopTabBar someProp={'here'} />}>
+             <AuthorPage
+               ref='AuthorPage'
+               tabLabel="作者"
+               papp={this.props.papp}
+               navigation={this.props.navigation}
+             />
+             <DynastyPage
+               ref='DynastyPage'
+               tabLabel="年代"
+               papp={this.props.papp}
+               navigation={this.props.navigation}
+             />
+           </ScrollableTabView>
+          </View>
+        </SafeAreaView>  
       )
     }
     _renderSearch(){

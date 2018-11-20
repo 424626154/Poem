@@ -75,6 +75,17 @@
 		695AA009216FBACE00BF5F88 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 695A9FC2216FBACD00BF5F88 /* UMAnalytics.framework */; };
 		695AA11E2170BB6700BF5F88 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 695AA0E62170B8A100BF5F88 /* libRNDeviceInfo.a */; };
 		699D17A21FE3B797000D9B81 /* UMShareModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 699D17A11FE3B797000D9B81 /* UMShareModule.m */; };
+		69A94178219DC11C00EC1B47 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A94146219DC11C00EC1B47 /* MediaPlayer.framework */; };
+		69A9417A219DC13800EC1B47 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A94179219DC13700EC1B47 /* StoreKit.framework */; };
+		69A9417C219DC14A00EC1B47 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A9417B219DC14A00EC1B47 /* CoreMotion.framework */; };
+		69A9417E219DC16700EC1B47 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A9417D219DC16600EC1B47 /* AudioToolbox.framework */; };
+		69A94180219DC17900EC1B47 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A9417F219DC17900EC1B47 /* libicucore.tbd */; };
+		69A94182219DC18500EC1B47 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A94181219DC18500EC1B47 /* AdSupport.framework */; };
+		69A94184219DC1A200EC1B47 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A94183219DC1A100EC1B47 /* WebKit.framework */; };
+		69A9418A219DC1E900EC1B47 /* libUMVideoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A94186219DC1E900EC1B47 /* libUMVideoSDK.a */; };
+		69A9418B219DC1E900EC1B47 /* UMVideo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69A94189219DC1E900EC1B47 /* UMVideo.bundle */; };
+		69A94191219DC1F700EC1B47 /* RCTYoumiModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9418D219DC1F700EC1B47 /* RCTYoumiModule.m */; };
+		69A94192219DC1F700EC1B47 /* VideoAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9418E219DC1F700EC1B47 /* VideoAdViewController.m */; };
 		69DD27291FCC008900259067 /* Default-568.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DD27281FCC008900259067 /* Default-568.png */; };
 		69EB7E191FD68731001D9732 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EB7DF21FD6871C001D9732 /* libRCTCameraRoll.a */; };
 		69EB7E671FD69718001D9732 /* FZSKBXK.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 69EB7E661FD6970D001D9732 /* FZSKBXK.TTF */; };
@@ -494,7 +505,7 @@
 		00E356EE1AD99517003FC87E /* PoemRNTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoemRNTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PoemRNTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PoemRNTests.m; sourceTree = "<group>"; };
-		0233393350F04A269C5F1071 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
+		0233393350F04A269C5F1071 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		05C31BF6CA874B96A9380DFB /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		0D07224557BC453ABD39CC07 /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
 		126117E67CD345D284E5E405 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
@@ -575,6 +586,20 @@
 		695AA0B62170B8A000BF5F88 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		699D17A01FE3B796000D9B81 /* UMShareModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMShareModule.h; sourceTree = "<group>"; };
 		699D17A11FE3B797000D9B81 /* UMShareModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMShareModule.m; sourceTree = "<group>"; };
+		69A94146219DC11C00EC1B47 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		69A94179219DC13700EC1B47 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		69A9417B219DC14A00EC1B47 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		69A9417D219DC16600EC1B47 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		69A9417F219DC17900EC1B47 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		69A94181219DC18500EC1B47 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		69A94183219DC1A100EC1B47 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		69A94186219DC1E900EC1B47 /* libUMVideoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMVideoSDK.a; sourceTree = "<group>"; };
+		69A94188219DC1E900EC1B47 /* UMVideoAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMVideoAd.h; sourceTree = "<group>"; };
+		69A94189219DC1E900EC1B47 /* UMVideo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMVideo.bundle; sourceTree = "<group>"; };
+		69A9418D219DC1F700EC1B47 /* RCTYoumiModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTYoumiModule.m; sourceTree = "<group>"; };
+		69A9418E219DC1F700EC1B47 /* VideoAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoAdViewController.m; sourceTree = "<group>"; };
+		69A9418F219DC1F700EC1B47 /* VideoAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoAdViewController.h; sourceTree = "<group>"; };
+		69A94190219DC1F700EC1B47 /* RCTYoumiModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTYoumiModule.h; sourceTree = "<group>"; };
 		69DD27211FCBFF2E00259067 /* PoemRN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PoemRN.entitlements; path = PoemRN/PoemRN.entitlements; sourceTree = "<group>"; };
 		69DD27281FCC008900259067 /* Default-568.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568.png"; path = "PoemRN/Default-568.png"; sourceTree = "<group>"; };
 		69EB7DE71FD6871B001D9732 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
@@ -624,6 +649,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69A94184219DC1A200EC1B47 /* WebKit.framework in Frameworks */,
+				69A94182219DC18500EC1B47 /* AdSupport.framework in Frameworks */,
+				69A94180219DC17900EC1B47 /* libicucore.tbd in Frameworks */,
+				69A9417E219DC16700EC1B47 /* AudioToolbox.framework in Frameworks */,
+				69A9417C219DC14A00EC1B47 /* CoreMotion.framework in Frameworks */,
+				69A9417A219DC13800EC1B47 /* StoreKit.framework in Frameworks */,
+				69A94178219DC11C00EC1B47 /* MediaPlayer.framework in Frameworks */,
 				695AA11E2170BB6700BF5F88 /* libRNDeviceInfo.a in Frameworks */,
 				69EB7E191FD68731001D9732 /* libRCTCameraRoll.a in Frameworks */,
 				69FDBFE41FCEF5750024AC9F /* libSplashScreen.a in Frameworks */,
@@ -645,6 +677,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				69A9418A219DC1E900EC1B47 /* libUMVideoSDK.a in Frameworks */,
 				69FDBFE51FCEF5CB0024AC9F /* libRCTJCoreModule.a in Frameworks */,
 				69FDBFE61FCEF5E30024AC9F /* libRCTJPushModule.a in Frameworks */,
 				6939F9481FD26D2F00D8BD65 /* libc++abi.tbd in Frameworks */,
@@ -786,6 +819,7 @@
 		13B07FAE1A68108700A75B9A /* PoemRN */ = {
 			isa = PBXGroup;
 			children = (
+				69A9418C219DC1F700EC1B47 /* youmi */,
 				6939F87D1FD189A900D8BD65 /* UMReactBridge */,
 				69DD27281FCC008900259067 /* Default-568.png */,
 				69DD27211FCBFF2E00259067 /* PoemRN.entitlements */,
@@ -1065,6 +1099,37 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		69A94185219DC1E900EC1B47 /* youmi_lib */ = {
+			isa = PBXGroup;
+			children = (
+				69A94186219DC1E900EC1B47 /* libUMVideoSDK.a */,
+				69A94187219DC1E900EC1B47 /* include */,
+				69A94189219DC1E900EC1B47 /* UMVideo.bundle */,
+			);
+			name = youmi_lib;
+			path = PoemRN/youmi_lib;
+			sourceTree = "<group>";
+		};
+		69A94187219DC1E900EC1B47 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				69A94188219DC1E900EC1B47 /* UMVideoAd.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		69A9418C219DC1F700EC1B47 /* youmi */ = {
+			isa = PBXGroup;
+			children = (
+				69A9418D219DC1F700EC1B47 /* RCTYoumiModule.m */,
+				69A9418E219DC1F700EC1B47 /* VideoAdViewController.m */,
+				69A9418F219DC1F700EC1B47 /* VideoAdViewController.h */,
+				69A94190219DC1F700EC1B47 /* RCTYoumiModule.h */,
+			);
+			name = youmi;
+			path = PoemRN/youmi;
+			sourceTree = "<group>";
+		};
 		69EB7DE81FD6871B001D9732 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1169,6 +1234,14 @@
 		B232E544376E443BA3E0AF9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69A94185219DC1E900EC1B47 /* youmi_lib */,
+				69A94183219DC1A100EC1B47 /* WebKit.framework */,
+				69A94181219DC18500EC1B47 /* AdSupport.framework */,
+				69A9417F219DC17900EC1B47 /* libicucore.tbd */,
+				69A9417D219DC16600EC1B47 /* AudioToolbox.framework */,
+				69A9417B219DC14A00EC1B47 /* CoreMotion.framework */,
+				69A94179219DC13700EC1B47 /* StoreKit.framework */,
+				69A94146219DC11C00EC1B47 /* MediaPlayer.framework */,
 				695A9F95216FBACD00BF5F88 /* UIComponents */,
 				6939F91B1FD26D2F00D8BD65 /* libc++abi.tbd */,
 				6939F8841FD18B1300D8BD65 /* libsqlite3.tbd */,
@@ -1813,6 +1886,7 @@
 				685233D0609D45EEBCC9DDA6 /* Ionicons.ttf in Resources */,
 				8377E9B7F87E43DB82057296 /* MaterialCommunityIcons.ttf in Resources */,
 				66562CBF5B8048EABBA6704F /* MaterialIcons.ttf in Resources */,
+				69A9418B219DC1E900EC1B47 /* UMVideo.bundle in Resources */,
 				3D40C0AAFF0B4B68AE5F9817 /* Octicons.ttf in Resources */,
 				F1A197BDAD4F41F0BBBCAAF1 /* SimpleLineIcons.ttf in Resources */,
 				F92CC382BE804F14B03FCC7F /* Zocial.ttf in Resources */,
@@ -1888,8 +1962,10 @@
 				699D17A21FE3B797000D9B81 /* UMShareModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				69A94192219DC1F700EC1B47 /* VideoAdViewController.m in Sources */,
 				6939F8831FD189A900D8BD65 /* UMAnalyticsModule.m in Sources */,
 				6939F8821FD189A900D8BD65 /* RNUMConfigure.m in Sources */,
+				69A94191219DC1F700EC1B47 /* RCTYoumiModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1956,7 +2032,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = PoemRNTests/Info.plist;
@@ -1999,7 +2075,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = PoemRNTests/Info.plist;
@@ -2059,7 +2135,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = PoemRN/Info.plist;
@@ -2081,6 +2157,7 @@
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/SocialLibraries/Sina/SinaSDK",
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/UMSocialSDKPlugin",
+					"$(PROJECT_DIR)/PoemRN/youmi_lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2125,7 +2202,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = PoemRN/Info.plist;
@@ -2147,6 +2224,7 @@
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/SocialLibraries/Sina/SinaSDK",
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/PoemRN/UIComponents/UMShare/UMSocialSDKPlugin",
+					"$(PROJECT_DIR)/PoemRN/youmi_lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2181,7 +2259,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = "PoemRN-tvOS/Info.plist";
@@ -2232,7 +2310,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = "PoemRN-tvOS/Info.plist";

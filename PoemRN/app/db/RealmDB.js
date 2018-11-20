@@ -8,7 +8,7 @@
 import Realm from 'realm';
 import RealmName from './RealmName';
 
-let SchemaVersion = 2;//数据库版本
+// let SchemaVersion = 2;//数据库版本
 // const MessageName = 'message';
 // let realm;
 
@@ -97,6 +97,27 @@ const Storage = {
   }
 }
 
+const Discuss = {
+    name:RealmName.Discuss,
+    primaryKey: 'rid',
+    properties:{
+      rid:{type: 'string', default: ''},//本地存储id
+      id:'int',
+      account:{type: 'string', default: ''},
+      userid:{type: 'string', default: ''},
+      head:{type: 'string', default: ''},
+      nickname:{type: 'string', default: ''},
+      title:{type: 'string', default: ''},
+      content:{type: 'string', default: ''},
+      extend:{type: 'string', default: ''},
+      lovenum:{type: 'int', default: 0},
+      commentnum:{type: 'int', default: 0},
+      mylove:{type: 'int', default: 0},
+      del: {type: 'int', default: 0},
+      time:{type: 'int', default: 0},
+    }
+}
+
 const schema1 = [Message,HomePoem,Chat,ChatList,Storage];
 const migrationFunction1 =  (oldRealm, newRealm) => {
   console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
@@ -123,9 +144,19 @@ const migrationFunction2 =  (oldRealm, newRealm) => {
   }
 }
 
+const schema3 = [Message,HomePoem,Chat,ChatList,Storage,Discuss];
+const migrationFunction3 =  (oldRealm, newRealm) => {
+  console.log('---Realm  migration oldRealm.schemaVersion:'+oldRealm.schemaVersion +' newRealm.schemaVersion:' +newRealm.schemaVersion);
+  if (oldRealm.schemaVersion < 1) {
+
+  }
+}
+
+
 const schemas = [
   { schema: schema1, schemaVersion: 1, migration: migrationFunction1 },
   { schema: schema2, schemaVersion: 2, migration: migrationFunction2 },
+  { schema: schema3, schemaVersion: 3, migration: migrationFunction3 },
 ]
 
 // the first schema to update to is the current schema version

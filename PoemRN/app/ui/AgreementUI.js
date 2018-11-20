@@ -83,17 +83,18 @@ class AgreementUI extends React.Component<Props,State>{
         headerTitleStyle:HeaderConfig.headerTitleStyle,
         headerStyle:HeaderConfig.headerStyle,
         headerLeft:(
-        <TouchableOpacity
-          style={pstyles.nav_left}
-          onPress={()=>navigation.state.params.onBack()}>
-          <Icon
-            name='navigate-before'
-            size={26}
-            type="MaterialIcons"
-            color={StyleConfig.C_333333}
-            />
-        </TouchableOpacity>
-      ),
+          <TouchableOpacity
+            style={pstyles.nav_left}
+            onPress={()=>navigation.state.params.onBack()}>
+            <Icon
+              name='navigate-before'
+              size={26}
+              type="MaterialIcons"
+              color={StyleConfig.C_333333}
+              />
+          </TouchableOpacity>
+        ),
+        headerRight:(<View style={pstyles.nav_right}/>)
      });
      onBack:Function;
      constructor(props){

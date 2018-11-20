@@ -52,6 +52,7 @@ class WorksUI extends React.Component<Props,State> {
          headerTitleStyle:HeaderConfig.headerTitleStyle,
          headerStyle:HeaderConfig.headerStyle,
          headerLeft:(<NavBack navigation={navigation}/>),
+         headerRight:(<View style={pstyles.nav_right}/>),
       });
       refresh_time:any;
       // 数据容器，用来存储数据

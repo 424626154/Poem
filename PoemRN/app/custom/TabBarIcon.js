@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
         ios:{
-          top: -14,
-          right: -16,
+          top: 0,
+          right: -1,
         },
         android:{
           top: 0,

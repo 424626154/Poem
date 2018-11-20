@@ -3979,6 +3979,12 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+linkify-it@^1.2.0:
+  version "1.2.4"
+  resolved "http://registry.npm.taobao.org/linkify-it/download/linkify-it-1.2.4.tgz#0773526c317c8fd13bd534ee1d180ff88abf881a"
+  dependencies:
+    uc.micro "^1.0.1"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/load-json-file/download/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -4087,6 +4093,10 @@ md5@2.2.1:
     charenc "~0.0.1"
     crypt "~0.0.1"
     is-buffer "~1.1.1"
+
+mdurl@^1.0.0:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/mdurl/download/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
 
 mem@^1.1.0:
   version "1.1.0"
@@ -5117,13 +5127,6 @@ react-native-elements@^1.0.0-beta6:
     opencollective-postinstall "^2.0.0"
     prop-types "^15.5.8"
 
-react-native-fetch-blob@^0.10.8:
-  version "0.10.8"
-  resolved "http://registry.npm.taobao.org/react-native-fetch-blob/download/react-native-fetch-blob-0.10.8.tgz#4fc256abae0cb5f10e7c41f28c11b3ff330d72a9"
-  dependencies:
-    base-64 "0.1.0"
-    glob "7.0.6"
-
 react-native-gifted-chat@^0.4.3:
   version "0.4.3"
   resolved "http://registry.npm.taobao.org/react-native-gifted-chat/download/react-native-gifted-chat-0.4.3.tgz#25b4da866c802e407c06e589495f421f7dcdf70a"
@@ -5145,6 +5148,13 @@ react-native-htmlview@^0.13.0:
   dependencies:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.2"
+
+react-native-hyperlink@^0.0.14:
+  version "0.0.14"
+  resolved "http://registry.npm.taobao.org/react-native-hyperlink/download/react-native-hyperlink-0.0.14.tgz#138bbfe5b410667d1e37f04a2b4713163ab0ed81"
+  dependencies:
+    linkify-it "^1.2.0"
+    mdurl "^1.0.0"
 
 react-native-image-crop-picker@^0.21.2:
   version "0.21.2"
@@ -5261,6 +5271,13 @@ react-native-snap-carousel@^3.4.0:
 react-native-splash-screen@^3.0.6:
   version "3.1.1"
   resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.1.1.tgz#1a4e46c9fdce53ff52af2a2cb4181788c4e30b30"
+
+react-native-super-grid@^2.4.3:
+  version "2.4.3"
+  resolved "http://registry.npm.taobao.org/react-native-super-grid/download/react-native-super-grid-2.4.3.tgz#ceeaa4515de7bdb2e3cc3f810009e1adbbadd40b"
+  dependencies:
+    lodash "^4.17.10"
+    prop-types "^15.6.0"
 
 react-native-swipeable@^0.6.0:
   version "0.6.0"
@@ -5492,9 +5509,9 @@ readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.6, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-realm@^2.17.0:
-  version "2.18.0"
-  resolved "http://registry.npm.taobao.org/realm/download/realm-2.18.0.tgz#83d7184653a9aaf0c9a28c9270e233d5d32d028a"
+realm@2.16.0:
+  version "2.16.0"
+  resolved "http://registry.npm.taobao.org/realm/download/realm-2.16.0.tgz#e7c02445bb403c095f7082305fc2c8c0ac762227"
   dependencies:
     command-line-args "^4.0.6"
     decompress "^4.2.0"
@@ -5705,6 +5722,13 @@ rimraf@^2.5.4, rimraf@^2.6.1:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "http://registry.npm.taobao.org/rimraf/download/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rn-fetch-blob@^0.10.13:
+  version "0.10.13"
+  resolved "http://registry.npm.taobao.org/rn-fetch-blob/download/rn-fetch-blob-0.10.13.tgz#e0fd5eac1a3a872563b35061353d96c4e51ae1cc"
+  dependencies:
+    base-64 "0.1.0"
+    glob "7.0.6"
 
 rsvp@^3.3.3:
   version "3.6.2"
@@ -6325,6 +6349,10 @@ typical@^2.6.0, typical@^2.6.1:
 ua-parser-js@^0.7.18:
   version "0.7.18"
   resolved "http://registry.npm.taobao.org/ua-parser-js/download/ua-parser-js-0.7.18.tgz#a7bfd92f56edfb117083b69e31d2aa8882d4b1ed"
+
+uc.micro@^1.0.1:
+  version "1.0.5"
+  resolved "http://registry.npm.taobao.org/uc.micro/download/uc.micro-1.0.5.tgz#0c65f15f815aa08b560a61ce8b4db7ffc3f45376"
 
 uglify-es@^3.1.9:
   version "3.3.9"

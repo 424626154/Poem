@@ -18,6 +18,7 @@ import * as PoemsActions from '../redux/actions/PoemsActions';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import WorksPage from '../custom/starpage/WorksPage';
 import FamousPage from '../custom/starpage/FamousPage';
+import DiscussPage from '../custom/starpage/DiscussPage';
 import TopTabBar from '../custom/toptabbar/TopTabBar';
 import TabBarIcon from '../custom/TabBarIcon';
 
@@ -55,6 +56,7 @@ class StarUI extends React.Component<Props,State> {
          headerTitleStyle:HeaderConfig.headerTitleStyle,
          headerStyle:HeaderConfig.headerStyle,
          headerLeft:(<NavBack navigation={navigation}/>),
+         headerRight:(<View style={pstyles.nav_right}/>),
       });
       constructor(props) {
           super(props);
@@ -96,6 +98,13 @@ class StarUI extends React.Component<Props,State> {
           <FamousPage
             ref='FamousPage'
             tabLabel="收录"
+            userid={this.state.userid}
+            papp={this.props.papp}
+            navigation={this.props.navigation}
+          />
+          <DiscussPage
+            ref='DiscussPage'
+            tabLabel="想法"
             userid={this.state.userid}
             papp={this.props.papp}
             navigation={this.props.navigation}

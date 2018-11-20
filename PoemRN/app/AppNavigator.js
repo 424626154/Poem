@@ -30,6 +30,7 @@ import MyTab from './tabs/MyTab';
 import WorksTab from './tabs/WorksTab';
 import AddPoemTab from './tabs/AddPoemTab';
 import FamousTab from './tabs/FamousTab';
+import DiscussTab from './tabs/DiscussTab';
 
 import AddPoemUI from './ui/AddPoemUI';//添加诗词
 import LoginUI from './ui/LoginUI';
@@ -62,6 +63,12 @@ import PoemUI from './ui/PoemUI';
 import CommentsUI from './ui/CommentsUI';
 import StarUI from './ui/StarUI';
 import ReadSetUI from './ui/ReadSetUI';
+import DiscussUI from './ui/DiscussUI';
+import PhotosUI from './ui/PhotosUI';
+import AddDiscussUI from './ui/AddDiscussUI';
+import GalleryUI from './ui/GalleryUI';
+import WebUI from './ui/WebUI';
+import MyDiscussUI from './ui/MyDiscussUI';
 // const fade = (props) => {
 //     const {position, scene} = props
 //
@@ -89,6 +96,20 @@ const Tabs = createBottomTabNavigator({
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
             name='home'
+            size={26}
+            type="MaterialIcons"
+            color={tintColor}
+          />
+        ),
+      }
+  },
+  DiscussTab: {
+    screen: DiscussTab,
+    navigationOptions: {
+        tabBarLabel: '想法',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='lightbulb-outline'
             size={26}
             type="MaterialIcons"
             color={tintColor}
@@ -194,7 +215,7 @@ const RootNavigator = createStackNavigator({
   Main: {
     screen: Tabs,
     navigationOptions:{
-      // header:null,
+      header:null,
     }
   },
   AddPoemUI:{
@@ -291,6 +312,24 @@ const RootNavigator = createStackNavigator({
   },
   ReadSetUI:{
     screen:ReadSetUI,
+  },
+  DiscussUI:{
+    screen:DiscussUI,
+  },
+  PhotosUI:{
+    screen:PhotosUI,
+  },
+  AddDiscussUI:{
+    screen:AddDiscussUI,
+  },
+  GalleryUI:{
+    screen:GalleryUI,
+  },
+  WebUI:{
+    screen:WebUI,
+  },
+  MyDiscussUI:{
+    screen:MyDiscussUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

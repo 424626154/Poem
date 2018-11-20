@@ -20,12 +20,15 @@ import{
       StyleConfig
     } from '../AppUtil';
 type Props = {
-      align:string,
-      onItem:Function,
+      align?:string,
+      onItem?:Function,
       onShowSelect:Function,
       onImagePicker:Function,//0相机 1相册
-      onLabel:Function,//标签页
-      onAnnotation:Function,//注释页
+      onLabel?:Function,//标签页
+      onAnnotation?:Function,//注释页
+      hiddenAlign?:boolean,//是否隐藏对齐
+      hiddenLabel?:boolean,//隐藏标签
+      hiddenAnnot?:boolean,//隐藏注释
 }
 type State = {
       align:string,
@@ -57,10 +60,33 @@ export default class WritingToolbar extends React.Component<Props,State>{
         <View>
           {this._renderModel()}
           <View style={styles.bg}>
+            {this._renderAlignment()}
+            {/* 添加照片 */}
+            {this._renderToolItem('crop-original',()=>{
+              // console.log('------_onShowPhoto')
+              this._onShowPhoto();
+            })}
+            {/* 添加标签 */}
+            {this._renderToolItem('label',()=>{
+              if(this.props.onLabel)this.props.onLabel();
+            },this.props.hiddenLabel)}
+            {/* 添加注释 */}
+            {this._renderToolItem('date-range',()=>{
+              if(this.props.onAnnotation)this.props.onAnnotation();
+            },this.props.hiddenAnnot)}
+            {/* {this._renderModel()} */}
+          </View>
+        </View>
+      )
+    }
+    _renderAlignment(){
+      if(!this.props.hiddenAlign){
+        return(
+          <View style={styles.alignment}>
             <TouchableOpacity style={styles.item}
               onPress={()=>{
                 this.setState({align:'left'})
-                this.props.onItem('left');
+                if(this.props.onItem)this.props.onItem('left');
               }}>
               <Icon
                 name='format-align-left'
@@ -72,7 +98,7 @@ export default class WritingToolbar extends React.Component<Props,State>{
             <TouchableOpacity style={styles.item}
               onPress={()=>{
                 this.setState({align:'center'})
-                this.props.onItem('center');
+                if(this.props.onItem)this.props.onItem('center');
               }}>
               <Icon
                 name='format-align-center'
@@ -81,41 +107,33 @@ export default class WritingToolbar extends React.Component<Props,State>{
                 color={this._renderIcon('center')}
               />
             </TouchableOpacity>
-            {/* 添加照片 */}
-            {this._renderToolItem('crop-original',()=>{
-              // console.log('------_onShowPhoto')
-              this._onShowPhoto();
-            })}
-            {/* 添加标签 */}
-            {this._renderToolItem('label',()=>{
-              this.props.onLabel();
-            })}
-            {/* 添加注释 */}
-            {this._renderToolItem('date-range',()=>{
-              this.props.onAnnotation();
-            })}
-            {/* {this._renderModel()} */}
           </View>
-        </View>
-      )
+          )
+      }else{
+        return null;
+      }
     }
     /**
     *功能栏icon
     */
-    _renderToolItem(icon:string,func:Function){
-      return(
-        <TouchableOpacity style={styles.item}
-          onPress={()=>{
-            func()
-          }}>
-          <Icon
-            name={icon}
-            size={30}
-            type="MaterialIcons"
-            color={StyleConfig.C_333333}
-          />
-        </TouchableOpacity>
-      )
+    _renderToolItem(icon:string,func:Function,hidden?:boolean){
+      if(!hidden){
+        return(
+          <TouchableOpacity style={styles.item}
+            onPress={()=>{
+              func()
+            }}>
+            <Icon
+              name={icon}
+              size={30}
+              type="MaterialIcons"
+              color={StyleConfig.C_333333}
+            />
+          </TouchableOpacity>
+        )
+      }else{
+        return null
+      }
     }
     _renderIcon(item_align){
       return this.state.align == item_align?StyleConfig.C_333333:StyleConfig.C_D4D4D4;
@@ -294,6 +312,9 @@ const styles = StyleSheet.create({
     borderTopColor:StyleConfig.C_D4D4D4,
     paddingLeft:10,
     paddingRight:10,
+  },
+  alignment:{
+    flexDirection:'row',
   },
   item:{
     padding:10,

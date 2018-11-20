@@ -8,6 +8,12 @@ import android.text.TextUtils;
 
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import io.realm.react.RealmReactPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -24,6 +30,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.sbb.poem.invokenative.DplusReactPackage;
 import com.sbb.poem.invokenative.RNUMConfigure;
+import com.sbb.poem.xiaomi.XiaomiReactPackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
@@ -73,7 +80,8 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
             new SplashScreenReactPackage(),
-            new DplusReactPackage()
+            new DplusReactPackage(),
+            new XiaomiReactPackage()
       );
     }
 

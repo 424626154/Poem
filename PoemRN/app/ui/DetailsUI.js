@@ -74,6 +74,7 @@ class DetailsUI extends React.Component<Props,State>{
     headerTitleStyle:HeaderConfig.headerTitleStyle,
     headerStyle:HeaderConfig.headerStyle,
     headerLeft:(<NavBack navigation={navigation}/>),
+    headerRight:(<View style={pstyles.nav_right}/>),
   });
   dataContainer = [];
   navigate = null;

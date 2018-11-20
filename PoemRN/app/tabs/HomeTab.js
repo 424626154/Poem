@@ -15,6 +15,7 @@ import {
       Animated,
      } from 'react-native';
 import {connect} from 'react-redux';
+import {SafeAreaView } from 'react-navigation';
 import * as UserActions from '../redux/actions/UserActions';
 import * as PoemsActions from '../redux/actions/PoemsActions';
 import HomeListItem from '../custom/HomeListItem';
@@ -122,31 +123,34 @@ class HomeTab extends React.Component<Props,State> {
   }
   render() {
     return (
-      <View style={pstyles.container}>
-      <FlatList
-                data={this.props.homepoems }
-                extraData={ this.state.selected }
-                keyExtractor={ this._keyExtractor }
-                renderItem={ this._renderItem }
-                // 决定当距离内容最底部还有多远时触发onEndReached回调；数值范围0~1，例如：0.5表示可见布局的最底端距离content最底端等于可见布局一半高度的时候调用该回调
-                onEndReachedThreshold={0.1}
-                // 当列表被滚动到距离内容最底部不足onEndReacchedThreshold设置的距离时调用
-                onEndReached={ this._onEndReached }
-                ListHeaderComponent={ this._renderBanner }
-                // ListFooterComponent={ this._renderFooter }
-                ItemSeparatorComponent={ this._renderItemSeparatorComponent }
-                ListEmptyComponent={ this._renderEmptyView }
-                refreshing={this.state.refreshing}
-                onRefresh={ this._renderRefresh }
-                // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
-                getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
-            />
-        <TouchableOpacity style={styles.add} onPress={()=>{
-            this._onAdd()
-          }}>
-          {this._renderAdd()}
-        </TouchableOpacity>
-      </View>
+      <SafeAreaView
+        style={pstyles.safearea}>
+        <View style={pstyles.container}>
+        <FlatList
+                  data={this.props.homepoems }
+                  extraData={ this.state.selected }
+                  keyExtractor={ this._keyExtractor }
+                  renderItem={ this._renderItem }
+                  // 决定当距离内容最底部还有多远时触发onEndReached回调；数值范围0~1，例如：0.5表示可见布局的最底端距离content最底端等于可见布局一半高度的时候调用该回调
+                  onEndReachedThreshold={0.1}
+                  // 当列表被滚动到距离内容最底部不足onEndReacchedThreshold设置的距离时调用
+                  onEndReached={ this._onEndReached }
+                  ListHeaderComponent={ this._renderBanner }
+                  // ListFooterComponent={ this._renderFooter }
+                  ItemSeparatorComponent={ this._renderItemSeparatorComponent }
+                  ListEmptyComponent={ this._renderEmptyView }
+                  refreshing={this.state.refreshing}
+                  onRefresh={ this._renderRefresh }
+                  // 是一个可选的优化，用于避免动态测量内容，+1是加上分割线的高度
+                  getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index, index } )}
+              />
+          <TouchableOpacity style={styles.add} onPress={()=>{
+              this._onAdd()
+            }}>
+            {this._renderAdd()}
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     );
   }
   _onAddAni() {

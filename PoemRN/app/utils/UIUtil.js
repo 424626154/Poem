@@ -5,6 +5,7 @@
  */
 import Storage from './Storage'
 import Global from '../Global';
+import HttpUtil  from './HttpUtil';
 var UIUtil = {};
 UIUtil.getFontSize = function(){
   var size = Storage.getFontSize();
@@ -84,4 +85,25 @@ UIUtil.getFCFontStyle = function(){
     lineHeight:Global.lineHeight,
   }
 }
+
+UIUtil.getDiscussPhotos = function(item:Object){
+  var extend = {};
+  var photos = [];
+  if(item.extend){
+     extend = JSON.parse(item.extend);
+     let temp_photos = extend.photos;
+     // console.log('---getDiscussPhotos')
+     // console.log(photos)
+     if(temp_photos&&temp_photos.length > 0){
+       for (var i = 0; i < temp_photos.length; i++) {
+         temp_photos[i].photourl = HttpUtil.getHeadurl(temp_photos[i].photo);
+         temp_photos[i].pbigurl = HttpUtil.getHeadurl(temp_photos[i].photo+'_big');
+       }
+       photos = [...temp_photos];
+     }
+   }
+   // console.log(photos)
+   return photos;
+}
+
 export default UIUtil;

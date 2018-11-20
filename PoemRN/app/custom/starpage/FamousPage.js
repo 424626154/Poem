@@ -1,6 +1,6 @@
 'use strict'
 /**
- * 作者
+ * 收录
  * @flow
  */
 import React from 'react';

@@ -17,8 +17,12 @@ StyleConfig.C_232323 = '#232323';//近黑色
 StyleConfig.C_7B8992 = '#7B8992';//深灰
 StyleConfig.C_D4D4D4 = '#d4d4d4';//浅灰
 StyleConfig.C_FFCA28 = '#ffca28';//黄色
+StyleConfig.C_4C97FF = '#4c97ff';//蓝色
 // StyleConfig.C_E7E7E7 = '#e7e7e7';//浅灰色 列表背景
 StyleConfig.C_FF4040 = '#ff4040';//红色
+
+StyleConfig.C_FF9900 = '#FF9900';
+StyleConfig.C_FF5555 = '#FF5555';
 
 StyleConfig.C_333333 = '#333333';//深灰
 // StyleConfig.C_F0F0F0 = '#f0f0f0';//
@@ -43,8 +47,10 @@ var HeaderConfig = {
 
 };
 HeaderConfig.headerTitleStyle = {
-  fontSize:StyleConfig.F_22,
+  fontSize:StyleConfig.F_18,
   alignSelf:'center',
+  flex:1,
+  textAlign: 'center',
   };
 HeaderConfig.headerStyle = {
   backgroundColor:StyleConfig.C_FFFFFF,
@@ -74,6 +80,9 @@ const clear = require('./images/clear.png');
 const addbox = require('./images/add_box.png');
 const favorite_border = require('./images/favorite_border.png');
 const favorite = require('./images/favorite.png');
+const more_photos = require('./images/more_photos.png');
+const add = require('./images/add.png');
+const photo_del = require('./images/clear.png');
 var ImageConfig = {
 
 }
@@ -85,7 +94,9 @@ ImageConfig.clear = clear;
 ImageConfig.addbox = addbox;
 ImageConfig.favorite = favorite;
 ImageConfig.favorite_border = favorite_border;
-
+ImageConfig.more_photos = more_photos;
+ImageConfig.add = add;
+ImageConfig.photo_del = photo_del;
 var UIName = {}
 UIName.LoginUI = 'LoginUI';
 UIName.ForgetUI = 'ForgetUI';
@@ -119,6 +130,12 @@ UIName.PoemUI = 'PoemUI';
 UIName.CommentsUI = 'CommentsUI';
 UIName.StarUI = 'StarUI';
 UIName.ReadSetUI = 'ReadSetUI';
+UIName.PhotosUI = 'PhotosUI';
+UIName.DiscussUI = 'DiscussUI';
+UIName.AddDiscussUI = 'AddDiscussUI';
+UIName.GalleryUI = 'GalleryUI';
+UIName.WebUI = 'WebUI';
+UIName.MyDiscussUI = 'MyDiscussUI';
 var Permission = {
 
 }

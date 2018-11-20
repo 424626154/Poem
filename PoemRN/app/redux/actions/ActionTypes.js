@@ -34,3 +34,13 @@ export const SET_PUSH_CHAT_USER = 'set_push_chat_user';
 export const SWITCH_FAMOUS = "switch_famous";
 
 export const UPSTAR = 'upstar';
+
+export const ADDDISCUSS = 'adddiscuss';
+export const HEAD_DISCUSS = 'head_discuss';
+export const UP_DISCUSS = 'up_discuss';
+export const FOOTER_DISCUSS = 'footer_discuss';
+export const DLOVEME = 'dloveme';
+export const SETDISCUSS = 'setdiscuss';
+export const UPDCOMMNUM = 'updcommnum';
+export const DELDISCUSS = 'deldiscuss';
+export const UPDSTAR = 'updstar';

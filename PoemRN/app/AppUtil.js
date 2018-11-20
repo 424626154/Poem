@@ -20,6 +20,7 @@ import UIUtil from './utils/UIUtil';
 import MessageDao from './db/MessageDao';
 import HomePoemDao from './db/HomePoemDao';
 import ChatDao from './db/ChatDao';
+import DiscussDao from './db/DiscussDao';
 import PImage from './custom/PImage';
 import BitSet from './utils/BitSet';
 import Toast from 'react-native-root-toast';
@@ -149,7 +150,12 @@ export function goPersonalUI(navigate:any,userid:string){
   }
 
 
-export function showToast(tips:string){
+export function showToast(tips:any){
+  if(typeof tips != 'string'){
+    if(typeof tips == 'object'){
+      tips = JSON.stringify(tips)
+    }
+  }
   let toast = Toast.show(tips, {
       duration: Toast.durations.SHORT,
       position: Toast.positions.BOTTOM,
@@ -216,5 +222,6 @@ export {
   MessageDao,
   HomePoemDao,
   ChatDao,
+  DiscussDao,
   PImage,
 }

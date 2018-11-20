@@ -227,6 +227,7 @@ class AddPoemUI extends React.Component<Props,State> {
       }}
       />
     {Platform.OS === 'ios' && <KeyboardSpacer/>}
+    {this._renderLoading()}
     </View>
     );
   }
@@ -461,6 +462,10 @@ class AddPoemUI extends React.Component<Props,State> {
     this.setState({annotation:annotation});
   }
   onRelease(){
+    if(this.state.animating){
+      return;
+    }
+    this.setState({animating:true})
     var title = this.state.title;
     var content = this.state.content;
     if(!this.props.papp.userid){
@@ -513,6 +518,7 @@ class AddPoemUI extends React.Component<Props,State> {
     }
     console.log('------url:',url);
     HttpUtil.post(url,json).then(res=>{
+      this.setState({animating:false})
       if(res.code == 0){
           var poem = res.data;
           let { dispatch } = this.props.navigation;
@@ -529,6 +535,7 @@ class AddPoemUI extends React.Component<Props,State> {
         showToast(res.errmsg)
       }
     }).catch(err=>{
+      this.setState({animating:false})
       console.error(err);
     })
   }

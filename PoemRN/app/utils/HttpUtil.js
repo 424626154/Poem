@@ -6,7 +6,7 @@
 import {
     NetInfo,
 } from 'react-native';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import AppConf from '../AppConf';
 
 var HttpUtil = {};
@@ -63,6 +63,31 @@ HttpUtil.STATR = 'star/star';
 HttpUtil.NSTARS = 'star/nstars';
 HttpUtil.HSTARS = 'star/hstars';
 
+// 想法
+HttpUtil.DISCUSS_ADD = 'discuss/add';
+HttpUtil.DISCUSS_NDISCUSS = 'discuss/ndiscuss';
+HttpUtil.DISCUSS_HDISCUSS = 'discuss/hdiscuss';
+HttpUtil.DISCUSS_INFO = 'discuss/info';
+HttpUtil.DISCUSS_DEL = 'discuss/del';
+HttpUtil.DISCUSS_NMYDISCUSS = 'discuss/nmydiscuss';
+HttpUtil.DISCUSS_HMYDISCUSS = 'discuss/hmydiscuss';
+
+//评论
+HttpUtil.COMMENT_LATEST = 'comment/latest';
+HttpUtil.COMMENT_HISTORY = 'comment/history';
+HttpUtil.COMMENT_ADD = 'comment/add';
+HttpUtil.COMMENT_DEL = 'comment/del';
+
+//点赞
+HttpUtil.LOVE_LOVE = 'love/love';
+HttpUtil.LOVE_LCNUM = 'love/lcnum';
+HttpUtil.LOVE_LOVES = 'love/loves';
+HttpUtil.LOVE_LOVECOMMENT = 'love/lovecomment';
+//云控
+HttpUtil.CLOUD_CONFIG = 'cloud_config';
+
+HttpUtil.ID = 3;//想法 评论
+
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;
 console.log('---http url :'+HttpUtil.BASE_URL);
 
@@ -93,6 +118,8 @@ HttpUtil.post = function(rep_url:string,body:any):Promise<Object> {
           resolve(responseJson);
         })
         .catch((error) => {
+            console.log('---response post  url:'+rep_url+' error:');
+            console.log(error);
             reject(error)
         });
     } catch (e) {

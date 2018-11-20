@@ -30,6 +30,7 @@ import TopTabBar from '../custom/toptabbar/TopTabBar';
 import TabBarIcon from '../custom/TabBarIcon';
 
 import {connect} from 'react-redux';
+import { SafeAreaView } from 'react-navigation';
 import * as UserActions from '../redux/actions/UserActions';
 type Props = {
       navigation:any,
@@ -67,7 +68,8 @@ class MessageTab extends Component <Props,State>{
             let index = 0;
             // console.log(scene)
             if(navigation.state.params){
-              navigation.state.params.onTabBarPress(index);
+              navigation.state.params.onTabBarPress(0);
+              // navigation.state.params.onTabBarPress(1);
             }
             // jumpToIndex(index);
 
@@ -117,29 +119,32 @@ class MessageTab extends Component <Props,State>{
     render(){
 
       return(
-        <View style={styles.container}>
-          <ScrollableTabView
-            locked={true}
-            onChangeTab={(fnc)=>{
-              this._onChangeTab(fnc.i);
-            }}
-            renderTabBar={() => <TopTabBar someProp={'here'} />}>
-           <NewsPage
-             ref='NewsPage'
-             tabLabel="通知"
-             papp={this.props.papp}
-             reduxMsgRead={this._reduxMsgRead}
-             navigation={this.props.navigation}
-           />
-           <ChatPage
-             ref='ChatPage'
-             tabLabel="私信"
-             papp={this.props.papp}
-             reduxMsgRead={this._reduxMsgRead}
-             navigation={this.props.navigation}
-           />
-         </ScrollableTabView>
-        </View>
+        <SafeAreaView
+          style={pstyles.safearea}>
+          <View style={styles.container}>
+            <ScrollableTabView
+              locked={true}
+              onChangeTab={(fnc)=>{
+                this._onChangeTab(fnc.i);
+              }}
+              renderTabBar={() => <TopTabBar someProp={'here'} />}>
+             <NewsPage
+               ref='NewsPage'
+               tabLabel="通知"
+               papp={this.props.papp}
+               reduxMsgRead={this._reduxMsgRead}
+               navigation={this.props.navigation}
+             />
+             <ChatPage
+               ref='ChatPage'
+               tabLabel="私信"
+               papp={this.props.papp}
+               reduxMsgRead={this._reduxMsgRead}
+               navigation={this.props.navigation}
+             />
+           </ScrollableTabView>
+          </View>
+        </SafeAreaView>
       )
     }
 
@@ -151,7 +156,7 @@ class MessageTab extends Component <Props,State>{
       )
     }
     _onTabBarPress(index){
-      this._loadSonTab(this.state.son_index);
+      this._loadSonTab(index);
     }
     _onChangeTab(index){
       if(index == 0 || index == 1){
@@ -163,9 +168,9 @@ class MessageTab extends Component <Props,State>{
     }
     _loadSonTab(index){
       if(index == 0){
-        this.refs.NewsPage._loadNews();
+        this.refs.NewsPage&&this.refs.NewsPage._loadNews();
       }else if(index == 1){
-        this.refs.ChatPage._loadChat();
+        this.refs.ChatPage&&this.refs.ChatPage._loadChat();
       }
     }
     _reduxMsgRead(){

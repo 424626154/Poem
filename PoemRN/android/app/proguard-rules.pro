@@ -163,3 +163,6 @@ public static ** valueOf(java.lang.String);
 
 -keep class com.linkedin.** { *; }
 -keepattributes Signature
+
+-keep class com.xiaomi.ad.**{*;}
+-keep class com.miui.zeus.**{*;}

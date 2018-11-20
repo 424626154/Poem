@@ -16,6 +16,9 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
 static NSString *um_appkey = @"5a214740a40fa32e1d000361";
 static NSString *um_channel = @"App Store";
 
+static NSString *youmi_appid = @"afba80aeeaaae762";
+static NSString *youmi_appkey = @"256001259aca1601";
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;

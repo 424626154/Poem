@@ -125,7 +125,8 @@ export default class NewsListItem extends React.Component<Props>{
   }
   _renderMsg(message){
     var extend = JSON.parse(message.extend);
-    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5){//点赞 评论 关注 发布作品
+    if(message.type == 1||message.type == 2||message.type == 3||message.type == 5
+      ||message.type == 6||message.type == 7||message.type == 8){//点赞 评论 关注 发布作品 6添加讨论 7点赞讨论 8评论讨论
       var msg_html =  '';
       if(message.type == 1){
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
@@ -152,6 +153,27 @@ export default class NewsListItem extends React.Component<Props>{
                       '<span><msg_love>发布了</msg_love></span>'+
                       '<span><msg_info>['+extend.title+']</msg_info></span></div>';
       }
+      if(message.type == 6){
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>发布了</msg_love></span>'+
+                      '<span><msg_info>['+extend.title+']</msg_info></span></div>';
+      }
+      if(message.type == 7){
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>赞了</msg_love></span>'+
+                      '<span><msg_info>['+extend.title+']</msg_info></span></div>';
+
+      }
+      if(message.type == 8){
+        var op_str = '评论:';
+        if(extend.cid > 0){
+          op_str = '回复:'
+        }
+        msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
+                      '<span><msg_love>'+op_str+'</msg_love></span>'+
+                      '<span><msg_info>'+extend.comment+'</msg_info></span></div>';
+
+      }
       // console.log(msg_html);
       return(
         <HTMLView
@@ -173,7 +195,8 @@ export default class NewsListItem extends React.Component<Props>{
     var source = ImageConfig.nothead;
       if(message.type == 0||message.type == 4){
         source = ImageConfig.official;
-      }else if (message.type == 1||message.type == 2||message.type == 3||message.type == 5){
+      }else if (message.type == 1||message.type == 2||message.type == 3||message.type == 5
+        ||message.type == 6||message.type == 7||message.type == 8){
         // console.log('---extend---');
         var extend = JSON.parse(message.extend);
         // console.log(extend);

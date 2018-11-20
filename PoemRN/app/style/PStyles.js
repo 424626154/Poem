@@ -22,6 +22,12 @@ const ptyles = StyleSheet.create({
       fontSize:18,
       color:StyleConfig.C_333333,
       marginRight:10,
+      width:40,
+    },
+    //适配背景
+    safearea:{
+      flex:1,
+      backgroundColor:StyleConfig.C_FFFFFF,
     },
     // 公共背景
     container: {

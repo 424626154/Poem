@@ -28,6 +28,7 @@ type Props = {
     time:string,
     headurl:any,
     userid:string,
+    fromType?:number,//1 想法 回复
 };
 
 type State = {
@@ -103,7 +104,13 @@ class CommentListItem extends React.PureComponent<Props> {
     _loadComment(comment){
       var comment_html = '';
       if(comment.cid > 0){
-          comment_html ='<div><span><comment_font1>回复</comment_font1></span>&nbsp;<span><comment_name1>'+comment.cpseudonym+'</comment_name1></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
+          let nickname = '';
+          if(this.props.fromType && this.props.fromType == 1){
+            nickname = comment.nickname
+          }else{
+            nickname = comment.cpseudonym
+          }
+          comment_html ='<div><span><comment_font1>回复</comment_font1></span>&nbsp;<span><comment_name1>'+nickname+'</comment_name1></span><span><comment_font1>&nbsp;:&nbsp;'+comment.comment+'</comment_font1></span></div>';
           return(
             <TouchableOpacity
               style={styles.comment}

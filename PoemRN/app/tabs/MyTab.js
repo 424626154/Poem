@@ -14,6 +14,7 @@ import {
         RefreshControl,
       } from 'react-native';
 import {connect} from 'react-redux';
+import { SafeAreaView } from 'react-navigation';
 import * as UserActions from '../redux/actions/UserActions';
 import { Icon } from 'react-native-elements';
 
@@ -56,6 +57,7 @@ class MyTab extends React.Component<Props,State> {
 
    _onStting:Function;
    _onWorks:Function;
+   _onDiscuss:Function;
    _onFont:Function;
    _onStar:Function;
    _onRefresh:Function;
@@ -73,6 +75,7 @@ class MyTab extends React.Component<Props,State> {
      }
      this._onStting = this._onStting.bind(this);
      this._onWorks = this._onWorks.bind(this);
+     this._onDiscuss = this._onDiscuss.bind(this);
      this._onFont = this._onFont.bind(this);
      this._onStar = this._onStar.bind(this);
      this._onRefresh = this._onRefresh.bind(this);
@@ -91,25 +94,29 @@ class MyTab extends React.Component<Props,State> {
   render() {
     const { state,navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.isRefreshing}
-            onRefresh={this._onRefresh}
-            tintColor={StyleConfig.C_FFFFFF}
-            title=""
-            titleColor={StyleConfig.C_FFFFFF}
-            colors={[StyleConfig.C_FFFFFF]}
-            progressBackgroundColor={StyleConfig.C_FFFFFF}
-          />
-        }>
-        {this._renderUserInfo()}
-        <View style={styles.interval}></View>
-        {this._renderWorks()}
-        {this._renderStar()}
-        {this._renderItem('read','material-community','阅读设置',this._onReadSet,false)}
-        {this._renderItem('settings-applications','MaterialIcons','设置',this._onStting,false)}
-      </ScrollView>
+      <SafeAreaView
+        style={pstyles.safearea}>
+        <ScrollView style={styles.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh}
+              tintColor={StyleConfig.C_FFFFFF}
+              title=""
+              titleColor={StyleConfig.C_FFFFFF}
+              colors={[StyleConfig.C_FFFFFF]}
+              progressBackgroundColor={StyleConfig.C_FFFFFF}
+            />
+          }>
+          {this._renderUserInfo()}
+          <View style={styles.interval}></View>
+          {this._renderWorks()}
+          {this._renderDiscuss()}
+          {this._renderStar()}
+          {this._renderItem('read','material-community','阅读设置',this._onReadSet,false)}
+          {this._renderItem('settings-applications','MaterialIcons','设置',this._onStting,false)}
+        </ScrollView>
+      </SafeAreaView>
     );
   }
   _renderUserInfo(){
@@ -266,6 +273,11 @@ class MyTab extends React.Component<Props,State> {
       return(this._renderItem('inbox','MaterialIcons','我的作品',this._onWorks,false))
     }
   }
+  _renderDiscuss(){
+    if(this.props.papp.userid){
+      return(this._renderItem('bubbles','simple-line-icon','我的想法',this._onDiscuss,false))
+    }
+  }
   _renderStar(){
     if(this.props.papp.userid){
       return(this._renderItem('star','MaterialIcons','我的收藏',this._onStar,false))
@@ -273,6 +285,9 @@ class MyTab extends React.Component<Props,State> {
   }
   _onWorks(){
     this.props.navigation.navigate(UIName.WorksUI);
+  }
+  _onDiscuss(){
+    this.props.navigation.navigate(UIName.MyDiscussUI,{userid:this.props.papp.userid});
   }
   _onStar(){
     this.props.navigation.navigate(UIName.StarUI,{userid:this.props.papp.userid});
