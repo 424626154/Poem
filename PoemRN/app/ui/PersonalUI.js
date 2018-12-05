@@ -254,6 +254,14 @@ class PersonalUI extends React.Component<Props,State>{
               <Text style={styles.follow_item_font}>{'收藏'}</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            this._onBadge();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.state.user.badgenum||0}</Text>
+              <Text style={styles.follow_item_font}>{'徽章'}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       )
   }
@@ -296,6 +304,9 @@ class PersonalUI extends React.Component<Props,State>{
   }
   _onStar(){
     this.props.navigation.navigate(UIName.StarUI,{userid:this.state.userid})
+  }
+  _onBadge(){
+    this.props.navigation.navigate(UIName.BadgeUI,{userid:this.state.userid})
   }
 
   _requestOtherInfo(userid){
@@ -471,7 +482,7 @@ const styles = StyleSheet.create({
   },
   follow_item_bg:{
     padding:10,
-    width:Global.width/3,
+    width:Global.width/4,
     alignItems:'center',
   },
   follow_item_num:{

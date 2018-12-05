@@ -266,14 +266,14 @@ const styles = StyleSheet.create({
     backgroundColor:StyleConfig.C_FFFFFF,
     borderWidth:1,
     borderColor:StyleConfig.C_333333,
-    borderRadius:15,
+    borderRadius:61,
   },
   head:{
     height:120,
     width:120,
     resizeMode:'cover',
     // 设置圆角
-    borderRadius:15,
+    borderRadius:60,
   },
   mhead:{
     width:20,

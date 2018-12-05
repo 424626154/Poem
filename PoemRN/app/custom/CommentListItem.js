@@ -59,7 +59,7 @@ class CommentListItem extends React.PureComponent<Props> {
                       />
                   </TouchableOpacity>
                     <View style={styles.bg1}>
-                      <Text style={styles.name}>{comment.pseudonym}</Text>
+                      <Text style={styles.name}>{comment.nickname}</Text>
                       <Text style={styles.time}>{this.props.time}</Text>
                       {this._loadComment(comment)}
                       <View style={styles.line}></View>

@@ -126,7 +126,8 @@ export default class NewsListItem extends React.Component<Props>{
   _renderMsg(message){
     var extend = JSON.parse(message.extend);
     if(message.type == 1||message.type == 2||message.type == 3||message.type == 5
-      ||message.type == 6||message.type == 7||message.type == 8){//点赞 评论 关注 发布作品 6添加讨论 7点赞讨论 8评论讨论
+      ||message.type == 6||message.type == 7||message.type == 8
+      ||message.type == 9){//点赞 评论 关注 发布作品 6添加讨论 7点赞讨论 8评论讨论 9 成就
       var msg_html =  '';
       if(message.type == 1){
         msg_html = '<div><span><msg_name>'+extend.pseudonym+'</msg_name></span>'+
@@ -174,6 +175,13 @@ export default class NewsListItem extends React.Component<Props>{
                       '<span><msg_info>'+extend.comment+'</msg_info></span></div>';
 
       }
+      if(message.type == 9){
+        msg_html = '<div><span><msg_love>恭喜您获得</msg_love></span>'+
+                  '<span><msg_info>[</msg_info></span>'+
+                  '<span><msg_badge>'+extend.title+'</msg_badge></span>'+
+                  '<span><msg_info>]</msg_info></span></div>';
+
+      }
       // console.log(msg_html);
       return(
         <HTMLView
@@ -193,7 +201,7 @@ export default class NewsListItem extends React.Component<Props>{
   }
   _logicSource(message){
     var source = ImageConfig.nothead;
-      if(message.type == 0||message.type == 4){
+      if(message.type == 0||message.type == 4||message.type == 9){
         source = ImageConfig.official;
       }else if (message.type == 1||message.type == 2||message.type == 3||message.type == 5
         ||message.type == 6||message.type == 7||message.type == 8){
@@ -276,6 +284,10 @@ const styles = StyleSheet.create({
   msg_info:{
     fontSize:16,
     color:StyleConfig.C_333333,
+  },
+  msg_badge:{
+    fontSize:16,
+    color:StyleConfig.C_FF4040,
   },
   msg_time:{
     color:StyleConfig.C_D4D4D4,

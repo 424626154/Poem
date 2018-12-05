@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.miui.zeus.mimo.sdk.MimoSdk;
 import com.miui.zeus.mimo.sdk.ad.AdWorkerFactory;
 import com.miui.zeus.mimo.sdk.ad.IAdWorker;
 import com.miui.zeus.mimo.sdk.listener.MimoAdListener;
@@ -61,7 +62,12 @@ public class XiaomiAdActivity extends Activity {
         });
         iv_app_icon.setImageBitmap(getBitmap(this));
         tv_app_name.setText(getAppName(this));
-        setupNativeSpotAd();
+        boolean isSdkReady = MimoSdk.isSdkReady();
+        if(isSdkReady){
+            setupNativeSpotAd();
+        }else{
+            finish();
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ AppConf.QIHU360 = 'qihu360';
 AppConf.ALI_DIS = 'ali_dis';
 AppConf.BAIDU = 'baidu';
 //服务器环境
-// AppConf.ENV = AppConf.DEBUG;
+AppConf.ENV = AppConf.DEBUG;
 AppConf.ENV = AppConf.ALI;
 // ios渠道
 AppConf.IOS_CHANNEL = AppConf.APPSTORE;

@@ -86,6 +86,9 @@ HttpUtil.LOVE_LOVECOMMENT = 'love/lovecomment';
 //云控
 HttpUtil.CLOUD_CONFIG = 'cloud_config';
 
+//徽章
+HttpUtil.BADGE = 'badge';
+
 HttpUtil.ID = 3;//想法 评论
 
 HttpUtil.BASE_URL = 'http://'+AppConf.IP+':'+AppConf.HOST;

@@ -207,6 +207,14 @@ class MyTab extends React.Component<Props,State> {
               <Text style={styles.follow_item_font}>关注我的人</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            this._onBadge();
+          }}>
+            <View style={styles.follow_item_bg}>
+              <Text style={styles.follow_item_num}>{this.props.papp.user.badgenum||0}</Text>
+              <Text style={styles.follow_item_font}>徽章</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       )
     }else{
@@ -345,7 +353,13 @@ class MyTab extends React.Component<Props,State> {
   _onFollowMe(){
     this.props.navigation.navigate(UIName.FollowUI,{userid:this.props.papp.userid,title:'关注我的',type:1});
   }
-
+  /**
+   * 徽章
+   * @return {[type]} [description]
+   */
+  _onBadge(){
+    this.props.navigation.navigate(UIName.BadgeUI,{userid:this.props.papp.userid});
+  }
   _onRefresh(){
     if(this.props.papp.userid){
       this.setState({isRefreshing: true});

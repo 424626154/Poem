@@ -20,7 +20,7 @@ import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends ReactActivity {
 
-    private static final String APP_ID = "2882303761517872766";
+    private static final String APP_ID = "2882303761517672905";
     // 以下两个没有的话就按照以下传入
     private static final String APP_KEY = "fake_app_key";
     private static final String APP_TOKEN = "fake_app_token";
@@ -33,6 +33,8 @@ public class MainActivity extends ReactActivity {
                 ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE}     , 0);
             }
         }
+        MimoSdk.setDebugOn(); // 输出调试信息
+//        MimoSdk.setStageOn(); // 测试请求开关，请求测试广告
         MimoSdk.init(this, APP_ID, APP_KEY, APP_TOKEN);
         JPushInterface.init(this);
         MobclickAgent.setSessionContinueMillis(1000);

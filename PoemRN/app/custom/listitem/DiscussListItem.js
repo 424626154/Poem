@@ -134,7 +134,7 @@ class DiscussListItem extends React.PureComponent<Props,State> {
     }
     _renderItem(item){
       return(
-        <View>
+        <View style={styles.discuss}>
             <Text style={pstyles.discuss_title}>
               {item.title}
             </Text>
@@ -273,6 +273,9 @@ const styles = StyleSheet.create({
     width:26,
     height:26,
   },
+  discuss:{
+
+  }
 });
 
 export default DiscussListItem;

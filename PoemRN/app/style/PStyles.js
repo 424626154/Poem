@@ -132,7 +132,28 @@ const ptyles = StyleSheet.create({
     padding:10,
     alignItems:'center',
     justifyContent:'center',
-  }
+  },
+  modal_bg:{
+    flex:1,
+    backgroundColor:'#00000044'
+  },
+  discuss_title:{
+    fontSize:StyleConfig.F_18,
+    textAlign:'left',
+    color:StyleConfig.C_232323,
+    // fontWeight:'bold',
+  },
+  discuss_content:{
+    fontSize:StyleConfig.F_14,
+    textAlign:'left',
+    color:StyleConfig.C_232323,
+  },
+  link:{
+    color: '#2980b9', fontSize: 20
+  },
+  spacing:{
+    height:5,
+  },
 });
 
 export {ptyles as default};

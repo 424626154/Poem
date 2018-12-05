@@ -54,6 +54,10 @@ Utils.dateStr = function(date:number){
       return date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
   }
 }
+Utils.timeToYMD = function(date:number){
+  var date1= new Date(parseInt(date) * 1000);
+  return date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+}
 Utils.log = function(key:string,value:string){
   console.log('~~~~~~'+key+':'+JSON.stringify(value)+'~~~~~');
 }

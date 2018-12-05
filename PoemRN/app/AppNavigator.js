@@ -69,6 +69,7 @@ import AddDiscussUI from './ui/AddDiscussUI';
 import GalleryUI from './ui/GalleryUI';
 import WebUI from './ui/WebUI';
 import MyDiscussUI from './ui/MyDiscussUI';
+import BadgeUI from './ui/BadgeUI';
 // const fade = (props) => {
 //     const {position, scene} = props
 //
@@ -330,6 +331,9 @@ const RootNavigator = createStackNavigator({
   },
   MyDiscussUI:{
     screen:MyDiscussUI,
+  },
+  BadgeUI:{
+    screen:BadgeUI,
   }
 },{
   initialRouteName: 'Main', // 默认显示界面

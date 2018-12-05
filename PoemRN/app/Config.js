@@ -136,6 +136,7 @@ UIName.AddDiscussUI = 'AddDiscussUI';
 UIName.GalleryUI = 'GalleryUI';
 UIName.WebUI = 'WebUI';
 UIName.MyDiscussUI = 'MyDiscussUI';
+UIName.BadgeUI = 'BadgeUI';
 var Permission = {
 
 }

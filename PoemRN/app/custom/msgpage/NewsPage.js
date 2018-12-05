@@ -119,6 +119,8 @@ class NewsPage extends React.Component<Props,State>{
           if(id){
             this.props.navigation.navigate(UIName.DiscussUI,{id:id});
           }
+      }else if(message.type == 9){
+        
       }else{
         this.props.navigation.navigate(UIName.MsgContentUI,{message:message});
       }

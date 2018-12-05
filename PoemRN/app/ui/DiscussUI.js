@@ -242,9 +242,10 @@ class DiscussUI extends React.Component<Props,State>{
    return(
       <View
         style={[styles.discuss,{backgroundColor:'#ffffff'}]}>
-        <Text style={styles.title}>
+        <Text style={pstyles.discuss_title}>
           {this.props.mydisuss.title}
         </Text>
+        <View style={pstyles.spacing}/>
         <Hyperlink
           linkStyle={pstyles.link}
           // linkText={ url =>{
@@ -254,7 +255,7 @@ class DiscussUI extends React.Component<Props,State>{
             this.props.navigation.navigate(UIName.WebUI,{url:url,title:text})
           }}>
           <Text
-            style={styles.content}>
+            style={pstyles.content}>
             {this.props.mydisuss.content}
           </Text>
         </Hyperlink>
@@ -840,7 +841,8 @@ class DiscussUI extends React.Component<Props,State>{
       cid:this.state.cid,
       comment:this.state.comment,
     })
-    // console.log(json);
+    console.log(json);
+    console.log(this.props.papp)
     HttpUtil.post(HttpUtil.COMMENT_ADD,json).then((data)=>{
       if(data.code == 0){
         var comment = data.data;

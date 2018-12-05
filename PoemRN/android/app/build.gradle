@@ -102,8 +102,8 @@ android {
         applicationId "com.sbb.poem"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 18
-        versionName "1.0.3"
+        versionCode 19
+        versionName "1.0.4"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "",
                 APP_CHANNEL : "default"

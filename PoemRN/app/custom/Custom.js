@@ -9,6 +9,7 @@ import NavBack from './NavBack';
 import HeaderTabbar from './HeaderTabbar';
 import DiscussListItem from './listitem/DiscussListItem';
 import MyDiscussListItem from './listitem/MyDiscussListItem';
+import BadgeItem from  './BadgeItem';
 export {
   CommentListItem,
   LoveListView,
@@ -16,4 +17,5 @@ export {
   HeaderTabbar,
   DiscussListItem,
   MyDiscussListItem,
+  BadgeItem,
 }
